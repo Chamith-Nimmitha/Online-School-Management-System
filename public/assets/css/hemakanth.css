@@ -1,0 +1,145 @@
+
+.hmpg li a {
+  
+  padding-right: 14px;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.hmpg li:hover:not(.hmpgactive) {
+background-color:#3CB371;
+}
+
+.hmpgactive{
+background-color:#3CB371;
+}
+
+.text-justify{text-align: justify;}
+
+.text-center{text-align: center;}
+
+.b-rad{border-radius: 10px}
+
+.b-white{border-color: #ffffff}
+
+.float-center{float: center;}
+
+.h-1{height:10px}
+.h-2{height:20px}
+.h-3{height:30px}
+.h-4{height:40px}
+.h-5{height:50px}
+.h-6{height:60px}
+.h-7{height:70px}
+.h-8{height:80px}
+.h-9{height:90px}
+
+
+.h-10{height:200px}
+
+.h-30{height:300px}
+
+.h-40{height:400px}
+
+.h-50{height:500px}
+
+.h-60{height:600px}
+
+.h-70{height:700px}
+
+.h-80{height:800px}
+
+.h-90{height:900px}
+
+.bg-navyblue{background-color: #000050}
+
+.bg-cornflowerblue{background-color:#191970}
+
+.bg-darkslategray{background-color: #2F4F4F}
+
+.bg-maroon{background-color:#800000;}
+
+.bg-white{background-color:#ffffff;}
+
+.bg-red1{background-color: #FF0000}
+
+.bg-gray1{background-color: #808080}
+
+.bg-navyblue1{
+  background: var(--header-bg);
+}
+
+.bg-lightred{background-color:    #3CB371;}
+
+.fs-white{color:#ffffff;}
+.fs-orange{color:#FFA500;}
+.fs-maroon{color: #800000;}
+.fs-navyblue{color:#000050;}
+
+.monospace {
+  font-family: "Lucida Console", Courier, monospace;
+}
+
+.sansserif {
+  font-family:Pussycat, Algerian, Broadway;
+}
+
+.couriernew{
+  font-family: "Times New Roman", Times, serif;
+}
+
+.hmpg-bg{
+  background-image: url("../img/school3.jpg");
+}
+
+.t-300{
+  position: absolute;
+  top:200px;
+}
+
+.fs-05{font-size: 5px;}
+.fs-10{font-size: 10px;}
+.fs-12{font-size: 12px;}
+.fs-14{font-size: 14px;}
+
+.hmpg-b-right{
+   border-right: 2px solid blue;
+}
+.dot{
+  cursor: pointer;
+  background-color: #ffffff;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+  height: 10px;
+  width: 10px;
+
+}
+
+.dotactive, .dot:hover{
+  background-color:orange;
+}
+
+
+.prev,.next{
+  font-weight: bold;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.prev:hover, .next:hover {
+  background-color: #bbb;
+}
+.notices {
+  display: none;
+  border: 1px solid black;
+  border-radius: 10px;
+  height: 300px;
+  max-width: 100%;
+}
+
+.square {
+  height: 30px;
+  width: 23px;
+ 
+}

@@ -1,0 +1,180 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body{
+	margin: 0;	
+	width: 100%;
+	overflow-wrap: break-word;
+}
+
+#top-header, #school-badge, #header-user-info{
+	border-radius: 10px;
+	transition: all 0.5s ease-in;
+	z-index: 3;
+}
+ #header-school-other-info{
+ 	position:absolute;
+	bottom: 0px;
+	transition: all 0.25s ease-in 0.25s;
+	padding-bottom: 10px;
+ }
+ 
+#header-user-info{
+	border: none;
+	color: white;
+}
+
+.school-name span{
+	-webkit-text-stroke: 0.3px yellow;
+	color : #20295b ;
+	transition: all 0.8s ease;
+	opacity :0.2;
+}
+
+.school-name span.school-name-fade{
+	color: #ffc107;
+	opacity: 1;
+}
+
+aside{
+	border-radius: 5px;
+	min-height: 450px !important;
+}
+
+#content{
+	background: var(--content-bg) !important;
+}
+
+footer{
+	padding: 20px;
+	background: var(--footer-bg);
+	color: var(--footer-color);
+	width: 100%;
+}
+
+.statistics-flex,.statistics-flex{
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+}
+
+.s-item{
+	min-width: 200px;
+	max-width: 25%;
+}
+
+.l-item{
+	min-width: 300px;
+	max-width: 25%;
+}
+
+.statistics-flex > div{
+	border-radius: 10px;
+}
+
+#user-nav{
+	position: absolute;
+	top: 82%;
+	right: 0px;
+	width: 200px !important;
+}
+
+#user-nav .nav-link{
+	font-size: 16px;
+	width: 100%;
+}
+
+#aside-nav-xm-ul li:hover{
+	background: red;
+}
+
+.sub-nav{
+	margin-left: 20px;
+	font-size: 14px;
+}
+
+.sub-nav .nav-links{
+	width: 100%;
+}
+.admissions-table {
+	display: flex;
+	width: 100% !important;
+	flex-direction: column;
+	justify-content: flex-start;
+	margin-top: 25px;
+}
+
+#aside-nav-xm-ul nav{
+	position: absolute;
+	width: 200px;
+}
+
+#aside-nav-xm-ul li,#aside-nav-xm-ul a{
+	padding: 0;
+	margin: 0;
+}
+
+#aside-nav-xm-ul li li{
+	padding: 5px;
+	padding-left: 20px;
+}
+
+.nav-item .active-xm{
+	background: green;
+}
+
+#interview-timetable th{
+	width: 15%;
+	word-wrap: break-word;
+}
+#interview-timetable td{
+	background: white;
+}
+
+.timetable-select{
+	background: green !important;
+}
+
+.timetable-unselect{
+	background: white !important;
+}
+
+.hide{
+	display: none;
+}
+.show{
+	display: inherit;
+}
+
+@media  (min-width:0px){
+	
+}
+
+@media  (min-width:576px){
+	
+}
+
+@media  (min-width:768px){
+	#header-user-info{
+		border: 2px solid orange;
+		color: white;
+	}
+	#user-nav{
+		left:  2% !important;
+		width: 90% !important;
+}
+}
+
+@media  (min-width:992px){
+
+	#header-school-info{
+		justify-content: flex-start;
+	}
+}
+
+@media  (min-width:1200px){
+
+}
