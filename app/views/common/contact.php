@@ -1,13 +1,10 @@
 
-<?php require_once("../templates/header.php"); ?>
-
 <div class="col-12 fs-15 bg-darkblue  m-0 p-0  " >
 	<div class="col-10 hmpg ">
 		<ul>
-			
-  				<li class="float-left d-block p-3 "><a href="<?php echo set_url('index.php') ?>">Home</a></li>
-  				<li class="hmpgactive float-left d-block p-3"><a href="<?php echo set_url('pages/contact.php') ?>">Contact us</a></li>
-  				<li class="float-left d-block p-3"><a href="<?php echo set_url('pages/about.php') ?>">About</a></li>
+  				<li class="float-left d-block p-3 "><a href="<?php echo set_url('homepage') ?>">Home</a></li>
+  				<li class="hmpgactive float-left d-block p-3"><a href="<?php echo set_url('school/contact') ?>">Contact us</a></li>
+  				<li class="float-left d-block p-3"><a href="<?php echo set_url('school/about') ?>">About</a></li>
   		
 		</ul>
 	</div>
@@ -15,13 +12,13 @@
 
 <div class="border b-rad mt-1 p-2 bg-white ">
 <div class="col-12">
-	<img src="../img/<?php if(!empty($header)){echo $header['map'];} ?>" alt="map1" width=1340px height=400px>
+	<img src="<?php if(!empty($header)){echo set_url("public/assets/img/").$header['map'];} ?>" alt="map1" width=1340px height=400px>
 </div>
 
 <div class="row justify-content-center align-items-center">
 <div class=" col-2 border b-rad m-3 p-3 text-justify fs-15 ">
 	    <div class="justify-content-center align-items-center d-block">
-    		<img src="../img/location.png" alt="location" width=40px height=40px>
+    		<img src="<?php echo set_url("public/assets/img/location.png")?>" alt="location" width=40px height=40px>
         </div>
      <div class="d-block justify-content-center align-items-center">   
 	<p><br><?php if(!empty($header)){echo $header['address'];} ?></p>
@@ -30,7 +27,7 @@
 
 <div class="col-2 border b-rad m-3 p-3 text-justify fs-15">
 	    <div class="justify-content-center align-items-center">
-    		<img src="../img/telephone.png" alt="telephone" width=40px height=40px>
+    		<img src=" <?php echo set_url("public/assets/img/telephone.png")?>" alt="telephone" width=40px height=40px>
         </div>
          <div class="d-block justify-content-center align-items-center">
 	<p><br><?php if(!empty($header)){echo$header['contact_number'];} ?></p>
@@ -39,7 +36,7 @@
 
 <div class="col-3 border b-rad m-3 p-3 text-justify fs-15">
 	    <div class="justify-content-left align-items-start d-block">
-    		<img src="../img/email.png" alt="email" width=40px height=40px>
+    		<img src="<?php echo set_url("public/assets/img/email.png")?>" alt="email" width=40px height=40px>
         </div>
 
         <div class="d-block justify-content-center align-items-center">
@@ -49,7 +46,7 @@
 
 <div class="col-3 border b-rad m-3 p-3 text-justify fs-15">
 	    <div class="justify-content-left align-items-start d-block">
-    		<img src="../img/web.png" alt="web" width=40px height=40px>
+    		<img src="<?php echo set_url("public/assets/img/web.png")?>" alt="web" width=40px height=40px>
         </div>
 
         <div class="d-block justify-content-center align-items-center">
@@ -101,6 +98,3 @@
 </div>
 </div>
 </div>
-
-
-<?php require_once("../templates/footer.php"); ?>

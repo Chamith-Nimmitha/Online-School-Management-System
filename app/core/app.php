@@ -21,23 +21,27 @@
 				$route_url = explode("/", $key);
 				if(count($route_url) == count($url)){
 					if($route_url[0] === $url[0]){
+						$real_url = trim($value,"/");
+						$real_url = explode("/",$real_url);
 						if(count($url) >1){
 							if($route_url[1] === $url[1]){
-								$real_url = trim($value,"/");
-								$real_url = explode("/",$real_url);
 								$this->controller = $real_url[0];
 								$this->method = isset($real_url[1]) ? $real_url[1] : "index";
-								unset($real_url[0],$real_url[1]);
-								$this->params = !empty($real_url) ? array_values($real_url) : [];
+								unset($url[0],$url[1]);
+								$this->params = !empty($url) ? array_values($url) : [];
+								break;
+							}else if(count($url) === count(explode("$",$value))){
+								$this->controller = $real_url[0];
+								$this->method = isset($real_url[1]) ? $real_url[1] : "index";
+								unset($url[0]);
+								$this->params = !empty($url) ? array_values($url) : [];
 								break;
 							}
 						}else{
-							$real_url = trim($value,"/");
-							$real_url = explode("/",$real_url);
 							$this->controller = !empty($real_url[0]) ? ucwords($real_url[0]) : "Home";
 							$this->method = isset($real_url[1]) ? $real_url[1] : "index";
-							unset($real_url[0],$real_url[1]);
-							$this->params = !empty($real_url) ? array_values($real_url) : [];
+							unset($url[0],$url[1]);
+							$this->params = !empty($url) ? array_values($url) : [];
 							break;
 						}
 					}
