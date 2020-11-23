@@ -35,7 +35,7 @@
 			$this->parameters = array();
 		}
 
-		protected function get($fields){
+		public function get($fields){
 			foreach ($fields as  $value) {
 				if (empty($this->get)){
 					$this->get .= "`".$value."`";
@@ -45,7 +45,7 @@
 			}
 		}
 
-		protected function where($ass_array){
+		public function where($ass_array){
 			foreach ($ass_array as $key => $value) {
 				array_push($this->parameters, $value);
 				if(empty($this->where)){
@@ -56,7 +56,7 @@
 			}
 		}
 
-		protected function set_table($table){
+		public function set_table($table){
 			$this->table = $table;
 		}
 
@@ -71,7 +71,7 @@
 			$this->parameters = array();
 		}
 
-		protected function select($table, $fields=NULL){
+		public function select($table, $fields=NULL){
 
 			$this->query = "SELECT";
 			if(empty($this->get)){
@@ -109,7 +109,7 @@
 			return $stmt;
 		}
 
-		protected function insert($table,$fields){
+		public function insert($table,$fields){
 			$this->query .= "INSERT INTO ";
 
 			$this->query .= "`".$table."` ";
@@ -140,7 +140,7 @@
 			return $stmt;
 		}
 
-		protected function delete($table, $fields=NULL){
+		public function delete($table, $fields=NULL){
 			
 			$this->query .= "DELETE FROM ";
 
@@ -168,7 +168,7 @@
 			return $stmt;
 		}
 
-		protected function update($table,$fields,$wheres=NULL){
+		public function update($table,$fields,$wheres=NULL){
 			$this->query .= "UPDATE `".$table."` SET ";
 			$set = "";
 			$pre_arr = array();
@@ -205,21 +205,21 @@
 			return $stmt;
 		}
 
-		protected function orderBy($or){
+		public function orderBy($or){
 			$this->order = " ORDER BY `".$or."` ASC ";
 		}
-		protected function limit($l){
+		public function limit($l){
 			$this->limit = "LIMIT ".$l;
 		}
 
-		protected function pure_query($query){
+		public function pure_query($query){
 			$this->reset_values();
 			$this->pre_query = $query;
 			// echo $query;
 			return $this->db->query($query);
 		}
 
-		protected function get_next_auto_increment($tablename){
+		public function get_next_auto_increment($tablename){
 			$this->query = "SELECT AUTO_INCREMENT FROM `information_schema`.`TABLES` WHERE `TABLE_SCHEMA` = '".$GLOBALS['dbname']."' AND `TABLE_NAME` = '".$tablename."'";
 
 			$this->pre_query = $this->query;

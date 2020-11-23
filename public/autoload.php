@@ -1,3 +1,8 @@
+<?php
+    if(!isset($_SESSION)) { 
+        session_start(); 
+    } 
+?>
 <?php 
 	
 	// define all folder paths

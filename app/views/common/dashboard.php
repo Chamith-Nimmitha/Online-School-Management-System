@@ -1,28 +1,9 @@
-<?php include_once("session.php"); ?>
-<?php include_once("../php/database.php"); ?>
 
-<?php 
-	function getCount($tables){
-		$con = new Database();
-		foreach ($tables as $table) {
-			$query = "SELECT COUNT(`id`) as count FROM `". $table."`";
-			$result_set = $con->pure_query($query);
-			if($result_set)
-				$count[$table] = $result_set->fetch()['count'];
-		}
-		return $count;
-	}
-	$tables = array("student","teacher","subject","classroom","parent");
-	$count = getCount($tables);
- ?>
-
-<?php require_once("../templates/header.php") ;?>
-<?php require_once("../templates/aside.php"); ?>
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 	<?php 
-		if(isset($_GET['msg'])){
+		if(isset($msg)){
 			echo "<p class='d-flex justify-content-center bg-lightgreen fb-green col-8 p-3'>";
-			echo $_GET['msg'];
+			echo $msg;
 			echo "</p>";
 		}  
 	?>
@@ -80,5 +61,3 @@
 		</div>
 	</div> <!-- #school-attendance -->
 </div> <!-- #content -->
-
-<?php require_once("../templates/footer.php"); ?>

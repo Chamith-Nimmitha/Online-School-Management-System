@@ -1,23 +1,4 @@
-<?php
-    if(!isset($_SESSION)) { 
-        session_start(); 
-    } 
-?>
 
-<?php require_once( realpath(dirname( __FILE__ )). "/../php/config.php"); ?>
-<?php require_once(realpath(dirname( __FILE__ )). "/../php/common.php"); ?>
-<?php require_once(realpath(dirname( __FILE__ )). "/../php../database.php") ?>
-<?php $con = new Database(); ?>
-
-<?php 
-	$query = "SELECT `name`,`value` FROM `website_data` WHERE `category`='school'";
-	$header_result = $con->pure_query($query)->fetchAll();
-	if($header_result){
-		foreach ($header_result as $data) {
-			$header[$data['name']] = $data['value'];
-		}
-	}
- ?>
 <?php
 
 $curPageName = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
@@ -38,17 +19,17 @@ if(!($curPageName =='login.php'||$curPageName =='student_registration.php'||$cur
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<title>SMS</title>
-	<link rel="stylesheet" href="<?php echo set_url('css/grid-system.css'); ?>">
+	<link rel="stylesheet" href="<?php echo set_url('public/assets/css/grid-system.css'); ?>">
 	<!-- <link rel="stylesheet" href="../css/vimarsha.css"> -->
-	<link rel="stylesheet" href="<?php echo set_url('css/main.css'); ?>">
-	<link rel="stylesheet" href="<?php echo set_url('css/hemakanth.css'); ?>">
-	<link rel="stylesheet" href="<?php echo set_url('css/chamith.css'); ?>">
+	<link rel="stylesheet" href="<?php echo set_url('public/assets/css/main.css'); ?>">
+	<link rel="stylesheet" href="<?php echo set_url('public/assets/css/hemakanth.css'); ?>">
+	<link rel="stylesheet" href="<?php echo set_url('public/assets/css/chamith.css'); ?>">
 </head>
 <body>
 	<div class="container bg-lightgray">
 		<div class="row theme-header sticky-top" id="top-header">
 			<div class="school-badge col-4 col-md-3 justify-content-center pt-2">
-				<a href="<?php echo set_url('index.php'); ?>"><img src="<?php echo set_url('img/school_badge') ?><?php if(!empty($header)){echo $header['badge'];}?>" width="80px" alt=""  id="school-badge" ></a>
+				<a href="<?php echo set_url(''); ?>"><img src="<?php echo set_url('public/assets/img/school_badge') ?><?php if(!empty($header)){echo $header['badge'];}?>" width="80px" alt=""  id="school-badge" ></a>
 			</div> <!-- .school-badge -->
 			<div id="header-school-info" class="col-6 col-md-6 flex-col align-items-center">
 				<!-- <div class="d-flex flex-col bg-red align-items-start"> -->
@@ -69,7 +50,7 @@ if(!($curPageName =='login.php'||$curPageName =='student_registration.php'||$cur
 						<div>
 							<img src="';
 							if(isset($_SESSION['profile_photo']) && $_SESSION['profile_photo'] !=""){
-								$user_info .= set_url("img/".$_SESSION['role']."_profile_photo/".$_SESSION['profile_photo']);
+								$user_info .= set_url("public/assets/upload/".$_SESSION['role']."_profile_photo/".$_SESSION['profile_photo']);
 							}else{
 								$user_info .= "";
 							}
@@ -86,10 +67,10 @@ if(!($curPageName =='login.php'||$curPageName =='student_registration.php'||$cur
 				</div>
 				<div class="no-collapsed theme-darkblue w-100" id="user-nav">
 					<ul class="nav">
-						<li class="nav-item"><a href="'.set_url("pages/admin.php").'" class="nav-link">Dashboard</a></li>
-						<li class="nav-item"><a href="'.set_url("pages/".$_SESSION['role']."_profile.php").'" class="nav-link">Profile</a></li>
+						<li class="nav-item"><a href="'.set_url("dashboard").'" class="nav-link">Dashboard</a></li>
+						<li class="nav-item"><a href="'.set_url("profile").'" class="nav-link">Profile</a></li>
 						<li class="nav-item"><a href="" class="nav-link">Notifications</a></li>
-						<li class="nav-item"><a href="' . set_url('pages/logout.php').'" class="nav-link">Log out</a></li>
+						<li class="nav-item"><a href="' . set_url('logout').'" class="nav-link">Log out</a></li>
 					</ul>
 				</div>
 			</div> <!-- #header-user-info -->';
@@ -97,8 +78,8 @@ if(!($curPageName =='login.php'||$curPageName =='student_registration.php'||$cur
 			}
 			else{
 				$buttons = '<div class="login_buttons col-12 col-md-3 justify-content-end pr-5 d-flex align-items-center">
-				<a class="btn btn-blue mr-5" href="' . set_url('pages/login.php').'">Log In</a>
-				<a class="btn btn-blue" href="'.  set_url('pages/student_registration.php'). ' ">Registration</a>
+				<a class="btn btn-blue mr-5" href="' . set_url('login').'">Log In</a>
+				<a class="btn btn-blue" href="'.  set_url('student/registration'). ' ">Registration</a>
 			</div>';
 			echo $buttons;
 			}
