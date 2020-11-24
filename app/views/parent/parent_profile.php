@@ -1,111 +1,14 @@
-<?php include_once("session.php"); ?>
-<?php require_once("../php/common.php"); ?>
-<?php require_once("../php/database.php"); ?>
-
-<?php
-
-	if(isset($_SESSION['role']) && $_SESSION['role'] == "parent"){
-		$id = $_SESSION['user_id'];
-		$profile_photo = $_SESSION['profile_photo'];
-	}else{
-		if(isset($_GET['parent_id'])){
-			$result = $con->select("parent",array("id"=>$_GET['parent_id']));
-			if($result->rowCount() == 1){
-				$result = $result->fetch();
-				$id = $result['id'];
-				$profile_photo = $result['profile_photo'];
-			}else{
-				echo "You dont have permissions.";
-			exit();	
-			}
-		}else{
-			echo "You dont have permissions.";
-			exit();
-		}
-	}
-	if(isset($_POST['submit'])){
-		$data['occupation'] = addslashes($_POST['occupation']);
-		$data['address'] = addslashes($_POST['address']);
-		$data['email'] = addslashes($_POST['email']);
-		$data['contact_number'] = $_POST['contact-number'];
-
-
-		$required_fields = array("address"=>100,"email"=>100,"contact-number"=>10);
-		$all_errors =check_input_fields($required_fields);
-
-		if(empty($all_errors[0]) && empty($all_errors[1]) && isset($_FILES['profile-photo']['tmp_name'])&& !empty($_FILES['profile-photo']['tmp_name'])){
-			$target = "../img/parent_profile_photo/";
-			$rename = $id;
-			$data['profile_photo'] = $rename . "." .strtolower(pathinfo($_FILES['profile-photo']['name'], PATHINFO_EXTENSION));
-			$errors = upload_file($_FILES['profile-photo'],$target, 2000000, $rename);
-		}
-
-		if((empty($all_errors[0]) && empty($all_errors[1])) && (!isset($errors) || $errors[0] == 1)){
-			try{
-				$con->db->beginTransaction();
-				$con->get(array("email"));
-				$result = $con->select("parent", array("id"=>$id));
-				if(!$result || $result->rowCount() != 1 ){
-					throw new Exception("User found failed.", 1);
-				}
-				$old_email = stripslashes($result->fetch()['email']);
-				$result = $con->update("parent",$data,array("id"=>$id));
-				if(!$result){
-					throw new Exception("Update failed.", 1);
-				}
-				$con->update("user", array("email"=>$data['email']), array("email"=>$old_email));
-				if(!$result){
-					throw new Exception("Login update failed.", 1);
-				}
-				if(isset($_FILES['profile-photo']['tmp_name'])&& !empty($_FILES['profile-photo']['tmp_name'])){
-					if(isset($_SESSION['role']) && $_SESSION['role'] == "parent"){
-						$_SESSION["profile_photo"] = $data["profile_photo"];
-					}
-				}
-				$info = "Update Successful.";
-				$con->db->commit();
-			}catch(Exception $e){
-				$all_errors[2] = $e->getMessage();
-				$con->db->rollback();
-			}
-		}
-	}
-
-	$result = $con->select("parent",array("id"=>$id));
-	if($result->rowCount() == 1){
-		$result = $result->fetch();
-	}
- ?>
-
-<?php require_once("../templates/header.php"); ?>
-<?php require_once("../templates/aside.php"); ?>
-
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 	<?php 
-		if(isset($all_errors) && (!empty($all_errors[0]) || !empty($all_errors[1]) || count($all_errors) > 2)){
-			echo "<p class='bg-red col-8 p-3'>";
-			foreach ($all_errors[0] as $error) {
-				echo $error." is required.<br>";
-			}
-			if(isset($all_errors[1]) && !empty($all_errors[1])){
-				foreach ($all_errors[1] as $error) {
-					echo $error." length must less than ".$required_fields[$error].".<br/>";
-				}
-			}
-			if(isset($all_errors[2])){
-				echo $all_errors[2]."<br/>";
-			}
-			if(isset($errors) && !empty($errors[1])){
-				foreach ($errors[1] as $error) {
-					echo $error. "<br/>";
-				}
-			}
+		if(isset($info)){
+			echo "<p class='bg-green d-flex justify-content-center col-8 p-3'>";
+			echo $info;
 			echo "</p>";
 		}
-		if(isset($info)){
-			echo "<p class='bg-green col-8 p-3'>";
-			echo $info;
+		if(isset($field_errors)){
+			echo "<p class='bg-red d-flex justify-content-center col-8 p-3'>";
+			echo "Update Failed.";
 			echo "</p>";
 		}
 	 ?>
@@ -114,13 +17,13 @@
 	</div>
 
 	<div class="col-12">
-			<form action="parent_profile.php" method="post" class="col-12" enctype="multipart/form-data">
+			<form action="<?php echo set_url('profile'); ?>" method="post" class="col-12" enctype="multipart/form-data">
 				<div class="col-4 flex-col d-none d-md-flex align-items-center"  style=" padding-top: 100px;background: #ccf;">
 					<div  class="col-8">
 						<div  style="position: relative;">
-							<img src="<?php echo set_url('img/parent_profile_photo/'.$profile_photo); ?>" alt="profile photo"  onclick="upload_profile_photo('profile-photo')" class="col-12">
+							<img src="<?php echo set_url('public/uploads/parent_profile_photo/'.$_SESSION['profile_photo']); ?>" alt="profile photo"  onclick="upload_profile_photo('profile-photo')" class="col-12">
 							<label for="profile-photo" class="" style="position: absolute; bottom: 0px; right: 0px;">
-								<img src="<?php echo set_url("img/camera.png"); ?>" alt="upload photo" style="width: 50px; height: 50px; cursor: pointer;">
+								<img src="<?php echo set_url("public/assets/img/camera.png"); ?>" alt="upload photo" style="width: 50px; height: 50px; cursor: pointer;">
 							</label>
 						</div>
 						<input type="file" name="profile-photo" id="profile-photo" accept="image/jpg,image/jpeg,image/png" onchange="check_input_image(this)" class="d-none">
@@ -166,6 +69,3 @@
 			</form>
 	</div>
 </div>
-
-
-<?php require_once("../templates/footer.php"); ?>

@@ -1,6 +1,6 @@
 
 <?php 
-	class ParentModel{
+	class ParentModel extends Model{
 		//for keep track of how many parents are logged in.
 		public static $num_of_parents = 0;
 		private $id;
@@ -13,8 +13,7 @@
 		private $state;
 		// set basic database info
 		public function __construct(){
-			unset($con);
-			$this->con = new Database();
+			parent::__construct();
 			$this->table = "parent";
 			$this->state = 0;
 		}
@@ -72,6 +71,20 @@
 		public function get_contact_number(){return $this->contact_number;}
 		public function get_profile_photo(){return $this->profile_photo;}
 		public function get_state(){return $this->state;}
+
+
+		public function get_data(){
+			$data["id"] = $this->id;
+			$data["name"] = $this->name;
+			$data["occupation"] = $this->occupation;
+			$data["address"] = $this->address;
+			$data["contact_number"] = $this->contact_number;
+			$data["email"] = $this->email;
+			$data["profile_id"] = $this->profile_id;
+			$data["state"] = $this->state;
+			return $data;
+		}
+
 
 		// unset database connection and reduce parent count
 		public function __destruct(){

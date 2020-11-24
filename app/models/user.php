@@ -25,4 +25,41 @@
 			}
 			return $count;
 		}
+
+		// get profile data
+		public function get_profile_data($id){
+			$result = $this->con->select("student",array("id"=>$id));
+			if($result->rowCount() == 1){
+				$result = $result->fetch();
+			}
+		}
+
+		// update user information
+		public function update_user_data($table,$data, $user_id){
+			try{
+				$this->con->db->beginTransaction();
+				$this->con->get(array("email"));
+				$result = $this->con->select($table, array("id"=>$user_id));
+				if($result && $result->rowCount() == 1){
+					$old_email = stripslashes($result->fetch()['email']);
+					$result = $this->con->update($table,$data,array("id"=>$user_id));
+					if(!$result){
+						throw new PDOException("Update failed.",1);
+					}
+					if($old_email != $data['email']){
+						$result =$this->con->update("user", array("email"=>$data['email']), array("email"=>$old_email));
+						if(!$result){
+							throw new PDOException("Login update failed.",1);
+						}
+					}
+					$this->con->db->commit();
+					return 1;
+				}else{
+					throw new Exception("Cant't find user.", 1);
+				}
+			}catch( Exception $e){
+				$this->con->db->rollback();
+				return $e->getMessage();
+			}
+		}
 	}

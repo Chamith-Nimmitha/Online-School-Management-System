@@ -1,10 +1,3 @@
-			<?php 
-				$con->get(array("interview_panel_id"));
-				$teacher_result = $con->select("teacher",array("id"=>$_SESSION['user_id']));
-				if($teacher_result && $teacher_result->rowCount() === 1){
-					$interview_panel_id = $teacher_result->fetch()['interview_panel_id'];
-				}
-			 ?>
 			<aside class="navbar col-1 col-md-4 col-lg-3 m-0 p-0 d-flex justify-content-start" >	
 				<div class="d-md-flex flex-col d-none col-12 theme-sidebar" id="aside-nav-wrapper">
 					<div id="aside-user-info" class=" d-flex flex-col m-3 p-2 text-center">

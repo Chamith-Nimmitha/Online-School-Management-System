@@ -1,18 +1,3 @@
-
-<?php
-
-$curPageName = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
-if(!($curPageName =='login.php'||$curPageName =='student_registration.php'||$curPageName =='index.php'||$curPageName =='contact.php'||$curPageName =='about.php')){
-	
-	if (!(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true)) {
-    	header("Location: login.php");
-
-	}
-
-}  
- 
-?> 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,7 +35,7 @@ if(!($curPageName =='login.php'||$curPageName =='student_registration.php'||$cur
 						<div>
 							<img src="';
 							if(isset($_SESSION['profile_photo']) && $_SESSION['profile_photo'] !=""){
-								$user_info .= set_url("public/assets/upload/".$_SESSION['role']."_profile_photo/".$_SESSION['profile_photo']);
+								$user_info .= set_url("public/uploads/".$_SESSION['role']."_profile_photo/".$_SESSION['profile_photo']);
 							}else{
 								$user_info .= "";
 							}
@@ -62,7 +47,7 @@ if(!($curPageName =='login.php'||$curPageName =='student_registration.php'||$cur
 						</div>
 					</div>
 					<button class="toggle-button" target="user-nav">
-						<img src="'.set_url('img/close-menu.png').'" width="20px" height="20px" alt="">
+						<img src="'.set_url('public/assets/img/close-menu.png').'" width="20px" height="20px" alt="">
 					</button>
 				</div>
 				<div class="no-collapsed theme-darkblue w-100" id="user-nav">
