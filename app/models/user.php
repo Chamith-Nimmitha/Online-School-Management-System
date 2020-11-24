@@ -2,6 +2,10 @@
 
 	class UserModel extends Model{
 
+		public function __construct() {
+			parent::__construct();
+		}
+
 		//get data for login.php page
 		public function get_user_data($table,$email){
 			$email = addslashes($email);

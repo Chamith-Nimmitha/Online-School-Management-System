@@ -2,6 +2,10 @@
 
 	class User extends Controller {
 
+		public function __construct() {
+			parent::__construct();
+		}
+
 		// login user
 		public function login($info=""){
 			$errors = array();  

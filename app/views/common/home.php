@@ -237,8 +237,8 @@
       </div>
 
       <div class="row justify-content-center align-items-center">
-      <div class="justify-content-left align-items-start">
-        <a href="<?php if(!empty($header)){echo $header['fb_id'];} ?>"><img src="<?php echo set_url('public/assets/img/fb.png') ?>" alt="flag" width=40px height=40px></a>
+        <div class="justify-content-left align-items-start">
+          <a href="<?php if(!empty($header)){echo $header['fb_id'];} ?>"><img src="<?php echo set_url('public/assets/img/fb.png') ?>" alt="flag" width=40px height=40px></a>
         </div>
 
         <div class="justify-content-left align-items-start">
