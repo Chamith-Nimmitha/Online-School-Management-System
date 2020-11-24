@@ -22,9 +22,10 @@
 		private $classroom_id;
 		private $state;
 		private $is_deleted;
+		private $table_name;
 		// create database connection
 		public function __construct(){
-			$this->con = new Database();
+			parent::__construct();
 			$this->table = "student";
 			$this->state = 0;
 		}
@@ -51,7 +52,6 @@
 		public function set_by_id($id){
 			$data = $this->con->select($this->table, array("id"=>$id));
 			if($data && $data->rowCount() == 1){
-				self::$num_of_students +=1;
 				$this->state = 1;
 				$data = $data->fetch();
 				foreach ($data as $key => $value) {
@@ -212,9 +212,6 @@
 
 		public function __destruct(){
 			unset($this->con);
-			if(isset($this->id) && $this->id != null){
-				self::$num_of_students -=1;
-			}
 		}
 	}
  ?>

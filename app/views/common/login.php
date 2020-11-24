@@ -8,6 +8,11 @@
 					echo "<p class='bg-red p-2 w-100 text-center'>";
 					echo $message;
 					echo "</p>";
+				}
+				if( isset($info) && !empty($info)) {
+					echo "<p class='bg-green p-2 w-100 text-center'>";
+					echo $info;
+					echo "</p>";
 				} 
 			?>
 		</div>

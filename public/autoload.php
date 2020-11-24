@@ -15,6 +15,7 @@
 	define("MODELS", APP.'models'.DS );
 	define("VIEWS", APP.'views'.DS );
 	define("HELPERS", APP.'helpers'.DS );
+	define("INCLUDES", APP.'includes'.DS );
 	define("PUB", ROOT_PATH.'public'.DS );
 	define("UPLOADS", PUB.'uploads'.DS );
 	define("ASSETS", PUB.'assets'.DS );
@@ -26,5 +27,6 @@
 	
 	require_once(CONFIG."config.php");
 	require_once(HELPERS."url_helper.php");
+	require_once(INCLUDES."common.php");
 	new App();
  ?>

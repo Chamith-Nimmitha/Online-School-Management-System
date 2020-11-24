@@ -1,3 +1,4 @@
+var base_url = "http://localhost/mymvc/";
 
 var toggle_buttons = document.getElementsByClassName("toggle-button");
 for(var i=0; i < toggle_buttons.length; i++){
@@ -10,11 +11,11 @@ function collapseToggle(){
 	if(target.classList.contains('no-collapsed')){
 		target.classList.add("collapsed");
 		target.classList.remove("no-collapsed");
-		this.getElementsByTagName("img")[0].src="../img/open-menu.png";
+		this.getElementsByTagName("img")[0].src=base_url+"public/assets/img/open-menu.png";
 	}else{
 		target.classList.add("no-collapsed");
 		target.classList.remove("collapsed");
-		this.getElementsByTagName("img")[0].src="../img/close-menu.png";
+		this.getElementsByTagName("img")[0].src=base_url+"public/assets/img/close-menu.png";
 	}
 }
 

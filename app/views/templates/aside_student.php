@@ -1,9 +1,4 @@
-			<?php require_once( realpath(dirname(__FILE__)). "/../php/classes/student.class.php" ); ?>
-			<?php 
-				$st = new StudentClass();
-				$st->set_by_id($_SESSION['user_id']);
-				$parent_id = $st->get_parent_id();
-			 ?>
+
 			<aside class="navbar col-1 col-md-4 col-lg-3 m-0 p-0 d-flex justify-content-start" >
 				<div class="d-md-flex flex-col d-none col-12 theme-sidebar" id="aside-nav-wrapper">
 					<div id="aside-user-info" class=" d-flex flex-col m-3 p-2 text-center">
@@ -13,55 +8,55 @@
 					<nav class="nav fs-18">
 						<ul class="d-flex flex-col" id="aside_nav">
 							<li class="nav-item aside-li">
-								<a href="<?php echo set_url('pages/admin.php'); ?>" class="nav-link active">Dashbord</a>
+								<a href="<?php echo set_url('dashboard'); ?>" class="nav-link active">Dashbord</a>
 							</li>
 							<li class="nav-item aside-li" id="attendance-li">
-								<a href="<?php echo set_url('pages/student_attendance_view.php',array('id'=>$_SESSION['user_id'])); ?>" class="nav-link">Student Attendance</a>
+								<a href="<?php echo set_url('student/attendance/view/'.$_SESSION['user_id']); ?>" class="nav-link">Student Attendance</a>
 								<button class="toggle-button" target="attendance-nav">
-									<img src="../img/close-menu.png" width="20px" alt="">
+									<img src="<?php echo set_url('public/assets/img/close-menu.png') ?>" width="20px" alt="">
 								</button>
 
 								<nav class="nav sub-nav no-collapsed" id="attendance-nav">
 									<ul class="d-flex flex-col">
-										<li class="nav-item"><a href="<?php echo set_url('pages/student_attendance_view.php',array('id'=>$_SESSION['user_id'])); ?>" parent-li="attendance-li" class="nav-link">Students Attendance</a></li>
+										<li class="nav-item"><a href="<?php echo set_url('student/attendance/view/'.$_SESSION['user_id']); ?>" parent-li="attendance-li" class="nav-link">Students Attendance</a></li>
 										<li class="nav-item"><a href="#" class="nav-link">Attendance Complaint</a></li>
 									</ul>
 								</nav>
 							</li>
 							<li class="nav-item aside-li" id="timetable-li">
-								<a href="<?php echo set_url('pages/student_timetable_view.php');?>" class="nav-link">Student Timetable</a>
+								<a href="<?php echo set_url('student/timetable/view');?>" class="nav-link">Student Timetable</a>
 								<button class="toggle-button" target="timetable-nav">
-									<img src="../img/close-menu.png" width="20px" alt="">
+									<img src="<?php echo set_url('public/assets/img/close-menu.png') ?>" width="20px" alt="">
 								</button>
 								<nav class="nav sub-nav no-collapsed" id="timetable-nav">
 									<ul class="d-flex flex-col">
-										<li class="nav-item"><a href="<?php echo set_url('pages/student_timetable_view.php');?>" parent-li="timetable-li" class="nav-link">Students Timetable</a></li>
+										<li class="nav-item"><a href="<?php echo set_url('student/timetable/view');?>" parent-li="timetable-li" class="nav-link">Students Timetable</a></li>
 										<li class="nav-item"><a href="#" class="nav-link">Timetable Complaint</a></li>
 									</ul>
 								</nav>
 							</li>
-							<li class="nav-item aside-li" id="classroom-li"><a href="<?php echo set_url('pages/classroom_student_view.php') ?>" class="nav-link">My Classroom</a>
+							<li class="nav-item aside-li" id="classroom-li"><a href="<?php echo set_url('student/classroom/student/list') ?>" class="nav-link">My Classroom</a>
 								<button class="toggle-button" target="classroom-nav">
-									<img src="../img/close-menu.png" width="20px" alt="">
+									<img src="<?php echo set_url('public/assets/img/close-menu.png') ?>" width="20px" alt="">
 								</button>
 
 								<nav  id="classroom-nav" class="nav sub-nav no-collapsed">
 									<ul class="d-flex flex-col">
-										<li class="nav-item"><a href="<?php echo set_url('pages/classroom_student_view.php') ?>" class="nav-link" parent-li="classroom-li">Student list</a></li>
+										<li class="nav-item"><a href="<?php echo set_url('student/classroom/student/list') ?>" class="nav-link" parent-li="classroom-li">Student list</a></li>
 										<li class="nav-item"><a href="#" class="nav-link" parent-li="classroom-li">Class Complaints</a></li>
 									</ul>
 								</nav>
 							</li>
 							<li class="nav-item aside-li" id="subject-li">
-								<a href="<?php echo set_url('pages/student_subject_list.php') ?>" class="nav-link">My Subjects</a>
+								<a href="<?php echo set_url('student/subject/list') ?>" class="nav-link">My Subjects</a>
 								<button class="toggle-button" target="subject-nav">
-									<img src="../img/close-menu.png" width="20px" alt="">
+									<img src="<?php echo set_url('public/assets/img/close-menu.png') ?>" width="20px" alt="">
 								</button>
 
 								<nav class="nav sub-nav no-collapsed" id="subject-nav">
 									<ul class="d-flex flex-col">
 										<li class="nav-item">
-											<a href="<?php echo set_url('pages/student_subject_list.php') ?>" class="nav-link" parent-li="subject-li">Subjects list</a></li>
+											<a href="<?php echo set_url('student/subject/list') ?>" class="nav-link" parent-li="subject-li">Subjects list</a></li>
 										<li class="nav-item">
 											<a href="#" class="nav-link" parent-li="subject-li">Subjects Complaints</a></li>
 									</ul>
@@ -69,17 +64,17 @@
 							</li>
 							
 							<li class="nav-item aside-li">
-								<a href="<?php echo set_url('pages/parent_profile_view.php',array('parent_id'=>$parent_id)); ?>" class="nav-link">Parent Info</a>
+								<a href="<?php echo set_url('student/parent/view',array('parent_id'=>$parent_id)); ?>" class="nav-link">Parent Info</a>
 							</li>
 							<li class="nav-item aside-li" id="exam-result-li">
-								<a href="<?php echo set_url('pages/student_marks_report.php'); ?>" class="nav-link">Exam Result</a>
+								<a href="<?php echo set_url('student/exam'); ?>" class="nav-link">Exam Result</a>
 								<button class="toggle-button" target="exam-result-nav">
-									<img src="../img/close-menu.png" width="20px" alt="">
+									<img src="<?php echo set_url('public/assets/img/close-menu.png') ?>" width="20px" alt="">
 								</button>
 
 								<nav class="nav sub-nav no-collapsed" id="exam-result-nav">
 									<ul class="d-flex flex-col">
-										<li class="nav-item"><a href="<?php echo set_url('pages/student_marks_report.php'); ?>" class="nav-link" parent-li="exam-result-li">Results</a></li>
+										<li class="nav-item"><a href="<?php echo set_url('student/exam'); ?>" class="nav-link" parent-li="exam-result-li">Results</a></li>
 										<li class="nav-item"><a href="<?php echo set_url('pages/TComplaints.php') ?>" class="nav-link"  parent-li="exam-result-li">Result Complaints</a></li>
 									</ul>
 								</nav>

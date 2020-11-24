@@ -3,7 +3,7 @@
 	class User extends Controller {
 
 		// login user
-		public function login(){
+		public function login($info=""){
 			$errors = array();  
 			$message="";
 			if(isset($_POST['submit'])) {
@@ -54,19 +54,24 @@
 							$_SESSION["username"]=$user['username'];
 							$_SESSION["profile_photo"]=$user['profile_photo'];
 						}
-						header('Location:dashboard/Login Successful');
+						header('Location:'.set_url("dashboard/Login Successful"));
 					}
 				}else{
 					$message ="Invalid email or password";
 				}
 			}
-			$this->load->view("common/login");
+			$this->view_header_and_aside();
+			if( strlen($info) >0){
+				$this->load->view("common/login",["info"=>$info]);
+			}else{
+				$this->load->view("common/login");
+			}
 			$this->load->view("templates/footer");
 		}
 
-		//view dashboard
+		//view dashboard for all users
 		public function dashboard($msg=""){
-			// echo $msg;
+			$this->view_header_and_aside();
 			$this->load->model("user");
 			$counts = $this->load->user->get_staticstic_count();
 			if( strlen($msg) > 0){
@@ -75,5 +80,163 @@
 				$this->load->view("common/dashboard", ["count"=>$counts]);
 			}
 			$this->load->view("templates/footer");
+		}
+
+		public function profile(){
+			$role = $_SESSION['role'];
+			$this->load->model($role);
+			$result = $this->load->{$role}->set_by_id($_SESSION['user_id']);
+			$field_errors = [];
+
+			switch ($role) {
+				case 'student':
+					if(isset($_POST['submit'])){
+						$data['address'] = addslashes($_POST['address']);
+						$data['email'] = addslashes($_POST['email']);
+						$data['contact_number'] = $_POST['contact-number'];
+
+						$required_fields = array(
+							"address"=>[0,100,1,"Address"],
+							"email"=>[0,100,1,"Email"],
+						);
+						$field_errors =check_input_fields($required_fields);
+						$c_result = validate_contact_number($_POST['contact-number']);
+						if($c_result !== 1){
+							$field_errors['contact-number'] = $c_result;
+						}
+						if(empty($field_errors)){
+							$result = $this->update_profile("student",$data);
+							$field_errors = array_merge($field_errors,$result[0]);
+							$info = $result[1];
+						}
+					}
+					break;		
+				case 'teacher':
+					if(isset($_POST['submit'])){
+						$data['address'] = addslashes($_POST['address']);
+						$data['email'] = addslashes($_POST['email']);
+						$data['contact_number'] = $_POST['contact-number'];
+
+						$required_fields = array(
+							"address"=>[0,100,1,"Address"],
+							"email"=>[0,100,1,"Email"],
+						);
+						$field_errors =check_input_fields($required_fields);
+						$c_result = validate_contact_number($_POST['contact-number']);
+						if($c_result !== 1){
+							$field_errors['contact-number'] = $c_result;
+						}
+						if(empty($field_errors)){
+							$result = $this->update_profile("teacher",$data);
+							$field_errors = array_merge($field_errors,$result[0]);
+							$info = $result[1];
+						}
+					}
+					break;
+				case 'admin':
+					if(isset($_POST['submit'])){
+						$data['username'] = addslashes($_POST['username']);
+						$data['address'] = addslashes($_POST['address']);
+						$data['email'] = addslashes($_POST['email']);
+						$data['contact_number'] = $_POST['contact-number'];
+
+						$required_fields = array(
+							"address"=>[0,20,1,"username"],
+							"address"=>[0,100,1,"Address"],
+							"email"=>[0,100,1,"Email"],
+						);
+						$field_errors =check_input_fields($required_fields);
+						$c_result = validate_contact_number($_POST['contact-number']);
+						if($c_result !== 1){
+							$field_errors['contact-number'] = $c_result;
+						}
+						if(empty($field_errors)){
+							$result = $this->update_profile("admin",$data);
+							$field_errors = array_merge($field_errors,$result[0]);
+							$info = $result[1];
+						}
+					}
+					break;	
+
+				case 'parent':
+					if(isset($_POST['submit'])){
+						$data['occupation'] = addslashes($_POST['occupation']);
+						$data['address'] = addslashes($_POST['address']);
+						$data['email'] = addslashes($_POST['email']);
+						$data['contact_number'] = $_POST['contact-number'];
+
+						$required_fields = array(
+							"address"=>[0,100,1,"Address"],
+							"email"=>[0,100,1,"Email"],
+						);
+						$field_errors =check_input_fields($required_fields);
+						$c_result = validate_contact_number($_POST['contact-number']);
+						if($c_result !== 1){
+							$field_errors['contact-number'] = $c_result;
+						}
+						if(empty($field_errors)){
+							$result = $this->update_profile("parent",$data);
+							$field_errors = array_merge($field_errors,$result[0]);
+							$info = $result[1];
+						}
+					}
+					break;
+
+				default:
+					
+				
+					break;
+			}
+			// load header and navbar
+			$this->view_header_and_aside();
+
+			// load profile page
+			$result = $this->load->{$role}->set_by_id($_SESSION['user_id']);
+			$data = $this->load->{$role}->get_data();
+			if(!empty($field_errors)){
+				$this->load->view("{$role}/{$role}_profile",["result"=>$data,"field_errors"=>$field_errors]);
+			}else if(isset($info) && !empty($info)){
+				$this->load->view("{$role}/{$role}_profile",["result"=>$data,"info"=>$info]);
+			}else{
+				$this->load->view("{$role}/{$role}_profile",["result"=>$data]);
+			}
+			$this->load->view("templates/footer");
+		}
+
+		private function update_profile($user_type,$data){
+			$field_errors = [];
+			$info = "";
+			if(isset($_FILES['profile-photo']['tmp_name']) && !empty($_FILES['profile-photo']['tmp_name'])){
+				$target = BASEPATH."public/uploads/{$user_type}_profile_photo/";
+				$rename = $_SESSION['user_id'];
+				$data['profile_photo'] = $rename . "." .strtolower(pathinfo($_FILES['profile-photo']['name'], PATHINFO_EXTENSION));
+				$res = upload_file($_FILES['profile-photo'],$target, 2000000, $rename);
+				if($res !== 1){
+					$field_errors['profile-photo'] = $res;
+				}
+			}
+
+			if(empty($field_errors)){
+				$this->load->model("user");
+				$result = $this->load->user->update_user_data("{$user_type}",$data,$_SESSION['user_id']);
+				if($result === 1){
+					if(isset($_FILES['profile-photo']['tmp_name'])&& !empty($_FILES['profile-photo']['tmp_name'])){
+						$_SESSION["profile_photo"] = $data["profile_photo"];
+					}
+					$info = "Update Successfully";
+				}
+			}
+			return [$field_errors,$info];
+		}
+
+		//logout user
+		public function logout(){
+			session_start();
+			unset($_SESSION['loggedin']);
+			unset($_SESSION['role']);
+			unset($_SESSION['user_id']);
+			unset($_SESSION['username']);
+			session_destroy();
+			header("Location: login/Logout Successful.");
 		}
 	}
