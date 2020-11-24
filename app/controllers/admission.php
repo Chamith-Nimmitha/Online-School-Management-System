@@ -2,6 +2,10 @@
 
 	class Admission extends Controller{
 
+		public function __construct() {
+			parent::__construct();
+		}
+
 		// view student registration form and submit
 		public function new_admission(){
 
@@ -149,8 +153,8 @@
 					 }
 
 					 if(count($field_errors) === 0 ){
-						$this->model("admission");
-						$result = $this->admission->insert_data($data);
+						$this->load->model("admission");
+						$result = $this->load->admission->insert_data($data);
 						if($result){
 						$info = "Admission send successfully.We will send you interview data as soon as posible.";
 							unset($_POST);
@@ -161,6 +165,7 @@
 
 				}
 			}
+			$this->view_header_and_aside();
 			// view form and footer
 			$this->load->view("student/student_registration",["field_errors"=>$field_errors,"info"=>$info,"error"=>$error]);
 			$this->load->view("templates/footer");

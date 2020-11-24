@@ -12,13 +12,14 @@
 			// if user not logged in, then redirect to the login page
 			$curPageName = $_SERVER['QUERY_STRING'];
 			$alloed_pages = ["homepage","login","student/registration","school/contact","school/about"];
-			
-			if (!(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) || !isset($_SESSION['username'])) {
+			if (!(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) || !isset($_SESSION['username']) ) {
 				$flag = 0;
+				echo strlen($curPageName);
 				foreach ($alloed_pages as $page) {
-					if( strpos($curPageName, $page) !== FALSE ){
+					if( empty($curPageName) || strpos($curPageName, $page) !== FALSE ){
 						$flag = 1;
 						$this->view_header_flag = 1;
+						$this->view_aside_flag = 0;
 					}
 				}
 				if($flag !== 1){
@@ -27,16 +28,12 @@
 			}else{
 				$this->view_header_flag = 1;
 				$this->view_aside_flag = 1;
-				if(empty($curPageName)){
-					$this->view_aside_flag = 0;
-				}else{
-					foreach ($alloed_pages as $page) {
-						if( strpos($curPageName, $page) !== FALSE ){
-							$this->view_aside_flag = 0;
-						}
+				foreach ($alloed_pages as $page) {
+					if( empty($curPageName) || strpos($curPageName, $page) !== FALSE ){
+						$this->view_header_flag = 1;
+						$this->view_aside_flag = 0;
 					}
 				}
-				// exit();
 			}
 
 

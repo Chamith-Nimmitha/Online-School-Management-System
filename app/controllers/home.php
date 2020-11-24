@@ -2,6 +2,9 @@
 
 	class Home extends Controller{
 
+		public function __construct() {
+			parent::__construct();
+		}
 		//homepage
 		public function index(){
 			$this->view_header_and_aside();
