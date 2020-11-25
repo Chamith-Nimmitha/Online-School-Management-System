@@ -11,7 +11,7 @@
 			$this->load->model("home");
 			// if user not logged in, then redirect to the login page
 			$curPageName = $_SERVER['QUERY_STRING'];
-			$alloed_pages = ["homepage","login","student/registration","school/contact","school/about"];
+			$alloed_pages = ["homepage","login","forget_password","verification_code","change_password","student/registration","school/contact","school/about"];
 			if (!(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) || !isset($_SESSION['username']) ) {
 				$flag = 0;
 				echo strlen($curPageName);

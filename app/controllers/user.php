@@ -243,4 +243,64 @@
 			session_destroy();
 			header("Location: login/Logout Successful.");
 		}
+
+		//forget password page
+		public function forget_password(){
+			$this->view_header_and_aside();
+				if(isset($_POST['submit'])){
+					if(!empty($_POST['email']) && valid_email($_POST['email']) ){
+						//session_destroy();
+						session_start();
+						$_SESSION['change_email_id']=$_POST['email'];
+						header('Location:'.set_url("verification_code"));
+					}
+					else{
+						set_url("verfication_code");
+					}
+				}
+			$this->load->view("common/forget_password",['header'=>$this->header_data]);
+			$this->load->view("templates/footer");
+		}
+		//for verification_code page
+		public function verification_code(){
+			$this->view_header_and_aside();
+				if(isset($_POST['submit'])){
+					if(isset($_POST['ver-code']) && $_POST['ver-code']=='abc@1234'){
+						header('Location:'.set_url("change_password"));
+					}
+					else{
+						$error="Incorrect Verification Code";
+					}
+
+				}
+			$this->load->view("common/verification_code",['header'=>$this->header_data]);
+			$this->load->view("templates/footer");
+		}
+
+		//for change_password page
+		public function change_password(){
+			$this->view_header_and_aside();
+			if(isset($_POST['submit'])){
+				if((isset($_POST['password']) && isset($_POST['cpassword']))  && ($_POST['password']==$_POST['cpassword']) ){
+					$this->load->model("user");
+					$row = $this->load->user->get_user_data("user",$_SESSION["change_email_id"]);
+					$salt =$row['salt'];
+					$pwd=$_POST['password'];
+					$hashed_password= sha1($pwd.$salt);
+
+					$con = new Database();
+					$con->update("user",array("password"=>$hashed_password),array("email"=>$_SESSION["change_email_id"]));
+					session_destroy();
+					$msg="Your Password Changed successfully";
+				}
+
+				else{
+					$error ='Please Check Your Password';
+					}
+
+			}
+			$this->load->view("common/change_password",['header'=>$this->header_data]);
+			$this->load->view("templates/footer");
+
+		}
 	}

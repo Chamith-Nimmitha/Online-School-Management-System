@@ -14,12 +14,11 @@
 
 
 <div class="bg-white mt-1 p-2 border b-rad">
+	<div class="m-1 p-2">
+		<h2>Brief history</h2>
+	</div>
 
-<div class="m-1 p-2">
-<h2>Brief history</h2>
-</div>
-
-<div class="text-justify border b-rad b-white m-2 p-2">
-	<p><?php if(!empty($header)){echo $header['brief_history'];} ?></p>
-</div>
+	<div class="text-justify border b-rad b-white m-2 p-2">
+		<p><?php if(!empty($header)){echo $header['brief_history'];} ?></p>
+	</div>
 </div>
