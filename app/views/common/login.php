@@ -24,7 +24,7 @@
         		<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
      		</div>
      		 <div class="form-group">
-      			<label for="password">Password (<a href="forget_password.php" class="d-inline-block t-d-none b-radius-10 pl-2 pr-2">Forget Password?</a>)</label>
+      			<label for="password">Password (<a href="<?php echo set_url("forget_password");?> " class="d-inline-block t-d-none b-radius-10 pl-2 pr-2">Forget Password?</a>)</label>
         		<input type="password" name="password" id="password" placeholder="password" value="<?php if(isset($_COOKIE["password"])) { echo $_COOKIE["password"];} ?>" class="form-control">
       		</div>
       		<div class="d-flex justify-content-end col-11">

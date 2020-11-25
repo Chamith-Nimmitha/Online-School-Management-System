@@ -13,6 +13,9 @@
 
 	// login routes
 	$routes['login'] = "user/login";
+	$routes['forget_password'] = "user/forget_password";
+	$routes['verification_code'] = "user/verification_code";
+	$routes['change_password'] = "user/change_password";
 	$routes['login/$1'] = "user/login/$1";
 	$routes['logout'] = "user/logout";
 
