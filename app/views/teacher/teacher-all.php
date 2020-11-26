@@ -1,32 +1,3 @@
-<?php include_once("session.php"); ?>
-<?php require_once("../php/database.php"); ?>
-<?php require_once("../php/pagination.php"); ?>
-<?php
-    $con = mysqli_connect("localhost", "root", "", "sms-final");
-
-    $start = 0;
-	$per_page = 1;
-	if(isset($_GET['per_page'])){
-		$per_page=$_GET['per_page'];
-	}
-	if(isset($_GET['page'])){
-		$start = (($_GET['page'] -1) * $per_page );
-	}else{
-		$_GET['page'] =1;
-	}
-	$limit = "$start, $per_page";
-
-    $result_set = mysqli_query($con, "SELECT * FROM teacher LIMIT $limit");
-
-    $con = new Database();
-    $count = $con->pure_query("SELECT COUNT(*) AS count FROM teacher");
-
-?>
-
-<?php require_once("../templates/header.php") ;?>
-<?php require_once("../templates/aside.php"); ?>
-
-
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 		<div class="d-flex justify-content-center align-items-center">
@@ -122,7 +93,3 @@
 
 </div>
 
-<?php require_once("../templates/footer.php") ;?>
-
-
-<?php
