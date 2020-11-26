@@ -10,6 +10,7 @@
 	$routes['homepage'] = "home/index";
 	$routes['school/contact'] = "home/contact";
 	$routes['school/about'] = "home/about";
+	$routes['settings_school'] = "home/settings_school";
 
 	// login routes
 	$routes['login'] = "user/login";
