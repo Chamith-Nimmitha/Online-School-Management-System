@@ -29,9 +29,9 @@
 	$routes['student/registration'] = "admission/new_admission";
 
 	// teacher routes
-	$routes['teacher_list'] = "teacher/teacher_list_view";
-	$routes['teacher_registration'] = "teacher/teacher_registration_form";
-	$routes['update_teacher_list'] = "teacher/teacher_list_update";
+	$routes['teacher/list'] = "teacher/teacher_list_view";
+	$routes['teacher/registration'] = "teacher/teacher_registration_form";
+	$routes['teacher/update'] = "teacher/teacher_list_update";
 
 	//classroom routes
 		// write here

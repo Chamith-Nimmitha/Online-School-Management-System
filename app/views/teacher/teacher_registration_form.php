@@ -1,6 +1,98 @@
-
+<?php //include_once("session.php"); ?>
+<?php //require_once("../templates/header.php") ;?>
+<?php //require_once("../templates/aside.php"); ?>
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
+
+<?php //<div class="col-7 flex-col" style="overflow-x: scroll;overflow-y: hidden;">?>
+
+<?php
+    
+    $tid = '';
+    $name = '';
+    $fname = '';
+    $midname = '';
+    $lname = '';
+    $gender = '';
+    $birthday = '';
+    $Address = '';
+    $Email = '';
+    $mobile = '';
+    $Nic = '';
+    $active = '';
+    $Interview = '';
+    $profile = '';
+
+
+    $required_fields = array();
+	$required_fields['name-with-initials']=50;
+	$required_fields['first-name']=20;
+	$required_fields['middle-name']=50;
+	$required_fields['last-name']=20;
+	$required_fields['gender']=6;
+	$required_fields['dob']=Null;
+	$required_fields['address']=100;
+    $required_fields['email']=100;
+    $required_fields['nic']=12;
+
+    if(isset($_POST['submit']))
+    {
+        $name = $_POST['name_with_initials'];
+        $fname = $_POST['first_name'];
+        $midname = $_POST['middle_name'];
+        $lname = $_POST['last_name'];
+        $gender = $_POST['gender'];
+        $birthday = $_POST['dob'];
+        $Address = $_POST['address'];
+        $Email = $_POST['email'];
+        $mobile = $_POST['contact_number'];
+        $Nic = $_POST['nic'];
+
+        if(!empty($name) && !empty($fname) && !empty($lname) && !empty($gender) && !empty($birthday) && !empty($Address) && !empty($Email) && !empty($mobile) && !empty($Nic))
+        {
+            $con = mysqli_connect("localhost", "root", "", "sms-final");
+
+            $SELECT = "SELECT `id` FROM teacher WHERE email = ? LIMIT 1";
+
+		    
+		$INSERT = "INSERT INTO teacher (name_with_initials, first_name, middle_name, last_name, gender, dob, address, email, contact_number, nic) VALUES (?,?,?,?,?,?,?,?,?,?)";
+
+               $stmt = $con->prepare($SELECT);
+                $stmt->bind_param("s", $Email);
+                $stmt->execute();
+                $stmt->bind_result($tid);
+                $stmt->store_result();
+                $rnum = $stmt->num_rows();
+                if($rnum === 0)
+                {
+                    $stmt->close();
+                    $stmt = $con->prepare($INSERT);
+                    $stmt->bind_param("ssssssssss",$name, $fname, $midname, $lname, $gender, $birthday, $Address, $Email, $mobile, $Nic);
+                    $stmt->execute();
+                    $USER = "INSERT INTO user (email, role) VALUES (?,?)";
+                    $stmt2 = $con->prepare($USER);
+                    $role = "teacher";
+                    $stmt2->bind_param("ss",$Email,$role);
+                    $stmt2->execute();
+                    echo "<p class='w-75 bg-green fg-white p-2 text-center'>";
+                    echo "Registration successful.";
+                    echo "</p>";
+                }
+                else
+                {
+                    echo "<p class='w-75 bg-red fg-white p-2 text-center'>";
+                    echo "Already registered.";
+                    echo "</p>";
+                }
+                $stmt->close();
+                $con->close();
+        }else{
+            echo "<p class='w-75 bg-red fg-white p-2 text-center'>";
+            echo "Please fill all fields.";
+            echo "</p>";
+        }
+    }
+?>
 
 <h2 class="fs-30">TEACHER-REGISTRATION FORM</h2>
 		
@@ -84,4 +176,4 @@
 
  </div>
  
- 
+ <?php //require_once("../templates/footer.php") ;?>

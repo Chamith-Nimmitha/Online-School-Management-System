@@ -1,4 +1,52 @@
+<?php //include_once("session.php"); ?>
+<?php //require_once("../templates/header.php") ;?>
+<?php //require_once("../templates/aside.php"); ?>
+
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
+
+
+<?php
+//require_once("../php/database.php");
+
+$con = mysqli_connect("localhost", "root", "", "sms-final");
+
+
+
+$tid = $_GET['id'];
+
+$qry = mysqli_query($con, "SELECT * FROM teacher WHERE id = $tid");
+
+$data = mysqli_fetch_array($qry);
+
+if(isset($_POST['update']))
+{
+        $name = $_POST['name_with_initials'];
+        $fname = $_POST['first_name'];
+        $midname = $_POST['middle_name'];
+        $lname = $_POST['last_name'];
+        $gender = $_POST['gender'];
+        $birthday = $_POST['dob'];
+        $Address = $_POST['address'];
+        $Email = $_POST['email'];
+        $mobile = $_POST['contact_number'];
+        $Nic = $_POST['nic'];
+        
+
+    $update = mysqli_query($con, "update teacher set name_with_initials='$name', first_name='$fname', middle_name='$midname', last_name='$lname', gender='$gender', dob='$birthday', address='$Address', email='$Email', contact_number='$mobile', nic='$Nic',  where id='$tid'");
+
+    if($update)
+    {
+        echo "UPDATED";
+        mysqli_close($con);
+
+    }
+    else
+    {
+        echo "ERROR";
+    }
+}
+
+?>
 
 <h2 class="fs-30">UPDATE TEACHERS</h2>
 
@@ -78,3 +126,4 @@
 
 </div>
 
+<?php //require_once("../templates/footer.php") ;?>
