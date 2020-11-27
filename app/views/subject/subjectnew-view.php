@@ -1,4 +1,4 @@
-<?php include_once("session.php"); ?>
+<?php //include_once("session.php"); ?>
 <?php
     $con = mysqli_connect("localhost", "root", "", "sms-final");
 
@@ -6,8 +6,8 @@
 
 ?>
 
-<?php require_once("../templates/header.php") ;?>
-<?php require_once("../templates/aside.php"); ?>
+<?php //require_once("../templates/header.php") ;?>
+<?php //require_once("../templates/aside.php"); ?>
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 
@@ -84,7 +84,8 @@
 						
 						<td class="text-center">
 							<div class="login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center">
-                				<a class="btn btn-blue" href="subjectnew-update.php?id=<?php echo $result['id']; ?> ">Update</a>
+								<?php //<a class="btn btn-blue" href="subjectnew-update.php?id=<?php echo $result['id'];  ">Update</a>  ?>
+								<a class="btn btn-blue" href="subjectnew_update?id=<?php echo $result['id']; ?> ">Update</a>
 		    				</div>
 						</td>
 
@@ -102,12 +103,13 @@
 			</table>
 		</div>  
             <div class="login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center">
-                <a class="btn btn-blue" href="<?php echo set_url('pages\subjectnew-add.php'); ?> ">Add Subject</a>
+			   <?php // <a class="btn btn-blue" href="<?php echo set_url('pages\subjectnew-add.php');  ">Add Subject</a> ?>
+			   <a class="btn btn-blue" href="<?php echo set_url('subjectnew_add'); ?> ">Add Subject</a>
 		    </div>
 
 </div>
 
-<?php require_once("../templates/footer.php") ;?>
+<?php //require_once("../templates/footer.php") ;?>
 
 
 <?php

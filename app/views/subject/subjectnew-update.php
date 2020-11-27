@@ -1,12 +1,12 @@
-<?php include_once("session.php"); ?>
-<?php require_once("../templates/header.php") ;?>
-<?php require_once("../templates/aside.php"); ?>
+<?php //include_once("session.php"); ?>
+<?php //require_once("../templates/header.php") ;?>
+<?php //require_once("../templates/aside.php"); ?>
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 
 
 <?php
-require_once("../php/database.php");
+//require_once("../php/database.php");
 
 $con = mysqli_connect("localhost", "root", "", "sms-final");
 
@@ -187,4 +187,4 @@ if(!empty($grade) || !empty($medium) || !empty($sub_name) || !empty($sub_code))
 
 </div>
 
-<?php require_once("../templates/footer.php") ;?>
+<?php //require_once("../templates/footer.php") ;?>

@@ -37,7 +37,9 @@
 		// write here
 
 	// subject routes
-		// write here
+	$routes['subjectnew_view'] = "subject/subjectnew_view";
+	$routes['subjectnew_add'] = "subject/subjectnew_add";
+	$routes['subjectnew_update'] = "subject/subjectnew_update";
 
 	// parent routes
 		//write here
