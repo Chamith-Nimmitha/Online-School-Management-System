@@ -1,6 +1,6 @@
-<?php include_once("session.php"); ?>
-<?php require_once("../templates/header.php") ;?>
-<?php require_once("../templates/aside.php"); ?>
+<?php //include_once("session.php"); ?>
+<?php //require_once("../templates/header.php") ;?>
+<?php //require_once("../templates/aside.php"); ?>
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 
@@ -134,7 +134,8 @@
 			
         <button type="submit" name="submit" class="btn btn-blue w-auto m-1">SAVE</button>
         
-        <button><a  class="btn btn-blue" href="subjectnew-view.php">VIEW</a></button>
+        <?php // <button><a  class="btn btn-blue" href="subjectnew-view.php">VIEW</a></button> ?>
+        <button><a  class="btn btn-blue" href="subjectnew_view">VIEW</a></button>
     </div>
 
 </form>
@@ -143,4 +144,4 @@
 
  </div>
  
- <?php require_once("../templates/footer.php") ;?>
+ <?php //require_once("../templates/footer.php") ;?>
