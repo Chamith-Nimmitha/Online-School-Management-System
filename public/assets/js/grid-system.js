@@ -78,7 +78,7 @@ function change_nav_links(){
 					parent_li.getElementsByTagName("a")[0].classList.add("active");
 					var toggle_target = parent_li.getElementsByClassName('toggle-button')[0].getAttribute("target");
 					document.getElementById(toggle_target).classList.add("collapsed");
-					parent_li.getElementsByTagName("img")[0].src="../img/open-menu.png";
+					parent_li.getElementsByTagName("img")[0].src=base_url+"public/assets/img/open-menu.png";
 					document.getElementById(toggle_target).classList.remove("no-collapsed");
 				}
 			}

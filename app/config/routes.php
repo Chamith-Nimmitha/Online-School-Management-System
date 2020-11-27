@@ -10,7 +10,7 @@
 	$routes['homepage'] = "home/index";
 	$routes['school/contact'] = "home/contact";
 	$routes['school/about'] = "home/about";
-	$routes['settings_school'] = "home/settings_school";
+	$routes['settings/school'] = "home/settings_school";
 
 	// login routes
 	$routes['login'] = "user/login";
@@ -29,17 +29,17 @@
 	$routes['student/registration'] = "admission/new_admission";
 
 	// teacher routes
-	$routes['teacher_list'] = "teacher/teacher_list_view";
-	$routes['teacher_registration'] = "teacher/teacher_registration_form";
-	$routes['update_teacher_list'] = "teacher/teacher_list_update";
+	$routes['teacher/list'] = "teacher/teacher_list_view";
+	$routes['teacher/registration'] = "teacher/teacher_registration_form";
+	$routes['teacher/update'] = "teacher/teacher_list_update";
 
 	//classroom routes
 		// write here
 
 	// subject routes
-	$routes['subjectnew_view'] = "subject/subjectnew_view";
-	$routes['subjectnew_add'] = "subject/subjectnew_add";
-	$routes['subjectnew_update'] = "subject/subjectnew_update";
+	$routes['subject/list'] = "subject/subjectnew_view";
+	$routes['subject/registration'] = "subject/subjectnew_add";
+	$routes['subject/update'] = "subject/subjectnew_update";
 
 	// parent routes
 		//write here

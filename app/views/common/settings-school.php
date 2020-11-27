@@ -18,7 +18,7 @@
 		}
 
 	 ?>
-	<form action="<?php echo set_url("settings_school");?>" method="post" enctype="multipart/form-data">
+	<form action="<?php echo set_url("settings/school");?>" method="post" enctype="multipart/form-data">
 		
 		<fieldset>	
 			<legend>Site Header Settings</legend>

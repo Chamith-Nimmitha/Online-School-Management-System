@@ -14,7 +14,7 @@
 							<li class="nav-item aside-li" id="attendance-li">
 								<a href="<?php echo set_url('pages/teacher_attendance_view.php') ?>" class="nav-link">Attendance</a>
 								<button class="toggle-button" target="attendance-nav">
-									<img src="../img/close-menu.png" width="20px" alt="">
+									<img src="<?php echo set_url('public/assets/img/close-menu.png') ?>" width="20px" alt="">
 								</button>
 
 								<nav class="nav sub-nav no-collapsed" id="attendance-nav">
