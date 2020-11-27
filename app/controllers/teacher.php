@@ -1,5 +1,4 @@
 <?php
-
      class Teacher extends Controller{
 		
 		//view the list of teachers
@@ -24,5 +23,4 @@
             $this->load->view("templates/footer");
 		}
 	 }
-
 ?>

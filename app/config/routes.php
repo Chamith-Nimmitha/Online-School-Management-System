@@ -10,7 +10,7 @@
 	$routes['homepage'] = "home/index";
 	$routes['school/contact'] = "home/contact";
 	$routes['school/about'] = "home/about";
-	$routes['settings_school'] = "home/settings_school";
+	$routes['settings/school'] = "home/settings_school";
 
 	// login routes
 	$routes['login'] = "user/login";
@@ -37,9 +37,9 @@
 		// write here
 
 	// subject routes
-	$routes['subjectnew_view'] = "subject/subjectnew_view";
-	$routes['subjectnew_add'] = "subject/subjectnew_add";
-	$routes['subjectnew_update'] = "subject/subjectnew_update";
+	$routes['subject/list'] = "subject/subjectnew_view";
+	$routes['subject/registration'] = "subject/subjectnew_add";
+	$routes['subject/update'] = "subject/subjectnew_update";
 
 	// parent routes
 		//write here
