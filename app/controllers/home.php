@@ -68,132 +68,94 @@
 		if(isset($_FILES['school-badge']['tmp_name']) && !empty($_FILES['school-badge']['tmp_name'])){
 			$result = upload_file($_FILES['school-badge'],$target,2000000);
 				if($result !== 1){
-					array_push($errors,$result);
+					$errors['school-badge'] = $result;
 				}
 				else{
-					$inf='Updated Successfully';
-					array_push($info, $inf);
+					$info['school-badge'] = "Updated Successfully";
 				}			
 			if($result == 1){
 				$school['badge'] = $_FILES['school-badge']['name'];
-				foreach ($school as $name => $value) {
-					$result = $con->insert("website_data",array("category"=>"school","name"=>$name, "value"=>$value));
-					if(!$result){
-						$con->update("website_data",array("value"=>$value),array("name"=>$name));
-					}
-				}
 			}else{
-				$error = "Error occured while uploading.<br>";
-				//array_push($errors, $error);
+				$errors['school-badge'] = "Error occured while uploading.<br>";
 			}
-		}else{
-			$school['badge'] = $result["school_badge"];
-			$in = "Successfully updated.";
-			foreach ($school as $name => $value) {
-				$result = $con->insert("website_data",array("category"=>"school","name"=>$name, "value"=>$value));
-				if(!$result){
-					$con->update("website_data",array("value"=>$value),array("name"=>$name));
-				}
-			}
-
-	    }
+		}
 
 		if(isset($_FILES['school-flag']['tmp_name']) && !empty($_FILES['school-flag']['tmp_name'])){
 			$result = upload_file($_FILES['school-flag'],$target,2000000);
-				if($result !== 1){
-					array_push($errors,$result);
-				}
-				else{
-					$inf='Updated Successfully';
-					array_push($info, $inf);
-				}
+			if($result !== 1){
+				$errors['school-flag'] = $result;
+			}
+			else{
+				$info['school-flag'] = "Updated Successfully";
+			}	
 
 			if($result == 1){
 				$school['flag'] = $_FILES['school-flag']['name'];
-				foreach ($school as $name => $value) {
-					$result = $con->insert("website_data",array("category"=>"school","name"=>$name, "value"=>$value));
-					if(!$result){
-						$con->update("website_data",array("value"=>$value),array("name"=>$name));
-					}
-				}
 			}else{
-				$error = "Error occured while uploading.<br>";
+				$errors['school-flag'] = "Error occured while uploading.<br>";
 				
 			}
 		}
 
 		if(isset($_FILES['school-image']['tmp_name']) && !empty($_FILES['school-image']['tmp_name'])){
 			$result = upload_file($_FILES['school-image'],$target,2000000);
-				if($result !== 1){
-					array_push($errors,$result);
-				}
-				else{
-					$inf='Updated Successfully';
-					array_push($info, $inf);
-				}
+			if($result !== 1){
+				$errors['school-image'] = $result;
+			}
+			else{
+				$info['school-image'] = "Updated Successfully";
+			}	
+
 			if($result == 1){
 				$school['image'] = $_FILES['school-image']['name'];
-				foreach ($school as $name => $value) {
-					$result = $con->insert("website_data",array("category"=>"school","name"=>$name, "value"=>$value));
-					if(!$result){
-						$con->update("website_data",array("value"=>$value),array("name"=>$name));
-					}
-				}
 			}else{
-				$error = "Error occured while uploading.<br>";
+				$errors['school-image'] = "Error occured while uploading.<br>";
 				
 			}
 		}
 
 		if(isset($_FILES['school-map']['tmp_name']) && !empty($_FILES['school-map']['tmp_name'])){
 			$result = upload_file($_FILES['school-map'],$target,2000000);
-				if($result !== 1){
-					array_push($errors,$result);
-				}
-				else{
-					$inf='Updated Successfully';
-					array_push($info, $inf);
-				}
+			if($result !== 1){
+				$errors['school-map'] = $result;
+			}
+			else{
+				$info['school-map'] = "Updated Successfully";
+			}	
 
 			if($result == 1){
 				$school['map'] = $_FILES['school-map']['name'];
-				foreach ($school as $name => $value) {
-					$result = $con->insert("website_data",array("category"=>"school","name"=>$name, "value"=>$value));
-					if(!$result){
-						$con->update("website_data",array("value"=>$value),array("name"=>$name));
-					}
-				}
 			}else{
-				$error = "Error occured while uploading.<br>";
+				$errors['school-map'] = "Error occured while uploading.<br>";
 				
 			}
 		}
 
 		if(isset($_FILES['bg-image']['tmp_name']) && !empty($_FILES['bg-image']['tmp_name'])){
 			$result = upload_file($_FILES['bg-image'],$target,2000000);
-				if($reults !== 1){
-					array_push($errors,$result);
-				}
-				else{
-					$inf='Updated Successfully';
-					array_push($info, $inf);
-				}
+				if($result !== 1){
+				$errors['bg-image'] = $result;
+			}
+			else{
+				$info['bg-image'] = "Updated Successfully";
+			}	
+
 			if($result == 1){
 				$school['background'] = $_FILES['bg-image']['name'];
-				foreach ($school as $name => $value) {
-					$result = $con->insert("website_data",array("category"=>"school","name"=>$name, "value"=>$value));
-					if(!$result){
-						$con->update("website_data",array("value"=>$value),array("name"=>$name));
-					}
-				}
 			}else{
-				$error = "Error occured while uploading.<br>";
+				$errors['bg-image'] = "Error occured while uploading.<br>";
+				
 			}
 		}
 
+		if(empty($errors)){
+			foreach ($school as $name => $value) {
+				$result = $con->insert("website_data",array("category"=>"school","name"=>$name, "value"=>$value));
+				if(!$result){
+					$result = $con->update("website_data",array("value"=>$value),array("name"=>$name));
 
-		foreach ($school as $key => $value) {
-			$con->update('website_data',array("value"=>$value),array('name'=>$key));
+				}
+			}
 		}
 
 		}
@@ -207,7 +169,7 @@
 				$this->load->view("common/settings-school",['header'=>$this->header_data,'result'=>$re,'errors'=>$errors]);
 			}
 			elseif(isset($info) && !empty($info)){
-				$this->load->view("common/settings-school",['header'=>$this->header_data,'result'=>$re,'info'=>$info]);
+				$this->load->view("common/settings-school",['header'=>$this->header_data,'result'=>$re,'info'=>$info,'errors'=>$errors]);
 			}
 			elseif((isset($errors) && !empty($errors)) && (isset($info) && !empty($info)) ){
 				$this->load->view("common/settings-school",['header'=>$this->header_data,'info'=>$info,'result'=>$re,'info'=>$info]);

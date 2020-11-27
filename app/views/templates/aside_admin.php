@@ -115,7 +115,7 @@
 								</nav>
 							</li>
 							<li class="nav-item aside-li" id="subject-li">
-								<a href="<?php echo set_url('subjectnew_view') ?>" class="nav-link">Subjects</a>
+								<a href="<?php echo set_url('subject/list') ?>" class="nav-link">Subjects</a>
 								<button class="toggle-button" target="subject-nav">
 									<img src="<?php echo set_url('public/assets/img/close-menu.png'); ?>" width="20px" alt="">
 								</button>

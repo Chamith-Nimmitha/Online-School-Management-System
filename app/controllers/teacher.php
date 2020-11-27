@@ -1,8 +1,7 @@
 <?php
 
     class Teacher extends Controller{
-        public function teacher_registration(){
-
+        public function teacher_registration_form(){
             $errors = array();
             $infomation = "";
             $error = "";
@@ -72,6 +71,11 @@
 			// view form and footer
 			$this->load->view("teacher/teacher_registration_form",["errors"=>$errors,"information"=>$information,"error"=>$error]);
 			$this->load->view("templates/footer");
+        }
+
+        public function teacher_list_view(){
+        	$this->view_header_and_aside();
+        	$this->load->view("templates/footer");
         }
     }
 
