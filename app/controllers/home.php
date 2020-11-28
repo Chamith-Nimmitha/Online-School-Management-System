@@ -34,7 +34,7 @@
 
 		//homepage-setting page
 		public function settings_school(){
-		$this->view_header_and_aside();
+		
 		$con = new Database();
 			$row = $this->load->home->get_header_data();
 			foreach ($row as $data) {
@@ -46,6 +46,7 @@
 		$errors = array();
 		$info = array();
 		$msg=array();
+		$field_errors = array();
 
 
       	$target = "public/assets/img/school_badge/";
@@ -65,19 +66,46 @@
 		$school['insta_id'] = $_POST['school-insta-id'];
 		$school['linkedin_id'] = $_POST['school-linkedin-id'];
 
+		$required_fields = array();
+		$required_fields['school-name']=[0,30,1,"School Name"];
+		$required_fields['school-address']=[0,30,1,"School Address"];
+
+		$c_no = validate_contact_number($_POST['school-contact-number']);
+		if($c_no !== 1){
+			$field_errors['school-contact-number'] = $c_no;
+		}
+
+		if(!valid_email($school['email'])){
+			$field_errors["school-email"] = "Invalid email address.";
+		}
+
+		$required_fields['school-vision']=[0,50,1,"School Vision"];
+		$required_fields['school-mission']=[0,150,1,"School Mission"];
+		$required_fields['school-principal-message']=[0,550,1,"School Principal Message"];
+		$required_fields['school-welcome-message']=[0,550,1,"School Welcome Message"];
+		$required_fields['school-description']=[0,1000,1,"School Description"];
+		$required_fields['school-website']=[0,30,1,"School Website"];
+		$required_fields['school-brief-history']=[0,2000,1,"School Brief History"];
+		$required_fields['school-fb-id']=[0,50,1,"School Facebook ID"];
+		$required_fields['school-twitter-id']=[0,50,1,"School Twitter ID"];
+		$required_fields['school-insta-id']=[0,50,1,"School Instagram ID"];
+		$required_fields['school-linkedin-id']=[0,50,1,"School LinkedIn ID"];
+
+		$field_errors = array_merge($field_errors,check_input_fields($required_fields));
+
+
 		if(isset($_FILES['school-badge']['tmp_name']) && !empty($_FILES['school-badge']['tmp_name'])){
 			$result = upload_file($_FILES['school-badge'],$target,2000000);
-				if($result !== 1){
-					$errors['school-badge'] = $result;
-				}
-				else{
-					$info['school-badge'] = "Updated Successfully";
-				}			
+			if($result !== 1){
+				$errors['school-badge'] = $result;
+			}
+			else{
+				$info['school-badge'] = "Updated Successfully";
+			}			
 			if($result == 1){
 				$school['badge'] = $_FILES['school-badge']['name'];
-			}else{
-				$errors['school-badge'] = "Error occured while uploading.<br>";
 			}
+
 		}
 
 		if(isset($_FILES['school-flag']['tmp_name']) && !empty($_FILES['school-flag']['tmp_name'])){
@@ -91,10 +119,8 @@
 
 			if($result == 1){
 				$school['flag'] = $_FILES['school-flag']['name'];
-			}else{
-				$errors['school-flag'] = "Error occured while uploading.<br>";
-				
 			}
+
 		}
 
 		if(isset($_FILES['school-image']['tmp_name']) && !empty($_FILES['school-image']['tmp_name'])){
@@ -108,10 +134,8 @@
 
 			if($result == 1){
 				$school['image'] = $_FILES['school-image']['name'];
-			}else{
-				$errors['school-image'] = "Error occured while uploading.<br>";
-				
 			}
+
 		}
 
 		if(isset($_FILES['school-map']['tmp_name']) && !empty($_FILES['school-map']['tmp_name'])){
@@ -125,15 +149,13 @@
 
 			if($result == 1){
 				$school['map'] = $_FILES['school-map']['name'];
-			}else{
-				$errors['school-map'] = "Error occured while uploading.<br>";
-				
 			}
+
 		}
 
 		if(isset($_FILES['bg-image']['tmp_name']) && !empty($_FILES['bg-image']['tmp_name'])){
 			$result = upload_file($_FILES['bg-image'],$target,2000000);
-				if($result !== 1){
+			if($result !== 1){
 				$errors['bg-image'] = $result;
 			}
 			else{
@@ -142,20 +164,21 @@
 
 			if($result == 1){
 				$school['background'] = $_FILES['bg-image']['name'];
-			}else{
-				$errors['bg-image'] = "Error occured while uploading.<br>";
-				
 			}
+
 		}
 
-		if(empty($errors)){
+		if(empty($errors) && empty($field_errors)){
 			foreach ($school as $name => $value) {
-				$result = $con->insert("website_data",array("category"=>"school","name"=>$name, "value"=>$value));
-				if(!$result){
+				//$result = $con->insert("website_data",array("category"=>"school","name"=>$name, "value"=>$value));
+				//if(!$result){
 					$result = $con->update("website_data",array("value"=>$value),array("name"=>$name));
+					
 
-				}
+				//}
 			}
+			
+			$info['data']="Updated Successfully";
 		}
 
 		}
@@ -165,20 +188,34 @@
 			}
 	
 			
-			if(isset($errors) && !empty($errors)){
-				$this->load->view("common/settings-school",['header'=>$this->header_data,'result'=>$re,'errors'=>$errors]);
+			if( !empty($errors) || !empty($field_errors) ){
+				$this->view_header_and_aside();
+				$this->load->view("common/settings-school",['header'=>$this->header_data,"field_errors"=>$field_errors,'result'=>$re,'errors'=>$errors]);
 			}
-			elseif(isset($info) && !empty($info)){
-				$this->load->view("common/settings-school",['header'=>$this->header_data,'result'=>$re,'info'=>$info,'errors'=>$errors]);
-			}
-			elseif((isset($errors) && !empty($errors)) && (isset($info) && !empty($info)) ){
-				$this->load->view("common/settings-school",['header'=>$this->header_data,'info'=>$info,'result'=>$re,'info'=>$info]);
-			}
+			/*elseif(isset($info) && !empty($info)){
+				$this->view_header_and_aside();
+				$this->load->view("common/settings-school",['header'=>$this->header_data,"field_errors"=>$field_errors,'result'=>$re,'info'=>$info,]);
+			}*/
+			/*elseif((isset($errors) && !empty($errors)) && (isset($info) && !empty($info)) ){
+				$this->view_header_and_aside();
+				$this->load->view("common/settings-school",['header'=>$this->header_data,"field_errors"=>$field_errors,'info'=>$info,'result'=>$re,'info'=>$info,'errors'=>$errors]);
+			}*/
 			else{
-				$this->load->view("common/settings-school",['header'=>$this->header_data,'result'=>$re]);
+
+				$this->view_header_and_aside();
+				if(!empty($info)){
+				$this->load->view("common/settings-school",['header'=>$this->header_data,'result'=>$re,'info'=>$info]);
+				}
+				else{
+				$this->load->view("common/settings-school",['header'=>$this->header_data,'result'=>$re]);	
+				}
 			}
 			
 			$this->load->view("templates/footer");
+		}
+
+		public function setting_notice(){
+
 		}
 
 
