@@ -1,313 +1,19 @@
-<?php require_once("../php/database.php") ?>
-<?php require_once("../php/common.php") ?>
 
-<?php
-	$statemnt = "SELECT * FROM `notice`";
-	$rls_set = $con->pure_query($statemnt)->fetchAll();
-	
-	if($rls_set){
-		foreach ($rls_set as $data1) {
-			$notice[$data1['id']."_text"] = $data1['text'];
-			$notice[$data1['id']."_image"] = $data1['image'];
-			$notice[$data1['id']."_reference"] = $data1['reference'];
-		}
-	}
-
-if(isset($_POST['submit'])){
-
-$note['1_text']=$_POST['notice1-text'];
-$note['1_reference']=$_POST['notice1-ref'];
-$note['2_text']=$_POST['notice2-text'];
-$note['2_reference']=$_POST['notice2-ref'];
-$note['3_text']=$_POST['notice3-text'];
-$note['3_reference']=$_POST['notice3-ref'];
-$note['4_text']=$_POST['notice4-text'];
-$note['4_reference']=$_POST['notice4-ref'];
-$note['5_text']=$_POST['notice5-text'];
-$note['5_reference']=$_POST['notice5-ref'];
-$note['1000_text']=$_POST['no-notice'];
-$targ = "../img/notice_images/";
-
-$errors1 = array();
-$info1 = array();
-    
-$errors2 = array();
-$info2 = array();
-
-$errors3 = array();
-$info3 = array();
-
-$errors4 = array();
-$info4 = array();
-
-$errors5 = array();
-$info5 = array();
-
-
-		if(isset($_FILES['notice1-image']['tmp_name']) && !empty($_FILES['notice1-image']['tmp_name'])){
-			$re1 = upload_file($_FILES['notice1-image'],$targ,2000000);
-			$errors1 = $re1[1];
-			$info1 = $re1[2];
-			if(count($info1) == 1){
-				$note['1_image'] = $_FILES['notice1-image']['name'];
-				foreach ($note as $n => $val) {
-					$id=explode("_",$n);
-					
-					if($id[1]=='text'){
-					$re1 = $con->insert("notice",array("id"=>$id[0],"text"=>$val));
-					}
-					else if($id[1]=='image'){
-					$re1 = $con->insert("notice",array("id"=>$id[0],"image"=>$val));	
-					}					
-					else if($id[1]=='reference'){
-					$re1 = $con->insert("notice",array("id"=>$id[0],"reference"=>$val));	
-					}
-
-					if(!$re1){
-						
-						if($id[1]=='text'){
-							$con->update("notice",array("text"=>$val),array("id"=>$id[0]));
-						}
-						elseif ($id[1]=='image') {
-							$con->update("notice",array("image"=>$val),array("id"=>$id[0]));
-						}
-						elseif ($id[1]=='reference') {
-							$con->update("notice",array("reference"=>$val),array("id"=>$id[0]));
-						}
-					}					
-				}
-			}else{
-				$error1 = "Error occured while uploading.<br>";
-				array_push($errors1, $error1);
-			}
-		}
-
-		if(isset($_FILES['notice2-image']['tmp_name']) && !empty($_FILES['notice2-image']['tmp_name'])){
-			$re1 = upload_file($_FILES['notice2-image'],$targ,2000000);
-			$errors2 = $re1[1];
-			$info2 = $re1[2];
-			if(count($info2) == 1){
-				$note['2_image'] = $_FILES['notice2-image']['name'];
-				foreach ($note as $n => $val) {
-					$id=explode("_",$n);
-					
-					if($id[1]=='text'){
-					$re1 = $con->insert("notice",array("id"=>$id[0],"text"=>$val));
-					}
-					else if($id[1]=='image'){
-					$re1 = $con->insert("notice",array("id"=>$id[0],"image"=>$val));	
-					}					
-					else if($id[1]=='reference'){
-					$re1 = $con->insert("notice",array("id"=>$id[0],"reference"=>$val));	
-					}
-
-					if(!$re1){
-						
-						if($id[1]=='text'){
-							$con->update("notice",array("text"=>$val),array("id"=>$id[0]));
-						}
-						elseif ($id[1]=='image') {
-							$con->update("notice",array("image"=>$val),array("id"=>$id[0]));
-						}
-						elseif ($id[1]=='reference') {
-							$con->update("notice",array("reference"=>$val),array("id"=>$id[0]));
-						}
-					}					
-				}
-			}else{
-				$error1 = "Error occured while uploading.<br>";
-				array_push($errors1, $error1);
-			}
-		}
-
-		if(isset($_FILES['notice3-image']['tmp_name']) && !empty($_FILES['notice3-image']['tmp_name'])){
-			$re1 = upload_file($_FILES['notice3-image'],$targ,2000000);
-			$errors3 = $re1[1];
-			$info3 = $re1[2];
-			if(count($info3) == 1){
-				$note['3_image'] = $_FILES['notice3-image']['name'];
-				foreach ($note as $n => $val) {
-					$id=explode("_",$n);
-					
-					if($id[1]=='text'){
-					$re1 = $con->insert("notice",array("id"=>$id[0],"text"=>$val));
-					}
-					else if($id[1]=='image'){
-					$re1 = $con->insert("notice",array("id"=>$id[0],"image"=>$val));	
-					}					
-					else if($id[1]=='reference'){
-					$re1 = $con->insert("notice",array("id"=>$id[0],"reference"=>$val));	
-					}
-
-					if(!$re1){
-						
-						if($id[1]=='text'){
-							$con->update("notice",array("text"=>$val),array("id"=>$id[0]));
-						}
-						elseif ($id[1]=='image') {
-							$con->update("notice",array("image"=>$val),array("id"=>$id[0]));
-						}
-						elseif ($id[1]=='reference') {
-							$con->update("notice",array("reference"=>$val),array("id"=>$id[0]));
-						}
-					}					
-				}
-			}else{
-				$error1 = "Error occured while uploading.<br>";
-				array_push($errors1, $error1);
-			}
-		}
-
-		if(isset($_FILES['notice4-image']['tmp_name']) && !empty($_FILES['notice4-image']['tmp_name'])){
-			$re1 = upload_file($_FILES['notice4-image'],$targ,2000000);
-			$errors4 = $re1[1];
-			$info4 = $re1[2];
-			if(count($info4) == 1){
-				$note['4_image'] = $_FILES['notice4-image']['name'];
-				foreach ($note as $n => $val) {
-					$id=explode("_",$n);
-					
-					if($id[1]=='text'){
-					$re1 = $con->insert("notice",array("id"=>$id[0],"text"=>$val));
-					}
-					else if($id[1]=='image'){
-					$re1 = $con->insert("notice",array("id"=>$id[0],"image"=>$val));	
-					}					
-					else if($id[1]=='reference'){
-					$re1 = $con->insert("notice",array("id"=>$id[0],"reference"=>$val));	
-					}
-
-					if(!$re1){
-						
-						if($id[1]=='text'){
-							$con->update("notice",array("text"=>$val),array("id"=>$id[0]));
-						}
-						elseif ($id[1]=='image') {
-							$con->update("notice",array("image"=>$val),array("id"=>$id[0]));
-						}
-						elseif ($id[1]=='reference') {
-							$con->update("notice",array("reference"=>$val),array("id"=>$id[0]));
-						}
-					}					
-				}
-			}else{
-				$error1 = "Error occured while uploading.<br>";
-				array_push($errors1, $error1);
-			}
-		}
-
-		if(isset($_FILES['notice5-image']['tmp_name']) && !empty($_FILES['notice5-image']['tmp_name'])){
-			$re1 = upload_file($_FILES['notice5-image'],$targ,2000000);
-			$errors5 = $re1[1];
-			$info5 = $re1[2];
-			if(count($info5) == 1){
-				$note['5_image'] = $_FILES['notice5-image']['name'];
-				foreach ($note as $n => $val) {
-					$id=explode("_",$n);
-					
-					if($id[1]=='text'){
-					$re1 = $con->insert("notice",array("id"=>$id[0],"text"=>$val));
-					}
-					else if($id[1]=='image'){
-					$re1 = $con->insert("notice",array("id"=>$id[0],"image"=>$val));	
-					}					
-					else if($id[1]=='reference'){
-					$re1 = $con->insert("notice",array("id"=>$id[0],"reference"=>$val));	
-					}
-
-					if(!$re1){
-						
-						if($id[1]=='text'){
-							$con->update("notice",array("text"=>$val),array("id"=>$id[0]));
-						}
-						elseif ($id[1]=='image') {
-							$con->update("notice",array("image"=>$val),array("id"=>$id[0]));
-						}
-						elseif ($id[1]=='reference') {
-							$con->update("notice",array("reference"=>$val),array("id"=>$id[0]));
-						}
-					}					
-				}
-			}else{
-				$error1 = "Error occured while uploading.<br>";
-				array_push($errors1, $error1);
-			}
-		}
-
-				foreach ($note as $n => $val) {
-					$id=explode("_",$n);
-					
-					if($id[1]=='text'){
-					$re1 = $con->insert("notice",array("id"=>$id[0],"text"=>$val));
-					}					
-					else if($id[1]=='reference'){
-					$re1 = $con->insert("notice",array("id"=>$id[0],"reference"=>$val));	
-					}
-
-					if(!$re1){
-						
-						if($id[1]=='text'){
-							$con->update("notice",array("text"=>$val),array("id"=>$id[0]));
-						}
-						elseif ($id[1]=='reference') {
-							$con->update("notice",array("reference"=>$val),array("id"=>$id[0]));
-						}
-					}					
-				}
-
-
-
-
-
-
-$con->update("notice",array("text"=>$note['1000_text']),array("id"=>"1000"));
-
-}
-
-	$statemnt = "SELECT * FROM `notice`";
-	$rls_set = $con->pure_query($statemnt)->fetchAll();
-	
-	if($rls_set){
-		foreach ($rls_set as $data1) {
-			$notice[$data1['id']."_text"] = $data1['text'];
-			$notice[$data1['id']."_image"] = $data1['image'];
-			$notice[$data1['id']."_reference"] = $data1['reference'];
-		}
-	}
-
-	
-
-
-
-?>
-
-<?php require_once("../templates/header.php") ?>
-<?php require_once("../templates/aside.php") ?>
-
-
-<?php 
-		/*if(isset($errors) && !empty($errors)){
+<div id="content" class="col-9 flex-col align-items-center justify-content-start">
+	<?php 
+		if(isset($errors) && !empty($errors)){
 			echo "<p class='float-left w-75 bg-red p-2'>";
-			foreach ($errors as $error) {
-				echo $error . "<br>";
-			}
-			echo "</p>";
+			echo "Error While Updating<br></p>";
 		}
 
 		if(isset($info) && !empty($info)){
 			echo "<p class='float-left w-75 bg-green p-2'>";
-			foreach ($info as $in) {
-				echo $in . "<br>";
-			}
+				echo $info['data'] . "<br>";
 			echo "</p>";
-		}*/
-?>
+		}
 
-
-
-<div id="content" class="col-9 flex-col align-items-center justify-content-start">
-
-	<form action="setting-notice.php" method="post" enctype="multipart/form-data">
+	 ?>
+	<form action="<?php echo set_url("settings/notice");?>" method="post" enctype="multipart/form-data">
 		<fieldset>	
 			<legend>Notice Settings</legend>
 				<div class="form-group">
@@ -328,6 +34,20 @@ $con->update("notice",array("text"=>$note['1000_text']),array("id"=>"1000"));
 				<div class="form-group">
 					<label for="notice1-image">Insert Image</label>
 					<input type="file" name="notice1-image" id="notice1-image">
+					<?php 
+					if(isset($errors['notice1-image']) && !empty($errors['notice1-image'])){
+						echo "<br>";
+						echo "<p class='float-left w-75 bg-red p-2'>";
+						echo $errors['notice1-image'] . "<br>";
+						echo "</p>";
+					}
+					if(isset($info['notice1-image']) && !empty($info['notice1-image'])){
+						echo "<br>";
+						echo "<p class='float-left w-75 bg-green p-2'>";
+						echo $info['notice1-image'] . "<br>";
+						echo "</p>";
+					}
+					?>
 				</div>
 
 				<div class="form-group">
@@ -348,6 +68,20 @@ $con->update("notice",array("text"=>$note['1000_text']),array("id"=>"1000"));
 				<div class="form-group">
 					<label for="notice2-image">Insert Image</label>
 					<input type="file" name="notice2-image" id="notice2-image">
+					<?php 
+					if(isset($errors['notice2-image']) && !empty($errors['notice2-image'])){
+						echo "<br>";
+						echo "<p class='float-left w-75 bg-red p-2'>";
+						echo $errors['notice2-image'] . "<br>";
+						echo "</p>";
+					}
+					if(isset($info['notice2-image']) && !empty($info['notice2-image'])){
+						echo "<br>";
+						echo "<p class='float-left w-75 bg-green p-2'>";
+						echo $info['notice2-image'] . "<br>";
+						echo "</p>";
+					}
+					?>
 				</div>
 
 				<div class="form-group">
@@ -368,6 +102,20 @@ $con->update("notice",array("text"=>$note['1000_text']),array("id"=>"1000"));
 				<div class="form-group">
 					<label for="notice3-image">Insert Image</label>
 					<input type="file" name="notice3-image" id="notice3-image">
+					<?php 
+					if(isset($errors['notice3-image']) && !empty($errors['notice3-image'])){
+						echo "<br>";
+						echo "<p class='float-left w-75 bg-red p-2'>";
+						echo $errors['notice3-image'] . "<br>";
+						echo "</p>";
+					}
+					if(isset($info['notice3-image']) && !empty($info['notice3-image'])){
+						echo "<br>";
+						echo "<p class='float-left w-75 bg-green p-2'>";
+						echo $info['notice3-image'] . "<br>";
+						echo "</p>";
+					}
+					?>
 				</div>
 
 				<div class="form-group">
@@ -388,6 +136,20 @@ $con->update("notice",array("text"=>$note['1000_text']),array("id"=>"1000"));
 				<div class="form-group">
 					<label for="notice4-image">Insert Image</label>
 					<input type="file" name="notice4-image" id="notice4-image">
+					<?php 
+					if(isset($errors['notice4-image']) && !empty($errors['notice4-image'])){
+						echo "<br>";
+						echo "<p class='float-left w-75 bg-red p-2'>";
+						echo $errors['notice4-image'] . "<br>";
+						echo "</p>";
+					}
+					if(isset($info['notice4-image']) && !empty($info['notice4-image'])){
+						echo "<br>";
+						echo "<p class='float-left w-75 bg-green p-2'>";
+						echo $info['notice4-image'] . "<br>";
+						echo "</p>";
+					}
+					?>
 				</div>
 
 				<div class="form-group">
@@ -408,6 +170,20 @@ $con->update("notice",array("text"=>$note['1000_text']),array("id"=>"1000"));
 				<div class="form-group">
 					<label for="notice5-image">Insert Image</label>
 					<input type="file" name="notice5-image" id="notice5-image">
+					<?php 
+					if(isset($errors['notice5-image']) && !empty($errors['notice5-image'])){
+						echo "<br>";
+						echo "<p class='float-left w-75 bg-red p-2'>";
+						echo $errors['notice5-image'] . "<br>";
+						echo "</p>";
+					}
+					if(isset($info['notice5-image']) && !empty($info['notice5-image'])){
+						echo "<br>";
+						echo "<p class='float-left w-75 bg-green p-2'>";
+						echo $info['notice5-image'] . "<br>";
+						echo "</p>";
+					}
+					?>
 				</div>
 
 				<div class="form-group">
@@ -451,4 +227,3 @@ $con->update("notice",array("text"=>$note['1000_text']),array("id"=>"1000"));
 </div> <!-- #content -->
 
 
-<?php 	require_once("../templates/footer.php") ?>
