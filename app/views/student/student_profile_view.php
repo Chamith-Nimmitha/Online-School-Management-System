@@ -1,7 +1,3 @@
-<?php include_once("session.php"); ?>
-<?php require_once("../php/common.php"); ?>
-<?php require_once("../php/database.php"); ?>
-
 <?php
 	if(!isset($_GET["student_id"])){
 		$error = "Account not found.";
@@ -12,10 +8,6 @@
 		}
 	}
  ?>
-
-<?php require_once("../templates/header.php"); ?>
-<?php require_once("../templates/aside.php"); ?>
-
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 	<?php 
@@ -119,6 +111,3 @@
 			</form>
 	</div>
 </div>
-
-
-<?php require_once("../templates/footer.php"); ?>

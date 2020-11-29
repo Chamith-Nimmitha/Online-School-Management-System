@@ -4,7 +4,7 @@
 		private $dsn;
 		public $db;
 		private $query;
-		private $pre_query;
+		public $pre_query;
 		private $pre_query_count;
 		private $table;
 		private $where;

@@ -1,27 +1,12 @@
-<?php include_once("session.php"); ?>
-<?php require_once("../php/database.php"); ?>
-<?php require_once("../php/pagination.php"); ?>
-
 <?php
 
-	if(isset($_GET['delete'])){
-		$con->update("student",array("is_deleted"=>1),array("id"=>$_GET['delete']));
-	}
 
 	$start = 0;
-	$per_page = 1;
-	if(isset($_GET['per_page'])){
-		$per_page=$_GET['per_page'];
-	}
-	if(isset($_GET['page'])){
-		$start = (($_GET['page'] -1) * $per_page );
-	}else{
-		$_GET['page'] =1;
-	}
-
+	$per_page = 10;
+	
 	$required_fields = "`s`.*, `c`.`class`";
 
-	require_once ("../php/classes/students_info.class.php");
+	require_once (MODELS."students_info.php");
 
 	$obj = new StudentsInfo($start, $per_page);
 
@@ -57,9 +42,6 @@
 	$count = $obj->get_pre_query_count();
 
  ?>
-
-<?php require_once("../templates/header.php"); ?>
-<?php require_once("../templates/aside.php"); ?>
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 	<div class="student-header mt-5">
@@ -149,11 +131,11 @@
 						$row .= "<td class='text-center'>".$result['class']."</td>";
 						$row .= "<td>".$result['contact_number']."</td>";
 						$row .= "<td class='text-center'>".$result['is_deleted']."</td>";
-						$row .= "<td class='text-center'><a href='admin_student_timetable_view.php?student_id=".$result['id']."' class='btn btn-blue t-d-none p-1'>timetable</a></td>";
-						$row .= "<td class='text-center'><a href='admin_student_profile.php?student-id=".$result['id']."' class='btn btn-blue t-d-none p-1'>profile</a></td>";
-						$row .= "<td class='text-center'><a href='student_marks_report.php?student-id=".$result['id']."' class='btn btn-blue t-d-none p-1'>Marks</a></td>";
+						$row .= "<td class='text-center'><a href='timetable/view/".$result['id']."' class='btn btn-blue t-d-none p-1'>timetable</a></td>";
+						$row .= "<td class='text-center'><a href='".set_url("profile/student/".$result['id'])."' class='btn btn-blue t-d-none p-1'>profile</a></td>";
+						$row .= "<td class='text-center'><a href='".set_url("student/exam/".$result['id'])."' class='btn btn-blue t-d-none p-1'>Marks</a></td>";
 						if($_SESSION['role'] !== "teacher"){
-							$row .= "<td class='text-center'><a href='student_list.php?delete=".$result['id']."' class='btn btn-lightred t-d-none p-1'>delete</a></td>";
+							$row .= "<td class='text-center'><a href='".set_url("student/delete/".$result['id'])."' class='btn btn-lightred t-d-none p-1'>delete</a></td>";
 						}
 						$row .="</tr>";
 
@@ -168,10 +150,5 @@
 			 ?>
 		</div>
 			<p class="mt-3 pl-5"><code id="record_count"><?php 	echo $count; ?> results found.</code> </p>	
-			<div id="pagination-div">
-				<?php display_pagination($count,$_GET['page'],$per_page); ?>
-			</div>
 	</div>
 </div>
-
-<?php require_once("../templates/footer.php"); ?>

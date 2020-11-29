@@ -1,20 +1,7 @@
-<?php require_once("../php/database.php") ?>
-<?php require_once("../php/common.php") ?>
-<?php require_once("../php/classes/student.class.php") ?>
 
 <?php 
-  if(isset($_GET["student-id"])){
-    $s = new StudentClass();
-    $r = $s->set_by_id($_GET["student-id"]);
-    if($r){
-      $result = $s->get_data();
-    }
-  }
-
+ 
  ?>
-
-<?php require_once("../templates/header.php") ?>
-<?php require_once("../templates/aside.php") ?>
 <div id="content" class="col-9 flex-col align-items-center justify-content-start fs-14">
 
 <h2>Student Details</h2>
@@ -182,17 +169,3 @@
 
       </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<?php require_once("../templates/footer.php") ?>

@@ -86,10 +86,15 @@
 			$this->load->view("templates/footer");
 		}
 
-		public function profile(){
-			$role = $_SESSION['role'];
+		public function profile($role="",$id=""){
+			if(empty($role)){
+				$role = $_SESSION['role'];
+			}
+			if( empty($id)){
+				$id = $_SESSION['user_id'];
+			}
 			$this->load->model($role);
-			$result = $this->load->{$role}->set_by_id($_SESSION['user_id']);
+			$result = $this->load->{$role}->set_by_id($id);
 			$field_errors = [];
 
 			switch ($role) {
@@ -195,7 +200,7 @@
 			$this->view_header_and_aside();
 
 			// load profile page
-			$result = $this->load->{$role}->set_by_id($_SESSION['user_id']);
+			$result = $this->load->{$role}->set_by_id($id);
 			$data = $this->load->{$role}->get_data();
 			if(!empty($field_errors)){
 				$this->load->view("{$role}/{$role}_profile",["result"=>$data,"field_errors"=>$field_errors]);

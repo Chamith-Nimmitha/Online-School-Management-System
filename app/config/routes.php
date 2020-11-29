@@ -41,6 +41,13 @@
 	$routes['subject/registration'] = "subject/subjectnew_add";
 	$routes['subject/update'] = "subject/subjectnew_update";
 
+	// student route
+	$routes['student/list'] = "student/list";
+	$routes['student/timetable/view/$1'] = "student/timetable_view/$1";
+	$routes['profile/$1/$2'] = "user/profile/$1/$2";
+	$routes['student/exam/$1'] = "student/exam/$1";
+	$routes['student/delete/$1'] = "admin/student_delete/$1";
+
 	// parent routes
 		//write here
 
