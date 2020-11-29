@@ -15,6 +15,7 @@
 			require_once(CONFIG."routes.php");
 			global $routes;
 			$url = $_SERVER["QUERY_STRING"];
+			$b_url = $url;
 			$url = trim($url,"/");
 			$url = explode("/",$url);
 			foreach ($routes as $key => $value) {
@@ -25,18 +26,31 @@
 						$real_url = explode("/",$real_url);
 						if(count($url) >1){
 							if($route_url[1] === $url[1]){
-								$this->controller = $real_url[0];
-								$this->method = isset($real_url[1]) ? $real_url[1] : "index";
-								unset($url[0],$url[1]);
-								$this->params = !empty($url) ? array_values($url) : [];
+								if( strpos(explode("$", $b_url)[0] ,explode("$", $key)[0]) !== FALSE){
+									$this->controller = $real_url[0];
+									$this->method = isset($real_url[1]) ? $real_url[1] : "index";
+									$co = count($url);
+									for ($i=0; $i < $co - (count(explode("/",$value)) -2) ; $i++) { 
+										unset($url[$i]);
+									}
+									$this->params = !empty($url) ? array_values($url) : [];
+									break;
+								}
+							}else{
+								if(count($url) === count(explode("$",$key))){
+									$this->controller = $real_url[0];
+									$this->method = isset($real_url[1]) ? $real_url[1] : "index";
+									unset($url[0]);
+									$this->params = !empty($url) ? array_values($url) : [];
 								break;
-							}else if(count($url) === count(explode("$",$value))){
+								}
+							}
+						}else if(count($url) === count(explode("$",$value))){
 								$this->controller = $real_url[0];
 								$this->method = isset($real_url[1]) ? $real_url[1] : "index";
 								unset($url[0]);
 								$this->params = !empty($url) ? array_values($url) : [];
 								break;
-							}
 						}else{
 							$this->controller = !empty($real_url[0]) ? ucwords($real_url[0]) : "Home";
 							$this->method = isset($real_url[1]) ? $real_url[1] : "index";
