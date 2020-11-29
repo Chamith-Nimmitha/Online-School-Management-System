@@ -214,7 +214,162 @@
 			$this->load->view("templates/footer");
 		}
 
-		public function setting_notice(){
+		public function settings_notice(){
+			$con = new Database();
+			$rls_set = $this->load->home->get_noticeboard_data();
+			foreach ($rls_set as $data) {
+			$notice[$data['id']."_text"] = $data['text'];
+			$notice[$data['id']."_image"] = $data['image'];
+			$notice[$data['id']."_reference"] = $data['reference'];
+			}
+
+			if(isset($_POST['submit'])){
+
+				$note['1_text']=$_POST['notice1-text'];
+				$note['1_reference']=$_POST['notice1-ref'];
+				$note['2_text']=$_POST['notice2-text'];
+				$note['2_reference']=$_POST['notice2-ref'];
+				$note['3_text']=$_POST['notice3-text'];
+				$note['3_reference']=$_POST['notice3-ref'];
+				$note['4_text']=$_POST['notice4-text'];
+				$note['4_reference']=$_POST['notice4-ref'];
+				$note['5_text']=$_POST['notice5-text'];
+				$note['5_reference']=$_POST['notice5-ref'];
+				$note['1000_text']=$_POST['no-notice'];
+				$target = "public/assets/img/notice_images/";
+
+				$is_ok = 1;
+				$errors = array();
+				$info = array();
+				$field_errors = array();
+				$required_fields = array();
+
+				if(isset($_FILES['notice1-image']['tmp_name']) && !empty($_FILES['notice1-image']['tmp_name'])){
+					$result = upload_file($_FILES['notice1-image'],$target,2000000);
+					if($result !== 1){
+						$errors['notice1-image'] = $result;
+					}
+					else{
+						$info['notice1-image'] = "Updated Successfully";
+					}			
+					if($result == 1){
+						$note['1_image'] = $_FILES['notice1-image']['name'];
+					}
+
+				}
+
+				if(isset($_FILES['notice2-image']['tmp_name']) && !empty($_FILES['notice2-image']['tmp_name'])){
+					$result = upload_file($_FILES['notice2-image'],$target,2000000);
+					if($result !== 1){
+						$errors['notice2-image'] = $result;
+					}
+					else{
+						$info['notice2-image'] = "Updated Successfully";
+					}			
+					if($result == 1){
+						$note['2_image'] = $_FILES['notice2-image']['name'];
+					}
+
+				}
+
+				if(isset($_FILES['notice3-image']['tmp_name']) && !empty($_FILES['notice3-image']['tmp_name'])){
+					$result = upload_file($_FILES['notice3-image'],$target,2000000);
+					if($result !== 1){
+						$errors['notice3-image'] = $result;
+					}
+					else{
+						$info['notice3-image'] = "Updated Successfully";
+					}			
+					if($result == 1){
+						$note['3_image'] = $_FILES['notice3-image']['name'];
+					}
+
+				}
+
+				if(isset($_FILES['notice4-image']['tmp_name']) && !empty($_FILES['notice4-image']['tmp_name'])){
+					$result = upload_file($_FILES['notice4-image'],$target,2000000);
+					if($result !== 1){
+						$errors['notice4-image'] = $result;
+					}
+					else{
+						$info['notice4-image'] = "Updated Successfully";
+					}			
+					if($result == 1){
+						$note['4_image'] = $_FILES['notice4-image']['name'];
+					}
+
+				}
+
+				if(isset($_FILES['notice5-image']['tmp_name']) && !empty($_FILES['notice5-image']['tmp_name'])){
+					$result = upload_file($_FILES['notice5-image'],$target,2000000);
+					if($result !== 1){
+						$errors['notice5-image'] = $result;
+					}
+					else{
+						$info['notice5-image'] = "Updated Successfully";
+					}			
+					if($result == 1){
+						$note['5_image'] = $_FILES['notice5-image']['name'];
+					}
+
+				}
+
+
+				if(empty($errors)){
+					foreach ($note as $n => $val) {
+						$id=explode("_",$n);
+						
+						/*if($id[1]=='text'){
+						$re1 = $con->insert("notice",array("id"=>$id[0],"text"=>$val));
+						}					
+						else if($id[1]=='reference'){
+						$re1 = $con->insert("notice",array("id"=>$id[0],"reference"=>$val));	
+						}*/
+							
+							if($id[1]=='text'){
+								$con->update("notice",array("text"=>$val),array("id"=>$id[0]));
+							}
+							elseif ($id[1]=='reference') {
+								$con->update("notice",array("reference"=>$val),array("id"=>$id[0]));
+							}
+							elseif ($id[1]=='image') {
+								$con->update("notice",array("image"=>$val),array("id"=>$id[0]));
+							}					
+					}
+					
+					$info['data']="Updated Successfully";
+				}
+				$con->update("notice",array("text"=>$note['1000_text']),array("id"=>"1000"));
+
+
+			}
+
+			$rls_set = $this->load->home->get_noticeboard_data();
+			foreach ($rls_set as $data) {
+			$notice[$data['id']."_text"] = $data['text'];
+			$notice[$data['id']."_image"] = $data['image'];
+			$notice[$data['id']."_reference"] = $data['reference'];
+			}
+
+			if( !empty($errors)) {
+				$this->view_header_and_aside();
+				$this->load->view("common/setting-notice",['header'=>$this->header_data,'notice'=>$notice,'errors'=>$errors,'rls_set'=>$rls_set]);
+			}
+			else{
+
+				if(!empty($info)){
+				$this->view_header_and_aside();
+				$this->load->view("common/setting-notice",['header'=>$this->header_data,'notice'=>$notice,'info'=>$info,'rls_set'=>$rls_set]);
+				}
+				else{
+				$this->view_header_and_aside();
+				$this->load->view("common/setting-notice",['header'=>$this->header_data,'notice'=>$notice,'rls_set'=>$rls_set]);
+
+				}
+			}
+
+			$this->load->view("templates/footer");
+
 
 		}
 
