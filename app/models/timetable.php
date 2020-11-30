@@ -1,7 +1,7 @@
 
 <?php 
 
-	class TimetableClass{
+	class TimetableModel extends Model{
 
 		private $id;
 		private $type;
@@ -10,8 +10,7 @@
 
 		// establish database connection
 		public function __construct(){
-			unset($con);
-			$this->con = new Database();
+			parent::__construct();
 			$this->tables = ["normal_timetable","normal_day"];
 		}
 

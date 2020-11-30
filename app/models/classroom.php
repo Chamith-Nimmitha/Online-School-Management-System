@@ -42,6 +42,11 @@
 					$this->state = 1;
 					$this->grade = $result->fetch()['grade'];
 				}
+				$this->con->get(['id']);
+				$result =$this->con->select('normal_timetable',['user_id'=>$this->id, "type"=>"classroom"]);
+				if($result && $result->rowCount() === 1){
+					$this->timetable_id = $result->fetch()['id'];
+				}
 				return TRUE;
 			}else{
 				return FALSE;
@@ -61,6 +66,11 @@
 				if($result && $result->rowCount() == 1){
 					$this->state = 1;
 					$this->grade = $result->fetch()['grade'];
+				}
+				$this->con->get(['id']);
+				$this->con->select('normal_timetable',['user_id'=>$this->id, "type"=>"classroom"]);
+				if($result && $result->rowCount() === 1){
+					$this->timetable_id = $result->fetch()['id'];
 				}
 				return TRUE;
 			}else{
@@ -99,9 +109,11 @@
 
 		// get timetable object which contains timetable
 		public function get_timetabel_object(){
-			$result = $this->con->select("normal_timetable",array("id"=>$this->timetable_id));
-			if($result && $result->rowCount() == 1){
-				return  $result->fetch();
+			require_once(MODELS."timetable.php");
+			$timetable = new TimetableModel();
+			$result = $timetable->set_by_id($this->timetable_id);
+			if($result){
+				return  $timetable;
 			}else{
 				return FALSE;
 			}	

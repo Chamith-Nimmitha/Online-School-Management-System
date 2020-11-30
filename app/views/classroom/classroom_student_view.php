@@ -1,64 +1,3 @@
-<?php 
-	if(!isset($_SESSION)){
-		session_start();
-	}
- ?>
-<?php require_once("../php/common.php"); ?>
-<?php require_once("../php/database.php"); ?>
-<?php 
-	if(isset($_GET['classroom_id']) || (isset($_SESSION['role']) && $_SESSION['role'] =="student" )){
-		try {
-			$con->db->beginTransaction();
-			if(!isset($_GET['classroom_id']) ){
-				$result = $con->select("student",array("id"=>$_SESSION['user_id']));
-				if($result && $result->rowCount() === 1){
-					$result = $result->fetch();
-					$_GET['classroom_id'] = $result['classroom_id'];
-				}
-			}
-			$result = $con->select("classroom", array("id"=> $_GET['classroom_id']));
-			if(!$result || $result->rowCount() != 1){
-				throw new Exception("Classroom Not Found.", 1);
-			}
-			$query = "SELECT `c`.`id`,`s`.`grade`,`c`.`class`,`c`.`section_id` FROM `classroom` AS `c` JOIN `section` AS `s` ON `c`.`section_id` = `s`.`id` WHERE `c`.`id`=".$_GET['classroom_id'];
-			$result = $con->pure_query($query);
-			if(!$result || $result->rowCount() != 1){
-				throw new Exception("Query Error.", 1);
-			}
-			$classroom_info = $result->fetch();
-			$con->get(array("grade"));
-			$con->orderby("grade");
-			$result = $con->select("section");
-			if(!$result || $result->rowCount() == 0){
-				throw new Exception("Sections not found..", 1);
-			}
-			$section_list = $result->fetchAll();
-			$con->get(array("class"));
-			$result = $con->select("classroom", array("section_id"=>$classroom_info['section_id']));
-			if(!$result || $result->rowCount() == 0){
-				throw new Exception("Classrooms are not defined.", 1);
-			}
-			$class_list = $result->fetchAll();
-
-			$con->get(array("id","name_with_initials","email","contact_number","classroom_id"));
-			$result = $con->select("student", array("classroom_id"=>$_GET{'classroom_id'}));
-			if(!$result){
-				throw new Exception("Student list error.", 1);
-			}
-			$student_list = $result->fetchAll();
-			$con->db->commit();
-		} catch (Exception $e) {
-			$error = $e->getMessage();
-			$con->db->rollback();
-		}
-
-	}
-
- ?>
-
-<?php require_once("../templates/header.php"); ?>
-<?php require_once("../templates/aside.php"); ?>
-
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 
 	<?php 
@@ -141,5 +80,3 @@
 		</div>
 	</form>
 </div>
-
-<?php require_once("../templates/footer.php"); ?>

@@ -1,20 +1,4 @@
-<?php include_once("session.php"); ?>
-<?php require_once("../php/classes/classroom_info.class.php"); ?>
-
-
-<?php
-    $classroom_info_obj = new ClassroomInfo();
-    $result_set = $classroom_info_obj->get_classroom_list();
-?>
-
-<?php require_once("../templates/header.php") ;?>
-<?php require_once("../templates/aside.php"); ?>
-
-
-
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
-
-
 		<div class="d-flex justify-content-center align-items-center">
 			<form action="<?php echo set_url('pages/classroomsnew-view.php'); ?>" method="get" class="d-flex align-items-center col-12">
 				<div class="d-flex col-12 align-items-center justify-content-center">
@@ -96,13 +80,13 @@
                         <td><?php echo $result['class_teacher_id']; ?></td>
                         <td>
 							<div class="login_buttons col-12 col-md-12 justify-content-end d-flex align-items-center">
-                				<a class="btn btn-blue p-1" href="classroom_student.php?classroom_id=<?php echo $result['id']; ?> ">List</a>
-                				<a class="btn btn-blue p-1 ml-3" href="classroom_assign_student.php?classroom_id=<?php echo $result['id']; ?> ">Add</a>
+                				<a class="btn btn-blue p-1" href="<?php  echo set_url('classroom/student/list/'.$result['id']); ?> ">List</a>
+                				<a class="btn btn-blue p-1 ml-3" href="<?php  echo set_url('classroom/student/add/'.$result['id']); ?>">Add</a>
 		    				</div>
 						</td>
 						<td>
 							<div class="login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center">
-                				<a class="btn btn-blue p-1" href="classroom_timetable_create.php?classroom-id=<?php echo $result['id']; ?> ">View</a>
+                				<a class="btn btn-blue p-1" href="<?php  echo set_url('classroom/timetable/'.$result['id']); ?>">View</a>
 		    				</div>
 						</td>
 						<td>
@@ -134,4 +118,3 @@
 
 </div>
 
-<?php require_once("../templates/footer.php") ;?>

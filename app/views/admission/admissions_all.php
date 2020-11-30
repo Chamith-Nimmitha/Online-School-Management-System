@@ -1,7 +1,5 @@
-<?php include_once("session.php"); ?>
-<?php require_once("../php/database.php"); ?>
-<?php require_once("../php/pagination.php"); ?>
 <?php 
+$con = new Database();
 	if(isset($_GET['delete'])){
 		$con->update("admission",array("state"=>"deleted"),array("id"=>$_GET["delete"]));
 		header("Location:". explode("&delete=","http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'])[0]);	
@@ -41,9 +39,6 @@
 		$result_set = $result_set->fetchAll();
 
  ?>
-<?php require_once("../templates/header.php"); ?>
-<?php require_once("../templates/aside.php"); ?>
-
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 	<div class="mt-5">
 		<h2 class="fs-30">Admissions Managment</h2>
@@ -134,5 +129,3 @@
 		</div>
 	</div>
 </div>
-
-<?php require_once("../templates/footer.php"); ?>

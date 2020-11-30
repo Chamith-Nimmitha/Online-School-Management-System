@@ -1,69 +1,3 @@
-<?php require_once("../php/common.php"); ?>
-<?php require_once("../php/database.php"); ?>
-<?php 
-
-	if(isset($_POST['submit'])){
-		$update_errors = array();
-		foreach ($_POST as $key => $value) {
-			if( stripos($key, "student-") === 0 ){
-				$query = "UPDATE `student` SET `classroom_id`=NULL WHERE `id`=".$value;
-				$result = $con->pure_query($query);
-				if(!$result || $result->rowCount()!= 1){
-					array_push($update_errors, "Student ".$value." removed failed.");
-				}
-			}
-		}
-		if(empty($update_errors)){
-			$info = "Removed successful.";
-		}
-	}
-
-
-	if(isset($_GET['classroom_id'])){
-		try {
-			$con->db->beginTransaction();
-			$result = $con->select("classroom", array("id"=> $_GET['classroom_id']));
-			if(!$result || $result->rowCount() != 1){
-				throw new Exception("Classroom Not Found.", 1);
-			}
-			$query = "SELECT `c`.`id`,`s`.`grade`,`c`.`class`,`c`.`section_id` FROM `classroom` AS `c` JOIN `section` AS `s` ON `c`.`section_id` = `s`.`id` WHERE `c`.`id`=".$_GET['classroom_id'];
-			$result = $con->pure_query($query);
-			if(!$result || $result->rowCount() != 1){
-				throw new Exception("Query Error.", 1);
-			}
-			$classroom_info = $result->fetch();
-			$con->get(array("grade"));
-			$con->orderby("grade");
-			$result = $con->select("section");
-			if(!$result || $result->rowCount() == 0){
-				throw new Exception("Sections not found..", 1);
-			}
-			$section_list = $result->fetchAll();
-			$con->get(array("class"));
-			$result = $con->select("classroom", array("section_id"=>$classroom_info['section_id']));
-			if(!$result || $result->rowCount() == 0){
-				throw new Exception("Classrooms are not defined.", 1);
-			}
-			$class_list = $result->fetchAll();
-
-			$con->get(array("id","name_with_initials","email","contact_number","classroom_id"));
-			$result = $con->select("student", array("classroom_id"=>$_GET{'classroom_id'}));
-			if(!$result){
-				throw new Exception("Student list error.", 1);
-			}
-			$student_list = $result->fetchAll();
-			$con->db->commit();
-		} catch (Exception $e) {
-			$error = $e->getMessage();
-			$con->db->rollback();
-		}
-
-	}
-
- ?>
-
-<?php require_once("../templates/header.php"); ?>
-<?php require_once("../templates/aside.php"); ?>
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 
@@ -93,7 +27,7 @@
 	<div class="p-5  w-100 d-flex align-items-center flex-col">
 		<h1>Classroom Students</h1>
 		<div class="w-75 d-flex justify-content-end">
-			<a class="t-d-none btn btn-blue-outline" href="<?php echo set_url('pages/classroom_assign_student.php?classroom_id='.$_GET['classroom_id']); ?>">+add new students</a>
+			<a class="t-d-none btn btn-blue-outline" href="<?php echo set_url('classroom/student/add/'.$classroom_info['id']); ?>">+add new students</a>
 		</div>
 	</div>
 	<hr class="w-100 mb-5">
@@ -190,7 +124,7 @@
 			<h2>Selected Students for Remove</h2>
 		</div>
 		<hr class="w-100 mb-5">
-		<form action="classroom_student.php?classroom_id=<?php echo $_GET['classroom_id'] ;?>" method="post" class="col-12 d-flex flex-col align-items-center">
+		<form action="<?php echo set_url('classroom/student/list/'.$classroom_info['id']); ?>" method="post" class="col-12 d-flex flex-col align-items-center">
 			<input type="hidden" name="classroom_id" value="<?php echo $classroom_info['id']; ?>" >
 			<div class="col-10 mb-5 d-flex flex-wrap" id="removed-set">
 				<!-- add student here -->
@@ -202,5 +136,3 @@
 		</form>
 	</div>
 </div>
-
-<?php require_once("../templates/footer.php"); ?>
