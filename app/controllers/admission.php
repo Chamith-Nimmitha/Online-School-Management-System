@@ -170,9 +170,62 @@
 			$this->load->view("templates/footer");
 		}
 
-		public function list($filter){
+		// show admissions list
+		public function list($filter=""){
+			if(empty($filter)){
+				if(isset($_POST['admission-state'])){
+					$filter = $_POST['admission-state'];
+				}else{
+					$filter = "all";
+				}
+			}
+			$con = new Database();
+			if($filter === "all"){
+				$result_set = $con->select('admission');
+			}else{
+				$result_set = $con->select('admission',["state"=>$filter]);
+			}
+			if($result_set)
+			$result_set = $result_set->fetchAll();
+
+			$data['result_set'] = $result_set;
 			$this->view_header_and_aside();
-			$this->load->view("admission/admissions_all");
+			$this->load->view("admission/admissions_all",$data);
+			$this->load->view("templates/footer");
+		}
+
+		//delte a admission
+		public function delete($admission_id){
+			$con = new Database();
+			$con->update("admission",array("state"=>"deleted"),array("id"=>$admission_id));
+			header("Location:".set_url('admission/list/all'));
+		}
+
+		public function view_admission($admission_id){
+			$con = new Database();
+			if(isset($_POST['accept'])){
+				$con->update('admission',array("state"=>"accepted"),array("id"=>$admission_id));
+				header("Location:".set_url("interview/set"));
+			}else if(isset($_POST['reject'])){
+				$con->update('admission',array("state"=>"rejected"),array("id"=>$admission_id));
+				header("Location:".set_url('admission/list'));
+			}else if(isset($_POST['delete'])){
+				$con->update('admission',array("state"=>"deleted"),array("id"=>$admission_id));
+				header("Location:".set_url('admission/list'));
+			}
+			$this->load->model("admission");
+			$admission_data = $this->load->admission->get_data($admission_id);
+			if(!$admission_data){
+				echo "Admisiion not found";
+				exit();
+			}
+			if($admission_data['state'] === "unread"){
+				$con->update('admission',array("state"=>"read"),array("id"=>$admission_id));
+			}
+
+			$data['result'] = $admission_data;
+			$this->view_header_and_aside();
+			$this->load->view("admission/admission_view",$data);
 			$this->load->view("templates/footer");
 		}
 	}

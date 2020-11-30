@@ -1,104 +1,9 @@
-<?php include_once("session.php"); ?>
-<?php require_once('../php/common.php'); ?>
-<?php require_once('../php/database.php'); ?>
-
-
-<?php 	
-	$errors = [];
-	if(isset($_POST['submit'])){
-		try{
-			$con->db->beginTransaction();
-			if($_POST['interview-panel'] === "0"){
-				throw new PDOException("Please select a interview panel.", 1);
-				
-			}
-			if($_POST['interview-date'] === "0"){
-				throw new PDOException("Please select a interview date.", 1);
-			}
-			if($_POST['interview-time'] === "0"){
-				throw new PDOException("Please select a interview time.", 1);
-			}
-
-			$data['admission_id'] = $_POST['admission-id'];
-			$data['interview_panel_id'] = $_POST['interview-panel'];
-			$data['date'] = explode("#",$_POST['interview-date'])[0];
-			$data['period'] = $_POST['interview-time'];
-			$result = $con->select("interview",array("admission_id"=>$_POST["admission-id"]));
-			if($result->rowCount() === 0){
-				$result = $con->insert('interview',$data);
-				if(!$result || $result->rowCount() !== 1){
-					throw new PDOException("Interview creation failed.", 1);
-				}
-			}else{
-				$result = $con->update("interview",$data,array("admission_id"=>$_POST['admission-id']));
-				if(!$result || $result->rowCount() !== 1){
-					throw new PDOException("Interview Update failed.", 1);
-				}
-			}
-			$info = "Set Interview successful..";
-			$con->db->commit();
-		}catch( PDOException $e){
-			$con->db->rollBack();
-			$error = $e->getMessage();
-		}
-	}else{
-		$result = $con->select('interview',array("admission_id"=>$_GET['admission-id']));
-		if($result->rowCount() != 0){
-			$result = $result->fetch();
-			$_POST['interview-panel'] = $result["interview_panel_id"];
-			$_POST['interview-date'] = ($result["date"])."#".strtolower(date("D",strtotime($result["date"])));
-			$_POST['interview-time'] = $result["period"];
-		}
-
-	}
-
-	if(isset($_GET['admission-id'])){
-		$con->update('admission',array("state"=>"accepted"),array("id"=>$_GET['admission-id']));
-		$con->where(array("id"=>$_GET['admission-id']));
-		$result = $con->select("admission")->fetch();
-	}else{
-		if(isset($_GET['back'])){
-			header("Location:". $_GET['back'] );
-		}else{
-			header("Location:". set_url('pages/admissions-all.php'));
-		}
-	}
-
-	$interview_panels = $con->select('interview_panel',array('grade'=>$result['grade']));
-	$valid_panels = [];
-	$timetables = [];
-
+<?php 
 	$day_map = ["mon"=>"monday", "tue"=>"tuesday", "wed"=>"wednesday", "thu"=>"thursday", "fri"=>"friday"];
 
 	$time_map = ["1"=>"7.50a.m - 8.30a.m", "2"=>"8.30a.m - 9.10a.m", "3"=>"9.10a.m - 9.50a.m", "4"=> "9.50a.m - 10.30a.m", "5"=> "10.50a.m - 11.30a.m", "6"=>"11.30a.m - 12.10p.m", "7"=> "12.10p.m - 12.50p.m", "8"=>"12.50p.m - 1.30p.m"];
-	
-	foreach ($interview_panels as $row) {
-		$timetable_id = $con->select('normal_timetable',array('user_id'=>$row['id'],"type"=>"interview"))->fetch()['id'];
-		$days = $con->select("normal_day",array("timetable_id"=>$timetable_id));
 
-		foreach ($days as $day){
-			if($day['task'] == "1"){
-				if(isset($timetables[$row['id']])){
-					if(isset($timetables[$row['id']][$day['day']])){
-						array_push($timetables[$row['id']][$day['day']], $day['period']);
-					}else{
-						$timetables[$row['id']][$day['day']] = [$day['period']];
-					}
-				}else{
-					$d = [];
-					$d[$day['day']] = [$day['period']];
-					$timetables[$row['id']] = $d;
-					array_push($valid_panels, [$row['id'],$row['name']]);
-				}
-			}
-		}
-	}
  ?>
-
-<?php require_once('../templates/header.php')?>
-<?php require_once('../templates/aside.php') ?>
-
-
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 	<?php 
 		if(isset($error) && !empty($error)){
@@ -215,4 +120,3 @@
 	</form>
 	
 </div>
-<?php require_once("../templates/footer.php") ?>
