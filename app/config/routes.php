@@ -28,6 +28,7 @@
 
 	// admission routes
 	$routes['student/registration'] = "admission/new_admission";
+	$routes['admission/list/$1'] = "admission/list/$1";
 
 	// teacher routes
 	$routes['teacher/list'] = "teacher/teacher_list_view";
@@ -35,7 +36,11 @@
 	$routes['teacher/update'] = "teacher/teacher_list_update";
 
 	//classroom routes
-		// write here
+	$routes['classroom/list'] = "classroom/classroom_list";
+	$routes['classroom/student/list'] = "classroom/student_list";
+	$routes['classroom/student/list/$1'] = "classroom/student_list/$1";
+	$routes['classroom/student/add/$1'] = "classroom/add_student/$1";
+	$routes['classroom/timetable/$1'] = "classroom/timetable/$1";
 
 	// subject routes
 	$routes['subject/list'] = "subject/subjectnew_view";
@@ -44,6 +49,7 @@
 
 	// student route
 	$routes['student/list'] = "student/list";
+	$routes['student/timetable/view'] = "student/timetable_view";
 	$routes['student/timetable/view/$1'] = "student/timetable_view/$1";
 	$routes['profile/$1/$2'] = "user/profile/$1/$2";
 	$routes['student/exam/$1'] = "student/exam/$1";

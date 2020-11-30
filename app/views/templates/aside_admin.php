@@ -101,7 +101,7 @@
 									</ul>
 								</nav>
 							</li>
-							<li class="nav-item aside-li" id="classroom-li"><a href="<?php echo set_url('pages/classroomsnew-view.php') ?>" class="nav-link">Class Rooms</a>
+							<li class="nav-item aside-li" id="classroom-li"><a href="<?php echo set_url('classroom/list') ?>" class="nav-link">Class Rooms</a>
 								<button class="toggle-button" target="classroom-nav">
 									<img src="<?php echo set_url('public/assets/img/close-menu.png'); ?>" width="20px" alt="">
 								</button>

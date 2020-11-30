@@ -35,14 +35,14 @@
 									</ul>
 								</nav>
 							</li>
-							<li class="nav-item aside-li" id="classroom-li"><a href="<?php echo set_url('student/classroom/student/list') ?>" class="nav-link">My Classroom</a>
+							<li class="nav-item aside-li" id="classroom-li"><a href="<?php echo set_url('classroom/student/list') ?>" class="nav-link">My Classroom</a>
 								<button class="toggle-button" target="classroom-nav">
 									<img src="<?php echo set_url('public/assets/img/close-menu.png') ?>" width="20px" alt="">
 								</button>
 
 								<nav  id="classroom-nav" class="nav sub-nav no-collapsed">
 									<ul class="d-flex flex-col">
-										<li class="nav-item"><a href="<?php echo set_url('student/classroom/student/list') ?>" class="nav-link" parent-li="classroom-li">Student list</a></li>
+										<li class="nav-item"><a href="<?php echo set_url('classroom/student/list') ?>" class="nav-link" parent-li="classroom-li">Student list</a></li>
 										<li class="nav-item"><a href="#" class="nav-link" parent-li="classroom-li">Class Complaints</a></li>
 									</ul>
 								</nav>

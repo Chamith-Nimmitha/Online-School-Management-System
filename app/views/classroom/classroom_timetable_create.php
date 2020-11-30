@@ -1,107 +1,7 @@
-<?php include_once("session.php"); ?>
-<?php require_once("../php/common.php"); ?>
-<?php require_once("../php/database.php"); ?>
-
 <?php 
 	$time_map = ["1"=>"7.50a.m - 8.30a.m", "2"=>"8.30a.m - 9.10a.m", "3"=>"9.10a.m - 9.50a.m", "4"=> "9.50a.m - 10.30a.m", "5"=> "10.50a.m - 11.30a.m", "6"=>"11.30a.m - 12.10p.m", "7"=> "12.10p.m - 12.50p.m", "8"=>"12.50p.m - 1.30p.m"];
-	$day_map = ["1"=>"mon","2"=>"tue","3"=>"wed","4"=>"thu","5"=>"fri"];
-
-	if(isset($_POST['submit'])){
-		try {
-			$con->db->beginTransaction();
-			$data['type'] = "classroom";
-			$data['user_id'] = $_GET['classroom-id'];
-
-			$con->get(array("id"));
-			$result = $con->select("normal_timetable",$data);
-
-			//check timetable is alredy created.
-			if($result && $result->rowCount() == 1){
-				$timetable_id = $result->fetch()['id'];
-				foreach ($_POST as $key => $value) {
-					$tmp = explode("-", $key);
-					if(count($tmp) == 2){
-						$data = [];
-						$data['day'] =  $tmp[0];
-						$data['period'] =  $tmp[1];
-						$data['timetable_id'] = $timetable_id;
-						$result = $con->update("normal_day",array("task"=>$value),$data);
-						if(!$result){
-							throw new PDOException("Timetable create failed.",1);
-						}
-					}
-				}
-			}else{
-				$result = $con->insert("normal_timetable",$data);
-				if(!$result){
-					throw new PDOException("Timetable create failed.",1);
-				}
-				$con->get(array("id"));
-				$result = $con->select("normal_timetable",$data);
-
-				if(!$result && $result->rowCount() != 1){
-					throw new PDOException("Timetable create failed.",1);
-				}
-				$timetable_id = $result->fetch()['id'];
-				foreach ($_POST as $key => $value) {
-					$tmp = explode("-", $key);
-					if(count($tmp) == 2){
-						$data = [];
-						$data['day'] =  $tmp[0];
-						$data['period'] =  $tmp[1];
-						$data['task'] = $value;
-						$data['timetable_id'] = $timetable_id;
-						$result = $con->insert("normal_day",$data);
-						if(!$result){
-							throw new PDOException("Timetable create failed.",1);
-						}
-					}
-				}
-			}
-			$info = "Update successful..";
-			$con->db->commit();
-		} catch (Exception $e) {
-			$error = $e->getMessage();
-			$con->db->rollback();
-		}
-	}
-
-	$query = "SELECT `grade` from `section` WHERE `id`=(SELECT `section_id` FROM `classroom` WHERE `id`=".$_GET['classroom-id'].")";
-	$result = $con->pure_query($query);
-
-	if($result && $result->rowCount() == 1){
-		$grade = $result->fetch()['grade'];
-		$con->get(array("code","name"));
-		$subjects = $con->select("subject",array("grade"=>$grade));
-		if($subjects && $subjects->rowCount() !==0){
-			$subjects = $subjects->fetchAll();
-		}
-	}
-
-	$con->get(array("id"));
-	$timetable = $con->select("normal_timetable",array("user_id"=>$_GET['classroom-id'], "type"=>"classroom"));
-	if($timetable && $timetable->rowCount() == 1){
-		$timetable_id = $timetable->fetch()['id'];
-		$con->get(array("day","period","task"));
-		$con->orderBy("period");
-		$con->limit(40);
-		$time = $con->select("normal_day",array("timetable_id"=>$timetable_id));
-
-		if($time && $time->rowCount() >0){
-			$timetable_day = $time->fetchAll();
-			$timetable_data = array("mon"=>array(), "tue"=>array(), "wed"=>array(), "thu"=>array(), "fri"=>array());
-			foreach ($timetable_day as $index => $data) {
-				$timetable_data[$data['day']][$data['period']] = $data['task'];
-			}
-		}else{
-			echo "Error";
-		}
-	}
-
+			$day_map = ["1"=>"mon","2"=>"tue","3"=>"wed","4"=>"thu","5"=>"fri"];
  ?>
-
-<?php require_once("../templates/header.php"); ?>
-<?php require_once("../templates/aside.php"); ?>
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 
@@ -125,7 +25,7 @@
 	<div class="col-12 d-flex flex-col mt-5">
 		<hr class="w-100">
 		<div class="p-5">
-			<form action="classroom_timetable_create.php?classroom-id=<?php echo $_GET['classroom-id']; ?>" method="post">
+			<form action="<?php echo set_url('classroom/timetable/'.$classroom_id); ?>" method="post">
 				<table class="w-100 table-strip-dark">
 					<thead>
 						<tr>
@@ -159,7 +59,7 @@
 									$row .= '<option value="FREE">FREE</option>';
 								foreach ($subjects as $sub) {
 									$row .= '<option value="'.$sub['code'].'"';
-									if(isset($timetable_data) && $timetable_data[$day_map[$j]][$period] == $sub['code']){
+									if(!empty($timetable_data) && $timetable_data[$day_map[$j]][$period] == $sub['code']){
 										$row .= " selected='selected'";
 									}
 									$row .= '>'.ucfirst($sub['name']).'</option>';
@@ -187,6 +87,3 @@
 		
 	</div>
 </div>
-
-
-<?php require_once("../templates/footer.php"); ?>

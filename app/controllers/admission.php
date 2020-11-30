@@ -166,8 +166,13 @@
 				}
 			}
 			$this->view_header_and_aside();
-			// view form and footer
 			$this->load->view("student/student_registration",["field_errors"=>$field_errors,"info"=>$info,"error"=>$error]);
+			$this->load->view("templates/footer");
+		}
+
+		public function list($filter){
+			$this->view_header_and_aside();
+			$this->load->view("admission/admissions_all");
 			$this->load->view("templates/footer");
 		}
 	}
