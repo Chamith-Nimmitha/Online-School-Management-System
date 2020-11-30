@@ -132,7 +132,7 @@
 				try {
 					$con->db->beginTransaction();
 					$where_data['type'] = "classroom";
-					$data['user_id'] = $classroom_id;
+					$where_data['user_id'] = $classroom_id;
 
 					$found_timetable = $this->load->classroom->get_timetabel_object();
 					if($found_timetable){
@@ -180,6 +180,8 @@
 					$info = "Update successful..";
 					$con->db->commit();
 				} catch (Exception $e) {
+					echo "catch";
+					exit();
 					$error = $e->getMessage();
 					$con->db->rollback();
 				}
@@ -193,8 +195,14 @@
 				$subjects = $subjects->fetchAll();
 			}
 			// get classroom timetable
+			$this->load->model("classroom");
+			$this->load->classroom->set_by_id($classroom_id);
 			$timetable_obj = $this->load->classroom->get_timetabel_object();
-			$timetable_data = $timetable_obj->get_timetable();
+			if($timetable_obj){
+				$timetable_data = $timetable_obj->get_timetable();
+			}else{
+				$timetable_data = FALSE;
+			}
 			$data['subjects'] = $subjects;
 			$data['classroom_id'] = $classroom_id;
 			$data['timetable_data'] = $timetable_data;

@@ -1,33 +1,3 @@
-<?php include_once("session.php"); ?>
-<?php require_once("../php/common.php") ?>
-<?php require_once("../php/database.php"); ?>
-
-<?php 
-	if(!isset($_GET['admission-id'])){
-		header("Location:".set_url('pages/login.php'));
-	}
-	if(isset($_POST['accept'])){
-		$con->update('admission',array("state"=>"accepted"),array("id"=>$_GET['admission-id']));
-		header("Location:".set_url("pages/admission_set_interview.php?admission-id=").$_GET['admission-id']."&back=".$_GET['back']);
-	}else if(isset($_POST['reject'])){
-		$con->update('admission',array("state"=>"rejected"),array("id"=>$_GET['admission-id']));
-		header("Location:".$_GET['back']);
-	}else if(isset($_POST['delete'])){
-		$con->update('admission',array("state"=>"deleted"),array("id"=>$_GET['admission-id']));
-		header("Location:".$_GET['back']);
-	}
-
-	$con->where(array("id"=>$_GET['admission-id']));
-	$result_set = $con->select('admission');
-	$result = $result_set->fetch(PDO::FETCH_ASSOC);
-
-
-	if($result['state'] === "unread"){
-		$con->update('admission',array("state"=>"read"),array("id"=>$_GET['admission-id']));
-	}
- ?>
-<?php require_once("../templates/header.php"); ?>
-<?php require_once("../templates/aside.php"); ?>
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 	<div class="admissions-header mt-5">
@@ -35,7 +5,7 @@
 	</div> <!-- .admission-header -->
 	<hr class="w-100">
 	<div class="admission-details col-12">
-		<form action="<?php echo set_url('pages/admission_view.php?admission-id='.$_GET['admission-id'].'&back='.$_GET['back']); ?>" class="col-12 align-items-start" method="post">
+		<form action="<?php echo set_url('admission/view/'.$result['id'])?>" class="col-12 align-items-start" method="post">
 			<div class="col-12 col-md-6 p-3">
 				<fieldset >
 					<legend>Student Info</legend>
@@ -201,13 +171,12 @@
 						</div>
 						<div class="w-100 p-1"></div>
 						<div class="form-group d-flex flex-row w-auto float-right">
-							<a href="<?php echo $_GET['back']; ?>" class="btn btn-blue m-1">Back</a>
 							<button type="submit" name="delete" class="btn btn-blue w-auto m-1">Delete</button>
 							<?php 
 								if($result['state'] != "registered"){
 									echo '<button type="submit" name="reject" class="btn btn-blue w-auto m-1">Reject</button>';
 									if($result['state'] == "accepted"){
-										echo "<a href='".set_url("pages/admission_set_interview.php?admission-id=".$result['id']."&back=".$_GET['back'])."' class='btn btn-blue w-auto m-1'>Set Interview Info</a>";
+										echo "<a href='".set_url("interview/set/").$result['id']."' class='btn btn-blue w-auto m-1'>Set Interview Info</a>";
 									}else{
 										echo "<button type='submit' name='accept' class='btn btn-blue np-3'>Accept</button>";			
 									}
@@ -221,5 +190,3 @@
 		</form>
 	</div>
 </div>
-
-<?php require_once("../templates/footer.php"); ?>

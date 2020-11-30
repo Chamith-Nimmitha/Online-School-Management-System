@@ -27,7 +27,10 @@
 
 	// admission routes
 	$routes['student/registration'] = "admission/new_admission";
+	$routes['admission/list'] = "admission/list";
 	$routes['admission/list/$1'] = "admission/list/$1";
+	$routes['admission/delete/$1'] = "admission/delete/$1";
+	$routes['admission/view/$1'] = "admission/view_admission/$1";
 
 	// teacher routes
 	$routes['teacher/list'] = "teacher/teacher_list_view";
@@ -58,7 +61,8 @@
 		//write here
 
 	// interview routes
-		// write here
+	$routes['interview/set/$1'] = "interview/set/$1";
+	
 
 	// define as a global variable. Don't delete this
 	$GLOBALS['routes'] = $routes;
