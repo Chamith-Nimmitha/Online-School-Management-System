@@ -58,7 +58,7 @@
 						$row .= "<td class='text-center'>".$result['name']."</td>";
 						$row .= "<td class='text-center'>".$result['grade']."</td>";
 
-						$row .= "<td class='text-center'><a class='btn btn-blue t-d-none p-1' href=\"interview_panel_view.php?interview-panel-id=".$result['id']."&back=". "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']."\">view</a></td>";
+						$row .= "<td class='text-center'><a class='btn btn-blue t-d-none p-1' href='".set_url('interviewpanel/view/').$result['id']."'>view</a></td>";
 
 						$row .= "<td class='text-center'><a class='btn btn-lightred t-d-none p-1' href=". set_url('interviewpanel/delete/').$result['id'].">delete</a>";
 						$row .= "</tr>";
