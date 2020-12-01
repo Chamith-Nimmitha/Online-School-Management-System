@@ -132,14 +132,14 @@
 								</nav>
 							</li>
 							<li id="interview-li" class="nav-item aside-li">
-								<a href="<?php echo set_url('interviewpannel/list') ?>" class="nav-link">Interviews</a>
+								<a href="<?php echo set_url('interviewpanel/list') ?>" class="nav-link">Interviews</a>
 								<button class="toggle-button" target="interview-nav">
 									<img src="<?php echo set_url('public/assets/img/close-menu.png') ?>" width="20px">
 								</button>
 								<nav id="interview-nav" class="no-collapsed nav sub-nav">
 									<ul class="d-flex flex-col">
-										<li class="nav-item"><a href="<?php echo set_url('interviewpannel/list') ?>" class="nav-link"  parent-li="interview-li">All panels</a></li>
-										<li class="nav-item"><a href="<?php echo set_url('interviewpannel/registration') ?>" class="nav-link" parent-li="interview-li">Add new Panel</a></li>
+										<li class="nav-item"><a href="<?php echo set_url('interviewpanel/list') ?>" class="nav-link"  parent-li="interview-li">All panels</a></li>
+										<li class="nav-item"><a href="<?php echo set_url('interviewpanel/registration') ?>" class="nav-link" parent-li="interview-li">Add new Panel</a></li>
 										<li class="nav-item">
 											<a href="<?php echo set_url('interview/list') ?>"  class="nav-link" parent-li="interview-li">Interview List</a>
 										</li>

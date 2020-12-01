@@ -1,36 +1,3 @@
-<?php include_once("session.php"); ?>
-<?php require_once("../php/database.php"); ?>
-<?php require_once("../php/pagination.php"); ?>
-
-<?php 
-
-	$time_map = ["1"=>"7.50a.m - 8.30a.m", "2"=>"8.30a.m - 9.10a.m", "3"=>"9.10a.m - 9.50a.m", "4"=> "9.50a.m - 10.30a.m", "5"=> "10.50a.m - 11.30a.m", "6"=>"11.30a.m - 12.10p.m", "7"=> "12.10p.m - 12.50p.m", "8"=>"12.50p.m - 1.30p.m"];
-
-
-	$start = 0;
-	$per_page = 5;
-	if(isset($_GET['page'])){
-		$start = (($_GET['page'] -1) * $per_page );
-	}else{
-		$_GET['page'] =1;
-	}
-	$limit = "$start, $per_page";
-	$query = "SELECT * FROM `interview` ORDER BY `date` ASC LIMIT ".$limit;
-	$result_set = $con->pure_query($query);
-	if($result_set){
-		$result_set = $result_set->fetchAll();
-	}
-	$query = "SELECT COUNT(*) AS count FROM `interview`";
-	$count = $con->pure_query($query);
-	if($count){
-		$count = $count->fetch()['count'];
-	}
- ?>
-
-
-
-<?php require_once("../templates/header.php"); ?>
-<?php require_once("../templates/aside.php"); ?>
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 	<div class="interview-header mt-5">
@@ -99,7 +66,7 @@
 								$row .= "<td style='background:#333333;color:white;' class='text-center'>".$result['state']."</td>";
 							}
 
-							$row .= "<td><a class='t-d-none btn btn-blue p-1' href=\"interview_admission_view.php?admission-id=".$result['admission_id']."&back=". "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']."\">view</a></td>";
+							$row .= "<td><a class='t-d-none btn btn-blue p-1' href='".set_url('interview/view/').$result['admission_id']."'>view</a></td>";
 							echo $row;
 						}
 						echo "</tbody>";
@@ -111,12 +78,5 @@
 					}
 				 ?>
 		</div>
-		<p class="mt-3 pl-5"><code><?php 	echo $count; ?> results found.</code> </p>	
-		<div id="pagination-div">
-			<?php display_pagination($count,$_GET['page'],$per_page); ?>
-		</div>
 	</div>
 </div>
-
-
-<?php require_once("../templates/footer.php"); ?>

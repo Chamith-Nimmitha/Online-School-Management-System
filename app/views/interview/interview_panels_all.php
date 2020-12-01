@@ -1,48 +1,3 @@
-<?php include_once("session.php"); ?>
-<?php require_once("../php/database.php"); ?>
-<?php require_once("../php/pagination.php"); ?>
-
-<?php 
-
-	if(isset($_GET['delete'])){
-		$con->delete("interview_panel",array("id"=>$_GET['delete']));
-		header("Location:". explode("&delete=","http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'])[0]);	
-	}
-
-	$start = 0;
-	$per_page = 1;
-	if(isset($_GET['per_page'])){
-		$per_page=$_GET['per_page'];
-	}
-	if(isset($_GET['page'])){
-		$start = (($_GET['page'] -1) * $per_page );
-	}else{
-		$_GET['page'] =1;
-	}
-	$limit = "$start, $per_page";
-	$con->get(array("id","name","grade"));
-	if(isset($_GET['interview-panel-grade']) && $_GET['interview-panel-grade'] !="all"){
-		$query = "SELECT COUNT(*) AS count FROM `interview_panel` WHERE `grade`=".$_GET['interview-panel-grade'];
-		$count = $con->pure_query($query);
-		$con->where(array("grade"=>$_GET['interview-panel-grade']));
-	}else{
-		$query = "SELECT COUNT(*) AS count FROM `interview_panel`";
-		$count = $con->pure_query($query);
-	}
-	$result_set =[];
-	$con->limit($limit);
-	$result_set = $con->select('interview_panel');
-
-	if($result_set){
-		$result_set = $result_set->fetchAll();
-	}
-	if($count){
-		$count = $count->fetch()['count'];
-	}
- ?>
-<?php require_once("../templates/header.php"); ?>
-<?php require_once("../templates/aside.php"); ?>
-
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 	<div class="admissions-header mt-5">
 		<h2 class="fs-30">Interview Managment</h2>
@@ -105,13 +60,7 @@
 
 						$row .= "<td class='text-center'><a class='btn btn-blue t-d-none p-1' href=\"interview_panel_view.php?interview-panel-id=".$result['id']."&back=". "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']."\">view</a></td>";
 
-						$row .= "<td class='text-center'><a class='btn btn-lightred t-d-none p-1' href=". set_url('pages/interview_panels_all.php').'?interview-panel-grade=';
-						if(isset($_GET['interview-panel-grade'])){
-							$row .= $_GET['interview-panel-grade'];
-						}else{
-							$row .= "all";
-						}
-						$row .='&delete='.$result['id'].">delete</a></td>";
+						$row .= "<td class='text-center'><a class='btn btn-lightred t-d-none p-1' href=". set_url('interviewpanel/delete/').$result['id'].">delete</a>";
 						$row .= "</tr>";
 						echo $row;
 					}
@@ -122,11 +71,5 @@
 				echo "</table>";
 			?>
 		</div>
-		<p class="mt-3 pl-5"><code><?php 	echo $count; ?> results found.</code> </p>	
-		<div id="pagination-div">
-			<?php display_pagination($count,$_GET['page'],$per_page); ?>
-		</div>
 	</div>
 </div>
-
-<?php require_once("../templates/footer.php"); ?>
