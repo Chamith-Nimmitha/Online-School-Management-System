@@ -1,76 +1,8 @@
-<?php include_once("session.php"); ?>
-<?php require_once('../php/database.php')?>
-
-<?php 
-	if(isset($_POST['update'])){
-		$data['name'] = $_POST['panel-name'];
-		$data['grade'] = $_POST['grade'];
-		$result = $con->update("interview_panel",$data,array('id'=>$_GET['interview-panel-id']));
-		
-		if($result){
-			$old_teachers = $con->select("teacher",array("interview_panel_id"=>$_GET['interview-panel-id']));
-			$teachers = array();
-			if($old_teachers){
-				$old_teachers = $old_teachers->fetchAll();
-				foreach ($old_teachers as $t) {
-					array_push($teachers, $t['id']);
-				}
-			}
-			try{
-				$con->db->beginTransaction();
-				foreach ($_POST as $key => $value) {
-					if(strpos($key,"teacher") === 0){
-						if (($k = array_search($value, $teachers)) !== false) {
-						    unset($teachers[$k]);
-						}else{
-							$result = $con->update("teacher",array("interview_panel_id"=>$_GET['interview-panel-id']),array("id"=>$value));
-							if($result->rowCount()!=1){
-								throw new PDOException("Update failed.",1);
-							}
-						}
-					}
-				}
-				if( count($teachers) > 0){
-					foreach ($teachers as $value) {
-						$query = "UPDATE `teacher` SET `interview_panel_id`=NUll WHERE `id`=${value}";
-						$result = $con->pure_query($query);
-						if($result->rowCount()!=1){
-							throw new PDOException("Update failed.",1);
-						}
-					}
-				}
-				$con->db->commit();
-				header("Location:interview_timetable.php?user_id=".$_GET['interview-panel-id']);
-			}catch(Exception $e){
-				$error = $e->getMessage();
-				$con->db->rollback();
-			}
-		}
-	}
-
-	if(isset($_GET['interview-panel-id'])){
-		$con->where(array('id'=>$_GET['interview-panel-id']));
-		$result_set = $con->select('interview_panel');
-		if($result_set){
-			$interview_panel = $result_set->fetch();
-			$con->where(array('interview_panel_id'=>$_GET['interview-panel-id']));
-			$interview_teachers = $con->select('teacher');
-			$interview_teachers = $interview_teachers->fetchAll();
-		}
-	}else{
-		header("Location:".set_url("pages/interview_panels_all.php"));
-	}
- ?>
-
-<?php require_once('../templates/header.php') ?>
-<?php require_once('../templates/aside.php') ?>
-
-
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 
 	<?php 
-		if(isset($error)){
+		if(isset($error) && !empty($error)){
 			echo "<p class='w-75 p-2 bg-red fg-white text-center'>";
 			echo $error;
 			echo "</p>";
@@ -80,13 +12,13 @@
 	<div>
 		<h2>View and Update Interview Panel</h2>
 	</div>
-	<form action="<?php echo set_url('pages/interview_panel_view.php'); if(isset($_GET['interview-panel-id'])){echo '?interview-panel-id='.$_GET['interview-panel-id'];} ?>" class="col-12" method="POST">
+	<form action="<?php echo set_url('interviewpanel/view/'.$interview_panel['id']); ?>" class="col-12" method="POST">
 		<div class="col-12 col-lg-6 p-3">
 			<fieldset>
 				<legend>Basic Info</legend>
 				<div class="form-group">
 					<label for="panel-id">Panel ID</label>
-					<input type="text" name="panel-id" id="panel-id" value="<?php if(isset($interview_panel['id'])){echo $interview_panel['id'];}else{ echo $next_id;} ?>" disabled="disabled">
+					<input type="text" name="panel-id" id="panel-id" value="<?php if(isset($interview_panel['id'])){echo $interview_panel['id'];}?>" disabled="disabled">
 				</div>
 
 				<div class="form-group">
@@ -172,4 +104,3 @@
 		</div>
 	</form>
 </div>
-<?php require_once("../templates/footer.php") ?>
