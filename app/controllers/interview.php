@@ -9,7 +9,8 @@
 		// set or update interview
 		public function set($admission_id){
 			$con = new Database();
-			$errors = [];
+			$error = "";
+			$info = "";
 			//when submit
 			if(isset($_POST['submit'])){
 				try{
@@ -37,8 +38,10 @@
 						}
 					}else{
 						$result = $con->update("interview",$data,array("admission_id"=>$_POST['admission-id']));
-						if(!$result || $result->rowCount() !== 1){
+						if(!$result){
 							throw new PDOException("Interview Update failed.", 1);
+						}else if(!$result || $result->rowCount() !== 1){
+							throw new PDOException("Nothing to update.", 1);
 						}
 					}
 					$info = "Set Interview successful..";
@@ -94,11 +97,298 @@
 					}
 				}
 			}
+			$data['error'] = $error;
+			$data['info'] = $info;
 			$data['timetables'] = $timetables;
 			$data['result'] = $result;
 			$data['valid_panels'] = $valid_panels;
 			$this->view_header_and_aside();
 			$this->load->view("admission/admission_set_interview",$data);
+			$this->load->view("templates/footer");
+		}
+
+		// get interview list
+		public function list(){
+			$con = new Database();
+
+			$time_map = ["1"=>"7.50a.m - 8.30a.m", "2"=>"8.30a.m - 9.10a.m", "3"=>"9.10a.m - 9.50a.m", "4"=> "9.50a.m - 10.30a.m", "5"=> "10.50a.m - 11.30a.m", "6"=>"11.30a.m - 12.10p.m", "7"=> "12.10p.m - 12.50p.m", "8"=>"12.50p.m - 1.30p.m"];
+
+			$con->orderBy("date");
+			$result_set = $con->select("interview");
+			if($result_set){
+				$data['result_set'] = $result_set;
+				$data['time_map'] = $time_map;
+			}else{
+				echo "query error";
+				exit();
+			}
+			$this->view_header_and_aside();
+			$this->load->view("interview/interview_list",$data);
+			$this->load->view("templates/footer");
+		}
+
+		public function view_admission($admission_id){
+			$con = new Database();
+			$error = "";
+			$field_errors = [];
+			// when submit the data
+			if(isset($_POST['submit'])){
+				$name_with_initials = addslashes($_POST['name-with-initials']);
+				$first_name = addslashes($_POST['first-name']);
+				$middle_name = addslashes($_POST['middle-name']);
+				$last_name = addslashes($_POST['last-name']);
+				$grade =addslashes($_POST['grade']);
+				$gender = addslashes($_POST['gender']);
+				$dob = addslashes($_POST['dob']);
+				$address = addslashes($_POST['address']);
+				$email = addslashes($_POST['email']);
+				if(!valid_email($email)){
+					$all_errors[3] = "Invalid student email address.";
+				}
+				$contact_number = addslashes($_POST['contact-number']);
+				$all_errors[5] = validate_contact_number($contact_number);
+
+				if(isset($_POST['already-have-account']) && $_POST['already-have-account'] == "yes"){
+					$already_have_account = 1;
+					$parent_account_id = $_POST['parent-account-id'];
+				}else{
+					$already_have_account = 0;
+					$parent_type = addslashes($_POST['parent-type']);
+					$father_name = addslashes($_POST['father-name']);
+					$father_occupation = addslashes($_POST['father-occupation']);
+					$father_contact_number =addslashes( $_POST['father-contact-number']);
+					$father_email = addslashes($_POST['father-email']);
+					$mother_name = addslashes($_POST['mother-name']);
+					$mother_occupation = addslashes($_POST['mother-occupation']);
+					$mother_contact_number = addslashes($_POST['mother-contact-number']);
+					$mother_email = addslashes($_POST['mother-email']);
+					$guardian_name = addslashes($_POST['guardian-name']);
+					$guardian_occupation = addslashes($_POST['guardian-occupation']);
+					$guardian_contact_number = addslashes($_POST['guardian-contact-number']);
+					$guardian_email = addslashes($_POST['guardian-email']);
+				}
+
+				$required_fields = array();
+				$required_fields['name-with-initials']=[0,50,1,"Name with initials"];
+				$required_fields['first-name']=[0,20,1,"First name"];
+				$required_fields['middle-name']=[0,50,0,"Middle name"];
+				$required_fields['last-name']=[0,20,1,"Last name"];
+				$required_fields['grade']=[1,2,1,"Grade"];
+				$required_fields['gender']=[1,6,1,"Gender"];
+				$required_fields['dob']=[10,10,1,"Dath of birth"];
+				$required_fields['address']=[0,100,1,"Address"];
+				$required_fields['email']=[0,100,1,"Email"];
+				$c_result = validate_contact_number($_POST['contact-number']);
+				if($c_result !== 1){
+					$field_errors['contact-number'] = $c_result;
+				}
+				if($already_have_account == 1){
+					$required_fields['parent-account-id']=[7,7,1,"Parent Account ID"];
+				}else{
+					if($parent_type == "father"){
+						$required_fields['father-name']=[0,50,1,"Father name"];
+						$required_fields['father-occupation']=[0,50,1,"Father Occupation"];
+						$c_result = validate_contact_number($_POST['father-contact-number']);
+						if($c_result !== 1){
+							$field_errors['father-contact-number'] = $c_result;
+						}
+						$required_fields['father-email']=[0,100,1,"Father Email"];
+					}else if($parent_type == "mother"){
+						$required_fields['mother-name']=[0,50,1,"Mother name"];
+						$required_fields['mother-occupation']=[0,50,1,"Mother Occupation"];
+						$c_result = validate_contact_number($_POST['mother-contact-number']);
+						if($c_result !== 1){
+							$field_errors['mother-contact-number'] = $c_result;
+						}
+						$required_fields['mother-email']=[0,100,1,"Mother email"];
+					}else{
+						$required_fields['guardian-name']=[0,50,1,"Guardian name"];
+						$required_fields['guardian-occupation']=[0,50,1,"Guardian Occupation"];
+						$c_result = validate_contact_number($_POST['guardian-contact-number']);
+						if($c_result !== 1){
+							$field_errors['guardian-contact-number'] = $c_result;
+						}
+						$required_fields['guardian-email']=[0,100,1,"Guardian email"];
+					}
+				}
+
+				$field_errors = array_merge($field_errors,check_input_fields($required_fields));
+
+				if($already_have_account == true){
+					$this->model("parent");
+					$result = $this->parent->set_by_id($parent_account_id);
+					if(!$result){
+						$field_errors['parent_account_id'] = "Parent id is not valid.";
+					}
+				}
+				if(empty($field_errors)){
+					$data = array();
+					 // $data["index_number"]= $index_number;
+					 $data["name_with_initials"]= $name_with_initials;
+					 $data["first_name"]= $first_name;
+					 $data["middle_name"]= $middle_name;
+					 $data["last_name"]= $last_name;
+					 $data["grade"]= $grade;
+					 $data["gender"]= $gender;
+					 $data["dob"]= $dob;
+					 $data["address"]= $address;
+					 $data["email"]= $email;
+					 $data["contact_number"]= $contact_number;
+					 $data['already_have_account'] = $already_have_account;
+					 if($already_have_account == 0){
+						$data['parent_type'] = $_POST["parent-type"];
+					 	if($parent_type == "father"){
+							 $data["parent_name"]= $father_name;
+							 $data["parent_occupation"]= $father_occupation;
+							 $data["parent_contact_number"]= $father_contact_number;
+							 $data["parent_email"]= $father_email;
+						}else if($parent_type == "mother"){
+							 $data["parent_name"]= $mother_name;
+							 $data["parent_occupation"]= $mother_occupation;
+							 $data["parent_contact_number"]= $mother_contact_number;
+							 $data["parent_email"]= $mother_email;
+
+						}else if($parent_type == "guardian"){
+							 $data["parent_name"]= $guardian_name;
+							 $data["parent_occupation"]= $guardian_occupation;
+							 $data["parent_contact_number"]= $guardian_contact_number;
+							 $data["parent_email"]= $guardian_email;
+						}
+						if(!valid_email($data['parent_email'])){
+							$field_errors["{$parent_type}_email"] = "Invalid {$parent_type} email address.";
+						}
+
+						$contact_errors = validate_contact_number($data['parent_contact_number']);
+						if($contact_errors !== 1){
+							$field_errors['{$parent_type}_contact_number'] = "Invalid {$parent_type} Contact Number.";
+						}
+					 }else{
+						$data['parent_account_id'] = $parent_account_id;
+					 	$data["parent_name"]= "";
+						$data["parent_occupation"]= "";
+						$data["parent_contact_number"]= "";
+						$data["parent_email"]= "";
+					 }
+					$data["state"] = "registered";
+					if(count($field_errors) === 0 ){
+						$con->db->beginTransaction();
+						$result = $con ->update('admission',$data,array("id"=>$admission_id));
+						if($result){
+							try{
+								if($data["already_have_account"] == 0){
+									$parent_data['name'] = $data["parent_name"];
+									$parent_data['type'] = $data["parent_type"];
+									$parent_data['occupation'] = $data["parent_occupation"];
+									$parent_data['address'] = $data["address"];
+									$parent_data['contact_number'] = $data["parent_contact_number"];
+									$parent_data['email'] = $data["parent_email"];
+									$result = $con->insert("parent",$parent_data);
+									if(!$result){
+										throw new PDOException('Faild to insert to parent table', 1 );
+									}
+									$con->get(array("id"));
+									$result = $con->select("parent",array("name"=>$parent_data['name'],"email"=>$parent_data["email"]));
+									if($result->rowCount() == 0){
+										throw new PDOException('Error when get parent id', 1 );
+									}else if($result->rowCount() == 2){
+										throw new PDOException('Already have parent account', 1 );
+									}
+									$parent_id = $result->fetch()['id'];
+									$user_data = array();
+									$user_data['email'] = $data["parent_email"];
+									$user_data['role'] = "parent";
+									$result = $con->insert("user",$user_data);
+									if(!$result){
+										throw new PDOException('Faild to insert  parent to user table', 1 );
+									}
+								}else{
+									$parent_id = $data["parent_account_id"];
+								}
+								$student_data["name_with_initials"] = $data["name_with_initials"];
+								$student_data["first_name"] = $data["first_name"];
+								$student_data["middle_name"] = $data["middle_name"];
+								$student_data["last_name"] = $data["last_name"];
+								$student_data["grade"] = $data["grade"];
+								$student_data["gender"] = $data["gender"];
+								$student_data["dob"] = $data["dob"];
+								$student_data["address"] = $data["address"];
+								$student_data["email"] = $data["email"];
+								$student_data["contact_number"] = $data["contact_number"];
+								$student_data["parent_id"] = $parent_id;
+
+								$result = $con->insert("student",$student_data);
+								if(!$result || $result->rowCount() ===0){
+									throw new PDOException('Faild to insert to student table', 1 );
+								}
+								$user_data = array();
+								$user_data['email'] = $data["email"];
+								$user_data['role'] = "student";
+								$result = $con->insert("user",$user_data);
+								if(!$result || $result->rowCount()===0){
+									throw new PDOException('Faild to insert student to user table', 1 );
+								}
+								$con->get(array("id"));
+								$result = $con->select("student",array("name_with_initials"=>$student_data['name_with_initials'],"email"=>$student_data["email"]));
+								if($result->rowCount() != 1){
+									throw new PDOException('Faild to get student id', 1 );
+								}
+								$student_id = $result->fetch()['id'];
+
+								$result = $con->update("interview",array("state"=>"interviewed"),array("admission_id"=>$admission_id));
+								if(!$result){
+									throw new PDOException("Faild to update interview state.",1);
+								}
+
+								$con->db->commit();
+								header("Location:". set_url("admission/admision_student_register"));
+							}catch(Exception $e){
+								$con->db->rollback();
+								$error = $e->getMessage();
+							}
+
+						}else{
+							$error = "Account creation failed.";
+						}
+					}
+
+				}
+			}
+
+			// view admission data
+			$result = $con->select("admission",array("id"=>$admission_id));
+			if(!$result ||  $result->rowCount() == 0){
+				echo "admission not found";
+				exit();
+			}else{
+				$result = $result->fetch();
+				if($result['already_have_account'] != 1){
+					$parent_type = $result['parent_type'];
+					switch ($parent_type) {
+						case 'father':
+							$result['father_name'] = $result['parent_name'];
+							$result['father_occupation'] = $result['parent_occupation'];
+							$result['father_contact_number'] = $result['parent_contact_number'];
+							$result['father_email'] = $result['parent_email'];
+							break;
+						case 'mother':
+							$result['mother_name'] = $result['parent_name'];
+							$result['mother_occupation'] = $result['parent_occupation'];
+							$result['mother_contact_number'] = $result['parent_contact_number'];
+							$result['mother_email'] = $result['parent_email'];
+							break;
+						default:
+							$result['guardian_name'] = $result['parent_name'];
+							$result['guardian_occupation'] = $result['parent_occupation'];
+							$result['guardian_contact_number'] = $result['parent_contact_number'];
+							$result['guardian_email'] = $result['parent_email'];
+							break;
+					}
+				}
+				$data['result'] = $result;
+			}
+			$data['error'] = $error;
+			$this->view_header_and_aside();
+			$this->load->view("interview/interview_admission_view",$data);
 			$this->load->view("templates/footer");
 		}
 	}

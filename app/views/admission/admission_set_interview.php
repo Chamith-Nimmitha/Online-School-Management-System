@@ -18,7 +18,7 @@
 			echo "</p>";
 		}
 	 ?>
-	<form action="<?php echo set_url('/pages/admission_set_interview.php?admission-id='.$_GET['admission-id'].'&back='.$_GET['back']) ?>" method="post" class="col-12 col-md-8">
+	<form action="<?php echo set_url('interview/set/'.$result['id']); ?>" method="post" class="col-12 col-md-8">
 		<fieldset>
 			<legend>Interview Info</legend>
 

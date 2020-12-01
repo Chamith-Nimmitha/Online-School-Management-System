@@ -18,7 +18,7 @@
 				$result = $this->load->user->get_user_data("user",$email);
 
 				if($result){
-					$_SESSION['role'] = $result['role'];
+					// $_SESSION['role'] = $result['role'];
 					$salt =$result['salt'];
 					$db_hashed_pass =$result['password'];
 					$user_hashed_pass = sha1($user_password.$salt);
