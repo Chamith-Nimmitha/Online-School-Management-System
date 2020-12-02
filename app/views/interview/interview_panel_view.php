@@ -10,7 +10,7 @@
 	 ?>
 
 	<div>
-		<h2>View and Update Interview Panel</h2>
+		<h2>Create and Update Interview Panel</h2>
 	</div>
 	<form action="<?php echo set_url('interviewpanel/view/'.$interview_panel['id']); ?>" class="col-12" method="POST">
 		<div class="col-12 col-lg-6 p-3">
@@ -88,7 +88,7 @@
 									<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 								</div>';
 						}
-					 ?>
+					?>
 				</div>
 
 				<div class=" form-group d-flex justify-content-end">
@@ -98,7 +98,7 @@
 				<div class="d-flex justify-content-end">
 					<?php 
 						echo '<button type="submit" class="btn btn-blue" name="update" id="update">update</button>';
-					 ?>
+					?>
 				</div>
 			</fieldset>
 		</div>

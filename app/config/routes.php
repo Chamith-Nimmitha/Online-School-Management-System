@@ -71,6 +71,8 @@
 	$routes['interviewpanel/list'] = "interviewpanel/list";
 	$routes['interviewpanel/delete/$1'] = "interviewpanel/delete/$1";
 	$routes['interviewpanel/view/$1'] = "interviewpanel/view_panel/$1";
+	$routes['interviewpanel/timetable/$1'] = "interviewpanel/timetable/$1";
+	$routes['interviewpanel/registration'] = "interviewpanel/view_panel";
 
 	// define as a global variable. Don't delete this
 	$GLOBALS['routes'] = $routes;

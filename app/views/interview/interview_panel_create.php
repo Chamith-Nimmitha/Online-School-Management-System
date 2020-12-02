@@ -1,63 +1,10 @@
-<?php include_once("session.php"); ?>
-<?php require_once('../php/database.php')?>
-
-<?php 
-	$next_id = $con->get_next_auto_increment("interview_panel");
-	$next_id = $next_id->fetch()['AUTO_INCREMENT'];
-
-	if(isset($_POST['create'])){
-		$data['name'] = $_POST['panel-name'];
-		$data['grade'] = $_POST['grade'];
-		$result = $con->insert("interview_panel",$data);
-
-		if($result){
-			foreach ($_POST as $key => $value) {
-				if(strpos($key,"teacher") === 0 && $value !== ""){
-					$result = $con->update("teacher",array("interview_panel_id"=>$next_id),array("id"=>$value));
-				}
-			}
-			if($result){
-				header("Location:interview_timetable.php?user_id=".$next_id);
-			}
-		}
-	}else if(isset($_POST['update'])){
-		$data['name'] = $_POST['panel-name'];
-		$data['grade'] = $_POST['grade'];
-		$result = $con->update("interview_panel",$data,array('id'=>$_GET['interview-panel-id']));
-
-		if($result){
-			foreach ($_POST as $key => $value) {
-				if(strpos($key,"teacher") === 0){
-					$result = $con->update("teacher",array("interview_panel_id"=>$next_id),array("id"=>$value));
-				}
-			}
-			header("Location:interview_timetable.php?user_id=".$_GET['interview-panel-id']);
-		}
-	}
-
-	if(isset($_GET['interview-panel-id'])){
-		$con->where(array('id'=>$_GET['interview-panel-id']));
-		$result_set = $con->select('interview_panel');
-		if($result_set){
-			$interview_panel = $result_set->fetch();
-			$con->where(array('interview_panel_id'=>$_GET['interview-panel-id']));
-			$interview_teachers = $con->select('teacher');
-			$interview_teachers = $interview_teachers->fetchAll();
-		}
-	}
- ?>
-
-<?php require_once('../templates/header.php')?>
-<?php require_once('../templates/aside.php') ?>
-
-
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 
 	<div>
-		<h2>Create New Interview Panel</h2>
+		<h2>Create and Update Interview Panel</h2>
 	</div>
-	<form action="<?php echo set_url('pages/interview_panel_create.php'); if(isset($_GET['interview-panel-id'])){echo '?interview-panel-id='.$_GET['interview-panel-id'];} ?>" class="col-12" method="POST">
+	<form action="<?php if(isset($interview_panel['id'])){echo set_url('interviewpanel/view/'.$interview_panel['id']);} else{ echo set_url('interviewpanel/registration'); }; ?>" class="col-12" method="POST">
 		<div class="col-12 col-lg-6 p-3">
 			<fieldset>
 				<legend>Basic Info</legend>
@@ -98,38 +45,42 @@
 				<div id="interview-teachers">
 					<?php 
 
-						if(isset($interview_teachers )){
+						if(isset($interview_teachers) && !empty($interview_teachers)){
 							$i =1;
 							foreach ($interview_teachers as $id) {
 								$row = '<div id="teacherid-'.$i.'" class="form-group interview-teacher-id">';
 								$row .= "<label for='teacher-".$i."'> Teacher ID (<code title=\"required\"> * </code>)</label>";
 								$row .= '<input type="text" name="teacher-'.$i.'" id="teacher-'.$i.'" required="required" value="';
-								$row .= $id['id'].'">';
+								$row .= $id['id'].'" >';
+								// $row .= '<input type="hidden" name="hidden-teacher-'.$i.'" id="hidden-teacher-'.$i.'" required="required" value="';
+								// $row .= $id['id'].'" >';
 								$row .= '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
-								$row .= '<input type="hidden" name="hidden-teacher-'.$i.'" id="hidden-teacher-'.$i.'"  value="';
-								$row .= $id['id'].'"';
-								$row .= ' oninput="validate_user_input(this,7,7,0)"></div>';
+								if($i >3){
+									$row .= '<button type="button" class="mt-2 float-right" onclick="removeElement(
+										\'teacherid-'.$i.'\')" required="required">-remove teacher</button>';
+								}
+								$row .= '</div>';
 								echo $row;
 								$i+=1;
 							}
 						}else{
 							echo '<div id="teacherid-1" class="form-group interview-teacher-id">
 									<label for="teacher-1">Teacher ID (<code title="required"> * </code>)</label>
-									<input type="text" name="teacher-1" id="teacher-1"  oninput="validate_user_input(this,7,7,0)">
+									<input type="text" name="teacher-1" id="teacher-1" required="required">
 									<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 								</div>
 								<div id="teacherid-2" class="form-group  interview-teacher-id">
 									<label for="teacherid-2">Teacher ID (<code title="required"> * </code>)</label>
-									<input type="text" name="teacher-2" id="teacher-2"  oninput="validate_user_input(this,7,7,0)">
+									<input type="text" name="teacher-2" id="teacher-2" required="required">
 									<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 								</div>
 								<div id="teacherid-3" class="form-group  interview-teacher-id">
 									<label for="teacherid-3">Teacher ID (<code title="required"> * </code>)</label>
-									<input type="text" name="teacher-3" id="teacher-3"  oninput="validate_user_input(this,7,7,0)">
+									<input type="text" name="teacher-3" id="teacher-3" required="required">
 									<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 								</div>';
 						}
-					 ?>
+					?>
 				</div>
 
 				<div class=" form-group d-flex justify-content-end">
@@ -149,5 +100,3 @@
 		</div>
 	</form>
 </div>
-
-<?php require_once("../templates/footer.php") ?>

@@ -14,23 +14,27 @@ function validate_teacher_id(){
 	xhr.open("GET","../php/getdata/get_teacher_info.php?id="+id,true);
 
 	xhr.onload = function(){
-		var response = xhr.responseText;
-		if(response.search("invalid") != -1){
-			if(ele.nextElementSibling != null && ele.nextElementSibling.nodeName == "P"){
-				var p_ele = ele.nextElementSibling;
-				p_ele.style.cssText = "display:inherit !important;";
-				if(p_ele.innerHTML.length == 0){
-					p_ele.innerHTML += "Invalid id.";
+		errors = validate_user_input(ele,7,7,1);
+		if(errors.length == 0 ){
+			var response = xhr.responseText;
+			console.log(response);
+			if(response.search("invalid") != -1){
+				if(ele.nextElementSibling != null && ele.nextElementSibling.nodeName == "P"){
+					var p_ele = ele.nextElementSibling;
+					p_ele.style.cssText = "display:inherit !important;";
+					if(p_ele.innerHTML.length == 0){
+						p_ele.innerHTML += "Invalid id.";
+					}
+					ele.parentElement.style.border = "1px solid red";
+					ele.parentElement.style.borderRadius = "5px";
 				}
-				ele.parentElement.style.border = "1px solid red";
-				ele.parentElement.style.borderRadius = "5px";
-			}
-		}else{
-			if(ele.nextElementSibling != null && ele.nextElementSibling.nodeName == "P"){
-				var p_ele = ele.nextElementSibling;
-				p_ele.style.cssText = "display:none !important;";
-				p_ele.innerHTML = "";
-				ele.parentElement.style.border = "none";
+			}else{
+				if(ele.nextElementSibling != null && ele.nextElementSibling.nodeName == "P"){
+					var p_ele = ele.nextElementSibling;
+					p_ele.style.cssText = "display:none !important;";
+					p_ele.innerHTML = "";
+					ele.parentElement.style.border = "none";
+				}
 			}
 		}
 	}
