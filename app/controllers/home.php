@@ -172,10 +172,20 @@
 			foreach ($school as $name => $value) {
 				//$result = $con->insert("website_data",array("category"=>"school","name"=>$name, "value"=>$value));
 				//if(!$result){
-					$result = $con->update("website_data",array("value"=>$value),array("name"=>$name));
-					
-
 				//}
+				
+				//$result = $con->update("website_data",array("value"=>$value),array("name"=>$name));
+				$con->db->beginTransaction();
+				try {
+						$result = $con->update("website_data",array("value"=>$value),array("name"=>$name));
+						if(!$result || $result->rowCount() ===0){
+							throw new PDOException('Failed to update '.$name, 1 );
+				}	
+					$con->db->commit();	
+				}catch (Exception $e) {
+					$con->db->rollback();
+					$error = $e->getMessage();
+				}
 			}
 			
 			$info['data']="Updated Successfully";

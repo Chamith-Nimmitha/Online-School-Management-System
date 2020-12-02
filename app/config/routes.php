@@ -35,7 +35,7 @@
 
 	// teacher routes
 	$routes['teacher/list'] = "teacher/teacher_list_view";
-	$routes['teacher/registration'] = "teacher/teacher_registration_form";
+	$routes['teacher/registration'] = "teacher/new_teacher";
 	$routes['teacher/update'] = "teacher/teacher_list_update";
 
 	//classroom routes
