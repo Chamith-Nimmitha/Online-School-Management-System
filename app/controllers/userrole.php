@@ -24,10 +24,11 @@
 
 			// get user role permission
 			if(!isset($_POST['user-role-id'])){
-				$permissions = $this->load->userrole->get_permissions($user_roles[0]['id']);
+				$user_role_id = $user_roles[0]['id'];
 			}else{
-				$permissions = $this->load->userrole->get_permissions($_POST['user-role-id']);
+				$user_role_id = $_POST['user-role-id'];
 			}
+			$permissions = $this->load->userrole->get_permissions($user_role_id);
 
 			if(!$permissions){
 				echo "Permissions not found.";
@@ -37,7 +38,7 @@
 			$data['user_roles'] = $user_roles;
 			$data['models'] = $models;
 			$data['permissions'] = $permissions;
-
+			$data['user_role_id'] = $user_role_id;
 			$this->view_header_and_aside();
 			$this->load->view("admin/user_role_all",$data);
 			$this->load->view("templates/footer");

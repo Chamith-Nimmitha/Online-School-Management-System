@@ -12,7 +12,7 @@
 				<select name="user-role-id" id="user-role-id">
 					<?php foreach ($user_roles as $role) {?>
 						<option value="<?php echo $role['id']; ?>"
-							 <?php if($user_roles[0]['id'] == $role['id']){echo "checked='checked'";} ?>><?php echo $role['name']; ?></option>
+							 <?php if($user_role_id == $role['id']){echo "selected='selected'";}?> ><?php echo $role['name']; ?></option>
 					<?php } ?>
 				</select>
 			</div>
