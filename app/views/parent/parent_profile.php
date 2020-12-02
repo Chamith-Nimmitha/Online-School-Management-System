@@ -17,11 +17,11 @@
 	</div>
 
 	<div class="col-12">
-			<form action="<?php echo set_url('profile'); ?>" method="post" class="col-12" enctype="multipart/form-data">
+			<form action="<?php if(isset($id) && !empty($id)){echo set_url('profile/parent').'/'.$id; }else{echo set_url('profile');} ?>" method="post" class="col-12" enctype="multipart/form-data">
 				<div class="col-4 flex-col d-none d-md-flex align-items-center"  style=" padding-top: 100px;background: #ccf;">
 					<div  class="col-8">
 						<div  style="position: relative;">
-							<img src="<?php echo set_url('public/uploads/parent_profile_photo/'.$_SESSION['profile_photo']); ?>" alt="profile photo"  onclick="upload_profile_photo('profile-photo')" class="col-12">
+							<img src="<?php echo set_url('public/uploads/parent_profile_photo/'.$result['profile_photo']); ?>" alt="profile photo"  onclick="upload_profile_photo('profile-photo')" class="col-12">
 							<label for="profile-photo" class="" style="position: absolute; bottom: 0px; right: 0px;">
 								<img src="<?php echo set_url("public/assets/img/camera.png"); ?>" alt="upload photo" style="width: 50px; height: 50px; cursor: pointer;">
 							</label>
@@ -39,11 +39,11 @@
 				<div style="background: #88f;" class="col-12 col-md-8 d-flex flex-col align-items-center">
 						<div class="form-group ">
 							<label for="name-with-initials">Name With Initials</label>
-							<input type="text"  placeholder="Name With Initials" value="<?php if(isset($result)){echo htmlspecialchars(stripslashes($result['name']));} ?>" oninput="validate_user_input(this,1,50,1)" disabled="disabled">
+							<input type="text" id="name-with-initials" name="name-with-initials"  placeholder="Name With Initials" value="<?php if(isset($result)){echo htmlspecialchars(stripslashes($result['name']));} ?>" oninput="validate_user_input(this,1,50,1)" <?php if(!$is_admin){echo "disabled='disabled'";}?>>
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>
 						<div class="form-group ">
-							<label for="address">Occupation</label>
+							<label for="occupation">Occupation</label>
 							<input type="text" name="occupation" id="occupation" placeholder="Occupation" value="<?php if(isset($result)){echo htmlspecialchars(stripslashes($result['occupation']));} ?>"required="required" oninput="validate_user_input(this,0,50,1)">
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>

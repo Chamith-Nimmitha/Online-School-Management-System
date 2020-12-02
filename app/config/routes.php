@@ -54,13 +54,15 @@
 	$routes['student/list'] = "student/list";
 	$routes['student/timetable/view'] = "student/timetable_view";
 	$routes['student/timetable/view/$1'] = "student/timetable_view/$1";
-	$routes['profile/$1/$2'] = "user/profile/$1/$2";
 	$routes['student/exam/$1'] = "student/exam/$1";
 	$routes['student/delete/$1'] = "admin/student_delete/$1";
 
+	//admin route
+	$routes['profile/$1/$2'] = "user/profile/$1/$2";
+	
 	// parent routes
-		//write here
-
+	$routes['parent/list'] = "Parents/list";
+	
 	// interview routes
 	$routes['interview/set/$1'] = "interview/set/$1";
 	$routes['interview/list'] = "interview/list";
