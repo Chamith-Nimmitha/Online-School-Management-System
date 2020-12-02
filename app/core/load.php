@@ -12,8 +12,12 @@
 			}
 		}
 
-		protected function model($model_name){
-			$file = MODELS.$model_name.".php";
+		protected function model($model_name,$file_name=""){
+			if(!empty($file_name)){
+				$file = MODELS.$file_name.".php";
+			}else{
+				$file = MODELS.$model_name.".php";
+			}
 			if(file_exists($file)){
 				require_once($file);
 				$name = ucfirst($model_name)."Model";
