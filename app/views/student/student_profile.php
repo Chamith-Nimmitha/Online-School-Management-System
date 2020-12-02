@@ -39,27 +39,27 @@
 				<div style="background: #88f;" class="col-12 col-md-8 d-flex flex-col align-items-center">
 						<div class="form-group ">
 							<label for="name-with-initials">Name With Initials</label>
-							<input type="text"  placeholder="Name With Initials" value="<?php if(isset($result)){echo htmlspecialchars(stripslashes($result['name_with_initials']));} ?>" oninput="validate_user_input(this,1,50,1)" disabled="disabled">
+							<input type="text" id="name-with-initials" name="name-with-initials" placeholder="Name With Initials" value="<?php if(isset($result)){echo htmlspecialchars(stripslashes($result['name_with_initials']));} ?>" oninput="validate_user_input(this,1,50,1)" <?php if(!$is_admin){echo "disabled='disabled'";}?>>
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>
 						<div class="form-group ">
 							<label for="first-name">First Name</label>
-							<input type="text" placeholder="First Name" value="<?php if(isset($result)){ echo htmlspecialchars(stripslashes($result['first_name']));} ?>" oninput="validate_user_input(this,1,20,1)"  disabled="disabled">
+							<input type="text" id="first-name" name="first-name" placeholder="First Name" value="<?php if(isset($result)){ echo htmlspecialchars(stripslashes($result['first_name']));} ?>" oninput="validate_user_input(this,1,20,1)"  <?php if(!$is_admin){echo "disabled='disabled'";}?>>
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>
 						<div class="form-group ">
 							<label for="middle-name">Middle Name</label>
-							<input type="text" placeholder="Middle Name" value="<?php if(isset($result)){ echo htmlspecialchars(stripslashes($result['middle_name']));} ?>" oninput="validate_user_input(this,1,50,1)"  disabled="disabled">
+							<input type="text" id="middle-name" name="middle-name" placeholder="Middle Name" value="<?php if(isset($result)){ echo htmlspecialchars(stripslashes($result['middle_name']));} ?>" oninput="validate_user_input(this,0,50,0)"  <?php if(!$is_admin){echo "disabled='disabled'";}?>>
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>
 						<div class="form-group ">
 							<label for="last-name">Last Name</label>
-							<input type="text" placeholder="Last Name" value="<?php if(isset($result)){echo  htmlspecialchars(stripslashes($result['last_name']));} ?>" oninput="validate_user_input(this,1,20,1)"  disabled="disabled">
+							<input type="text" id="last-name" name="last-name" placeholder="Last Name" value="<?php if(isset($result)){echo  htmlspecialchars(stripslashes($result['last_name']));} ?>" oninput="validate_user_input(this,1,20,1)"  <?php if(!$is_admin){echo "disabled='disabled'";}?>>
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>
 						<div class="form-group ">
 							<label for="grade">Grade</label>
-							<select  disabled="disabled">
+							<select name="grade" id="grade"  <?php if(!$is_admin){echo "disabled='disabled'";}?>>
 								<option value="1" <?php if(isset($result) && $result['grade']== '1'){ "selected='selected'";} ?>>1</option>
 								<option value="2" <?php if(isset($result) && $result['grade']== '2'){echo "selected='selected'";} ?>>2</option>
 								<option value="3" <?php if(isset($result) && $result['grade']== '3'){echo "selected='selected'";} ?>>3</option>
@@ -78,8 +78,8 @@
 						<div class="form-group ">
 							<label for="gender">Gender</label>
 							<div class="d-flex">
-								<label for="male" class="w-25"><input type="radio" value="M" <?php if(isset($result) && $result['gender'] == "M"){echo "checked='checked'";} ?>  disabled="disabled">Male</label>
-								<label for="female" class="w-25"><input type="radio" value="F" <?php if(isset($result) && $result['gender'] == "F"){echo "checked='checked'";} ?>  disabled="disabled">Female</label>
+								<label for="male" class="w-25"><input type="radio" id="male" name="gender" value="M" <?php if(isset($result) && $result['gender'] == "M"){echo "checked='checked'";} ?>  <?php if(!$is_admin){echo "disabled='disabled'";}?>>Male</label>
+								<label for="female" class="w-25"><input type="radio" id="female" name="gender" value="F" <?php if(isset($result) && $result['gender'] == "F"){echo "checked='checked'";} ?>  <?php if(!$is_admin){echo "disabled='disabled'";}?>>Female</label>
 							</div>
 						</div>
 						<div class="form-group ">

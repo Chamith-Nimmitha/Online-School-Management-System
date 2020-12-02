@@ -9,7 +9,7 @@
 		private $address;
 		private $contact_number;
 		private $email;
-		private $profile_id;
+		private $profile_photo;
 		private $state;
 		// set basic database info
 		public function __construct(){
@@ -80,7 +80,7 @@
 			$data["address"] = $this->address;
 			$data["contact_number"] = $this->contact_number;
 			$data["email"] = $this->email;
-			$data["profile_id"] = $this->profile_id;
+			$data["profile_photo"] = $this->profile_photo;
 			$data["state"] = $this->state;
 			return $data;
 		}

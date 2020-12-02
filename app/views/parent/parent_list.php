@@ -1,17 +1,3 @@
-<?php require_once( realpath(dirname(__FILE__)). "/../php/common.php" ); ?>
-<?php require_once( realpath(dirname(__FILE__)). "/../php/database.php" ); ?>
-<?php 
-
-	$restul_set = $con->select("parent");
-	if($restul_set){
-		$restul_set = $restul_set->fetchAll();
-	}
-
-
- ?>
-
-<?php require_once( realpath(dirname(__FILE__)). "/../templates/header.php" ); ?>
-<?php require_once( realpath(dirname(__FILE__)). "/../templates/aside.php" ); ?>
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 	<div class="mt-5">
@@ -52,18 +38,18 @@
 					</tr>
 				</thead>
 				<tbody>
-				<?php if($restul_set && !empty($restul_set)){
-					foreach ($restul_set as $restul) { ?>
+				<?php if($result_set && !empty($result_set)){
+					foreach ($result_set as $result) { ?>
 						<tr>
-							<td><?php echo $restul['id']; ?></td>
-							<td><?php echo $restul['name']; ?></td>
-							<td><?php echo $restul['type']; ?></td>
-							<td><?php echo $restul['occupation']; ?></td>
-							<td><?php echo $restul['email']; ?></td>
-							<td><?php echo $restul['contact_number']; ?></td>
+							<td><?php echo $result['id']; ?></td>
+							<td><?php echo $result['name']; ?></td>
+							<td><?php echo $result['type']; ?></td>
+							<td><?php echo $result['occupation']; ?></td>
+							<td><?php echo $result['email']; ?></td>
+							<td><?php echo $result['contact_number']; ?></td>
 							<td>
 								<div>
-									<a href="<?php echo set_url('pages/parent_profile.php',array('parent_id'=>$restul['id'])); ?>" class="btn btn-blue t-d-none">profile</a>
+									<a href="<?php echo set_url('profile/parent/'.$result['id']); ?>" class="btn btn-blue t-d-none">profile</a>
 								</div>
 							</td>
 							<td>
@@ -83,4 +69,3 @@
 
 	</div>
 </div>
-<?php require_once( realpath(dirname(__FILE__)). "/../templates/footer.php" ); ?>

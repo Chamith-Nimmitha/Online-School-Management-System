@@ -87,11 +87,14 @@
 		}
 
 		public function profile($role="",$id=""){
-			if(empty($role)){
-				$role = $_SESSION['role'];
-			}
 			if( empty($id)){
 				$id = $_SESSION['user_id'];
+				$role = $_SESSION['role'];
+			}
+			if($_SESSION['role'] === "admin"){
+				$is_admin = TRUE;
+			}else{
+				$is_admin = FALSE;
 			}
 			$this->load->model($role);
 			$result = $this->load->{$role}->set_by_id($id);
@@ -102,13 +105,25 @@
 				switch ($role) {
 					case 'student':
 						if(isset($_POST['submit'])){
+							if($_SESSION['role'] === "admin"){
+								$data['name_with_initials'] = addslashes($_POST['name-with-initials']);
+								$data['first_name'] = addslashes($_POST['first-name']);
+								$data['middle_name'] = addslashes($_POST['middle-name']);
+								$data['last_name'] = addslashes($_POST['last-name']);
+								$data['grade'] = addslashes($_POST['grade']);
+								$data['gender'] = addslashes($_POST['gender']);
+								$required_fields["name-with-initials"]=[0,50,1,"Name with intials"];
+								$required_fields["first-name"]=[0,20,1,"First Name"];
+								$required_fields["middle-name"]=[0,50,0,"Middle Name"];
+								$required_fields["last-name"]=[0,50,1,"Last Name"];
+							}
 							$data['address'] = addslashes($_POST['address']);
 							$data['email'] = addslashes($_POST['email']);
 							$data['contact_number'] = $_POST['contact-number'];
 
 							$required_fields = array(
 								"address"=>[0,100,1,"Address"],
-								"email"=>[0,100,1,"Email"],
+								"email"=>[0,100,1,"Email"]
 							);
 							$field_errors =check_input_fields($required_fields);
 							$c_result = validate_contact_number($_POST['contact-number']);
@@ -119,6 +134,17 @@
 						break;		
 					case 'teacher':
 						if(isset($_POST['submit'])){
+							if($_SESSION['role'] === "admin"){
+								$data['name_with_initials'] = addslashes($_POST['name-with-initials']);
+								$data['first_name'] = addslashes($_POST['first-name']);
+								$data['middle_name'] = addslashes($_POST['middle-name']);
+								$data['last_name'] = addslashes($_POST['last-name']);
+								$data['gender'] = addslashes($_POST['gender']);
+								$required_fields["name-with-initials"]=[0,50,1,"Name with intials"];
+								$required_fields["first-name"]=[0,20,1,"First Name"];
+								$required_fields["middle-name"]=[0,50,0,"Middle Name"];
+								$required_fields["last-name"]=[0,50,1,"Last Name"];
+							}
 							$data['address'] = addslashes($_POST['address']);
 							$data['email'] = addslashes($_POST['email']);
 							$data['contact_number'] = $_POST['contact-number'];
@@ -156,14 +182,18 @@
 
 					case 'parent':
 						if(isset($_POST['submit'])){
+							if($_SESSION['role'] === "admin"){
+								$data['name'] = addslashes($_POST['name-with-initials']);
+							}
 							$data['occupation'] = addslashes($_POST['occupation']);
 							$data['address'] = addslashes($_POST['address']);
 							$data['email'] = addslashes($_POST['email']);
 							$data['contact_number'] = $_POST['contact-number'];
+							$required_fields["name-with-initials"]=[0,50,1,"Name with intials"];
 
 							$required_fields = array(
 								"address"=>[0,100,1,"Address"],
-								"email"=>[0,100,1,"Email"],
+								"email"=>[0,100,1,"Email"]
 							);
 							$field_errors =check_input_fields($required_fields);
 							$c_result = validate_contact_number($_POST['contact-number']);
@@ -208,14 +238,14 @@
 			$this->view_header_and_aside();
 
 			// load profile page
-			$result = $this->load->{$role}->set_by_id($id);
-			$data = $this->load->{$role}->get_data();
+			$this->load->{$role}->set_by_id($id);
+			$result = $this->load->{$role}->get_data();
 			if(!empty($field_errors)){
-				$this->load->view("{$role}/{$role}_profile",["result"=>$data,"field_errors"=>$field_errors,"id"=>$id]);
+				$this->load->view("{$role}/{$role}_profile",["result"=>$result,"field_errors"=>$field_errors,"id"=>$id,"is_admin"=>$is_admin]);
 			}else if(isset($info) && !empty($info)){
-				$this->load->view("{$role}/{$role}_profile",["result"=>$data,"info"=>$info,"id"=>$id]);
+				$this->load->view("{$role}/{$role}_profile",["result"=>$result,"info"=>$info,"id"=>$id,"is_admin"=>$is_admin]);
 			}else{
-				$this->load->view("{$role}/{$role}_profile",["result"=>$data,"id"=>$id]);
+				$this->load->view("{$role}/{$role}_profile",["result"=>$result,"id"=>$id,"is_admin"=>$is_admin]);
 			}
 			$this->load->view("templates/footer");
 		}
