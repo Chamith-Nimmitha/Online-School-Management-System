@@ -220,7 +220,8 @@
 		}
 
 		public function get_next_auto_increment($tablename){
-			$this->query = "SELECT AUTO_INCREMENT FROM `information_schema`.`TABLES` WHERE `TABLE_SCHEMA` = '".$GLOBALS['dbname']."' AND `TABLE_NAME` = '".$tablename."'";
+			global $db_config;
+			$this->query = "SELECT AUTO_INCREMENT FROM `information_schema`.`TABLES` WHERE `TABLE_SCHEMA` = '".$db_config['dbname']."' AND `TABLE_NAME` = '".$tablename."'";
 
 			$this->pre_query = $this->query;
 			$result = $this->db->query($this->query);

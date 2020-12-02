@@ -1,142 +1,3 @@
-<?php include_once("session.php"); ?>
-<?php require_once('../php/common.php') ?>
-<?php require_once('../php/database.php') ?>
-
-
-<?php 
-	
-	$errors = array();
-	$info = array();
-	if(!isset($_GET['user_id'])){
-		header("Location:".set_url("pages/interview_panel_create.php"));
-	}
-
-	$user_id = $_GET['user_id'];
-	$valid = $con->select("interview_panel",array("id"=>$user_id));
-	if($valid && $valid->rowCount() !== 1){
-		header("Location:".set_url("pages/interview_panel_create.php"));
-	}
-	if(isset($_POST['submit'])){
-		$con->db->beginTransaction();
-		try{
-			$data = [];
-			$data['type'] = "interview";
-			$data['user_id'] = $user_id;
-			$already_exist = $con->select("normal_timetable",$data);
-			if($already_exist->rowCount() > 0){
-				$result = false;
-			}else{
-				$result = $con->insert("normal_timetable",$data);
-				if(!$result && $result->rowCount() !== 1){
-					throw new PDOException("Timetable Creation failed",1);
-				}
-			}
-
-			if($result){
-				$con->get(array("id"));
-				$result = $con->select("normal_timetable",$data);
-				if($result && $result->rowCount() === 1){
-					$timetable_id = $result->fetch()['id'];
-				}else{
-					throw new PDOException("Timetable Creation failed.",1);
-				}
-
-				$days = ['mon', "tue" , "wed", "thu", "fri"];
-
-
-				foreach ($days as $day) {
-					for($i=1; $i <9; $i++){
-						$data = [];
-						$data['timetable_id'] = $timetable_id;
-						$data['day'] = $day;
-						$data['period'] = $i;
-						if($_POST[$day."-".$i] == 0){
-							$data['task'] = 0;
-						}else{
-							$data['task'] = 1;
-						}
-						$result = $con->insert("normal_day",$data);
-						if(!$result && $result->rowCount() != 1){
-							throw new PDOException("Timetable data store failed.",1);
-						}
-					}
-				}
-				array_push($info,"Timetable create successful.");
-			}else{
-				$con->get(array("id"));
-				$result = $con->select("normal_timetable",array("user_id"=>$user_id,"type"=>"interview"));
-				if($result && ($result->rowCount() > 0)){
-					if(!$result && $result->rowCount() != 1){
-						throw new PDOException("Timetable not found.");
-					}
-					$timetable_id = $result->fetch()['id'];
-					$days = ['mon', "tue" , "wed", "thu", "fri"];
-					foreach ($days as $day) {
-						for($i=1; $i <9; $i++){
-							$data = [];
-							if($_POST[$day."-".$i] == 0){
-								$data['task'] = 0;
-							}else{
-								$data['task'] = 1;
-							}
-							$result = $con->update("normal_day",$data,array("timetable_id"=>$timetable_id,"day"=>$day,"period"=>$i));
-							if(!$result && $result->rowCount() != 1){
-								throw new PDOException("Timetable Update failed.",1);
-							}
-						}
-					}
-				}
-				array_push($info,"Timetable update successful.");
-			}
-			$con->db->commit();
-		}catch(Exception $e){
-			$con->db->rollback();
-			array_push($errors,$e->getMessage());
-		}
-	}
-
-
-	$con->db->beginTransaction();
-	try{
-		$con->get(array("id"));
-		$timetable= $con->select('normal_timetable',array("user_id"=>$user_id,"type"=>"interview"));
-		if( !$timetable || $timetable->rowCount() == 0){
-			throw new Exception("Timetable Not Found.",1);
-		}
-		$timetable = $timetable->fetch();
-		function getData($day){
-			global $con;
-			global $timetable;
-			$result_set = $con->select('normal_day',array("timetable_id"=>$timetable['id'],"day"=>$day));
-			if(!$result_set || $result_set->rowCount() == 0){
-				throw new PDOException("Get data from databse failed.",1);
-			}
-
-			$result_set = $result_set->fetchAll();
-			$r = array();
-			if($result_set){
-				foreach ($result_set as $result) {
-					$r[$result['period']] = $result['task'];
-				}
-				return $r;
-			}
-		}
-
-		$mon = getData("mon");
-		$tue = getData("tue");
-		$wed = getData("wed");
-		$thu = getData("thu");
-		$fri = getData("fri");
-		$con->db->commit();
-	}catch(PDOException $e){
-		array_push($errors, $e->getMessage());
-		$con->db->rollback();
-	}catch(Exception $e){
-
-	}
- ?>
-<?php require_once('../templates/header.php') ?>
-<?php require_once('../templates/aside.php') ?>
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 
@@ -161,7 +22,7 @@
 		<h2>Define Interview Timetable</h2>
 
 		<div id="interview-timetable" class="mt-5 col-9">
-			<form action="<?php  echo set_url('pages/interview_timetable.php?user_id='.$user_id);?>" class="col-12" method="post">
+			<form action="<?php  echo set_url('interviewpanel/timetable/').$panel_id;?>" class="col-12" method="post">
 				<table class="w-100">
 					<caption>Interview panel timetable</caption>
 					<thead>
@@ -254,6 +115,3 @@
 		
 	</div>
 </div>
-
-
-<?php require_once('../templates/footer.php') ?>

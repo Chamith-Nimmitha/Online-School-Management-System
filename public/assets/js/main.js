@@ -212,7 +212,7 @@ function interview_add_teacher(element,target){
 	input.setAttribute("type","text");
 	input.setAttribute("name","teacherid-" + num);
 	input.setAttribute("id","teacherid-" + num);
-	input.setAttribute("oninput","validate_user_input(this,7,7,1)");
+	input.setAttribute("oninput","validate_teacher_id(this,7,7,1)");
 	input.addEventListener("input",validate_teacher_id);
 	var p = '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
 	var button = `<button type="button" class="mt-2 float-right" onclick="removeElement(
