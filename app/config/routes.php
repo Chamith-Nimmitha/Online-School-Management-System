@@ -25,6 +25,7 @@
 	$routes['dashboard'] = "user/dashboard";
 	$routes['dashboard/$1'] = "user/dashboard/$1";
 	$routes['profile'] = "user/profile";
+	$routes['profile/$1/$2'] = "user/profile/$1/$2";
 
 	// admission routes
 	$routes['student/registration'] = "admission/new_admission";
@@ -57,9 +58,9 @@
 	$routes['student/exam/$1'] = "student/exam/$1";
 	$routes['student/delete/$1'] = "admin/student_delete/$1";
 
-	//admin route
-	$routes['profile/$1/$2'] = "user/profile/$1/$2";
-	
+	//admin route --> only admin can access
+	$routes['userrole/permission'] = "userrole/permission";
+
 	// parent routes
 	$routes['parent/list'] = "Parents/list";
 	
@@ -75,6 +76,7 @@
 	$routes['interviewpanel/view/$1'] = "interviewpanel/view_panel/$1";
 	$routes['interviewpanel/timetable/$1'] = "interviewpanel/timetable/$1";
 	$routes['interviewpanel/registration'] = "interviewpanel/view_panel";
+
 
 	// define as a global variable. Don't delete this
 	$GLOBALS['routes'] = $routes;
