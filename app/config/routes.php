@@ -72,7 +72,8 @@
 	$routes['userrole/create'] = "userrole/create";
 
 	// parent routes
-	$routes['parent/list'] = "Parents/list";
+	$routes['parent/list'] = "parents/list";
+	$routes['parent/student/list'] = "parents/student_list";
 	
 	// interview routes
 	$routes['interview/set/$1'] = "interview/set/$1";
