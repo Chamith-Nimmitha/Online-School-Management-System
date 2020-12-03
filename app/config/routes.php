@@ -80,6 +80,11 @@
 	$routes['interviewpanel/timetable/$1'] = "interviewpanel/timetable/$1";
 	$routes['interviewpanel/registration'] = "interviewpanel/view_panel";
 
+	// attendance routes
+	$routes['attendance/classroom/list'] = "attendance/classroom_list";
+	$routes['attendance/classroom/view/$1'] = "attendance/classroom_view/$1";
+	$routes['attendance/teacher/list'] = "attendance/teacher_list";
+	$routes['attendance/teacher/view/$1'] = "attendance/teacher_view/$1";
 
 	// define as a global variable. Don't delete this
 	$GLOBALS['routes'] = $routes;

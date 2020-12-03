@@ -62,15 +62,15 @@
 							<li class="nav-item aside-li" id="admission-li"><a href="<?php echo set_url('admission/list/all'); ?>" class="nav-link">Admissions</a>
 							</li>
 							<li class="nav-item aside-li" id="attendance-li">
-								<a href="<?php echo set_url('attendace/classroom/list'); ?>" class="nav-link">Attendance</a>
+								<a href="<?php echo set_url('attendance/classroom/list'); ?>" class="nav-link">Attendance</a>
 								<button class="toggle-button" target="attendance-nav">
 									<img src="<?php echo set_url('public/assets/img/close-menu.png'); ?>" width="20px" alt="">
 								</button>
 
 								<nav class="nav sub-nav no-collapsed" id="attendance-nav">
 									<ul class="d-flex flex-col">
-										<li class="nav-item"><a href="<?php echo set_url('attendace/classroom/list'); ?>" class="nav-link" parent-li="attendance-li">Students Attendance</a></li>
-										<li class="nav-item"><a href="<?php echo set_url('attendace/teacher/list'); ?>" class="nav-link" parent-li="attendance-li">Teachers Attendance</a></li>
+										<li class="nav-item"><a href="<?php echo set_url('attendance/classroom/list'); ?>" class="nav-link" parent-li="attendance-li">Students Attendance</a></li>
+										<li class="nav-item"><a href="<?php echo set_url('attendance/teacher/list'); ?>" class="nav-link" parent-li="attendance-li">Teachers Attendance</a></li>
 									</ul>
 								</nav>
 							</li>

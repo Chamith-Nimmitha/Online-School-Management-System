@@ -1,16 +1,3 @@
-<?php include_once("session.php"); ?>
-<?php require_once("../php/classes/classroom_info.class.php"); ?>
-
-<?php
-    $classroom_info_obj = new ClassroomInfo();
-    $result_set = $classroom_info_obj->get_classroom_list();
-?>
-
-<?php require_once("../templates/header.php") ;?>
-<?php require_once("../templates/aside.php"); ?>
-
-
-
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 
 
@@ -89,7 +76,7 @@
                         <td><?php echo $result['class_teacher_id']; ?></td>
 						<td class="text-center">
 							<div>
-                				<a class="btn btn-blue" href="classroom_attendance_view.php?classroom-id=<?php echo $result['id']; ?> ">View</a>
+                				<a class="btn btn-blue" href="<?php echo set_url('attendance/classroom/view/'.$result['id']); ?>">View</a>
 		    				</div>
 						</td>
 					</tr>
@@ -105,5 +92,3 @@
 
 		</div>  
 </div>
-
-<?php require_once("../templates/footer.php") ;?>

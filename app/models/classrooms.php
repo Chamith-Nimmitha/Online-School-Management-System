@@ -18,6 +18,7 @@
 			}
 		}
 
+		// this function can't use directly. Use get_classroom_list() method.
 		public function get_all_data($result_set){
 			require_once(MODELS."classroom.php");
 			if($result_set && !empty($result_set)){

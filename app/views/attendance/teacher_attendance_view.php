@@ -1,15 +1,3 @@
-<?php require_once( realpath(dirname(__FILE__)). "/../php/common.php" ); ?>
-<?php require_once( realpath(dirname(__FILE__)). "/../php/database.php" ); ?>
-<?php require_once( realpath(dirname(__FILE__)). "/../php/pagination.php" ); ?>
-
-<?php 
-
- ?>
-<?php require_once("../templates/header.php") ;?>
-<?php require_once("../templates/aside.php"); ?>
-
-
-
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 
 	<div class="col-12 flex-col justify-content-center align-items-center">
@@ -112,17 +100,9 @@
                 </table>
                 <div class="w-100 p-1"></div>
     		</div>
-            <div>
-                <p class="mt-3 bg-green float-left p-1 pl-3 pr-3"><code><?php    echo 100; ?> results found.</code> </p>  
-                <div id="pagination-div" class="float-left w-100">
-                    <?php display_pagination(100,1,10); ?>
-                </div>
-                
-            </div>
             <div class="form-group d-flex flex-row w-90 justify-content-end">
     	        <button type="submit" name="submit" class="btn btn-blue w-auto m-1">Download as pdf</button>
             </div>
         </form>
     </div>
-
-<?php require_once("../templates/footer.php") ;?>
+</div>

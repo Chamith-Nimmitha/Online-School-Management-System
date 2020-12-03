@@ -1,18 +1,3 @@
-<?php require_once( realpath(dirname(__FILE__)). "/../php/common.php" ); ?>
-<?php require_once( realpath(dirname(__FILE__)). "/../php/database.php" ); ?>
-
-<?php 
-    $con->get(array("id","name_with_initials"));
-    $result_set = $con->select("teacher");
-    if($result_set){
-        $result_set = $result_set->fetchAll();
-    }
- ?>
-<?php require_once("../templates/header.php") ;?>
-<?php require_once("../templates/aside.php"); ?>
-
-
-
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 	<div class="col-12 flex-col">
         <div class="d-flex justify-content-center align-items-center">
@@ -64,7 +49,7 @@
                                     </td>
                                     <td class="text-center">
                 						<div>
-                							<a class="btn btn-blue" href="<?php echo set_url('pages/teacher_attendance_view.php',array($result_set[$i]['id'])); ?>" >VIEW REPORT</a>
+                							<a class="btn btn-blue" href="<?php echo set_url('attendance/teacher/view/'.$result_set[$i]['id']); ?>" >VIEW REPORT</a>
                 		    			 </div>
                 					</td>
                                 </tr>
@@ -81,5 +66,3 @@
         </form>
     </div>
 </div>
-
-<?php require_once("../templates/footer.php") ;?>

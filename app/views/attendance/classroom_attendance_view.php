@@ -1,11 +1,3 @@
-<?php
-    $con = mysqli_connect("localhost", "root", "", "sms-final");
-
-	$result_set = mysqli_query($con, "SELECT * FROM attendance");
-?>
-
-<?php require_once("../templates/header.php") ;?>
-<?php require_once("../templates/aside.php"); ?>
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
     <div class="d-flex justify-content-center align-items-center">
         <form action="<?php echo set_url('pages/student_list.php'); ?>" method="get" class="d-flex align-items-center col-12">
@@ -166,5 +158,3 @@
         </div>
     </form>
 </div>
-
-<?php require_once("../templates/footer.php") ;?>
