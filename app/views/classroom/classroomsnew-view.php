@@ -91,7 +91,7 @@
 						</td>
 						<td>
 							<div class="login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center">
-                				<a class="btn btn-blue p-1" href="classroomsnew-update.php?id=<?php echo $result['id']; ?> ">Update</a>
+                				<a class="btn btn-blue p-1" href="<?php echo set_url('classroom/update/'.$result['id']); ?> ">Update</a>
 		    				</div>
 						</td>
 

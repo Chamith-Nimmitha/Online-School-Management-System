@@ -41,6 +41,8 @@
 
 	//classroom routes
 	$routes['classroom/list'] = "classroom/classroom_list";
+	$routes['classroom/update/$1'] = "classroom/update/$1";
+	$routes['classroom/registration'] = "classroom/registration";
 	$routes['classroom/student/list'] = "classroom/student_list";
 	$routes['classroom/student/list/$1'] = "classroom/student_list/$1";
 	$routes['classroom/student/add/$1'] = "classroom/add_student/$1";

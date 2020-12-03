@@ -18,6 +18,14 @@
 			}
 		}
 
+		// get all section/ grades
+		public function get_section_list_by_category($category){
+			$result_set = $this->con->select("section",["category"=>$category]);
+			if($result_set){
+				return $result_set->fetchAll();
+			}
+		}
+
 		// this function can't use directly. Use get_classroom_list() method.
 		public function get_all_data($result_set){
 			require_once(MODELS."classroom.php");
