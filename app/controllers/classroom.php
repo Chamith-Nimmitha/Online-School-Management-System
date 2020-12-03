@@ -4,6 +4,26 @@
 			parent::__construct();
 		}
 
+		// create new classroom
+		public function registration(){
+			$this->load->model("teachers");
+
+			// when submit the form
+			if(isset($_POST['submit'])){
+				// write code here...
+			}
+
+			$teachers = $this->load->teachers->get_not_class_teacher_list();
+			if(!$teachers){
+				echo "Query failed.";
+				exit();
+			}
+			$data['teachers'] = $teachers;
+			$this->view_header_and_aside();
+			$this->load->view("classroom/classroomsnew-add",$data);
+			$this->load->view("templates/footer");
+		}
+
 		// view classroom student list. this function can use any user role
 		public function student_list($classroom_id=""){
 			$role = $_SESSION['role'];
@@ -209,6 +229,52 @@
 
 			$this->view_header_and_aside();
 			$this->load->view("classroom/classroom_timetable_create",$data);
+			$this->load->view("templates/footer");
+		}
+
+		public function update($classroom_id){
+
+
+			//when user sumbit the updates
+			if(isset($_POST['update'])){
+				// WRITE CODE HERE
+			}
+
+
+			$this->load->model("classroom");
+			$this->load->model("classrooms");
+			$result = $this->load->classroom->set_by_id($classroom_id);
+			if(!$result){
+				echo "classroom not found.";
+				exit();
+			}
+			$data['result'] = $this->load->classroom->get_data();
+
+			$section_data = $this->load->classroom->get_section_data();
+
+			// get sections list
+			$result = $this->load->classrooms->get_section_list_by_category($section_data['category']);
+			if(!$result){
+				echo "sections get failed.";
+				exit();
+			}
+			$data['sections'] = $result;
+
+			//get teacher list
+			$this->load->model("teachers");
+			$teachers = $this->load->teachers->get_not_class_teacher_list();
+			$class_teacher_data = $this->load->classroom->get_class_teacher_data();
+			if($class_teacher_data){
+				array_unshift($teachers,$class_teacher_data);
+			}
+			if(!$teachers){
+				echo "Query failed.";
+				exit();
+			}
+			$data['teachers'] = $teachers;
+
+			$this->view_header_and_aside();
+			$this->load->view("classroom/classroomsnew-add",$data);
 			$this->load->view("templates/footer");
 		}
 	}

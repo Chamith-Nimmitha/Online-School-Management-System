@@ -5,8 +5,10 @@
 		private $section_id;
 		private $grade;
 		private $class;
+		private $category;
 		private $class_teacher_id;
 		private $timetable_id;
+		private $description;
 		private $state;
 		// create database connection
 		public function __construct(){
@@ -36,11 +38,12 @@
 				foreach ($data as $key => $value) {
 					$this->$key = $value;
 				}
-				$this->con->get(array("grade"));
 				$result = $this->con->select("section",array("id"=>$this->section_id));
 				if($result && $result->rowCount() == 1){
 					$this->state = 1;
-					$this->grade = $result->fetch()['grade'];
+					$result = $result->fetch();
+					$this->grade = $result['grade'];
+					$this->category = $result['category'];
 				}
 				$this->con->get(['id']);
 				$result =$this->con->select('normal_timetable',['user_id'=>$this->id, "type"=>"classroom"]);
@@ -61,11 +64,11 @@
 				foreach ($data as $key => $value) {
 					$this->$key = $value;
 				}
-				$this->con->get(array("grade"));
 				$result = $this->con->select("section",array("id"=>$this->section_id));
 				if($result && $result->rowCount() == 1){
 					$this->state = 1;
 					$this->grade = $result->fetch()['grade'];
+					$this->category = $result['category'];
 				}
 				$this->con->get(['id']);
 				$this->con->select('normal_timetable',['user_id'=>$this->id, "type"=>"classroom"]);
@@ -83,12 +86,14 @@
 		public function get_section_id(){return $this->section_id;}
 		public function get_grade(){return $this->grade;}
 		public function get_class(){return $this->class;}
+		public function get_category(){return $this->category;}
 		public function get_class_teacher_id(){return $this->class_teacher_id;}
 		public function get_timetable_id(){return $this->timetable_id;}
+		public function get_description(){return $this->description;}
 		public function get_state(){return $this->state;}
 
-		// get section object which contain section details
-		public function get_section_object(){
+		// get section data
+		public function get_section_data(){
 			$result = $this->con->select("section",array("id"=>$this->section_id));
 			if($result && $result->rowCount() == 1){
 				return $result->fetch();
@@ -97,8 +102,8 @@
 			}
 		}
 
-		// get teacher object which contains all class teacher details.
-		public function get_class_teacher_object(){
+		// get teacher data
+		public function get_class_teacher_data(){
 			$result = $this->con->select("teacher",array("id"=>$this->class_teacher_id));
 			if($result && $result->rowCount() == 1){
 				return  $result->fetch();
@@ -135,8 +140,10 @@
 			$data['section_id'] = $this->section_id;
 			$data['grade'] = $this->grade;
 			$data['class'] = $this->class;
+			$data['category'] = $this->category;
 			$data['class_teacher_id'] = $this->class_teacher_id;
 			$data['timetable_id'] = $this->timetable_id;
+			$data['description'] = $this->description;
 			$data['state'] = $this->state;
 			return $data;
 		}
