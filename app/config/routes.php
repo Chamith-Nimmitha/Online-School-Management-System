@@ -59,7 +59,10 @@
 	$routes['student/delete/$1'] = "admin/student_delete/$1";
 
 	//admin route --> only admin can access
+	$routes['userrole'] = "userrole/permission";
 	$routes['userrole/permission'] = "userrole/permission";
+	$routes['userrole/permission/update'] = "userrole/update_permission";
+	$routes['userrole/create'] = "userrole/create";
 
 	// parent routes
 	$routes['parent/list'] = "Parents/list";

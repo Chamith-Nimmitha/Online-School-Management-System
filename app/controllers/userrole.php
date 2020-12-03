@@ -45,8 +45,58 @@
 		}
 
 		// user permissions update
-		public function update(){
+		public function update_permission(){
+			$this->load->model("userrole","user_role");
+			$models = $this->load->userrole->get_models();
 
+
+			$where['user_role_id'] = $_POST['user-role-id'];
+			$data = [];
+			foreach ($models AS $model) {
+				if( array_key_exists("edit-".$model['id'], $_POST) ){
+					$data[$model['id']]['edit'] = $_POST["edit-".$model['id']];
+				}else{
+					$data[$model['id']]['edit'] = 0;
+				}
+
+				if( array_key_exists("view-".$model['id'], $_POST) ){
+					$data[$model['id']]['view'] = $_POST["view-".$model['id']];
+				}else{
+					$data[$model['id']]['view'] = 0;
+				}
+
+				if( array_key_exists("update-".$model['id'], $_POST) ){
+					$data[$model['id']]['update'] = $_POST["update-".$model['id']];
+				}else{
+					$data[$model['id']]['update'] = 0;
+				}
+
+				if( array_key_exists("delete-".$model['id'], $_POST) ){
+					$data[$model['id']]['delete'] = $_POST["delete-".$model['id']];
+				}else{
+					$data[$model['id']]['delete'] = 0;
+				}
+			}
+			// print_r($data);
+			// exit();
+			$result = $this->load->userrole->update_permissions($data, $where);
+			if(!$result){
+				echo "permissions update failed.";
+				exit();
+			}
+			$this->permission();
+		}
+
+		public function create(){
+			$user_role_name = $_POST["user-role-name"];
+			$this->load->model("userrole","user_role");
+			$result = $this->load->userrole->create_user_role($user_role_name);
+			if($result === FALSE){
+				echo "User role creation failed.";
+				exit();
+			}
+			$_POST['user-role-id'] = $result;
+			$this->permission();
 		}
 	}
  ?>
