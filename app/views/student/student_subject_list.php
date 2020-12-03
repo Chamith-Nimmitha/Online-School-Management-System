@@ -1,37 +1,3 @@
-<?php require_once("./session.php"); ?>
-<?php require_once("../php/common.php"); ?>
-<?php require_once("../php/database.php"); ?>
-
-<?php 
-	$result_set = $con->select("tea_sub_student",array("student_id"=>$_SESSION['user_id']));
-	if($result_set){
-		$result_set = $result_set->fetchAll();
-		$table_data = array();
-		for($i=0; $i < count($result_set); $i++) {
-			$tea_sub = $con->select("teacher_subject", array("id"=>$result_set[$i]['teacher_subject_id']));
-			if($tea_sub && $tea_sub->rowCount() === 1){
-				$con->get(array("name_with_initials"));
-				$teacher = $con->select("teacher", array("id"=>$tea_sub['teacher_id']));
-				if($teacher && $teacher->rowCount()===1){
-					$subject = $con->select("suject", array("id"=>$tea_sub['subject_id']));
-					if($subject && $subject->rowCount() === 1){
-						$teacher = $teacher->fetch();
-						$subject = $subject->fetch();
-						$table_data[$i] = array("name"=>$subject['name'],"code"=>$subject['code'],"teacher_name"=>$teacher['name_with_initials']);
-					}
-				}
-			}
-		}
-	}
-	$table_data[0] = array("name"=>"Maths","code"=>"12MAT","teacher_name"=>"R.P.Kumara");
-	$table_data[1] = array("name"=>"Chemistry","code"=>"12CHE","teacher_name"=>"C.W.Gamage");
-
- ?>
-
-<?php require_once("../templates/header.php"); ?>
-<?php require_once("../templates/aside.php"); ?>
-
-
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 	<?php 
 		if(isset($error)){
@@ -81,4 +47,3 @@
 		</div>
 	</div>
 </div>
-<?php require_once("../templates/footer.php"); ?>

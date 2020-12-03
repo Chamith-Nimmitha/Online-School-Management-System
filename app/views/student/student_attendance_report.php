@@ -1,11 +1,6 @@
-<?php require_once("../php/database.php") ?>
-<?php require_once("../php/common.php") ?>
-<?php require_once("../templates/header.php") ?>
-<?php require_once("../templates/aside.php") ?>
-
 <div id="content" class="col-9 flex-col align-items-center justify-content-start fs-14">
 
-<form action="student_attendance_report.php" method="post" enctype="multipart/form-data" >
+<form action="<?php echo set_url('student/attendance/report') ?>" method="post" enctype="multipart/form-data" >
 		<fieldset class="col-12">
 			<legend>Attendance Report</legend>
 
@@ -409,7 +404,3 @@ echo'
 </div>
 ';
 ?>
-
-
-
-<?php require_once("../templates/footer.php") ?>

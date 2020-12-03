@@ -1,15 +1,3 @@
-<?php require_once( realpath(dirname(__FILE__)). "/../php/common.php" ); ?>
-<?php require_once( realpath(dirname(__FILE__)). "/../php/database.php" ); ?>
-<?php require_once( realpath(dirname(__FILE__)). "/../php/pagination.php" ); ?>
-
-<?php 
-
- ?>
-<?php require_once("../templates/header.php") ;?>
-<?php require_once("../templates/aside.php"); ?>
-
-
-
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 
 	<div class="col-12 flex-col justify-content-center align-items-center">
@@ -39,7 +27,7 @@
 
         <form action="" method="POST" class="col-12 d-flex flex-col align-items-center">
             <div class="d-flex justify-content-center align-items-center">
-                <form action="<?php echo set_url('pages/student_list.php'); ?>" method="get" class="d-flex align-items-center col-12">
+                <form action="<?php echo set_url('student/attendance'); ?>" method="get" class="d-flex align-items-center col-12">
                     <div class="d-flex col-12 align-items-center justify-content-center">
                         <div class="mt-5">
                             <input type="reset" class="btn btn-blue" onclick="reset_form(this)" value="reset">
@@ -76,7 +64,7 @@
                                 <option value="Week-04">Week-04</option>
                             </select>
                         </div>
-                        <a href="<?php echo set_url('pages/student_attendance_report.php') ?>" class="btn btn-green-outline ml-2 mt-5 p-1" value="Show">View This year attendance</a>
+                        <a href="<?php echo set_url('student/attendance/report') ?>" class="btn btn-green-outline ml-2 mt-5 p-1" value="Show">View This year attendance</a>
                         <input type="submit" class="btn btn-blue ml-3 mt-5" value="Show">
                     </div>
                 </form>
@@ -111,10 +99,6 @@
                 <div class="w-100 p-1"></div>
     		</div>
             <div>
-                <p class="mt-3 bg-green float-left p-1 pl-3 pr-3"><code><?php    echo 100; ?> results found.</code> </p>  
-                <div id="pagination-div" class="float-left w-100">
-                    <?php display_pagination(100,1,10); ?>
-                </div>
                 
             </div>
             <div class="form-group d-flex flex-row w-90 justify-content-end">
@@ -122,5 +106,3 @@
             </div>
         </form>
     </div>
-
-<?php require_once("../templates/footer.php") ;?>

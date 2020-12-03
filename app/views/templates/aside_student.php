@@ -11,14 +11,14 @@
 								<a href="<?php echo set_url('dashboard'); ?>" class="nav-link active">Dashbord</a>
 							</li>
 							<li class="nav-item aside-li" id="attendance-li">
-								<a href="<?php echo set_url('student/attendance/view/'.$_SESSION['user_id']); ?>" class="nav-link">Student Attendance</a>
+								<a href="<?php echo set_url('student/attendance'); ?>" class="nav-link">Student Attendance</a>
 								<button class="toggle-button" target="attendance-nav">
 									<img src="<?php echo set_url('public/assets/img/close-menu.png') ?>" width="20px" alt="">
 								</button>
 
 								<nav class="nav sub-nav no-collapsed" id="attendance-nav">
 									<ul class="d-flex flex-col">
-										<li class="nav-item"><a href="<?php echo set_url('student/attendance/view/'.$_SESSION['user_id']); ?>" parent-li="attendance-li" class="nav-link">Students Attendance</a></li>
+										<li class="nav-item"><a href="<?php echo set_url('student/attendance/'.$_SESSION['user_id']); ?>" parent-li="attendance-li" class="nav-link">Students Attendance</a></li>
 										<li class="nav-item"><a href="#" class="nav-link">Attendance Complaint</a></li>
 									</ul>
 								</nav>
@@ -64,7 +64,7 @@
 							</li>
 							
 							<li class="nav-item aside-li">
-								<a href="<?php echo set_url('student/parent/view',array('parent_id'=>$parent_id)); ?>" class="nav-link">Parent Info</a>
+								<a href="<?php echo set_url('student/view/parent/'.$parent_id); ?>" class="nav-link">Parent Info</a>
 							</li>
 							<li class="nav-item aside-li" id="exam-result-li">
 								<a href="<?php echo set_url('student/exam'); ?>" class="nav-link">Exam Result</a>
