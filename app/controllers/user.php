@@ -86,6 +86,8 @@
 			$this->load->view("templates/footer");
 		}
 
+		// can user for edit,view own profile
+		// admin can edit,view all profiles
 		public function profile($role="",$id=""){
 			if( empty($id)){
 				$id = $_SESSION['user_id'];
@@ -247,6 +249,26 @@
 			}else{
 				$this->load->view("{$role}/{$role}_profile",["result"=>$result,"id"=>$id,"is_admin"=>$is_admin]);
 			}
+			$this->load->view("templates/footer");
+		}
+
+		// only view user profile
+		public function profile_view($role="",$id=""){
+			if( empty($id)){
+				$id = $_SESSION['user_id'];
+				$role = $_SESSION['role'];
+			}
+			$this->load->model($role);
+			$result = $this->load->{$role}->set_by_id($id);
+			$field_errors = [];
+
+			// load header and navbar
+			$this->view_header_and_aside();
+
+			// load profile page
+			$this->load->{$role}->set_by_id($id);
+			$result = $this->load->{$role}->get_data();
+			$this->load->view("{$role}/{$role}_profile_view",["result"=>$result]);
 			$this->load->view("templates/footer");
 		}
 

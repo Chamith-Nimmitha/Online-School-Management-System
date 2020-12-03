@@ -20,7 +20,6 @@
 			echo $info."<br/>";
 			echo "</p>";
 		}
-
 	 ?>
 
 	<div class="p-5  w-100 d-flex align-items-center flex-col">
@@ -33,15 +32,15 @@
 			<legend>Classroom Info</legend>
 			<div class="d-flex w-100">
 				<label class="col-4" for="id">Classroom ID</label>
-				<input type="text" placeholder="Classroom ID" value="<?php if(isset($classroom_info)){echo $classroom_info['id'];} ?>" disabled="disabled">
+				<input type="text" placeholder="Classroom ID" value="<?php if(!empty($classroom_info)){echo $classroom_info['id'];} ?>" disabled="disabled">
 			</div>
 			<div class="d-flex w-100">
 				<label class="col-4" for="grade">Grade</label>
-				<input type="text" name="grade" placeholder="Grade" value="<?php if(isset($classroom_info)){echo $classroom_info['grade'];} ?>" disabled="disable">
+				<input type="text" name="grade" placeholder="Grade" value="<?php if(!empty($classroom_info)){echo $classroom_info['grade'];} ?>" disabled="disable">
 			</div>
 			<div class="d-flex w-100">
 				<label class="col-4" for="class">Class</label>
-				<input type="text" name="class" placeholder="Class" value="<?php if(isset($classroom_info)){echo $classroom_info['class'];} ?>" disabled="disable">
+				<input type="text" name="class" placeholder="Class" value="<?php if(!empty($classroom_info)){echo $classroom_info['class'];} ?>" disabled="disable">
 			</div>
 		</fieldset>
 		<hr class="w-100 mt-5">

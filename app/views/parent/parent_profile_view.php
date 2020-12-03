@@ -1,38 +1,3 @@
-<?php include_once("session.php"); ?>
-<?php require_once("../php/common.php"); ?>
-<?php require_once("../php/database.php"); ?>
-
-<?php
-	if(isset($_SESSION['role']) && $_SESSION['role'] == "parent"){
-		$id = $_SESSION['user_id'];
-		$profile_photo = $_SESSION['profile_photo'];
-	}else{
-		if(isset($_GET['parent_id'])){
-			$result = $con->select("parent",array("id"=>$_GET['parent_id']));
-			if($result->rowCount() == 1){
-				$result = $result->fetch();
-				$id = $result['id'];
-				$profile_photo = $result['profile_photo'];
-			}else{
-				echo "You dont have permissions.";
-			exit();	
-			}
-		}else{
-			echo "You dont have permissions.";
-			exit();
-		}
-	}
-
-	$result = $con->select("parent",array("id"=>$id));
-	if($result->rowCount() == 1){
-		$result = $result->fetch();
-	}
- ?>
-
-<?php require_once("../templates/header.php"); ?>
-<?php require_once("../templates/aside.php"); ?>
-
-
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 	<?php 
 		if(isset($all_errors) && (!empty($all_errors[0]) || !empty($all_errors[1]) || count($all_errors) > 2)){
@@ -62,7 +27,7 @@
 		}
 	 ?>
 	<div class="mt-5">
-		<h2>Student Profile</h2>
+		<h2>Parent Profile</h2>
 	</div>
 
 	<div class="col-12">
@@ -70,12 +35,12 @@
 				<div class="col-4 bg-red flex-col d-none d-md-flex align-items-center"  style=" padding-top: 100px;background: #ccf;">
 					<div  class="col-8">
 						<div  style="position: relative;">
-							<img src="<?php echo set_url('img/parent_profile_photo/'.$profile_photo); ?>" alt="profile photo"  onclick="upload_profile_photo('profile-photo')" class="col-12">
+							<img src="<?php echo set_url('/public/assets/uploads/parent_profile_photo/'.$result['profile_photo']); ?>" alt="profile photo"  onclick="upload_profile_photo('profile-photo')" class="col-12">
 							<label for="profile-photo" class="" style="position: absolute; bottom: 0px; right: 0px;">
-								<img src="<?php echo set_url("img/camera.png"); ?>" alt="upload photo" style="width: 50px; height: 50px; cursor: pointer;">
+								<img src="<?php echo set_url("public/assets/img/camera.png"); ?>" alt="upload photo" style="width: 50px; height: 50px; cursor: pointer;">
 							</label>
 						</div>
-						<input type="file" name="profile-photo" id="profile-photo" accept="image/jpg,image/jpeg,image/png" onchange="check_input_image(this)" class="d-none">
+						<input type="file" name="profile-photo" id="profile-photo" accept="image/jpg,image/jpeg,image/png" onchange="check_input_image(this)" class="d-none" disabled="disabled">
 						<p class="bg-red fg-white p-2 d-none"></p>
 					</div>
 					<p id="profile-photo-error" class="d-none"></p>
@@ -110,6 +75,3 @@
 			</form>
 	</div>
 </div>
-
-
-<?php require_once("../templates/footer.php"); ?>

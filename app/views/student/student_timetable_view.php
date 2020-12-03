@@ -54,7 +54,7 @@
 						echo $row;
 						}
 					}else{
-						echo "<tr><td colspan=7 class='text-center bg-red'>Students not found...</td></tr>";
+						echo "<tr><td colspan=7 class='text-center bg-red'>Timetable not found...</td></tr>";
 						echo "</tbody>";
 						echo "</table>";
 					}
