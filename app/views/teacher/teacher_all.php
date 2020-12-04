@@ -1,7 +1,7 @@
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 		<div class="d-flex justify-content-center align-items-center">
-			<form action="<?php echo set_url('pages/teacher-all.php'); ?>" method="get" class="d-flex align-items-center col-12">
+			<form action="<?php echo set_url('teacher/list'); ?>" method="POST" class="d-flex align-items-center col-12">
 				<div class="d-flex col-12 align-items-center justify-content-center">
 					<div class="mt-5">
 						<input type="reset" class="btn btn-blue" onclick="reset_form(this)" value="reset">
@@ -31,8 +31,15 @@
 						<th>CONTACT NUMBER</th>
 					    <th>NIC</th>
 					    <th>Subjects</th>
-					    <th>UPDATE</th>
-					    <th>DELETE</th>
+					   <?php
+					   	if($_SESSION['role']==='admin'){
+					   		echo '
+						    <th>UPDATE</th>
+						    <th>DELETE</th>';
+						  }
+
+					    ?>
+
 				    </tr>
 			    </thead>
 			    
@@ -54,17 +61,22 @@
                 				<a class="btn btn-blue" href="teacher_subject_list.php?teacher_id=<?php echo $result['id']; ?> ">List</a>
 		    				</div>
 						</td>
-						<td>
-							<div>
-                				<a class="btn btn-blue" href="teacher_list_update.php?id=<?php echo $result['id']; ?> ">Update</a>
-		    				</div>
-						</td>
+						<?php
+							if($_SESSION['role']==='admin'){
+								echo '
+							<td>
+								<div>
+	                				<a class="btn btn-blue" href="teacher_list_update.php?id=' .$result['id'] .' ">Update</a>
+			    				</div>
+							</td>
 
-						<td>
-							<div>
-								<a class="btn btn-lightred" href="teacher_delete.php?id=<?php echo $result['id']; ?>" onclick="return confirm('Are you sure to delete?')">Delete</a>
-		    				</div>
-						</td>
+							<td>
+								<div>
+									<a class="btn btn-lightred" href="teacher_delete.php?id=' .$result['id'] .'" onclick="return confirm("Are you sure to delete?")">Delete</a>
+			    				</div>
+							</td>';
+							}
+						?>
 					</tr>
 
 					
@@ -82,14 +94,14 @@
 
 		<div class="d-flex justify-content-start col-12">
 			
-				<?php if($count){
-					$count = $count->fetch()['count'];
+				<?php /*if($count){
+					$count = $count->fetch()['count'];*/
 				 ?>
-				<p class="mt-3 pl-5"><code><?php 	echo $count; ?> results found.</code> </p>	
-			<?php } ?>
+				<!--<p class="mt-3 pl-5"><code><?php 	echo $count; ?> results found.</code> </p>-->	
+			<?php ///} ?>
 
 		</div>
-                 <?php display_pagination($count,$_GET['page'],$per_page); ?>
+                 <?php //display_pagination($count,$_GET['page'],$per_page); ?>
 
 </div>
 

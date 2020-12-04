@@ -45,7 +45,7 @@
 
 								<nav class="nav sub-nav no-collapsed" id="teacher-nav">
 									<ul class="d-flex flex-col">
-										<li class="nav-item"><a href="<?php echo set_url('pages/teacher_list_view.php'); ?>" class="nav-link" parent-li="teacher-li">Teachers List</a></li>
+										<li class="nav-item"><a href="<?php echo set_url('teacher/list'); ?>" class="nav-link" parent-li="teacher-li">Teachers List</a></li>
 										<li class="nav-item"><a href="<?php echo set_url('pages/TComplaints.php') ?>" class="nav-link"  parent-li="teacher-li">Teachers Complaints</a></li>
 									</ul>
 								</nav>
