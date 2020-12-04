@@ -24,8 +24,7 @@
             <legend>Registration form</legend>
             <div class="form-group mt-1">
                 <label>NAME WITH INITIALS</label>
-                <input type="text" name="name_with_initials"  value="" oninput="validate_user_input(this,0,50,1)" placeholder="Name With initials">
-                <p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
+                <input type="text" name="name_with_initials"  value="<?php if(isset($_POST['name_with_initials'])){echo $_POST['name_with_initials'];} ?>" oninput="validate_user_input(this,0,50,1)" placeholder="Name With initials">
                 <?php 
                 if(isset($field_errors['name_with_initials'])){
                     echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["name_with_initials"].'</p>';
@@ -37,8 +36,7 @@
 
             <div class="form-group mt-1">
                 <label>FIRST NAME</label>
-                <input type="text" name="first_name"  placeholder="First Name" value="" oninput="validate_user_input(this,0,20,1)">
-                <p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
+                <input type="text" name="first_name"  placeholder="First Name" value="<?php if(isset($_POST['first_name'])){echo $_POST['first_name'];} ?>" oninput="validate_user_input(this,0,20,1)">
                 <?php 
                 if(isset($field_errors['first_name'])){
                     echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["first_name"].'</p>';
@@ -50,8 +48,7 @@
 
             <div class="form-group mt-1">
                 <label>MIDDLE NAME</label>
-                <input type="text" name="middle_name" placeholder="Middle Name" value="" oninput="validate_user_input(this,0,50,0)" >
-                <p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
+                <input type="text" name="middle_name" placeholder="Middle Name" value="<?php if(isset($_POST['middle_name'])){echo $_POST['middle_name'];} ?>" oninput="validate_user_input(this,0,50,0)" >
                 <?php 
                 if(isset($field_errors['middle_name'])){
                     echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["middle_name"].'</p>';
@@ -63,8 +60,7 @@
 
             <div class="form-group mt-1">
                 <label>LAST NAME</label>
-                <input type="text" name="last_name"  value="" placeholder="Last Name" oninput="validate_user_input(this,0,20,1)">
-                <p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
+                <input type="text" name="last_name"  value="<?php if(isset($_POST['last_name'])){echo $_POST['last_name'];} ?>" placeholder="Last Name" oninput="validate_user_input(this,0,20,1)">
                 <?php 
                 if(isset($field_errors['last_name'])){
                     echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["last_name"].'</p>';
@@ -77,8 +73,8 @@
             <div class="form-group">
                 <label>GENDER</label>
                 <select name="gender" style="width: 100px;">
-                    <option value="male">MALE</option>
-                    <option value="female">FEMALE</option>
+                    <option value="male" <?php if(isset($_POST['gender']) && $_POST['gender']== 'male'){echo "selected='selected'";} ?>>MALE</option>
+                    <option value="female" <?php if(isset($_POST['gender']) && $_POST['gender']== 'female'){echo "selected='selected'";} ?>>FEMALE</option>
                 </select>
                 <?php 
                 if(isset($field_errors['gender'])){
@@ -91,8 +87,7 @@
 
             <div class="form-group mt-1">
                 <label for="dob">DATE OF BIRTH</label>
-                <input type="date" name="dob" id="dob" onchange="validate_birthday(this,20)">
-                <p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
+                <input type="date" name="dob" id="dob" value="<?php if(isset($_POST['dob'])){echo $_POST['dob'];} ?>" onchange="validate_birthday(this,20)">
                 <?php 
                 if(isset($field_errors['dob'])){
                     echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["dob"].'</p>';
@@ -104,8 +99,7 @@
 
             <div class="form-group mt-1">
                 <label>ADDRESS</label>
-                <input type="text" name="address" placeholder="Address"  value="" oninput="validate_user_input(this,0,100,1)">
-                <p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
+                <input type="text" name="address" placeholder="Address"  value="<?php if(isset($_POST['address'])){echo $_POST['address'];} ?>" oninput="validate_user_input(this,0,100,1)">
                 <?php 
                 if(isset($field_errors['address'])){
                     echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["address"].'</p>';
@@ -117,8 +111,7 @@
 
             <div class="form-group mt-1">
                 <label>EMAIL</label>
-                <input type="text" name="email" placeholder="Email" value="" oninput="validate_email(this,0,100,1)">
-                <p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
+                <input type="text" name="email" placeholder="Email" value="<?php if(isset($_POST['email'])){echo $_POST['email'];} ?>" oninput="validate_email(this,0,100,1)">
                 <?php 
                 if(isset($field_errors['email'])){
                     echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["email"].'</p>';
@@ -130,8 +123,7 @@
 
             <div class="form-group mt-1">
                 <label>CONTACT NUMBER</label>
-                <input type="text" name="contact_number" placeholder="Contact Number" value="" oninput="validate_contact_number(this)">
-                <p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
+                <input type="text" name="contact_number" placeholder="Contact Number" value="<?php if(isset($_POST['contact_number'])){echo $_POST['contact_number'];} ?>" oninput="validate_contact_number(this)">
                 <?php 
                 if(isset($field_errors['contact_number'])){
                     echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["contact_number"].'</p>';
@@ -143,8 +135,7 @@
 
             <div class="form-group mt-1">
                 <label>NIC</label>
-                <input type="text" name="nic" placeholder="NIC" value="" oninput="validate_user_input(this,10,12,1)">
-                <p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
+                <input type="text" name="nic" placeholder="NIC" value="<?php if(isset($_POST['nic'])){echo $_POST['nic'];} ?>" oninput="validate_user_input(this,10,12,1)">
                 <?php 
                 if(isset($field_errors['nic'])){
                     echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["nic"].'</p>';
