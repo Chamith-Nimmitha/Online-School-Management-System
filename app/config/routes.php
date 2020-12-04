@@ -35,7 +35,7 @@
 	$routes['admission/view/$1'] = "admission/view_admission/$1";
 
 	// teacher routes
-	$routes['teacher/list'] = "teacher/teacher_list_view";
+	$routes['teacher/list'] = "teacher/list";
 	$routes['teacher/registration'] = "teacher/new_teacher";
 	$routes['teacher/update'] = "teacher/teacher_list_update";
 

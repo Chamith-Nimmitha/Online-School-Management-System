@@ -1,54 +1,3 @@
-<?php //include_once("session.php"); ?>
-<?php //require_once("../php/database.php"); ?>
-<?php //require_once("../php/pagination.php"); ?>
-<?php
-  /*  $con = mysqli_connect("localhost", "root", "", "sms-final");
-    $start = 0;
-	$per_page = 1;
-	if(isset($_GET['per_page'])){
-		$per_page=$_GET['per_page'];
-	}
-	if(isset($_GET['page'])){
-		$start = (($_GET['page'] -1) * $per_page );
-	}else{
-		$_GET['page'] =1;
-	}
-	$limit = "$start, $per_page";
-
-    $result_set = mysqli_query($con, "SELECT * FROM teacher LIMIT $limit");
-    $con = new Database();
-    $count = $con->pure_query("SELECT COUNT(*) AS count FROM teacher");*/
-?>
-
-<?php //require_once("../templates/header.php") ;?>
-<?php //require_once("../templates/aside.php"); ?>
-
-
-<?php
-	$start = 0;
-	$per_page = 10;
-
-	require_once (MODELS."teachers_info.php");
-
-	$obj = new TeachersInfo($start, $per_page);
-	
-	if(!isset($_GET['teacher-id']) || empty($_GET['teacher-id'])){
-		$result_set = $obj->get_teacher_list();
-
-	}
-	else{
-		if(is_numeric($_GET['teacher-id'])){
-			$result_set = $obj->get_teacher_list($_GET['teacher-id'],null);	
-		}
-		else{
-			$result_set = $obj->get_teacher_list(null,$_GET['teacher-id']);
-		}
-	}
-
-
-	$count = $obj->get_pre_query_count();
-
-?>
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 		<div class="d-flex justify-content-center align-items-center">
@@ -107,11 +56,11 @@
 			</table>
 		</div>  
 		<div class="d-flex justify-content-start col-12">	
-				<?php if($count){
+				<?php //if($count){
 					
 				 ?>
-				<p class="mt-3 pl-5"><code id="record_count"><?php 	echo $count; ?> results found.</code> </p>	
-			<?php } ?>
+				<!--<p class="mt-3 pl-5"><code id="record_count"><?php 	echo $count; ?> results found.</code> </p>-->	
+			<?php //} ?>
 		</div>
                  <?php //display_pagination($count,$_GET['page'],$per_page); ?>
              <?php if($_SESSION['role'] === "admin"){ ?>

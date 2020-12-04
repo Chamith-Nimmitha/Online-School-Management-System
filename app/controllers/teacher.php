@@ -2,16 +2,34 @@
      class Teacher extends Controller{
 		
 		//view the list of teachers
-		public function teacher_list_view(){
-				/*require_once(MODELS."teacher.php");
-				$t = new TeacherModel();
-				$t->set_by_id('1200055');
-				$data = $t->get_data();
+		public function list(){
 
-				print_r($data);*/
+			$start = 0;
+			$per_page = 10;
 
+
+			$obj = new TeachersInfo($start, $per_page);
+			
+			if(!isset($_POST['teacher-id']) || empty($_POST['teacher-id'])){
+				$result_set = $obj->get_teacher_list();
+
+			}
+			else{
+				if(is_numeric($_POST['teacher-id'])){
+					$result_set = $obj->get_teacher_list($_POST['teacher-id'],null);	
+				}
+				else{
+					$result_set = $obj->get_teacher_list(null,$_POST['teacher-id']);
+				}
+			}
+
+
+			//$count = $obj->get_pre_query_count();
+
+            unset($_POST);
+            $data['result_set'] = $result_set;
 		    $this->view_header_and_aside();
-            $this->load->view("teacher/teacher_list_view");
+            $this->load->view("teacher/teacher_all",$data);
             $this->load->view("templates/footer");
 		}
 		//register new teachers
