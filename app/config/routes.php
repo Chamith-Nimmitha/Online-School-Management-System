@@ -94,5 +94,12 @@
 	$routes['attendance/teacher/list'] = "attendance/teacher_list";
 	$routes['attendance/teacher/view/$1'] = "attendance/teacher_view/$1";
 
+
+
+	// FOR APIS
+	$routes['api/admission/search/$1/$2'] = "apiAdmission/search/$1/$2";
+	$routes['api/admission/search/$2'] = "apiAdmission/search/$2";
+
+
 	// define as a global variable. Don't delete this
 	$GLOBALS['routes'] = $routes;
