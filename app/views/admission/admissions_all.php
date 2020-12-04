@@ -1,4 +1,8 @@
-
+<script>
+	if ( window.history.replaceState ) {
+	  window.history.replaceState( null, null, window.location.href );
+	}
+</script>
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 	<div class="mt-5">
 		<h2 class="fs-30">Admissions Managment</h2>
@@ -8,7 +12,7 @@
 		<div class="d-flex justify-content-center align-items-center">
 			<div class="w-25">
 				<label for="admission-search">Search : </label>
-				<input class="form-control" type="text" name="sadmission-search" oninput="admission_search(this)" placeholder="Id, Grade, Name">
+				<input class="form-control" type="text" name="admission-search" oninput="admission_search(this)" placeholder="Id, Grade, Name">
 			</div>
 			<form action="<?php echo set_url('admission/list'); ?>" method="post" class="d-flex align-items-center">
 				<div  class="d-flex flex-col  ml-5 align-items-center">
