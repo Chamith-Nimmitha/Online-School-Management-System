@@ -1,10 +1,6 @@
-<?php require_once("../common.php"); ?>
-<?php require_once("../database.php"); ?>
-
 <?php 
-	if(isset($_GET['data']) && isset($_GET['type'])){
-		$data = $_GET['data'];
-		$type = $_GET['type'];
+	$con = new Database();
+	if(isset($data) && isset($type)){
 		if(strlen($data) > 0 && strlen($data) <3){
 			if($type =="all"){
 				$query = "SELECT * FROM `admission` WHERE grade='{$data}' OR name_with_initials like '%{$data}%' LIMIT 20";

@@ -9,6 +9,9 @@
 		public function list(){
 			$con = new Database();
 			$con->get(array("id","name","grade"));
+			if(isset($_POST['interview-panel-grade']) && $_POST['interview-panel-grade'] !== 'all'){
+				$con->where(['grade'=>$_POST['interview-panel-grade']]);
+			}
 			$result_set = $con->select("interview_panel");
 			if($result_set){
 				$data['result_set'] = $result_set->fetchAll();

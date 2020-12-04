@@ -74,9 +74,9 @@ function validate_parent_id(){
 
 function admission_search(input){
 	var value = input.value;
-	var type = document.getElementById("admission-type").value;
+	var type = document.getElementById("admission-state").value;
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET","../php/getdata/admission_list.php?data="+value+"&type="+type,true);
+	xhr.open("GET",base_url+"api/admission/search/"+type+"/"+value,true);
 	xhr.onload = function(){
 		if(this.status == 200){
 			var respond = xhr.responseText;
@@ -93,7 +93,7 @@ function get_subject_data(field,input){
 	var input_value = input.value;
 	var inputs = input.parentNode.getElementsByTagName("input");
 	var xhr = new XMLHttpRequest();
-	var resquest = "../php/getdata/get_subject_info.php?"+field+"="+input_value;
+	var resquest = base_url+"include/getdata/get_subject_info.php?"+field+"="+input_value;
 	xhr.open("GET",resquest,true);
 	xhr.onload = function(){
 		if(this.status == 200){
