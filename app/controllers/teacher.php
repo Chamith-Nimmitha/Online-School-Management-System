@@ -3,6 +3,13 @@
 		
 		//view the list of teachers
 		public function teacher_list_view(){
+				/*require_once(MODELS."teacher.php");
+				$t = new TeacherModel();
+				$t->set_by_id('1200055');
+				$data = $t->get_data();
+
+				print_r($data);*/
+
 		    $this->view_header_and_aside();
             $this->load->view("teacher/teacher_list_view");
             $this->load->view("templates/footer");
@@ -82,6 +89,8 @@
 						$error = "Registration failed.";
 					}
 
+				}else{
+					$error="Registration failed.";
 				}
 
 

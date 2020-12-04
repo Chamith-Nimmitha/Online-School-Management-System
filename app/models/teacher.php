@@ -113,6 +113,7 @@
 			$data['dob'] = $this->dob;
 			$data['address'] = $this->address;
 			$data['contact_number'] = $this->contact_number;
+			$data['nic']=$this->nic;
 			$data['profile_photo'] = $this->profile_photo;
 			$data['classroom_id'] = $this->classroom_id;
 			$data['interview_panel_id'] = $this->interview_panel_id;
@@ -123,4 +124,8 @@
 		public function insert_data($data){
 			return $result = $this->con->insert("teacher",$data);
 		}
+
+
+
+
 	}

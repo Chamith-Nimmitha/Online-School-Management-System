@@ -2,7 +2,7 @@
 <?php //require_once("../php/database.php"); ?>
 <?php //require_once("../php/pagination.php"); ?>
 <?php
-    $con = mysqli_connect("localhost", "root", "", "sms-final");
+  /*  $con = mysqli_connect("localhost", "root", "", "sms-final");
     $start = 0;
 	$per_page = 1;
 	if(isset($_GET['per_page'])){
@@ -17,15 +17,42 @@
 
     $result_set = mysqli_query($con, "SELECT * FROM teacher LIMIT $limit");
     $con = new Database();
-    $count = $con->pure_query("SELECT COUNT(*) AS count FROM teacher");
+    $count = $con->pure_query("SELECT COUNT(*) AS count FROM teacher");*/
 ?>
 
 <?php //require_once("../templates/header.php") ;?>
 <?php //require_once("../templates/aside.php"); ?>
 
+
+<?php
+	$start = 0;
+	$per_page = 10;
+
+	require_once (MODELS."teachers_info.php");
+
+	$obj = new TeachersInfo($start, $per_page);
+	
+	if(!isset($_GET['teacher-id']) || empty($_GET['teacher-id'])){
+		$result_set = $obj->get_teacher_list();
+
+	}
+	else{
+		if(is_numeric($_GET['teacher-id'])){
+			$result_set = $obj->get_teacher_list($_GET['teacher-id'],null);	
+		}
+		else{
+			$result_set = $obj->get_teacher_list(null,$_GET['teacher-id']);
+		}
+	}
+
+
+	$count = $obj->get_pre_query_count();
+
+?>
+
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 		<div class="d-flex justify-content-center align-items-center">
-			<form action="<?php echo set_url('pages/teacher-all.php'); ?>" method="get" class="d-flex align-items-center col-12">
+			<form action="<?php echo set_url('teacher/list'); ?>" method="get" class="d-flex align-items-center col-12">
 				<div class="d-flex col-12 align-items-center justify-content-center">
 					<div class="mt-5">
 						<input type="reset" class="btn btn-blue" onclick="reset_form(this)" value="reset">
@@ -81,16 +108,15 @@
 		</div>  
 		<div class="d-flex justify-content-start col-12">	
 				<?php if($count){
-					$count = $count->fetch()['count'];
+					
 				 ?>
-				<p class="mt-3 pl-5"><code><?php 	echo $count; ?> results found.</code> </p>	
+				<p class="mt-3 pl-5"><code id="record_count"><?php 	echo $count; ?> results found.</code> </p>	
 			<?php } ?>
 		</div>
-                 <?php display_pagination($count,$_GET['page'],$per_page); ?>
+                 <?php //display_pagination($count,$_GET['page'],$per_page); ?>
              <?php if($_SESSION['role'] === "admin"){ ?>
 	            <div class="login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center">
 	                <a class="btn btn-blue" href="<?php echo set_url('pages\teacher_registration_form.php'); ?> ">Register Teacher</a>
 			    </div>
 		   <?php } ?>
 </div>
-<?php //require_once("../templates/footer.php") ;?>
