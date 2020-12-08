@@ -1,75 +1,73 @@
-<?php //include_once("session.php"); ?>
-<?php //require_once("../templates/header.php") ;?>
-<?php //require_once("../templates/aside.php"); ?>
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
-
-
-<?php
-//require_once("../php/database.php");
-
-$con = mysqli_connect("localhost", "root", "", "sms-final");
-
-
-
-$tid = $_GET['id'];
-
-$qry = mysqli_query($con, "SELECT * FROM teacher WHERE id = $tid");
-
-$data = mysqli_fetch_array($qry);
-
-if(isset($_POST['update']))
-{
-        $name = $_POST['name_with_initials'];
-        $fname = $_POST['first_name'];
-        $midname = $_POST['middle_name'];
-        $lname = $_POST['last_name'];
-        $gender = $_POST['gender'];
-        $birthday = $_POST['dob'];
-        $Address = $_POST['address'];
-        $Email = $_POST['email'];
-        $mobile = $_POST['contact_number'];
-        $Nic = $_POST['nic'];
+        <?php 
         
+        if(isset($error) && !empty($error)){
+            echo "<p class='mt-5 w-75 bg-red p-5 text-center'>";
+            echo $error;
+            echo "</p>";
+        }
 
-    $update = mysqli_query($con, "update teacher set name_with_initials='$name', first_name='$fname', middle_name='$midname', last_name='$lname', gender='$gender', dob='$birthday', address='$Address', email='$Email', contact_number='$mobile', nic='$Nic',  where id='$tid'");
+        if(isset($info) && !empty($info)){
+            echo "<p class='mt-5 w-75 bg-green p-5 text-center'>";
+            echo $info;
+            echo "</p>";
+        }
 
-    if($update)
-    {
-        echo "UPDATED";
-        mysqli_close($con);
+     ?>
 
-    }
-    else
-    {
-        echo "ERROR";
-    }
-}
-
-?>
 
 <h2 class="fs-30">UPDATE TEACHERS</h2>
 
-<form method="POST" class="col-10">
+<form method="POST" class="col-10" action="<?php echo set_url('teacher/update/'.$data['id'].''); ?>">
     
     <div class="form-group mt-1">
         <label>NAME</label>
-        <input type="text" name="name_with_initials" value="<?php echo $data['name_with_initials'] ?>" required>
+        <input type="text" name="name_with_initials" value="<?php echo $data['name_with_initials'] ?>" oninput="validate_user_input(this,0,50,1)" >
+        <?php 
+        if(isset($field_errors['name_with_initials'])){
+            echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["name_with_initials"].'</p>';
+        }else{
+            echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
+         }
+        ?>
     </div>
 
     <div class="form-group mt-1">
         <label>FIRST NAME</label>
-        <input type="text" name="first_name" value="<?php echo $data['first_name'] ?>" required>
+        <input type="text" name="first_name" value="<?php echo $data['first_name'] ?>" oninput="validate_user_input(this,0,20,1)" >
+        <?php 
+        if(isset($field_errors['first_name'])){
+            echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["first_name"].'</p>';
+        }else{
+            echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
+         }
+        ?>
     </div>
 
     <div class="form-group mt-1">
         <label>MIDDLE NAME</label>
-        <input type="text" name="middle_name" value="<?php echo $data['middle_name'] ?>" required>
+        <input type="text" name="middle_name" value="<?php echo $data['middle_name'] ?>" oninput="validate_user_input(this,0,50,0)" >
+        <?php 
+        if(isset($field_errors['middle_name'])){
+            echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["middle_name"].'</p>';
+        }else{
+            echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
+         }
+        ?>
+
     </div>
 
     <div class="form-group mt-1">
         <label>LAST NAME</label>
-        <input type="text" name="last_name" value="<?php echo $data['last_name'] ?>" required>
+        <input type="text" name="last_name" value="<?php echo $data['last_name'] ?>" oninput="validate_user_input(this,0,20,1)"  >
+        <?php 
+        if(isset($field_errors['last_name'])){
+            echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["last_name"].'</p>';
+        }else{
+            echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
+         }
+        ?>
     </div>
     
     <div>
@@ -78,31 +76,73 @@ if(isset($_POST['update']))
                 <option value="male">Male</option>
                 <option value="female">Female</option>
             </select>
+        <?php 
+        if(isset($field_errors['gender'])){
+            echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["gender"].'</p>';
+        }else{
+            echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
+         }
+        ?>
     </div>
 
     <div class="form-group mt-1">
         <label>DATE OF BIRTH</label>
-        <input type="date" name="dob"  value="<?php echo $data['dob'] ?>" required>
+        <input type="date" name="dob"  value="<?php echo $data['dob'] ?>" onchange="validate_birthday(this,20)" >
+        <?php 
+        if(isset($field_errors['dob'])){
+            echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["dob"].'</p>';
+        }else{
+            echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
+         }
+        ?>
     </div>
 
     <div class="form-group mt-1">
         <label>ADDRESS</label>
-        <input type="text" name="address"  value="<?php echo $data['address'] ?>" required>
+        <input type="text" name="address"  value="<?php echo $data['address'] ?>" oninput="validate_user_input(this,0,100,1)" >
+        <?php 
+        if(isset($field_errors['address'])){
+            echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["address"].'</p>';
+        }else{
+            echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
+         }
+        ?>
     </div>
 
     <div class="form-group mt-1">
         <label>EMAIL</label>
-        <input type="text" name="email"  value="<?php echo $data['email'] ?>" required>
+        <input type="text" name="email"  value="<?php echo $data['email'] ?>" oninput="validate_email(this,0,100,1)" >
+        <?php 
+        if(isset($field_errors['email'])){
+            echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["email"].'</p>';
+        }else{
+            echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
+         }
+        ?>
     </div>
 
     <div class="form-group mt-1">
         <label>CONTACT NUMBER</label>
-        <input type="number" name="contact_number"  value="<?php echo $data['contact_number'] ?>" required>
+        <input type="text" name="contact_number"  value="<?php echo $data['contact_number'] ?>" oninput="validate_contact_number(this)" >
+        <?php 
+        if(isset($field_errors['contact_number'])){
+            echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["contact_number"].'</p>';
+        }else{
+            echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
+         }
+        ?>
     </div>
 
     <div class="form-group mt-1">
         <label>NIC</label>
-        <input type="text" name="nic"  value="<?php echo $data['nic'] ?>" required>
+        <input type="text" name="nic"  value="<?php echo $data['nic'] ?>" oninput="validate_user_input(this,10,12,1)" >
+        <?php 
+        if(isset($field_errors['nic'])){
+            echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["nic"].'</p>';
+        }else{
+            echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
+         }
+        ?>
     </div>
 <!--
     <div class="form-group mt-1">
@@ -118,8 +158,8 @@ if(isset($_POST['update']))
     <div class="w-100 p-1"></div>
 
         <div class="form-group d-flex flex-row w-auto float-right">
-		    <button type="submit" name="update" class="btn btn-blue w-auto m-1">UPDATE</button>
-		</div>
+            <button type="submit" name="update" class="btn btn-blue w-auto m-1">UPDATE</button>
+        </div>
 
     
 </form>

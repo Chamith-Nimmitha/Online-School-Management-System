@@ -66,13 +66,13 @@
 								echo '
 							<td>
 								<div>
-	                				<a class="btn btn-blue" href="teacher_list_update.php?id=' .$result['id'] .' ">Update</a>
+	                				<a class="btn btn-blue" href="update/' .$result['id'] .' ">Update</a>
 			    				</div>
 							</td>
 
 							<td>
 								<div>
-									<a class="btn btn-lightred" href="teacher_delete.php?id=' .$result['id'] .'" onclick="return confirm("Are you sure to delete?")">Delete</a>
+									<a class="btn btn-lightred" href="delete/' .$result['id'] .' onclick=\"return confirm(\'Are you sure to delete?\');\">Delete</a>
 			    				</div>
 							</td>';
 							}

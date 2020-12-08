@@ -38,6 +38,8 @@
 	$routes['teacher/list'] = "teacher/list";
 	$routes['teacher/registration'] = "teacher/new_teacher";
 	$routes['teacher/update'] = "teacher/teacher_list_update";
+	$routes['teacher/update/$1'] = "teacher/update_teacher/$1";
+	$routes['teacher/delete/$1'] = "teacher/delete/$1";
 
 	//classroom routes
 	$routes['classroom/list'] = "classroom/classroom_list";
