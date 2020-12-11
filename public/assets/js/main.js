@@ -464,9 +464,9 @@ function reset_form(ele){
 	if(p_ele.nodeName == "FORM"){
 		var inputs = p_ele.getElementsByTagName("input");
 		var select = p_ele.getElementsByTagName("select");
-		for (var i=0; i< select.length; i++){
+		for (var i=0; i< inputs.length; i++){
 			if(inputs[i].type == "text"){
-				inputs[i].setAttribute("value","")
+				inputs[i].setAttribute("value","");
 			}
 		}
 		for (var i=0; i< select.length; i++){
@@ -474,6 +474,5 @@ function reset_form(ele){
 			selected.removeAttribute("selected");
 			select[i].firstElementChild.setAttribute("selected","selected");
 		}
-		// ele.value = value;
 	}
 }

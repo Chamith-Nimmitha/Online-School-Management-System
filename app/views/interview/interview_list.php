@@ -6,28 +6,28 @@
 	<div id="all-admission-table"  class="admissions-table">
 		<hr>
 		<div class="d-flex justify-content-center align-items-center">
-			<form action="<?php echo set_url('pages/student_list.php'); ?>" method="get" class="d-flex align-items-center col-12">
+			<form action="<?php echo set_url('interview/list'); ?>" method="post" class="d-flex align-items-center col-12">
 				<div class="d-flex col-12 align-items-center justify-content-center">
 					<div class="mt-5">
 						<input type="reset" class="btn btn-blue" onclick="reset_form(this)" value="reset">
 					</div>
 					<div class="ml-5">
 						<label for="admission-id">Admission ID</label>
-						<input type="text" name="admission-id" id="admission-id" placeholder="admission ID" value="<?php if(isset($_GET['admission-id'])){echo $_GET['admission-id'];} ?>">
+						<input type="text" name="admission-id" id="admission-id" placeholder="admission ID" value="<?php if(isset($_POST['admission-id'])){echo $_POST['admission-id'];} ?>">
 					</div>
 					<div class="ml-5">
 						<label for="panel-id">Panel ID</label>
-						<input type="text" name="panel-id" id="panel-id" placeholder="panel ID" value="<?php if(isset($_GET['panel-id'])){echo $_GET['panel-id'];} ?>">
+						<input type="text" name="panel-id" id="panel-id" placeholder="panel ID" value="<?php if(isset($_POST['panel-id'])){echo $_POST['panel-id'];} ?>">
 					</div>
 					<div  class="  ml-5 align-items-center">
 						<label for="class" class="mr-3 d-normal">State:</label>
 						<select name="state" id="state">
-							<option value="all" <?php if(isset($_GET['state']) && ($_GET['state'] == "all")){echo 'selected="selected"';} ?> >All</option>
-							<option value="interviewed" <?php if(isset($_GET['state']) && ($_GET['state'] == "interviewed")){echo 'selected="selected"';} ?> >Interviewed</option>
-							<option value="notInterviewed" <?php if(isset($_GET['state']) && ($_GET['state'] == "notInterviewed")){echo 'selected="selected"';} ?> >NotInterviewed</option>
+							<option value="all" <?php if(isset($_POST['state']) && ($_POST['state'] == "all")){echo 'selected="selected"';} ?> >All</option>
+							<option value="interviewed" <?php if(isset($_POST['state']) && ($_POST['state'] == "interviewed")){echo 'selected="selected"';} ?> >Interviewed</option>
+							<option value="notInterviewed" <?php if(isset($_POST['state']) && ($_POST['state'] == "notInterviewed")){echo 'selected="selected"';} ?> >NotInterviewed</option>
 						</select>				
 					</div>
-					<input type="submit" class="btn btn-blue ml-3 mt-5" value="Show">
+					<input type="submit" class="btn btn-blue ml-3 mt-5" name="search" value="Show">
 				</div>
 			</form>
 		</div>
@@ -35,8 +35,8 @@
 				<?php 
 					$table = "<table class='table-strip-dark'>
 								<caption class=\"p-5\">";
-					 if(isset($_GET['admission-search'])){ 
-					 	$table .= ucfirst($_GET['admission-search']);
+					 if(isset($_POST['admission-search'])){ 
+					 	$table .= ucfirst($_POST['admission-search']);
 					 }
 					$table .= "Admissions</caption>";
 					$table .= "<thead>

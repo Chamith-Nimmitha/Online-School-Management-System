@@ -17,7 +17,7 @@
 					</div>
 					<div class="ml-5">
 						<label for="studebt-id">Student ID</label>
-						<input type="text" name="student-id" id="student-id" placeholder="Student ID" value="<?php if(isset($student_id)){echo $student_id;} ?>" oninput="get_student_data('student-list-table','student-id','','grade','class', <?php echo $per_page; ?>)">
+						<input type="text" name="student-id" id="student-id" placeholder="Student ID" value="<?php if(isset($student_id)){echo $student_id;} ?>" oninput="get_student_data2('student-list-table','student-id','','grade','class')">
 					</div>
 					<div  class="  ml-5 align-items-center">
 						<label for="grade" class="mr-3 d-normal">Grade : </label>

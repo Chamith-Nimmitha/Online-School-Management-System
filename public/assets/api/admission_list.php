@@ -5,13 +5,13 @@
 			if($type =="all"){
 				$query = "SELECT * FROM `admission` WHERE grade='{$data}' OR name_with_initials like '%{$data}%' LIMIT 20";
 			}else{
-				$query = "SELECT * FROM `admission` WHERE grade={$data} OR name_with_initials like '%{$data}%' AND state='{$type}' LIMIT 20";
+				$query = "SELECT * FROM `admission` WHERE (grade={$data} OR name_with_initials like '%{$data}%')	 AND state='{$type}' LIMIT 20";
 			}
 		}else if(strlen($data) > 2){
 			if($type =="all"){
 				$query = "SELECT * FROM `admission` WHERE id like '%{$data}%' OR name_with_initials like '%{$data}%' LIMIT 20";
 			}else{
-				$query = "SELECT * FROM `admission` WHERE id like '%{$data}%' OR name_with_initials like '%{$data}%' AND state='{$type}' LIMIT 20";
+				$query = "SELECT * FROM `admission` WHERE (id like '%{$data}%' OR name_with_initials like '%{$data}%') AND state='{$type}' LIMIT 20";
 			}
 		}else{
 			if($type =="all"){
