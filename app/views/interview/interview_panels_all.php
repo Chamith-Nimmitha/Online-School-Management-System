@@ -65,7 +65,7 @@
 						echo $row;
 					}
 				}else{
-					echo "<tr><td colspan=5 class='text-center bg-red'>Students not found...</td></tr>";
+					echo "<tr><td colspan=5 class='text-center bg-red'>Panels not found...</td></tr>";
 				}
 				echo "</tbody>";
 				echo "</table>";

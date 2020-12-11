@@ -109,13 +109,29 @@
 
 		// get interview list
 		public function list(){
-			$con = new Database();
+			
+			$admission_id = NULL;
+			$panel_id = NULL;
+			$state = 'all';
+
+			if(isset($_POST['search'])){
+				$admission_id = addslashes(trim($_POST['admission-id']));
+				$panel_id = addslashes(trim($_POST['panel-id']));
+				$state = addslashes(trim($_POST['state']));
+				if( strlen($admission_id) === 0){
+					$admission_id = NULL;
+				}
+				if( strlen($panel_id) === 0){
+					$panel_id = NULL;
+				}
+			}
 
 			$time_map = ["1"=>"7.50a.m - 8.30a.m", "2"=>"8.30a.m - 9.10a.m", "3"=>"9.10a.m - 9.50a.m", "4"=> "9.50a.m - 10.30a.m", "5"=> "10.50a.m - 11.30a.m", "6"=>"11.30a.m - 12.10p.m", "7"=> "12.10p.m - 12.50p.m", "8"=>"12.50p.m - 1.30p.m"];
 
-			$con->orderBy("date");
-			$result_set = $con->select("interview");
+			$this->load->model("interview");
+			$result_set = $this->load->interview->search($admission_id,$panel_id,$state);
 			if($result_set){
+				$result_set = $result_set->fetchAll();
 				$data['result_set'] = $result_set;
 				$data['time_map'] = $time_map;
 			}else{

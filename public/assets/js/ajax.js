@@ -76,7 +76,8 @@ function admission_search(input){
 	var value = input.value;
 	var type = document.getElementById("admission-state").value;
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET",base_url+"api/admission/search/"+type+"/"+value,true);
+	xhr.open("POST",base_url+"api/admission/search",true);
+	xhr.setRequestHeader("Content-Type", "application/json");
 	xhr.onload = function(){
 		if(this.status == 200){
 			var respond = xhr.responseText;
@@ -86,7 +87,8 @@ function admission_search(input){
 	xhr.onerror = function(){
 		console.log(xhr.error);
 	}
-	xhr.send();
+	var data = {type:type,value:value};
+	xhr.send( JSON.stringify(data) );
 }
 
 function get_subject_data(field,input){
@@ -222,6 +224,7 @@ function get_student_data(target_id,id="",name="",grade="",className="",per_page
 	xhr.send();
 }
 
+// without pagination
 function get_student_data2(target_id,id="",name="",grade="",className=""){
 	var target_div = document.getElementById(target_id);
 	var idVal ="";
@@ -248,41 +251,37 @@ function get_student_data2(target_id,id="",name="",grade="",className=""){
 	}
 
 	var xhr = new XMLHttpRequest();
-	console.log(`../php/getdata/get_student_info.php?id=${idVal}&name=${nameVal}&grade=${gradeVal}&class=${classVal}`);
-	xhr.open("GET", `../php/getdata/get_student_info.php?id=${idVal}&name=${nameVal}&grade=${gradeVal}&class=${classVal}`, true);
-
+	xhr.open("POST", base_url+`api/student/search`, true);
+	xhr.setRequestHeader("Content-Type", "application/json");
+	var data = {id:idVal,name:nameVal,grade:gradeVal,class:classVal};
 	xhr.onload = function(){
 		if(this.status == 200){
 			var response = this.responseText; 
 			if(response.search("FALSE") == -1){
 				response = JSON.parse(response);
 				target_div.innerHTML = "";
-				for ( var i=0; i < response.length-1; i++){
-					var row = `<tr class="col-12 word-break">
-					 <td class="col-2 word-break">${response[i]['id']}</td>
-					 <td class="col-2 word-break">${response[i]['name_with_initials']}</td>
-					 <td class="col-2 word-break">${response[i]['email']}</td>
-					 <td class="col-2 word-break">${response[i]['contact_number']}</td>
-					 <td class="col-2  word-break d-flex justify-content-center align-items-center"><input type="checkbox" name="assign-${response[i]['id']}" `;
-					 if(response[i]['classroom_id'] != null){
-					 	row += "checked disabled='disabled'";
-					 }else{
-					 	row += "";
-					 }
-					 row += ` onchange="update_student_selected_set(this)" ></td>
-					 <td class="col-2  word-break"><a href="./student_profile_view?student_id="${response[i]['id']}>profile</a></td>
-					 </tr>`;
+				for ( var i=0; i < response.length; i++){
+					var row = `<tr>
+					 <td>${response[i]['id']}</td>
+					 <td>${response[i]['name_with_initials']}</td>
+					 <td class="text-center">${response[i]['grade']}</td>
+					 <td class="text-center">${response[i]['class']}</td>
+					 <td>${response[i]['contact_number']}</td>
+					 <td>${response[i]['is_deleted']}</td>
+					 <td class='text-center'><a href='admin_student_timetable_view.php?student_id=${response[i]['id']}' class='btn btn-blue t-d-none p-1'>timetable</a></td>
+					 <td class='text-center'><a href='admin_student_profile.php?student-id=${response[i]['id']}' class='btn btn-blue t-d-none p-1'>profile</a></td>
+					 <td class='text-center'><a href='student_marks_report.php?student-id=${response[i]['id']}' class='btn btn-blue t-d-none p-1'>profile</a></td>
+					 <td class='text-center'><a href='student_list.php?delete=${response[i]['id']}' class='btn btn-lightred t-d-none p-1'>delete</a></td></tr>`;
 					target_div.innerHTML += row ;
 				}
 			}else{
 				target_div.innerHTML = `
-							<tr class='col-12'>
-								<td colspan=6 class='col-12 bg-red'><p class='text-center w-100'>Students Not found...</p></td>
+							<tr'>
+								<td colspan=10 class='bg-red'><p class='text-center w-100'>Students Not found...</p></td>
 							</tr>`;
 			}
 		}
 	}
-
-	xhr.send();
+	xhr.send( JSON.stringify(data));
 }
 

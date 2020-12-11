@@ -64,7 +64,7 @@
 				}else{
 					$query .= " WHERE ";
 				}
-				$query .= "(`s`.`grade`={$grade}) ";
+				$query .= "(`s`.`grade`='{$grade}') ";
 				$flag = 1;
 			}
 			$query .=  "LIMIT {$this->limit}";

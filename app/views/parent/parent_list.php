@@ -6,20 +6,20 @@
 	<hr class="w-100">
 	<div class="col-12 d-flex justify-content-center">
 		<div class="d-flex justify-content-center mb-5 align-items-center">
-			<form action="<?php echo set_url('pages/teacher-all.php'); ?>" method="get" class="d-flex align-items-center col-12">
+			<form action="<?php echo set_url("parent/list"); ?>" method="post" class="d-flex align-items-center col-12">
 				<div class="d-flex col-12 align-items-center justify-content-center">
 					<div class="mt-5">
 						<input type="reset" class="btn btn-blue" onclick="reset_form(this)" value="reset">
 					</div>
 					<div class="ml-5">
 						<label for="parent-id">Parent ID/Name</label>
-						<input type="text" name="parent-id" id="parent-id" placeholder="ID, Name" value="<?php if(isset($_GET['parent-id'])){echo $_GET['parent-id'];} ?>">
+						<input type="text" name="parent-id" id="parent-id" placeholder="ID, Name" value="<?php if(isset($_POST['parent-id'])){echo $_POST['parent-id'];} ?>">
 					</div>
 					<div class="ml-5">
 						<label for="occupation">Occupation</label>
-						<input type="text" name="occupation" id="occupation" placeholder="ID, Name" value="<?php if(isset($_GET['occupation'])){echo $_GET['occupation'];} ?>">
+						<input type="text" name="occupation" id="occupation" placeholder="ID, Name" value="<?php if(isset($_POST['occupation'])){echo $_POST['occupation'];} ?>">
 					</div>
-					<input type="submit" class="btn btn-blue ml-3 mt-5" value="Show">
+					<input type="submit" class="btn btn-blue ml-3 mt-5" name="search" value="Show">
 				</div>
 			</form>
 		</div>

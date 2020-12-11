@@ -1,9 +1,9 @@
 <?php 
-	
+
 	/**
 	  * define routes here
 	  * This roures are check top to bottom. So most specific routes must be in top.
-	  */ 
+	  */
 
 	// homepage routes
 	$routes[''] = "home/index";
@@ -76,12 +76,12 @@
 	// parent routes
 	$routes['parent/list'] = "parents/list";
 	$routes['parent/student/list'] = "parents/student_list";
-	
+
 	// interview routes
 	$routes['interview/set/$1'] = "interview/set/$1";
 	$routes['interview/list'] = "interview/list";
 	$routes['interview/view/$1'] = "interview/view_admission/$1";
-	
+
 
 	// interview panel routes
 	$routes['interviewpanel/list'] = "interviewpanel/list";
@@ -99,8 +99,8 @@
 
 
 	// FOR APIS
-	$routes['api/admission/search/$1/$2'] = "apiAdmission/search/$1/$2";
-	$routes['api/admission/search/$2'] = "apiAdmission/search/$2";
+	$routes['api/admission/search'] = "apiAdmission/search";
+	$routes['api/student/search'] = "apiStudent/search";
 
 
 	// define as a global variable. Don't delete this

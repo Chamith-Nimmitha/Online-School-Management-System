@@ -5,10 +5,11 @@ class ApiAdmission extends Controller{
 		parent::__construct();
 	}
 
-	public function search($type,$value=""){
-		$data["type"] = $type;
-		$data["data"] = $value;
-		$this->load->view("../includes/getdata/admission_list",$data);
+	public function search(){
+		$post = json_decode(file_get_contents("php://input"));
+		$data["type"] = $post->type;
+		$data["data"] = $post->value;
+		$this->load->view("../../public/assets/api/admission_list",$data);
 	}
 
 }
