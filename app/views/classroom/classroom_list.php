@@ -68,9 +68,14 @@
 
 				<?php 
 				if(isset($result_set) && !empty($result_set)){
+					$grade = 0;
 					foreach ($result_set as $result) {
                 ?>
-
+                	<?php 
+                		if($grade !== 0 && $grade != $result['grade']){
+                			echo "<tr><td colspan=8 class='text-center bg-gray'></td></tr>";
+                		}
+                	 ?>
 					<tr>
                         <td><?php echo $result['id']; ?></td>
                         <td class="text-center"><?php echo $result['grade']; ?></td>
@@ -101,6 +106,7 @@
 					</tr>
 
 				<?php
+				$grade = $result['grade'];
 					}
 				}else{
 					echo "<tr><td colspan=8 class='text-center bg-red'>Classroom not found...</td></tr>";

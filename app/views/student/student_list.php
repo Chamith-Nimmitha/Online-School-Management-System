@@ -52,7 +52,7 @@
 							<option value="H" <?php if(isset($class) && ($class == "H")){echo 'selected="selected"';} ?> >H</option>
 						</select>				
 					</div>
-					<input type="submit" class="btn btn-blue ml-3 mt-5" value="Show">
+					<input type="submit" class="btn btn-blue ml-3 mt-5" name="search" value="Show">
 				</div>
 			</form>
 		</div>
