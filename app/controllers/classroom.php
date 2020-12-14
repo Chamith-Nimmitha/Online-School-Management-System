@@ -86,9 +86,47 @@
 		// view classroom list for admin
 		public function classroom_list(){
 			$this->load->model("classrooms");
-			$data['result_set'] = $this->load->classrooms->get_classroom_list();
+
+			if(!isset($_POST['classroom-id']) || empty($_POST['classroom-id'])){
+                $data['classroom_id'] = "";
+                if(isset($_POST['grade']) && $_POST['grade'] != 'all'){
+                    if(isset($_POST['class']) && $_POST['class'] != 'all'){
+                        $result_set = $this->load->classrooms->get_classroom_list(null,$_POST['grade'],$_POST['class']);
+                        $data['grade'] = $_POST['grade'];
+                        $data['class'] = $_POST['class'];
+                    }else{
+                        $result_set = $this->load->classrooms->get_classroom_list(null,$_POST['grade']);
+                        $data['grade'] = $_POST['grade'];
+                    }
+                }else{
+                    if(isset($_POST['class']) && $_POST['class'] != 'all'){
+                        $result_set = $this->load->classrooms->get_classroom_list(null,null,$_POST['class']);
+                        $data['class'] = $_POST['class'];
+                    }else{
+                        $result_set = $this->load->classrooms->get_classroom_list();
+                    }
+                }
+            }else{
+                $data['classroom_id'] = $_POST['classroom-id'];
+                if(isset($_POST['grade']) && $_POST['grade'] != 'all'){
+                    if(isset($_POST['class']) && $_POST['class'] != 'all'){
+                        $result_set = $this->load->classrooms->get_classroom_list($_POST['classroom-id'],$_POST['grade'],$_POST['class']);
+                    }else{
+                        $result_set = $this->load->classrooms->get_classroom_list($_POST['classroom-id'],$_POST['grade']);
+                    }
+                }else{
+                    if(isset($_POST['class']) && $_POST['class'] != 'all'){
+                        $result_set = $this->load->classrooms->get_classroom_list($_POST['classroom-id'],null,$_POST['class']);
+                    }else{
+                        $result_set = $this->load->classrooms->get_classroom_list($_POST['classroom-id']);
+                    }
+                }
+            }
+
+            unset($_POST);
+			$data['result_set'] = $result_set;
 			$this->view_header_and_aside();
-			$this->load->view("classroom/classroomsnew-view",$data);
+			$this->load->view("classroom/classroom_list",$data);
 			$this->load->view("templates/footer");
 		}
 

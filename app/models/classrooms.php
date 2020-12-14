@@ -9,11 +9,44 @@
 		}
 
 		// get all classrooms data
-		public function get_classroom_list(){
-			$this->con->get(array("id"));
-			$result_set = $this->con->select($this->table);
-			if($result_set){
-				$result_set = $result_set->fetchAll();
+		public function get_classroom_list($classroom_id=NULL,$grade=NULL,$class=NULL){
+
+			$query = "SELECT `c`.`id` FROM `classroom` AS `c` JOIN `section` AS `s` WHERE `s`.`id`=`c`.`section_id` ";
+			$params = [];
+			$where_flag = 0;
+
+			if($classroom_id !== NULL){
+				$query .= " && (`c`.`id` LIKE ? ";
+				array_push($params, "%{$classroom_id}%");
+				$where_flag = 1;
+			}
+
+			if($grade !== NULL){
+				if($where_flag ===1 ){
+					$query .= " && `s`.`grade`= ? ";
+				}else{
+					$query .= " && (`s`.`grade`= ? ";
+				}
+				array_push($params, $grade);
+				$where_flag = 1;
+			}
+
+			if($class !== NULL){
+				if($where_flag === 1 ){
+					$query .= " && `c`.`class`= ? ";
+				}else{
+					$query .= " && (`c`.`class`= ? ";
+				}
+				array_push($params, $class);
+				$where_flag = 1;
+			}
+			if($where_flag === 1){
+				$query .= ")";
+			}
+			$stmt = $this->con->db->prepare($query);
+			$result = $stmt->execute($params);
+			if($result){
+				$result_set = $stmt->fetchAll();
 				return $this->get_all_data($result_set);
 			}
 		}

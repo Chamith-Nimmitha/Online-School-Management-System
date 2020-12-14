@@ -54,7 +54,7 @@
 							</td>
 							<td>
 								<div>
-									<a href="" class="btn btn-lightred t-d-none">delete</a>
+									<a href="" class="btn btn-lightred t-d-none" onclick="return confirm('Are you sure to delete?')">delete</a>
 								</div>
 							</td>
 						</tr>		

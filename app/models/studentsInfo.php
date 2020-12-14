@@ -1,6 +1,6 @@
 
 <?php 
-	class StudentsInfo{
+	class StudentsInfoModel{
 		public $start;
 		public $count;
 		public $limit;
@@ -67,7 +67,7 @@
 				$query .= "(`s`.`grade`='{$grade}') ";
 				$flag = 1;
 			}
-			$query .=  "LIMIT {$this->limit}";
+			// $query .=  "LIMIT {$this->limit}";
 			$result_set = $this->con->pure_query($query);
 			if($result_set){
 				$result_set = $result_set->fetchAll();
