@@ -71,7 +71,7 @@
 							}
 
 							$row .= "<td><a href=". set_url('admission/view/').$result['id'].">view</a>";
-							$row .= "<td><a href=". set_url('admission/delete/').$result['id'].">delete</a>";
+							$row .= "<td><a href=". set_url('admission/delete/').$result['id']." onclick=\"return confirm('Are you sure to delete?')\">delete</a>";
 							$row .= "</tr>";
 							echo $row;
 						}

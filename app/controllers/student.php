@@ -9,39 +9,39 @@
         // show list of student
         public function list(){
 
-            $obj = new StudentsInfo();
+            $this->load->model("studentsInfo");
             if(!isset($_POST['student-id']) || empty($_POST['student-id'])){
                 $data['student_id'] = "";
                 if(isset($_POST['grade']) && $_POST['grade'] != 'all'){
                     if(isset($_POST['class']) && $_POST['class'] != 'all'){
-                        $result_set = $obj->get_student_list(null,null,$_POST['grade'],$_POST['class']);
+                        $result_set = $this->load->studentInfo->get_student_list(null,null,$_POST['grade'],$_POST['class']);
                         $data['grade'] = $_POST['grade'];
                         $data['class'] = $_POST['class'];
                     }else{
-                        $result_set = $obj->get_student_list(null,null,$_POST['grade']);
+                        $result_set = $this->load->studentsInfo->get_student_list(null,null,$_POST['grade']);
                         $data['grade'] = $_POST['grade'];
                     }
                 }else{
                     if(isset($_POST['class']) && $_POST['class'] != 'all'){
-                        $result_set = $obj->get_student_list(null,null,null,$_POST['class']);
+                        $result_set = $this->load->studentsInfo->get_student_list(null,null,null,$_POST['class']);
                         $data['class'] = $_POST['class'];
                     }else{
-                        $result_set = $obj->get_student_list();
+                        $result_set = $this->load->studentsInfo->get_student_list();
                     }
                 }
             }else{
                 $data['student_id'] = $_POST['student-id'];
                 if(isset($_POST['grade']) && $_POST['grade'] != 'all'){
                     if(isset($_POST['class']) && $_POST['class'] != 'all'){
-                        $result_set = $obj->get_student_list($_POST['student-id'],null ,$_POST['grade'],$_POST['class']);
+                        $result_set = $this->load->studentsInfo->get_student_list($_POST['student-id'],null ,$_POST['grade'],$_POST['class']);
                     }else{
-                        $result_set = $obj->get_student_list($_POST['student-id'],null,$_POST['grade']);
+                        $result_set = $this->load->studentsInfo->get_student_list($_POST['student-id'],null,$_POST['grade']);
                     }
                 }else{
                     if(isset($_POST['class']) && $_POST['class'] != 'all'){
-                        $result_set = $obj->get_student_list($_POST['student-id'],null,null,$_POST['class']);
+                        $result_set = $this->load->studentsInfo->get_student_list($_POST['student-id'],null,null,$_POST['class']);
                     }else{
-                        $result_set = $obj->get_student_list($_POST['student-id']);
+                        $result_set = $this->load->studentsInfo->get_student_list($_POST['student-id']);
                     }
                 }
             }
