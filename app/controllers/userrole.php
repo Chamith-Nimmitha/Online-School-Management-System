@@ -40,7 +40,7 @@
 			}else{
 				$user_role_id = $_POST['user-role-id'];
 			}
-			$permissions = $this->load->userrole->get_permissions($user_role_id);
+			$permissions = $this->load->userrole->get_permissions_by_id($user_role_id);
 
 			if(!$permissions){
 				echo "Permissions not found.";
@@ -62,7 +62,6 @@
 		public function update_permission(){
 			$this->load->model("userrole","user_role");
 			$models = $this->load->userrole->get_models();
-
 
 			$where['user_role_id'] = $_POST['user-role-id'];
 			$data = [];
@@ -97,6 +96,7 @@
 				echo "permissions update failed.";
 				exit();
 			}
+			$_SESSION["permissions"] = $this->load->userrole->get_permissions_by_name($_SESSION['role']);
 			$info = "Update successful.";
 			$this->permission($info);
 		}

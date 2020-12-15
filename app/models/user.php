@@ -34,7 +34,9 @@
 		public function get_profile_data($id){
 			$result = $this->con->select("student",array("id"=>$id));
 			if($result->rowCount() == 1){
-				$result = $result->fetch();
+				return $result->fetch();
+			}else{
+				return FALSE;
 			}
 		}
 

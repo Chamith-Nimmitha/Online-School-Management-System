@@ -59,8 +59,8 @@
 			
 		}
 
-		// get user permissions
-		public function get_permissions( $user_role_id ){
+		// get user permissions using user role id
+		public function get_permissions_by_id( $user_role_id ){
 			$query = "SELECT `p`.*,`ur`.`name` AS `user_role_name`,`m`.`name` AS `model_name`  FROM `permission` AS `p` JOIN `user_role` AS `ur` ON `p`.`user_role_id`=`ur`.`id` JOIN `model` AS `m` ON `p`.`model_id`=`m`.`id` WHERE `p`.`user_role_id`=$user_role_id";
 			$result_set = $this->con->pure_query($query);
 			if(!$result_set){
@@ -68,6 +68,21 @@
 			}
 			return $result_set->fetchAll();
 
+		}
+
+		// get user permissions using user role name
+		public function get_permissions_by_name( $user_role_name ){
+			$query = "SELECT `p`.*,`ur`.`name` AS `user_role_name`,`m`.`name` AS `model_name`  FROM `permission` AS `p` JOIN `user_role` AS `ur` ON `p`.`user_role_id`=`ur`.`id` JOIN `model` AS `m` ON `p`.`model_id`=`m`.`id` WHERE `ur`.`name`='$user_role_name'";
+			$result_set = $this->con->pure_query($query);
+			if(!$result_set){
+				return FALSE;
+			}
+			$result_set = $result_set->fetchAll();
+			$data = [];
+			foreach ($result_set as $result) {
+				$data[$result['model_name']] = $result;
+			}
+			return $data;
 		}
 
 		// update user permissions

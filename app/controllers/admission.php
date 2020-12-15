@@ -172,6 +172,12 @@
 
 		// show admissions list
 		public function list($filter=""){
+			if($_SESSION['permissions']['admission']['view'] != 1){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			if(empty($filter)){
 				if(isset($_POST['admission-state'])){
 					$filter = $_POST['admission-state'];
@@ -196,12 +202,24 @@
 
 		//delte a admission
 		public function delete($admission_id){
+			if($_SESSION['permissions']['admission']['delete'] != 1){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$con = new Database();
 			$con->update("admission",array("state"=>"deleted"),array("id"=>$admission_id));
 			header("Location:".set_url('admission/list/all'));
 		}
 
 		public function view_admission($admission_id){
+			if($_SESSION['permissions']['admission']['view'] != 1){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$con = new Database();
 			if(isset($_POST['accept'])){
 				$con->update('admission',array("state"=>"accepted"),array("id"=>$admission_id));
