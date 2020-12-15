@@ -88,5 +88,51 @@
 				return FALSE;
 			}
 		}
+
+		// delete userrole
+		public function delete_userrole($user_role_id){
+			$this->con->get(["name"]);
+			$userrole_name = $this->con->select("user_role",["id"=>$user_role_id]);
+			$result = $this->con->delete("user_role",["id"=>$user_role_id]);
+			if($result && ($userrole_name && $userrole_name->rowCount() === 1 )){
+				return $userrole_name->fetch()['name'];
+			}else{
+				return FALSE;
+			}
+		}
+
+		// Create new model
+		public function create_model($model_name){
+			$user_roles = $this->get_user_roles();
+
+			try {
+				$this->con->db->beginTransaction();
+				$result = $this->con->select("model",['name'=>$model_name]);
+				if(!$result || $result->rowCount() !== 0 ){
+					throw new PDOException();
+				}
+				$result = $this->con->insert("model",['name'=>$model_name]);
+				if(!$result || $result->rowCount() !== 1){
+					throw new PDOException();
+				}
+				$result = $this->con->select("model",['name'=>$model_name]);
+				if(!$result || $result->rowCount() !== 1 ){
+					throw new PDOException();
+				}
+				$model_id = $result->fetch()['id'];
+
+				foreach ($user_roles as $user_role) {
+					$result = $this->con->insert("permission",["user_role_id"=>$user_role['id'],"model_id"=>$model_id]);
+					if(!$result || $result->rowCount() !== 1){
+						throw new PDOException();
+					}
+				}
+				$this->con->db->commit();
+				return TRUE;;
+			} catch (Exception $e) {
+				$this->con->db->rollBack();
+				return FALSE;
+			}
+		}
 	}
  ?>

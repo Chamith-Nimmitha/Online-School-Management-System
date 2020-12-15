@@ -72,6 +72,7 @@
 	$routes['userrole/permission'] = "userrole/permission";
 	$routes['userrole/permission/update'] = "userrole/update_permission";
 	$routes['userrole/create'] = "userrole/create";
+	$routes['userrole/model/create'] = "userrole/model_create";
 
 	// parent routes
 	$routes['parent/list'] = "parents/list";
