@@ -148,6 +148,41 @@
 			return $data;
 		}
 
+		// register new classroom
+		public function register($data){
+			$result = $this->con->select("classroom",["section_id"=>$data['section_id'],"class"=>$data['class']]);
+			if(!$result || $result->rowCount() !== 0){
+				return FALSE;
+			}
+			$result = $this->con->insert("classroom",$data);
+			if($result && $result->rowCount() === 1){
+				$this->con->get(['id']);
+				$result = $this->con->select("classroom",$data);
+				if($result && $result->rowCount() === 1){
+					return $this->set_by_id($result->fetch()['id']);
+				}else{
+					return FALSE;
+				}
+			}else{
+				return FALSE;
+			}
+		}
+
+		// update existing classroom
+		public function update_classroom($classroom_id,$data){
+			$result = $this->con->select("classroom",["id"=>$classroom_id]);
+			if(!$result || $result->rowCount() !== 1){
+				return FALSE;
+			}
+			// $query = "UPDATE `classroom` SET `section_id`=$data['section_id'],$"
+			$result = $this->con->update("classroom",$data,['id'=>$classroom_id]);
+			if($result){
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+		}
+
 		public function __destruct(){
 			unset($this->con);
 		}

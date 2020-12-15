@@ -1,4 +1,19 @@
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
+
+    <?php 
+
+        if(isset($info) && !empty($info)){
+            echo "<p class='w-75 bg-green p-2 text-center'>";
+            echo $info;
+            echo "</p>";
+        }
+        if(isset($error) && !empty($error)){
+            echo "<p class='w-75 bg-red p-2 text-center'>";
+            echo $error;
+            echo "</p>";
+        }
+     ?>
+
     <div>
         <h2 class="fs-30">ADD CLASSROOMS</h2>
     </div>	
@@ -7,10 +22,16 @@
     <form  method="post" action="<?php if(isset($result)){echo set_url('classroom/update/'.$result['id']);}else{echo set_url('classroom/registration');} ?>" class="col-6">
         <div class="form-group mt-1">
             <label>SECTION</label>
-            <select name="section" id="section" required="required">
+            <select name="section" id="section" required="required" onchange="get_classroom_grades(this,'grade')">
                 <option value="">select</option>
-                <option value="primary" <?php if(isset($result) && $result['category'] == "primary"){echo "selected='selected'";} ?>>Primary</option>
-                <option value="secondary" <?php if(isset($result) && $result['category'] == "secondary"){echo "selected='selected'";} ?>>Secondary</option>
+                <?php 
+                    if(isset($categories) && !empty($categories)){
+                        foreach ($categories as $category) {
+                 ?>
+                 <option value="<?php echo $category['category'] ?>" <?php if(isset($result) && $result['category'] == $category['category']){echo "selected='selected'";} ?>><?php echo $category['category']; ?></option>
+                <?php 
+                    }
+                } ?>
             </select> 
         </div>
 
@@ -18,9 +39,11 @@
             <label>Grade</label>
             <select name="grade" id="grade" required="required">
                 <option value="">select</option>
-                <?php foreach ($sections as $section) { ?>
-                    <option value="<?php echo $section['grade']; ?>" <?php if(isset($result) && $result['grade'] === $section['grade']){echo "selected='selected'";} ?>><?php echo $section['grade']; ?></option>
-                <?php } ?>
+                <?php 
+                if(isset($sections) && !empty($sections)){
+                    foreach ($sections as $section) { ?>
+                        <option value="<?php echo $section['id']; ?>" <?php if(isset($result) && $result['section_id'] === $section['id']){echo "selected='selected'";} ?>><?php echo $section['grade']; ?></option>
+                <?php } }?>
             </select> 
         </div>
             
@@ -41,7 +64,7 @@
         </div>
         <div class="form-group w-90">
             <label for="description">Description</label>
-            <textarea name="description" id="description" value="<?php if(isset($result)){echo $result['description'];} ?>" class="w-100" rows="10"></textarea>
+            <textarea name="description" id="description"  class="w-100" rows="10"><?php if(isset($result)){echo $result['description'];} ?></textarea>
         </div>
 
         <div class="w-100 p-1"></div>

@@ -143,86 +143,6 @@ function get_teacher_data(field,input){
 	xhr.send();
 }
 
-function get_student_data(target_id,id="",name="",grade="",className="",per_page){
-	var target_div = document.getElementById(target_id);
-	var pagination_div = document.getElementById("pagination-div");
-	var count_ele = document.getElementById("record_count");
-	var idVal ="";
-	var nameVal ="";
-	var gradeVal ="";
-	var gradeVal2 ="";
-	var classVal ="";
-	var classVal2 ="";
-	if(id !== ""){
-		var idVal = document.getElementById(id).value;
-	}
-	if(name !== ""){
-		var nameVal = document.getElementById(name).value;
-	}
-	if(grade !== ""){
-		var gradeVal2 = document.getElementById(grade).value;
-		if(gradeVal2 === "all"){
-			gradeVal = "";
-		}
-	}
-	if(className !== ""){
-		var classVal2 = document.getElementById(className).value;
-		if(classVal2 === "all"){
-			classVal ="";
-		}
-	}
-
-	var xhr = new XMLHttpRequest();
-	var xhr2 = new XMLHttpRequest();
-	xhr.open("GET", `../php/getdata/get_student_info.php?start=0&count=${per_page}&id=${idVal}&name=${nameVal}&grade=${gradeVal}&class=${classVal}`, true);
-
-	xhr.onload = function(){
-		if(this.status == 200){
-			var response = this.responseText; 
-			target_div.innerHTML = "";
-			if(response.search("FALSE") == -1){
-				response = JSON.parse(response);
-				for ( var i=0; i < response.length-1; i++){
-					var row = `<tr>
-					 <td>${response[i]['id']}</td>
-					 <td>${response[i]['name_with_initials']}</td>
-					 <td class="text-center">${response[i]['grade']}</td>
-					 <td class="text-center">${response[i]['class']}</td>
-					 <td>${response[i]['contact_number']}</td>
-					 <td>${response[i]['is_deleted']}</td>
-					 <td class='text-center'><a href='admin_student_timetable_view.php?student_id=${response[i]['id']}' class='btn btn-blue t-d-none p-1'>timetable</a></td>
-					 <td class='text-center'><a href='admin_student_profile.php?student-id=${response[i]['id']}' class='btn btn-blue t-d-none p-1'>profile</a></td>
-					 <td class='text-center'><a href='student_marks_report.php?student-id=${response[i]['id']}' class='btn btn-blue t-d-none p-1'>profile</a></td>
-					 <td class='text-center'><a href='student_list.php?delete=${response[i]['id']}' class='btn btn-lightred t-d-none p-1'>delete</a></td></tr>`;
-					target_div.innerHTML += row ;
-				}
-				xhr2.open("GET", `../php/pagination.php?ajax=&count=${response[response.length-1]}&current_page=1&per_page=${per_page}&actual_link=http://localhost/sms/pages/student_list.php?student-id=${idVal}@grade=${gradeVal2}@class=${classVal2}@`, true);
-				xhr2.onload = function(){
-					if( this.status == 200){
-						var res = this.responseText;
-						console.log(response[response.length-1]);
-						count_ele.innerHTML = response[response.length-1]+" results found.";
-						pagination_div.innerHTML = res;
-					}
-				}
-				xhr2.send();
-			}else{
-				target_div.innerHTML = "<tr><td colspan=10 class='text-center bg-red'>Students not found...</td></tr>" ;
-				xhr2.open("GET", `../php/pagination.php?ajax=&count=0&current_page=1&per_page=${per_page}`, true);
-				xhr2.onload = function(){
-					if( this.status == 200){
-						var res = this.responseText;
-						count_ele.innerHTML = 0+" results found.";
-						pagination_div.innerHTML = res;
-					}
-				}
-				xhr2.send();
-			}
-		}
-	}
-
-	xhr.send();
-}
 
 // without pagination
 function get_student_data2(target_id,id="",name="",grade="",className=""){
@@ -283,5 +203,29 @@ function get_student_data2(target_id,id="",name="",grade="",className=""){
 		}
 	}
 	xhr.send( JSON.stringify(data));
+}
+
+// get classrooms grades according to section category
+function get_classroom_grades(category_ele,target_id){
+	var grade_sel = document.getElementById(target_id);
+	var category = category_ele.value;
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET",base_url+"api/classroom/grade/"+category,true);
+
+	xhr.onload = function(){
+		if( this.status == 200 ){
+			var response = xhr.responseText;
+			if( response.search("FALSE") === -1 ){
+				grades = JSON.parse(response);
+				grade_sel.innerHTML = `<option value="">select</option>`;
+				for( var i in grades ){
+					var option = `<option value="${grades[i]['id']}">${grades[i]['grade']}</option>`;
+					grade_sel.innerHTML += option;
+				}
+			}
+		}
+	}
+	xhr.send();
 }
 
