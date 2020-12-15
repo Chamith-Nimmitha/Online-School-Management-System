@@ -58,7 +58,7 @@
 						
 						<td class="text-center">
 							<div>
-                				<a class="btn btn-blue" href="teacher_subject_list.php?teacher_id=<?php echo $result['id']; ?> ">List</a>
+                				<a class="btn btn-blue" href="subject/list/<?php echo $result['id'];?>">List</a>
 		    				</div>
 						</td>
 						<?php
