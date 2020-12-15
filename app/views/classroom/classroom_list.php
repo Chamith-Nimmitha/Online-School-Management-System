@@ -12,34 +12,34 @@
 					<div  class="  ml-5 align-items-center">
 						<label for="grade" class="mr-3 d-normal">Grade : </label>
 						<select name="grade" id="grade" style="width: 100px">
-							<option value="all" <?php if(isset($_POST['grade'])){if($_POST['grade'] == "all"){echo 'selected="selected"';}}else{echo 'selected="selected"';} ?>>All</option>
-							<option value="1" <?php if(isset($_POST['grade']) && ($_POST['grade'] == "1")){echo 'selected="selected"';} ?> >1</option>
-							<option value="2" <?php if(isset($_POST['grade']) && ($_POST['grade'] == "2")){echo 'selected="selected"';} ?> >2</option>
-							<option value="3" <?php if(isset($_POST['grade']) && ($_POST['grade'] == "3")){echo 'selected="selected"';} ?> >3</option>
-							<option value="4" <?php if(isset($_POST['grade']) && ($_POST['grade'] == "4")){echo 'selected="selected"';} ?> >4</option>
-							<option value="5" <?php if(isset($_POST['grade']) && ($_POST['grade'] == "5")){echo 'selected="selected"';} ?> >5</option>
-							<option value="6" <?php if(isset($_POST['grade']) && ($_POST['grade'] == "6")){echo 'selected="selected"';} ?> >6</option>
-							<option value="7" <?php if(isset($_POST['grade']) && ($_POST['grade'] == "7")){echo 'selected="selected"';} ?> >7</option>
-							<option value="8" <?php if(isset($_POST['grade']) && ($_POST['grade'] == "8")){echo 'selected="selected"';} ?> >8</option>
-							<option value="9" <?php if(isset($_POST['grade']) && ($_POST['grade'] == "9")){echo 'selected="selected"';} ?> >9</option>
-							<option value="10" <?php if(isset($_POST['grade']) && ($_POST['grade'] == "10")){echo 'selected="selected"';} ?> >10</option>
-							<option value="11" <?php if(isset($_POST['grade']) && ($_POST['grade'] == "11")){echo 'selected="selected"';} ?> >11</option>
-							<option value="12" <?php if(isset($_POST['grade']) && ($_POST['grade'] == "12")){echo 'selected="selected"';} ?> >12</option>
-							<option value="13" <?php if(isset($_POST['grade']) && ($_POST['grade'] == "13")){echo 'selected="selected"';} ?> >13</option>
+							<option value="all" <?php if(isset($grade)){if($grade == "all"){echo 'selected="selected"';}}else{echo 'selected="selected"';} ?>>All</option>
+							<option value="1" <?php if(isset($grade) && ($grade == "1")){echo 'selected="selected"';} ?> >1</option>
+							<option value="2" <?php if(isset($grade) && ($grade == "2")){echo 'selected="selected"';} ?> >2</option>
+							<option value="3" <?php if(isset($grade) && ($grade == "3")){echo 'selected="selected"';} ?> >3</option>
+							<option value="4" <?php if(isset($grade) && ($grade == "4")){echo 'selected="selected"';} ?> >4</option>
+							<option value="5" <?php if(isset($grade) && ($grade == "5")){echo 'selected="selected"';} ?> >5</option>
+							<option value="6" <?php if(isset($grade) && ($grade == "6")){echo 'selected="selected"';} ?> >6</option>
+							<option value="7" <?php if(isset($grade) && ($grade == "7")){echo 'selected="selected"';} ?> >7</option>
+							<option value="8" <?php if(isset($grade) && ($grade == "8")){echo 'selected="selected"';} ?> >8</option>
+							<option value="9" <?php if(isset($grade) && ($grade == "9")){echo 'selected="selected"';} ?> >9</option>
+							<option value="10" <?php if(isset($grade) && ($grade == "10")){echo 'selected="selected"';} ?> >10</option>
+							<option value="11" <?php if(isset($grade) && ($grade == "11")){echo 'selected="selected"';} ?> >11</option>
+							<option value="12" <?php if(isset($grade) && ($grade == "12")){echo 'selected="selected"';} ?> >12</option>
+							<option value="13" <?php if(isset($grade) && ($grade == "13")){echo 'selected="selected"';} ?> >13</option>
 						</select>
 					</div>
 					<div  class="  ml-5 align-items-center">
 						<label for="class" class="mr-3 d-normal">Class:</label>
 						<select name="class" id="class">
-							<option value="all" <?php if(isset($_POST['class']) && ($_POST['class'] == "all")){echo 'selected="selected"';} ?> >All</option>
-							<option value="A" <?php if(isset($_POST['class']) && ($_POST['class'] == "A")){echo 'selected="selected"';} ?> >A</option>
-							<option value="B" <?php if(isset($_POST['class']) && ($_POST['class'] == "B")){echo 'selected="selected"';} ?> >B</option>
-							<option value="C" <?php if(isset($_POST['class']) && ($_POST['class'] == "C")){echo 'selected="selected"';} ?> >C</option>
-							<option value="D" <?php if(isset($_POST['class']) && ($_POST['class'] == "D")){echo 'selected="selected"';} ?> >D</option>
-							<option value="E" <?php if(isset($_POST['class']) && ($_POST['class'] == "E")){echo 'selected="selected"';} ?> >E</option>
-							<option value="F" <?php if(isset($_POST['class']) && ($_POST['class'] == "F")){echo 'selected="selected"';} ?> >F</option>
-							<option value="G" <?php if(isset($_POST['class']) && ($_POST['class'] == "G")){echo 'selected="selected"';} ?> >G</option>
-							<option value="H" <?php if(isset($_POST['class']) && ($_POST['class'] == "H")){echo 'selected="selected"';} ?> >H</option>
+							<option value="all" <?php if(isset($class) && ($class == "all")){echo 'selected="selected"';} ?> >All</option>
+							<option value="A" <?php if(isset($class) && ($class == "A")){echo 'selected="selected"';} ?> >A</option>
+							<option value="B" <?php if(isset($class) && ($class == "B")){echo 'selected="selected"';} ?> >B</option>
+							<option value="C" <?php if(isset($class) && ($class == "C")){echo 'selected="selected"';} ?> >C</option>
+							<option value="D" <?php if(isset($class) && ($class == "D")){echo 'selected="selected"';} ?> >D</option>
+							<option value="E" <?php if(isset($class) && ($class == "E")){echo 'selected="selected"';} ?> >E</option>
+							<option value="F" <?php if(isset($class) && ($class == "F")){echo 'selected="selected"';} ?> >F</option>
+							<option value="G" <?php if(isset($class) && ($class == "G")){echo 'selected="selected"';} ?> >G</option>
+							<option value="H" <?php if(isset($class) && ($class == "H")){echo 'selected="selected"';} ?> >H</option>
 						</select>				
 					</div>
 					<input type="submit" class="btn btn-blue ml-3 mt-5" name="search" value="Show">

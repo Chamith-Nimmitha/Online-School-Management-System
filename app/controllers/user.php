@@ -37,6 +37,8 @@
 						}
 						$_SESSION["role"]=$result['role'];
 						$_SESSION['loggedin'] = true;
+						$this->load->model("userrole","user_role");
+						$_SESSION["permissions"] = $this->load->userrole->	get_permissions_by_name($_SESSION['role']);
 						if($_SESSION["role"]==="student"){
 							$user = $this->load->user->get_user_data("student",$email);
 							$_SESSION["user_id"]=$user['id'];
@@ -75,6 +77,12 @@
 
 		//view dashboard for all users
 		public function dashboard($msg=""){
+			if($_SESSION['permissions']['dashboard']['view'] != 1){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$this->view_header_and_aside();
 			$this->load->model("user");
 			$counts = $this->load->user->get_staticstic_count();
