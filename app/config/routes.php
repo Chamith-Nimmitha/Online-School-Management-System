@@ -102,6 +102,7 @@
 	// FOR APIS
 	$routes['api/admission/search'] = "apiAdmission/search";
 	$routes['api/student/search'] = "apiStudent/search";
+	$routes['api/classroom/grade/$1'] = "apiClassroom/get_grades/$1";
 
 
 	// define as a global variable. Don't delete this

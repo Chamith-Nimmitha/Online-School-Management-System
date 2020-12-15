@@ -7,10 +7,27 @@
 		// create new classroom
 		public function registration(){
 			$this->load->model("teachers");
+			$this->load->model("classroom");
+			$this->load->model("classrooms");
 
 			// when submit the form
 			if(isset($_POST['submit'])){
-				// write code here...
+				$section = $_POST['section'];
+				$grade = $_POST['grade'];
+				$class = addslashes(trim($_POST['class']));
+				$class_teacher_id = $_POST['class_teacher'];
+				$description = addslashes(trim($_POST['description']));
+
+				$details['section_id'] = $grade;
+				$details['class'] = $class;
+				$details['class_teacher_id'] = $class_teacher_id;
+				$details['description'] = $description;
+				$classroom_obj = $this->load->classroom->register($details);
+				if($classroom_obj){
+					$data['info'] = "Classroom registration successful";
+				}else{
+					$data["error"] = "Classroom registration failed.";
+				}
 			}
 
 			$teachers = $this->load->teachers->get_not_class_teacher_list();
@@ -18,9 +35,15 @@
 				echo "Query failed.";
 				exit();
 			}
+			$categories = $this->load->classrooms->get_categories();
+			if(!$categories){
+				echo "Query Failed.";
+				exit();
+			}
 			$data['teachers'] = $teachers;
+			$data['categories'] = $categories;
 			$this->view_header_and_aside();
-			$this->load->view("classroom/classroomsnew-add",$data);
+			$this->load->view("classroom/classroom_registration",$data);
 			$this->load->view("templates/footer");
 		}
 
@@ -277,23 +300,49 @@
 		}
 
 		public function update($classroom_id){
-
+			$this->load->model("classroom");
+			$this->load->model("classrooms");
 
 			//when user sumbit the updates
 			if(isset($_POST['update'])){
-				// WRITE CODE HERE
+				$section = $_POST['section'];
+				$grade = $_POST['grade'];
+				$class = addslashes(trim($_POST['class']));
+				$class_teacher_id = $_POST['class_teacher'];
+				$description = addslashes(trim($_POST['description']));
+
+				$details['section_id'] = $grade;
+				$details['class'] = $class;
+				if(!empty($class_teacher_id)){
+					$details['class_teacher_id'] = $class_teacher_id;
+				}
+				$details['description'] = $description;
+				$result = $this->load->classroom->update_classroom($classroom_id,$details);
+				if($result){
+					$data['info'] = "Classroom Update successful";
+				}else{
+					$data["error"] = "Classroom Update failed.";
+				}
 			}
 
-
-			$this->load->model("classroom");
-			$this->load->model("classrooms");
+			// set classroom object
 			$result = $this->load->classroom->set_by_id($classroom_id);
 			if(!$result){
 				echo "classroom not found.";
 				exit();
 			}
+			// get all distict section categories
+			$categories = $this->load->classrooms->get_categories();
+			if(!$categories){
+				echo "Query Failed.";
+				exit();
+			}
+			$data['categories'] = $categories;
+			
+			//get classroom information
 			$data['result'] = $this->load->classroom->get_data();
 
+			// get section information
 			$section_data = $this->load->classroom->get_section_data();
 
 			// get sections list
@@ -318,7 +367,7 @@
 			$data['teachers'] = $teachers;
 
 			$this->view_header_and_aside();
-			$this->load->view("classroom/classroomsnew-add",$data);
+			$this->load->view("classroom/classroom_registration",$data);
 			$this->load->view("templates/footer");
 		}
 	}

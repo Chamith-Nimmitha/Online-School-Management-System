@@ -51,11 +51,24 @@
 			}
 		}
 
+		// get distict section category
+		public function get_categories(){
+			$query = "SELECT distinct `category` FROM `section`";
+			$result = $this->con->pure_query($query);
+			if($result){
+				return $result->fetchAll();
+			}else{
+				return FALSE;
+			}
+		}
+
 		// get all section/ grades
 		public function get_section_list_by_category($category){
 			$result_set = $this->con->select("section",["category"=>$category]);
 			if($result_set){
 				return $result_set->fetchAll();
+			}else{
+				return FALSE;
 			}
 		}
 
