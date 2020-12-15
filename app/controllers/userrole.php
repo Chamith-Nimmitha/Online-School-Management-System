@@ -6,9 +6,21 @@
 		}
 
 		// get all user role permissions
-		public function permission(){
-			$con = new Database();
+		public function permission($info=NULL, $error=NULL){
+
 			$this->load->model("userrole","user_role");
+
+			if(isset($_POST['delete'])){
+				$user_role_id = $_POST['user-role-id'];
+				unset($_POST['user-role-id']);
+				$result = $this->load->userrole->delete_userrole($user_role_id);
+				if($result){
+					$info = "User Role $result is deleted.";
+				}else{
+					$error = "User Role deletetion failed.";
+				}
+			}
+
 			// get all user roles
 			$user_roles = $this->load->userrole->get_user_roles();
 			if(!$user_roles){
@@ -39,6 +51,8 @@
 			$data['models'] = $models;
 			$data['permissions'] = $permissions;
 			$data['user_role_id'] = $user_role_id;
+			$data['info'] = $info;
+			$data['error'] = $error;
 			$this->view_header_and_aside();
 			$this->load->view("admin/user_role_all",$data);
 			$this->load->view("templates/footer");
@@ -77,26 +91,50 @@
 					$data[$model['id']]['delete'] = 0;
 				}
 			}
-			// print_r($data);
-			// exit();
+
 			$result = $this->load->userrole->update_permissions($data, $where);
 			if(!$result){
 				echo "permissions update failed.";
 				exit();
 			}
-			$this->permission();
+			$info = "Update successful.";
+			$this->permission($info);
 		}
 
+		// create new user role
 		public function create(){
+			$info = "";
+			$error = "";
 			$user_role_name = $_POST["user-role-name"];
 			$this->load->model("userrole","user_role");
 			$result = $this->load->userrole->create_user_role($user_role_name);
 			if($result === FALSE){
-				echo "User role creation failed.";
-				exit();
+				$error = "User role creation failed.";
+			}else{
+				$info = "User Role creation successful.";
 			}
 			$_POST['user-role-id'] = $result;
-			$this->permission();
+			$this->permission($info,$error);
+		}
+
+		// create new model
+		public function model_create(){
+			$info = NULL;
+			$error = NULL;
+			if(isset($_POST['create'])){
+				$this->load->model("userrole","user_role");
+				$model_name = $_POST['model-name'];
+				$result = $this->load->userrole->create_model($model_name);
+
+				if($result){
+					$info = "Model creation successful";
+				}else{
+					$error = "Model creation failed.";
+				}
+
+				$this->permission($info,$error);
+
+			}
 		}
 	}
  ?>
