@@ -1,12 +1,6 @@
-<?php require_once("../php/common.php"); ?>
-<?php require_once("../php/database.php"); ?> 
+
 
 <?php 
-	$teacher_subject_info['id'] = $_GET['id'];
-	$teacher_subject_info['grade'] = 12;
-	$teacher_subject_info['code'] = "12MAT";
-	$teacher_subject_info['name'] = "Maths";
-
 	$student_list = array();
 	$student['id'] = "1";
 	$student['name_with_initials'] = "Kamal Perera";
@@ -22,8 +16,6 @@
 	array_push($student_list, $student);
  ?>
 
-<?php require_once("../templates/header.php"); ?>
-<?php require_once("../templates/aside.php"); ?>
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 
@@ -103,4 +95,3 @@
 	</form>
 </div>
 
-<?php require_once("../templates/footer.php"); ?>

@@ -241,5 +241,142 @@
 
 			header("Location:". set_url("teacher/list"));
 		}
+
+		public function subject_list($teacher_id){
+
+			$con = new Database();
+			$info = "";
+			$error = "";
+			$day_map = ["1"=>"mon","2"=>"tue","3"=>"wed","4"=>"thu","5"=>"fri"];
+			if(isset($_POST['submit'])){
+				$teacher_id = $_POST['id'];
+				$result = $con->select("teacher",array("id"=>$teacher_id));
+				if($result && $result->rowCount() == 1){
+					if(!empty($teacher_id)){
+						try{
+							$con->db->beginTransaction();
+							foreach ($_POST as $key => $value) {
+								if( strpos($key, "subject") === 0 && strpos($key, "id") !== False){
+									if(!empty($value)){
+										$result = $con->select("teacher_subject",array("teacher_id"=>$teacher_id, "subject_id"=>$_POST["old-".$key]));
+										if($result && $result->rowCount() >0){
+											$result = $con->update("teacher_subject",array("subject_id"=>$value),array("teacher_id"=>$teacher_id, "subject_id"=>$_POST["old-".$key]));
+											if(!$result){
+												throw new PDOException("Subject update error.".$value	,1);
+											}
+										}else if($result){
+											$result = $con->insert("teacher_subject",array("teacher_id"=>$teacher_id, "subject_id"=>$value));
+											if(!$result || $result->rowCount() ==0){
+												throw new PDOException("Subject insertion error.",1);
+											}
+											$result = $con->select("teacher_subject",array("teacher_id"=>$teacher_id, "subject_id"=>$value));
+											if(!$result || $result->rowCount() !==1){
+												throw new PDOException("Subject insertion error.",1);
+											}
+											$result = $result->fetch();
+											$user_id = $result['id'];
+											$result = $con->insert("normal_timetable",array("type"=>"subject", "user_id"=>$user_id));
+											if(!$result || $result->rowcount() !== 1){
+												throw new PDOException("Timetable creation error.fff",1);
+											}
+											$result = $con->select("normal_timetable",array("type"=>"subject", "user_id"=>$user_id));
+											if(!$result || $result->rowcount() !== 1 ){
+												throw new PDOException("Timetable creation error.qqqqq",1);
+											}
+											$timetable_id = $result->fetch()['id'];
+											for ($i=1; $i <= 5; $i++) { 
+												for ($j=1; $j <= 8; $j++) { 
+													$result = $con->insert("normal_day",array("timetable_id"=>$timetable_id, "day"=>$day_map[$i], "period"=>$j));
+													if(!$result || $result->rowCount() !== 1){
+														throw new PDOException("Timetable creation error.",1);
+													}
+												}
+											}
+
+										}
+									}else{
+										throw new PDOException("Subject Id is empty.",1);
+									}
+								}
+							}
+							$info = "Successfully Update.";
+							$con->db->commit();
+						}catch (Exception $e){
+							$con->db->rollback();
+							$error = $e->getMessage();
+						}
+					}else{
+						$error = "Please fill teacher ID or Name.";
+					}
+				}else{
+					$error = "Invalid teacher ID";
+				}
+			}
+			if(isset($_GET['teacher_id']) || $_SESSION['role'] === "teacher"){
+				if(isset($_GET['teacher_id'])){
+					$teacher_id = $_GET['teacher_id'];
+				}else{
+					$teacher_id = $_SESSION['user_id'];
+				}
+				$result = $con->select("teacher_subject",array("teacher_id"=>$teacher_id));
+				$subject_info = array();
+				if($result && $result->rowCount() > 0){
+					$result = $result->fetchAll();			
+					try{
+						foreach ($result as $sub) {
+							$result = $con->select("subject",array("id"=>$sub['subject_id']));
+							if($result && $result->rowCount() == 1){
+								array_push($subject_info, $result->fetch());
+							}else{
+								throw new PDOException("Data getting failed.",1);
+							}
+						}
+					}catch (Exception $e){
+						$con->db->rollback();
+						$error = $e->getMessage();
+					}
+				}
+			}
+			
+			$result_set =$con->select("teacher_subject",array("teacher_id"=>$teacher_id));
+			$teacher_subject = $result_set->fetchAll();
+
+			$this->load->model("subjectInfo");
+			$subjects = $this->load->subjectInfo->set_by_teacher_id($teacher_id);
+
+
+			$this->load->model("teacher");
+			$this->load->teacher->set_by_id($teacher_id);
+			$teacher_data=$this->load->teacher->get_data();
+			$data1['data'] = $teacher_data;
+
+			foreach ($teacher_data as $name => $value) {
+				$row[$name]=$value;
+			}
+
+			$this->view_header_and_aside();
+			if(isset($_SESSION['role']) && $_SESSION['role']=='teacher'){
+            $this->load->view("teacher/teacher_subject_list_view",["teacher_info"=>$row,"subjects"=>$subjects,"teacher_subject"=>$teacher_subject,"subject_info"=>$subjects,"info"=>$info,"error"=>$error]);
+        	}
+        	else if(isset($_SESSION['role']) && $_SESSION['role']=='admin'){
+            $this->load->view("teacher/teacher_subject_list",["teacher_info"=>$row,"subjects"=>$subjects,"teacher_subject"=>$teacher_subject,"subject_info"=>$subjects,"info"=>$info,"error"=>$error]);	
+        	}
+            $this->load->view("templates/footer");
+
+
+
+		}
+
+		public function student_list($teacher_id){
+
+			$this->view_header_and_aside();
+			if(isset($_SESSION['role']) && $_SESSION['role']=='teacher'){
+            $this->load->view("teacher/teacher_subject_student_list_view");
+        	}
+        	else if(isset($_SESSION['role']) && $_SESSION['role']=='admin'){
+            $this->load->view("teacher/teacher_subject_student_list");	
+        	}
+            $this->load->view("templates/footer");
+		}
 	 }
 ?>
