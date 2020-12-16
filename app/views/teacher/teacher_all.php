@@ -8,11 +8,11 @@
 					</div>
 					<div class="ml-5">
 						<label for="teacher-id">teacher ID/Name</label>
-						<input type="text" name="teacher-id" id="teacher-id" placeholder="ID, Name" value="<?php if(isset($_GET['teacher-id'])){echo $_GET['teacher-id'];} ?>" >
+						<input type="text" name="teacher-id" id="teacher-id" placeholder="ID, Name" value="<?php if(isset($teacher_id)){echo $teacher_id;} ?>" >
 					</div>
 					<div class="ml-5">
 						<label for="subject-id">Subject ID/Name</label>
-						<input type="text" name="subject-id" id="subject-id" placeholder="ID, Name" value="<?php if(isset($_GET['subject-id'])){echo $_GET['subject-id'];} ?>">
+						<input type="text" name="subject-id" id="subject-id" placeholder="ID, Name" value="<?php if(isset($_POST['subject-id'])){echo $_POST['subject-id'];} ?>">
 					</div>
 					<input type="submit" class="btn btn-blue ml-3 mt-5" value="Show">
 				</div>
@@ -46,42 +46,43 @@
                 <tbody>
 
 				<?php 
-				foreach ($result_set as $result) {
-                ?>
+				if(isset($result_set) && !empty($result_set)){
+					foreach ($result_set as $result) {
+	                ?>
 
-					<tr>
-						<td><?php echo $result['id']; ?></td>
-						<td><?php echo $result['name_with_initials']; ?></td>
-						<td><?php echo $result['email']; ?></td>
-						<td><?php echo $result['contact_number']; ?></td>
-						<td><?php echo $result['nic']; ?></td>
-						
-						<td class="text-center">
-							<div>
-                				<a class="btn btn-blue" href="subject/list/<?php echo $result['id'];?>">List</a>
-		    				</div>
-						</td>
-						<?php
-							if($_SESSION['role']==='admin'){
-								echo '
-							<td>
+						<tr>
+							<td><?php echo $result['id']; ?></td>
+							<td><?php echo $result['name_with_initials']; ?></td>
+							<td><?php echo $result['email']; ?></td>
+							<td><?php echo $result['contact_number']; ?></td>
+							<td><?php echo $result['nic']; ?></td>
+							
+							<td class="text-center">
 								<div>
-	                				<a class="btn btn-blue" href="update/' .$result['id'] .' ">Update</a>
+	                				<a class="btn btn-blue" href="subject/list/<?php echo $result['id'];?>">List</a>
 			    				</div>
 							</td>
+							<?php
+								if($_SESSION['role']==='admin'){
+									echo '
+								<td>
+									<div>
+		                				<a class="btn btn-blue" href="update/' .$result['id'] .' ">Update</a>
+				    				</div>
+								</td>
 
-							<td>
-								<div>
-									<a class="btn btn-lightred" href="delete/' .$result['id'] .' onclick=\"return confirm(\'Are you sure to delete?\');\">Delete</a>
-			    				</div>
-							</td>';
-							}
-						?>
-					</tr>
-
-					
-
+								<td>
+									<div>
+										<a class="btn btn-lightred" href="delete/' .$result['id'] .' onclick=\"return confirm(\'Are you sure to delete?\');\">Delete</a>
+				    				</div>
+								</td>';
+								}
+							?>
+						</tr>
 				<?php
+					}
+				}else{
+					echo "<tr><td colspan=8 class='text-center bg-red'>teacher not found...</td></tr>";
 				}
                 ?>
                 </tbody>
@@ -101,7 +102,7 @@
 			<?php ///} ?>
 
 		</div>
-                 <?php //display_pagination($count,$_GET['page'],$per_page); ?>
+                 <?php //display_pagination($count,$_POST['page'],$per_page); ?>
 
 </div>
 

@@ -8,7 +8,12 @@
 
         // show list of student
         public function list(){
-
+            if( isset($_SESSION['permissions']['student_list'])  && $_SESSION['permissions']['student_list']['view'] != 1){
+                $this->view_header_and_aside();
+                $this->load->view("common/error");
+                $this->load->view("templates/footer");
+                return;
+            }
             $this->load->model("studentsInfo");
 
             if(isset($_POST['search'])){
