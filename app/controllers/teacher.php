@@ -15,6 +15,7 @@
 
 			}
 			else{
+				$data['teacher_id'] = $_POST['teacher-id'];
 				if(is_numeric($_POST['teacher-id'])){
 					$result_set = $obj->get_teacher_list($_POST['teacher-id'],null);	
 				}

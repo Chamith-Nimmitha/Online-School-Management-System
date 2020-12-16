@@ -34,21 +34,23 @@
 			    </thead>
                 <tbody>
 				<?php 
-				foreach ($result_set as $result) {
-                ?>
-					<tr>
-						<td class="text-center"><?php echo $result['id']; ?></td>
-						<td><?php echo $result['name_with_initials']; ?></td>
-						<td><?php echo $result['email']; ?></td>
-						<td class="text-center"><?php echo $result['contact_number']; ?></td>
-						<td><?php echo $result['nic']; ?></td>
-						<td class="text-center">
-							<div>
-                				<a class="btn btn-blue" href="teacher_subject_list_view.php?teacher_id=<?php echo $result['id']; ?> ">List</a>
-		    				</div>
-						</td>
-					</tr>
+				if(isset($result_set) && !empty($result_set)){
+					foreach ($result_set as $result) {
+	                ?>
+						<tr>
+							<td class="text-center"><?php echo $result['id']; ?></td>
+							<td><?php echo $result['name_with_initials']; ?></td>
+							<td><?php echo $result['email']; ?></td>
+							<td class="text-center"><?php echo $result['contact_number']; ?></td>
+							<td><?php echo $result['nic']; ?></td>
+							<td class="text-center">
+								<div>
+	                				<a class="btn btn-blue" href="teacher_subject_list_view.php?teacher_id=<?php echo $result['id']; ?> ">List</a>
+			    				</div>
+							</td>
+						</tr>
 				<?php
+					}
 				}
                 ?>
                 </tbody>
