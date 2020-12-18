@@ -3,12 +3,14 @@
 		
 		//view the list of teachers
 		public function list(){
+			if(!$this->checkPermission->check_permission("teacher_list","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 
-			$start = 0;
-			$per_page = 10;
-
-
-			$obj = new TeachersInfo($start, $per_page);
+			$obj = new TeachersInfo();
 			
 			if(!isset($_POST['teacher-id']) || empty($_POST['teacher-id'])){
 				$result_set = $obj->get_teacher_list();
@@ -24,9 +26,6 @@
 				}
 			}
 
-
-			//$count = $obj->get_pre_query_count();
-
             unset($_POST);
             $data['result_set'] = $result_set;
 		    $this->view_header_and_aside();
@@ -35,6 +34,12 @@
 		}
 		//register new teachers
 		public function new_teacher(){
+			if(!$this->checkPermission->check_permission("teacher","create")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$field_errors = array();
 			$info = "";
 			$error = "";
@@ -125,7 +130,12 @@
 		//update teacher details
 		public function update_teacher($teacher_id){
 
-
+			if(!$this->checkPermission->check_permission("teacher","update")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$con = new Database();
 			$field_errors = array();
 			$info = "";
@@ -236,7 +246,12 @@
 		}
 
 		public function delete($teacher_id){
-
+			if(!$this->checkPermission->check_permission("teacher","delete")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$con=new Database();
 			$result=$con->delete('teacher',array('id'=>$teacher_id));
 
@@ -244,7 +259,12 @@
 		}
 
 		public function subject_list($teacher_id){
-
+			if(!$this->checkPermission->check_permission("subject","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$con = new Database();
 			$info = "";
 			$error = "";
@@ -363,12 +383,15 @@
             $this->load->view("teacher/teacher_subject_list",["teacher_info"=>$row,"subjects"=>$subjects,"teacher_subject"=>$teacher_subject,"subject_info"=>$subjects,"info"=>$info,"error"=>$error]);	
         	}
             $this->load->view("templates/footer");
-
-
-
 		}
 
 		public function student_list($teacher_id){
+			if(!$this->checkPermission->check_permission("student","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 
 			$this->view_header_and_aside();
 			if(isset($_SESSION['role']) && $_SESSION['role']=='teacher'){

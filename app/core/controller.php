@@ -9,6 +9,8 @@
 			// create Load object
 			$this->load = new Load();
 			$this->load->model("home");
+			// create permission check object
+			$this->checkPermission = new checkPermission();
 			// if user not logged in, then redirect to the login page
 			$curPageName = $_SERVER['QUERY_STRING'];
 			$alloed_pages = ["homepage","login","forget_password","verification_code","change_password","student/registration","school/contact","school/about"];

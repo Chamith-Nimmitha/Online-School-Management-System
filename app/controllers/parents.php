@@ -8,6 +8,12 @@
 
 		// search and view parent list
 		public function list(){
+			if(!$this->checkPermission->check_permission("parent_list","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$parent_id = NULL;
 			$parent_name = NULL;
 			$occupation = NULL;
@@ -35,6 +41,12 @@
 		}
 
 		public function student_list(){
+			if(!$this->checkPermission->check_permission("student","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$con = new Database();
 			$result = $con->select("student",array("parent_id"=>$_SESSION['user_id']));
 			if($result){

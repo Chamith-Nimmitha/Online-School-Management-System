@@ -8,11 +8,18 @@
 
 		// set or update interview
 		public function set($admission_id){
+			if(!$this->checkPermission->check_permission("interview","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$con = new Database();
 			$error = "";
 			$info = "";
-			//when submit
+			//when create inteview
 			if(isset($_POST['submit'])){
+
 				try{
 					$con->db->beginTransaction();
 					if($_POST['interview-panel'] === "0"){
@@ -32,11 +39,23 @@
 					$data['period'] = $_POST['interview-time'];
 					$result = $con->select("interview",array("admission_id"=>$_POST["admission-id"]));
 					if($result->rowCount() === 0){
+						if(!$this->checkPermission->check_permission("interview","create")){
+							$this->view_header_and_aside();
+							$this->load->view("common/error");
+							$this->load->view("templates/footer");
+							return;
+						}
 						$result = $con->insert('interview',$data);
 						if(!$result || $result->rowCount() !== 1){
 							throw new PDOException("Interview creation failed.", 1);
 						}
 					}else{
+						if(!$this->checkPermission->check_permission("interview","update")){
+							$this->view_header_and_aside();
+							$this->load->view("common/error");
+							$this->load->view("templates/footer");
+							return;
+						}
 						$result = $con->update("interview",$data,array("admission_id"=>$_POST['admission-id']));
 						if(!$result){
 							throw new PDOException("Interview Update failed.", 1);
@@ -109,7 +128,12 @@
 
 		// get interview list
 		public function list(){
-			
+			if(!$this->checkPermission->check_permission("interview","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$admission_id = NULL;
 			$panel_id = NULL;
 			$state = 'all';
@@ -143,7 +167,14 @@
 			$this->load->view("templates/footer");
 		}
 
+		// view,update admission  and create user accounts
 		public function view_admission($admission_id){
+			if(!$this->checkPermission->check_permission("admission","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$con = new Database();
 			$error = "";
 			$field_errors = [];
@@ -287,6 +318,12 @@
 					 }
 					$data["state"] = "registered";
 					if(count($field_errors) === 0 ){
+						if(!$this->checkPermission->check_permission("admission","update") || !$this->checkPermission->check_permission("user_account","create")){
+							$this->view_header_and_aside();
+							$this->load->view("common/error");
+							$this->load->view("templates/footer");
+							return;
+						}
 						$con->db->beginTransaction();
 						$result = $con ->update('admission',$data,array("id"=>$admission_id));
 						if($result){

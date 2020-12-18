@@ -6,6 +6,12 @@
 
 		// create new classroom
 		public function registration(){
+			if(!$this->checkPermission->check_permission("classroom","create")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$this->load->model("teachers");
 			$this->load->model("classroom");
 			$this->load->model("classrooms");
@@ -49,6 +55,12 @@
 
 		// view classroom student list. this function can use any user role
 		public function student_list($classroom_id=""){
+			if(!$this->checkPermission->check_permission("classroom","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$role = $_SESSION['role'];
 			if(empty($classroom_id)){
 				$this->load->model("student");
@@ -108,6 +120,12 @@
 
 		// view classroom list for admin
 		public function classroom_list(){
+			if(!$this->checkPermission->check_permission("classroom_list","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$this->load->model("classrooms");
 
 			if(!isset($_POST['classroom-id']) || empty($_POST['classroom-id'])){
@@ -155,6 +173,12 @@
 
 		// add new student to classroom. For only admin
 		public function add_student($classroom_id=""){
+			if(!$this->checkPermission->check_permission("classroom","update") && !$this->checkPermission->check_permission("student","update")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$role = $_SESSION['role'];
 			$con = new Database();
 			if(empty($classroom_id)){
@@ -201,6 +225,12 @@
 
 		// get classroom timetable
 		public function timetable($classroom_id){
+			if(!$this->checkPermission->check_permission("classroom","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$time_map = ["1"=>"7.50a.m - 8.30a.m", "2"=>"8.30a.m - 9.10a.m", "3"=>"9.10a.m - 9.50a.m", "4"=> "9.50a.m - 10.30a.m", "5"=> "10.50a.m - 11.30a.m", "6"=>"11.30a.m - 12.10p.m", "7"=> "12.10p.m - 12.50p.m", "8"=>"12.50p.m - 1.30p.m"];
 			$day_map = ["1"=>"mon","2"=>"tue","3"=>"wed","4"=>"thu","5"=>"fri"];
 
@@ -216,6 +246,12 @@
 
 			// when update classroom timetable
 			if(isset($_POST['submit'])){
+				if(!$this->checkPermission->check_permission("classroom","update")){
+					$this->view_header_and_aside();
+					$this->load->view("common/error");
+					$this->load->view("templates/footer");
+					return;
+				}
 				try {
 					$con->db->beginTransaction();
 					$where_data['type'] = "classroom";
@@ -298,8 +334,14 @@
 			$this->load->view("classroom/classroom_timetable_create",$data);
 			$this->load->view("templates/footer");
 		}
-
+		// update classroom
 		public function update($classroom_id){
+			if(!$this->checkPermission->check_permission("classroom","update")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$this->load->model("classroom");
 			$this->load->model("classrooms");
 

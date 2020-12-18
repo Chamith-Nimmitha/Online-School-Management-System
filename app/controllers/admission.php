@@ -172,7 +172,8 @@
 
 		// show admissions list
 		public function list($filter=""){
-			if($_SESSION['permissions']['admission']['view'] != 1){
+			// check view  permissions
+			if(!$this->checkPermission->check_permission("admission","view")){
 				$this->view_header_and_aside();
 				$this->load->view("common/error");
 				$this->load->view("templates/footer");
@@ -202,7 +203,7 @@
 
 		//delte a admission
 		public function delete($admission_id){
-			if($_SESSION['permissions']['admission']['delete'] != 1){
+			if(!$this->checkPermission->check_permission("admission","delete")){
 				$this->view_header_and_aside();
 				$this->load->view("common/error");
 				$this->load->view("templates/footer");
@@ -214,7 +215,7 @@
 		}
 
 		public function view_admission($admission_id){
-			if($_SESSION['permissions']['admission']['view'] != 1){
+			if(!$this->checkPermission->check_permission("admission","view")){
 				$this->view_header_and_aside();
 				$this->load->view("common/error");
 				$this->load->view("templates/footer");

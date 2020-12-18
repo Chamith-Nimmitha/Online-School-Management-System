@@ -6,11 +6,24 @@
 		}
 
 		// get all user role permissions
+		// and delete userrole
 		public function permission($info=NULL, $error=NULL){
-
+			if(!$this->checkPermission->check_permission("permission","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$this->load->model("userrole","user_role");
 
+			// delete user role
 			if(isset($_POST['delete'])){
+				if(!$this->checkPermission->check_permission("permission","delete")){
+					$this->view_header_and_aside();
+					$this->load->view("common/error");
+					$this->load->view("templates/footer");
+					return;
+				}
 				$user_role_id = $_POST['user-role-id'];
 				unset($_POST['user-role-id']);
 				$result = $this->load->userrole->delete_userrole($user_role_id);
@@ -60,16 +73,22 @@
 
 		// user permissions update
 		public function update_permission(){
+			if(!$this->checkPermission->check_permission("permission","update")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$this->load->model("userrole","user_role");
 			$models = $this->load->userrole->get_models();
 
 			$where['user_role_id'] = $_POST['user-role-id'];
 			$data = [];
 			foreach ($models AS $model) {
-				if( array_key_exists("edit-".$model['id'], $_POST) ){
-					$data[$model['id']]['edit'] = $_POST["edit-".$model['id']];
+				if( array_key_exists("create-".$model['id'], $_POST) ){
+					$data[$model['id']]['create'] = $_POST["create-".$model['id']];
 				}else{
-					$data[$model['id']]['edit'] = 0;
+					$data[$model['id']]['create'] = 0;
 				}
 
 				if( array_key_exists("view-".$model['id'], $_POST) ){
@@ -103,6 +122,12 @@
 
 		// create new user role
 		public function create(){
+			if(!$this->checkPermission->check_permission("permission","create")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$info = "";
 			$error = "";
 			$user_role_name = $_POST["user-role-name"];
@@ -119,6 +144,12 @@
 
 		// create new model
 		public function model_create(){
+			if(!$this->checkPermission->check_permission("permission","create")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$info = NULL;
 			$error = NULL;
 			if(isset($_POST['create'])){

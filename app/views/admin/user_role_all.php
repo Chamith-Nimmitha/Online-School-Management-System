@@ -47,7 +47,7 @@
 					<thead>
 						<tr>
 							<th>Permissions</th>
-							<th>Edit</th>
+							<th>Create</th>
 							<th>View</th>
 							<th>Update</th>
 							<th>Delete</th>
@@ -58,7 +58,7 @@
 						foreach ($permissions as $permission) {?>
 							<tr>
 							 	<th><?php echo $permission['model_name']; ?></th>
-							 	<td><input type="checkbox" name="edit-<?php echo $permission['model_id'];?>" value="1" <?php if($permission['edit'] == 1){echo "checked='checked'";	} ?>></td>
+							 	<td><input type="checkbox" name="create-<?php echo $permission['model_id'];?>" value="1" <?php if($permission['create'] == 1){echo "checked='checked'";	} ?>></td>
 							 	<td><input type="checkbox" name="view-<?php echo $permission['model_id'];?>" value="1" <?php if($permission['view'] == 1){echo "checked='checked'";	} ?>></td>
 							 	<td><input type="checkbox" name="update-<?php echo $permission['model_id'];?>" value="1" <?php if($permission['update'] == 1){echo "checked='checked'";	} ?>></td>
 							 	<td><input type="checkbox" name="delete-<?php echo $permission['model_id'];?>" value="1" <?php if($permission['delete'] == 1){echo "checked='checked'";	} ?>></td>
