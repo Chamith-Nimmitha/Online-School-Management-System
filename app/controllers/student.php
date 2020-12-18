@@ -8,7 +8,8 @@
 
         // show list of student
         public function list(){
-            if( isset($_SESSION['permissions']['student_list'])  && $_SESSION['permissions']['student_list']['view'] != 1){
+
+            if(!$this->checkPermission->check_permission("student_list","view")){
                 $this->view_header_and_aside();
                 $this->load->view("common/error");
                 $this->load->view("templates/footer");
@@ -49,7 +50,12 @@
 
         // view student timetable all users can use this
         public function timetable_view($id=""){
-            
+            if(!$this->checkPermission->check_permission("student","view")){
+                $this->view_header_and_aside();
+                $this->load->view("common/error");
+                $this->load->view("templates/footer");
+                return;
+            }
             $time_map = ["1"=>"7.50a.m - 8.30a.m", "2"=>"8.30a.m - 9.10a.m", "3"=>"9.10a.m - 9.50a.m", "4"=> "9.50a.m - 10.30a.m", "5"=> "10.50a.m - 11.30a.m", "6"=>"11.30a.m - 12.10p.m", "7"=> "12.10p.m - 12.50p.m", "8"=>"12.50p.m - 1.30p.m"];
             $day_map = ["1"=>"mon","2"=>"tue","3"=>"wed","4"=>"thu","5"=>"fri"];
             $timetable_data = [];
@@ -137,6 +143,12 @@
 
         // view own learing subject list
         public function subject_list(){
+            if(!$this->checkPermission->check_permission("subject","view")){
+                $this->view_header_and_aside();
+                $this->load->view("common/error");
+                $this->load->view("templates/footer");
+                return;
+            }
             $con = new Database();
             $result_set = $con->select("tea_sub_student",array("student_id"=>$_SESSION['user_id']));
             if($result_set){
@@ -169,6 +181,12 @@
 
         //view parent profile
         public function parent_view(){
+            if(!$this->checkPermission->check_permission("parent","view")){
+                $this->view_header_and_aside();
+                $this->load->view("common/error");
+                $this->load->view("templates/footer");
+                return;
+            }
             $this->view_header_and_aside();
             $this->load->view("student/student_attendance_view");
             $this->load->view("templates/footer");

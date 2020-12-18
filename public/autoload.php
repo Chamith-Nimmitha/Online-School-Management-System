@@ -28,5 +28,7 @@
 	require_once(CONFIG."config.php");
 	require_once(HELPERS."url_helper.php");
 	require_once(INCLUDES."common.php");
+	require_once(INCLUDES."check_permissions.php");
+
 	new App();
  ?>

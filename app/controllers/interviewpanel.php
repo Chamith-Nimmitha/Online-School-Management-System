@@ -7,6 +7,12 @@
 
 		// view list of interview panels
 		public function list(){
+			if(!$this->checkPermission->check_permission("interview_panel","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$con = new Database();
 			$con->get(array("id","name","grade"));
 			if(isset($_POST['interview-panel-grade']) && $_POST['interview-panel-grade'] !== 'all'){
@@ -26,6 +32,12 @@
 
 		// delete interview panel
 		public function delete($panel_id){
+			if(!$this->checkPermission->check_permission("interview_panel","delete")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$con = new Database();
 			$con->update("interview_panel",['is_deleted'=>1],array("id"=>$panel_id));
 			header("Location:". set_url("interviewpanel/list"));	
@@ -33,6 +45,12 @@
 
 		// view interview panel details
 		public function view_panel($panel_id=""){
+			if(!$this->checkPermission->check_permission("interview_panel","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$con = new Database();
 			$error = "";
 			$next_id = $con->get_next_auto_increment("interview_panel");
@@ -40,6 +58,12 @@
 			
 			// create new interview panel
 			if(isset($_POST['create'])){
+				if(!$this->checkPermission->check_permission("interview_panel","create")){
+					$this->view_header_and_aside();
+					$this->load->view("common/error");
+					$this->load->view("templates/footer");
+					return;
+				}
 				try {
 					$con->db->beginTransaction();
 					$data['name'] = $_POST['panel-name'];
@@ -79,6 +103,12 @@
 			}
 			// when update the data
 			else if(isset($_POST['update']) && !empty($panel_id)){
+				if(!$this->checkPermission->check_permission("interview_panel","update")){
+					$this->view_header_and_aside();
+					$this->load->view("common/error");
+					$this->load->view("templates/footer");
+					return;
+				}
 				$data['name'] = $_POST['panel-name'];
 				$data['grade'] = $_POST['grade'];
 				$result = $con->update("interview_panel",$data,array('id'=>$panel_id));
@@ -148,6 +178,12 @@
 
 		// interviewpanel timetable
 		public function timetable($panel_id){
+			if(!$this->checkPermission->check_permission("interview_panel","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$con = new Database();
 			$errors = array();
 			$info = array();
@@ -165,6 +201,12 @@
 
 			// when submit timetble
 			if(isset($_POST['submit'])){
+				if(!$this->checkPermission->check_permission("interview_panel","update")){
+					$this->view_header_and_aside();
+					$this->load->view("common/error");
+					$this->load->view("templates/footer");
+					return;
+				}
 				$con->db->beginTransaction();
 				try{
 					$result = $this->load->timetable->update_timetable();
@@ -194,10 +236,6 @@
 			$this->view_header_and_aside();
 			$this->load->view("interview/interviewpanel_timetable",$data);
 			$this->load->view("templates/footer");
-		}
-
-		public function registration(){
-
 		}
 	}
  ?>

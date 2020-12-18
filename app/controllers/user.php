@@ -94,9 +94,15 @@
 			$this->load->view("templates/footer");
 		}
 
-		// can user for edit,view own profile
+		// user can  edit,view own profile
 		// admin can edit,view all profiles
 		public function profile($role="",$id=""){
+			if(!$this->checkPermission->check_permission("profile","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			if( empty($id)){
 				$id = $_SESSION['user_id'];
 				$role = $_SESSION['role'];
@@ -112,6 +118,12 @@
 
 			// if user update profile
 			if(isset($_POST['submit'])){
+				if(!$this->checkPermission->check_permission("profile","update")){
+					$this->view_header_and_aside();
+					$this->load->view("common/error");
+					$this->load->view("templates/footer");
+					return;
+				}
 				switch ($role) {
 					case 'student':
 						if(isset($_POST['submit'])){
@@ -262,6 +274,12 @@
 
 		// only view user profile
 		public function profile_view($role="",$id=""){
+			if(!$this->checkPermission->check_permission("profile","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			if( empty($id)){
 				$id = $_SESSION['user_id'];
 				$role = $_SESSION['role'];
