@@ -1,4 +1,3 @@
-
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 	<?php 
 		if(isset($msg)){

@@ -39,12 +39,23 @@ body{
 	opacity: 1;
 }
 
+/*#asd{
+	display: grid;
+	grid-template-columns: "250px 1fr" !important;
+	grid-template-rows: auto;
+	grid-template-areas: 
+			"aside content";
+	background-color: red;
+}*/
 aside{
+	/*grid-area: aside;*/
 	border-radius: 5px;
 	min-height: 450px !important;
+	/*width: 250px !important;*/
 }
 
 #content{
+	/*grid-area: content;*/
 	background: var(--content-bg) !important;
 }
 
