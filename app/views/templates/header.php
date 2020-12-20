@@ -34,11 +34,11 @@
 					<div class="d-none d-md-flex">
 						<div>
 							<img src="';
-							if(isset($_SESSION['profile_photo']) && $_SESSION['profile_photo'] !=""){
-								$user_info .= set_url("public/uploads/".$_SESSION['role']."_profile_photo/".$_SESSION['profile_photo']);
-							}else{
-								$user_info .= "";
-							}
+							//if(isset($_SESSION['profile_photo']) && $_SESSION['profile_photo'] !=""){
+								//$user_info .= set_url("public/uploads/".$_SESSION['role']."_profile_photo/".$_SESSION['profile_photo']);
+							//}else{
+								//$user_info .= "";
+							//}
 						$user_info .= '" alt="" style="width:50px; height:50px; border: 2px solid orange;">
 						</div>
 						<div class="mr-3 d-lg-flex flex-col d-md-none">

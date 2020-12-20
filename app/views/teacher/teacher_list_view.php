@@ -56,7 +56,33 @@
                 </tbody>
         
 			</table>
-		</div>  
+		</div> 
+
+		<div class="container">
+		    <form method="post" enctype="multipart/form-data">
+			    <div class="row mt-5">
+				    <div class="col-md-6 m-auto border shadow">
+					    <label> Import Data </label>
+						    <div class="form-group">					
+							    <input type="file" name="file" class="form-control">
+						    </div>
+						    <div class="form-group">
+							    <button type="submit" name="import" class="btn btn-success"> Import Data </button>
+						    </div>				
+				    </div>		
+			    </div>
+
+			    <div class="row mt-4">
+				    <div class="col-md-10 m-auto">
+					    <?php
+
+						    $importResult   =  $importCtrl->index(); 	
+											
+					    ?>
+				    </div>
+			    </div>	
+		    </form>
+	    </div> 
 		<div class="d-flex justify-content-start col-12">	
 				<?php //if($count){
 					
