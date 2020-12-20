@@ -80,8 +80,13 @@
 					</tbody>
 				</table>
 				<div class="d-flex justify-content-end p-5">
-					<button type="submit" name="submit" class="btn btn-blue p-3">Submit</button>
+					<button type="submit" name="submit" class="btn btn-blue p-3" >Submit</button>
 				</div>
+                <center>
+				    <div>
+                        <a class="btn btn-blue" onClick="window.print()">Download as a PDF</a>
+		            </div>
+				</center>
 			</form>
 		</div>
 		

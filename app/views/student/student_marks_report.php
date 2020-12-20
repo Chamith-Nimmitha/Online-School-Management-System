@@ -163,7 +163,9 @@
 
       <div class="row justify-content-end align-items-end fs-16">
 
-			 <input type="submit" value="Download as PDF" class="m-2 btn btn-blue">
+        <div>
+            <a class="btn btn-blue" onClick="window.print()">Download as a PDF</a>
+		    </div>
 
 		  </div>
 

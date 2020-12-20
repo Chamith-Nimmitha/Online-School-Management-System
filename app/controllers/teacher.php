@@ -128,5 +128,9 @@
             $this->load->view("teacher/teacher_list_update");
             $this->load->view("templates/footer");
 		}
+
+
+		
+		
 	 }
 ?>

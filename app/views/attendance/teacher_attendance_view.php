@@ -101,7 +101,9 @@
                 <div class="w-100 p-1"></div>
     		</div>
             <div class="form-group d-flex flex-row w-90 justify-content-end">
-    	        <button type="submit" name="submit" class="btn btn-blue w-auto m-1">Download as pdf</button>
+                <div>
+                    <a class="btn btn-blue" onClick="window.print()">Download as a PDF</a>
+		        </div>
             </div>
         </form>
     </div>

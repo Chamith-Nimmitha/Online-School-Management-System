@@ -91,6 +91,10 @@
 
 
 		</div>  
+        <br>
+		<div>
+            <a class="btn btn-blue" onClick="window.print()">Download as a PDF</a>
+		</div>
 
 		<div class="d-flex justify-content-start col-12">
 			
