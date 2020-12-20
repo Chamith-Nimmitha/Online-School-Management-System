@@ -109,5 +109,12 @@
 				echo "</table>";
 			 ?>
 		</div>
+        <br>
+		<center>
+		    <div>
+                <a class="btn btn-blue" onClick="window.print()">Download as a PDF</a>
+		    </div>
+		</center>
+
 	</div>
 </div>

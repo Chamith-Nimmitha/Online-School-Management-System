@@ -402,5 +402,9 @@
         	}
             $this->load->view("templates/footer");
 		}
+
+
+		
+		
 	 }
 ?>
