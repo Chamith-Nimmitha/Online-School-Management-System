@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded",function(){
-
 	dynamically_set();
 	var schoolHeader = document.querySelector(".school-name");
 	var charArry = schoolHeader.innerText.split("");
@@ -43,6 +42,21 @@ document.addEventListener("DOMContentLoaded",function(){
 	if(document.getElementById('interview-panel')){
 		set_interview_date();
 	}
+
+	// get goToTop button
+	var goToTop = document.getElementById("goToTop");
+	// when click the button goto top of the page
+	goToTop.addEventListener("click", () => {
+		document.documentElement.scrollTop = 0;
+	});
+	// check whether page is scroll or not
+	setInterval( () => {
+		if(document.documentElement.scrollTop > 100){
+			goToTop.classList.remove("hide");
+		}else{
+			goToTop.classList.add("hide");
+		}
+	},1000)
 });
 
 var ul_xm_ids = [];
@@ -475,4 +489,18 @@ function reset_form(ele){
 			select[i].firstElementChild.setAttribute("selected","selected");
 		}
 	}
+}
+
+function create_subject_code(ele){
+	var name = ele.value;
+	var medium = document.getElementById('medium').value;
+	var grade = document.getElementById('grade').value;
+	grade = ("0" + grade).slice(-2); 
+
+	var code = medium.substr(0,1).toUpperCase()+"-";
+	code += grade+"-";
+	code += name.toUpperCase().substr(0,3);
+	document.getElementById('dis_code').value = code;
+	document.getElementById('code').value = code;
+
 }

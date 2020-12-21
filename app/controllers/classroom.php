@@ -53,6 +53,19 @@
 			$this->load->view("templates/footer");
 		}
 
+		// delete a classroom
+		public function delete($id){
+			$this->load->model("classroom");
+			$result = $this->load->classroom->delete_classroom($id);
+			$info = "";
+			$error = "";
+			if($result){
+				$info = "Deletion successful";
+			}else{
+				$error = "Deletion failed.";
+			}
+			$this->classroom_list($info,$error);
+		}
 		// view classroom student list. this function can use any user role
 		public function student_list($classroom_id=""){
 			if(!$this->checkPermission->check_permission("classroom","view")){
@@ -119,7 +132,7 @@
 		}
 
 		// view classroom list for admin
-		public function classroom_list(){
+		public function classroom_list($info="",$error=""){
 			if(!$this->checkPermission->check_permission("classroom_list","view")){
 				$this->view_header_and_aside();
 				$this->load->view("common/error");
@@ -166,6 +179,8 @@
 
             unset($_POST);
 			$data['result_set'] = $result_set;
+			$data['info'] = $info;
+			$data['error'] = $error;
 			$this->view_header_and_aside();
 			$this->load->view("classroom/classroom_list",$data);
 			$this->load->view("templates/footer");

@@ -157,7 +157,39 @@ footer{
 	display: none;
 }
 .show{
-	display: inherit;
+	display: initial;
+}
+
+#goToTop{
+	position: fixed;
+	bottom: 50px;
+	right: 50px;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background-color: white;
+	background-image: url("../img/gototop.png");
+	background-size: 30px 30px;
+	background-position: center;
+	background-repeat: no-repeat;
+	border: 2px solid blue;
+	box-shadow: 0 0 5px blue;
+	z-index: 20;
+	cursor: pointer;
+}
+
+#goToTop:hover{
+	background-color: blue;
+	animation : vibrate 0.3s linear;
+	animation-iteration-count: 3;
+}
+
+@keyframes vibrate{
+	0%{transform: translateX(0px);}
+	25%{transform: translateX(-10px);}
+	50%{transform: translateX(0px);}
+	75%{transform: translateX(10px);}
+	100%{transform: translateX(0px);}
 }
 
 @media  (min-width:0px){

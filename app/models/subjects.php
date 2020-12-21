@@ -68,6 +68,31 @@
 				return FALSE;
 			}
 		}
+
+		// register a new subject
+		public function register($data){
+			$temp = $data;
+			unset($temp['description']);
+			$result = $this->con->select("subject", $temp);
+			if($result && $result->rowCount() !== 0 ){
+				return FALSE;
+			}
+			return $this->con->insert("subject",$data);
+		}
+
+		// update a new subject
+		public function update_subject($id,$data){
+			$result = $this->con->select("subject", ['id'=>$id]);
+			if(!$result || $result->rowCount() !== 1 ){
+				return FALSE;
+			}
+			return $this->con->update("subject",$data,['id'=>$id]);
+		}
+
+		// delete a subject
+		public function delete_subject($id){
+			return $this->con->delete("subject",["id"=>$id]);
+		}
 	}
 
  ?>

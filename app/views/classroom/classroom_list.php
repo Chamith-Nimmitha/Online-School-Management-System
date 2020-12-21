@@ -1,4 +1,17 @@
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
+
+	<?php 
+		if(isset($info) && !empty($info)){
+			 echo "<p class='w-75 bg-green p-2 text-center'>";
+            echo $info;
+            echo "</p>";
+		}
+		if(isset($error) && !empty($error)){
+            echo "<p class='w-75 bg-red p-2 text-center'>";
+            echo $error;
+            echo "</p>";
+        }
+	 ?>
 		<div class="d-flex justify-content-center align-items-center">
 			<form action="<?php echo set_url('classroom/list'); ?>" method="post" class="d-flex align-items-center col-12">
 				<div class="d-flex col-12 align-items-center justify-content-center">
@@ -100,7 +113,7 @@
 
 						<td>
 							<div class="login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center">
-								<a class="btn btn-lightred p-1" href="classroomsnew-delete.php?id=<?php echo $result['id']; ?>" onclick="return confirm('Are you sure to delete?')">Delete</a>
+								<a class="btn btn-lightred p-1" href="<?php echo set_url('classroom/delete/').$result['id']; ?>" onclick="return confirm('Are you sure to delete?')">Delete</a>
 		    				</div>
 						</td>
 					</tr>
