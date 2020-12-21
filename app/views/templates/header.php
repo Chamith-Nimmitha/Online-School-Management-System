@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="<?php echo set_url('public/assets/css/chamith.css'); ?>">
 </head>
 <body>
+	<?php require_once(VIEWS."common/goToTop.html"); ?>
 	<div class="container bg-lightgray">
 		<div class="row theme-header sticky-top" id="top-header">
 			<div class="school-badge col-4 col-md-3 justify-content-center pt-2">

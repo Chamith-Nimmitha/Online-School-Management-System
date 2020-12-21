@@ -47,6 +47,7 @@
 
 	//classroom routes
 	$routes['classroom/list'] = "classroom/classroom_list";
+	$routes['classroom/delete/$1'] = "classroom/delete/$1";
 	$routes['classroom/update/$1'] = "classroom/update/$1";
 	$routes['classroom/registration'] = "classroom/registration";
 	$routes['classroom/student/list'] = "classroom/student_list";
@@ -57,7 +58,8 @@
 	// subject routes
 	$routes['subject/list'] = "subject/list";
 	$routes['subject/registration'] = "subject/registration";
-	$routes['subject/update'] = "subject/update";
+	$routes['subject/update/$1'] = "subject/update/$1";
+	$routes['subject/delete/$1'] = "subject/delete/$1";
 
 	// student route
 	$routes['student/list'] = "student/list";

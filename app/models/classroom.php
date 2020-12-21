@@ -183,6 +183,11 @@
 			}
 		}
 
+		// delete a classroom
+		public function delete_classroom($id){
+			return $this->con->delete("classroom",["id"=>$id]);
+		}
+		
 		public function __destruct(){
 			unset($this->con);
 		}
