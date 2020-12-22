@@ -17,7 +17,7 @@
 					</div>
 					<div class="ml-5">
 						<label for="studebt-id">Student ID</label>
-						<input type="text" name="student-id" id="student-id" placeholder="Student ID" value="<?php if(isset($student_id)){echo $student_id;} ?>" oninput="get_student_data2('student-list-table','student-id','','grade','class')">
+						<input type="text" name="student-id" id="student-id" placeholder="Student ID" value="<?php if(isset($student_id)){echo $student_id;} ?>" oninput="get_student_data()">
 					</div>
 					<div  class="  ml-5 align-items-center">
 						<label for="grade" class="mr-3 d-normal">Grade : </label>
@@ -108,6 +108,13 @@
 				echo "</tbody>";
 				echo "</table>";
 			 ?>
+		</div>
+		<div id="pagination" class="col-12">
+			<span>Number of results found : <span id="row_count"><?php echo $count; ?></span></span>
+			<div id="pagination_data" class="col-12">
+				<?php require_once(INCLUDES."pagination.php"); ?>
+				<?php display_pagination($count,$page,$per_page, "student/list","get_student_data"); ?>
+			</div>
 		</div>
         <br>
 		<center>

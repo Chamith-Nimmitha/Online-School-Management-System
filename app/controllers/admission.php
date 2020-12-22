@@ -171,7 +171,7 @@
 		}
 
 		// show admissions list
-		public function list($filter=""){
+		public function list($page=Null, $per_page=Null){
 			// check view  permissions
 			if(!$this->checkPermission->check_permission("admission","view")){
 				$this->view_header_and_aside();
@@ -179,25 +179,43 @@
 				$this->load->view("templates/footer");
 				return;
 			}
-			if(empty($filter)){
-				if(isset($_POST['admission-state'])){
-					$filter = $_POST['admission-state'];
-				}else{
-					$filter = "all";
-				}
+			// count page info for pagination
+			if($per_page === NULL){
+				$per_page = 1;
 			}
-			$con = new Database();
-			if($filter === "all"){
-				$result_set = $con->select('admission');
+			if($page === Null){
+				$page = 1;
+				$start = 0;
 			}else{
-				$result_set = $con->select('admission',["state"=>$filter]);
+				$start = ($page-1)*$per_page;
 			}
-			if($result_set)
-			$result_set = $result_set->fetchAll();
 
+			$data['page'] = $page;
+			$data['per_page'] = $per_page;
+			$data['start'] = $start;
+
+
+			if(isset($_POST['admission-state']) && $_POST['admission-state'] != "all"){
+				$admission_state = $_POST['admission-state'];
+			}else{
+				$admission_state = NULL;
+			}
+			if(isset($_POST['admission-search']) && !empty($_POST['admission-search'])){
+				$admission_search = $_POST['admission-search'];
+			}else{
+				$admission_search = NULL;
+			}
+			$data['admission_search'] = $admission_search;
+			$data['admission_state'] = $admission_state;
+			$this->load->model("admission");
+			$result_set = $this->load->admission->get_list($start,$per_page,$admission_search,$admission_state);
+			if($result_set){
+				$result_set = $result_set->fetchAll();
+			}
 			$data['result_set'] = $result_set;
+			$data['count'] = $this->load->admission->get_count()->fetch()['count'];
 			$this->view_header_and_aside();
-			$this->load->view("admission/admissions_all",$data);
+			$this->load->view("admission/admission_list",$data);
 			$this->load->view("templates/footer");
 		}
 

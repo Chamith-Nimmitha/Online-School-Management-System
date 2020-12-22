@@ -22,8 +22,8 @@
 		}
 
 
-		public function get_student_list($student_id=NULL,$student_name=NULL,$grade=NULL,$class=NULL){
-			$query = "SELECT `s`.`id` FROM `student` AS `s` ";
+		public function get_student_list($start,$per_page,$student_id=NULL,$student_name=NULL,$grade=NULL,$class=NULL){
+			$query = "SELECT SQL_CALC_FOUND_ROWS  `s`.`id` FROM `student` AS `s` ";
 			$flag = 0; // use for check wether query is already complete or not
 			$id_flag = 0; // use for check wether student id is set
 			$name_flag = 0; // use for check wether student name is set
@@ -67,7 +67,7 @@
 				$query .= "(`s`.`grade`='{$grade}') ";
 				$flag = 1;
 			}
-			// $query .=  "LIMIT {$this->limit}";
+			$query .=  "LIMIT $start,$per_page";
 			$result_set = $this->con->pure_query($query);
 			if($result_set){
 				$result_set = $result_set->fetchAll();
@@ -76,6 +76,11 @@
 			}else{
 				return FALSE;
 			}
+		}
+
+		// get result count
+		public function get_count(){
+			return $this->con->get_count();
 		}
 
 		public function get_full_data($result_set){
@@ -89,17 +94,6 @@
 					unset($student);
 				}
 				return $data;
-			}else{
-				return FALSE;
-			}
-		}
-
-		//get all student count
-		public function get_count(){
-			$query = "SELECT COUNT(*) AS count FROM `$this->table`";
-			$result = $this->con->pure_query($query);
-			if($result){
-				return $result->fetch()['count'];
 			}else{
 				return FALSE;
 			}

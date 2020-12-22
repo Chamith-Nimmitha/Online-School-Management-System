@@ -30,7 +30,7 @@
 	// admission routes
 	$routes['student/registration'] = "admission/new_admission";
 	$routes['admission/list'] = "admission/list";
-	$routes['admission/list/$1'] = "admission/list/$1";
+	$routes['admission/list/$1/$2'] = "admission/list/$1/$2";
 	$routes['admission/delete/$1'] = "admission/delete/$1";
 	$routes['admission/view/$1'] = "admission/view_admission/$1";
 
@@ -63,6 +63,7 @@
 
 	// student route
 	$routes['student/list'] = "student/list";
+	$routes['student/list/$1/$2'] = "student/list/$1/$2";
 	$routes['student/timetable/view'] = "student/timetable_view";
 	$routes['student/timetable/view/$1'] = "student/timetable_view/$1";
 	$routes['student/exam'] = "student/exam_report";
@@ -109,6 +110,7 @@
 	$routes['api/admission/search'] = "apiAdmission/search";
 	$routes['api/student/search'] = "apiStudent/search";
 	$routes['api/classroom/grade/$1'] = "apiClassroom/get_grades/$1";
+	$routes['api/pagination'] = "apiPagination/pagination";
 
 
 	// define as a global variable. Don't delete this
