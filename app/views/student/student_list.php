@@ -5,6 +5,18 @@
 </script>
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 	<div class="student-header mt-5">
+	<center>
+	    <form method="POST" enctype="multipart/form-data">
+            <br/><br/><br/>
+            <div align="center">
+                <label>Select a File:</label>
+                <input type="file" name="file"/>
+                <br/>
+                <input type="submit" name="submit" value="Import" class="btn btn-info"/>
+            </div>
+        </form>
+
+	</center>
 		<h2 class="fs-30">Student List</h2>
 	</div> <!-- .student-header -->
 	<div id="all-admission-table"  class="admissions-table">
