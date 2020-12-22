@@ -19,6 +19,20 @@
 			</form>
 		</div>
 
+		<center>
+	    <form method="POST" enctype="multipart/form-data">
+            <br/><br/><br/>
+            <div align="center">
+                <label>Select a File:</label>
+                <input type="file" name="file"/>
+                <br/>
+                <input type="submit" name="submit" value="Import" class="btn btn-info"/>
+            </div>
+        </form>
+
+	    </center>
+
+
 		<div class="col-12 flex-col" style="overflow-x: scroll;overflow-y: hidden;">
 		    <table class="table-strip-dark">
 			    <caption class="p-5"><b>TEACHERS' LIST</b></caption>

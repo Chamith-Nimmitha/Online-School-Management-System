@@ -3,6 +3,8 @@
 <?php require_once("../templates/header.php") ?>
 <?php require_once("../templates/aside.php") ?>
 
+
+
 <?php 
 if(isset($_POST['submit'])){
 
@@ -39,6 +41,19 @@ if(isset($_POST['submit'])){
 
 		</fieldset>
 		</form>
+
+		<center>
+	    <form method="POST" enctype="multipart/form-data">
+            <br/><br/><br/>
+            <div align="center">
+                <label>Select a File:</label>
+                <input type="file" name="file"/>
+                <br/>
+                <input type="submit" name="submit" value="Import" class="btn btn-info"/>
+            </div>
+        </form>
+
+	   </center>		
 
 <div class="row">
 <div class="container col-12 table table-strip-dark text-center">
