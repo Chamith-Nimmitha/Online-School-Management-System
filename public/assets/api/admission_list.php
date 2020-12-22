@@ -3,7 +3,7 @@
 	if(isset($data) && isset($type)){
 		if(strlen($data) > 0 && strlen($data) <3){
 			if($type =="all"){
-				$query = "SELECT * FROM `admission` WHERE grade='{$data}' OR name_with_initials like '%{$data}%' LIMIT 20";
+				$query = "SELECT  * FROM `admission` WHERE grade='{$data}' OR name_with_initials like '%{$data}%' LIMIT 20";
 			}else{
 				$query = "SELECT * FROM `admission` WHERE (grade={$data} OR name_with_initials like '%{$data}%')	 AND state='{$type}' LIMIT 20";
 			}

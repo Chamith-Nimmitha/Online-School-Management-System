@@ -59,7 +59,7 @@
 							<li class="nav-item aside-li">
 								<a href="<?php echo set_url('dashboard'); ?>" class="nav-link active">Dashbord</a>
 							</li>
-							<li class="nav-item aside-li" id="admission-li"><a href="<?php echo set_url('admission/list/all'); ?>" class="nav-link">Admissions</a>
+							<li class="nav-item aside-li" id="admission-li"><a href="<?php echo set_url('admission/list'); ?>" class="nav-link">Admissions</a>
 							</li>
 							<li class="nav-item aside-li" id="attendance-li">
 								<a href="<?php echo set_url('attendance/classroom/list'); ?>" class="nav-link">Attendance</a>

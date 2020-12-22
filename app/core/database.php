@@ -208,8 +208,12 @@
 		public function orderBy($or){
 			$this->order = " ORDER BY `".$or."` ASC ";
 		}
-		public function limit($l){
-			$this->limit = "LIMIT ".$l;
+		public function limit($start,$count=NULL){
+			if($count === NULL){
+				$this->limit = "LIMIT ".$start;
+			}else{
+				$this->limit = "LIMIT ".$start.",".$count;
+			}
 		}
 
 		public function pure_query($query){
@@ -227,6 +231,50 @@
 			$result = $this->db->query($this->query);
 			$this->reset_values();
 			return $result;
+		}
+
+		// select and get total result count
+		public function count_and_select($table, $fields=NULL){
+
+			$this->query = "SELECT SQL_CALC_FOUND_ROWS ";
+			if(empty($this->get)){
+				$this->query .=" * ";
+			}else{
+				$this->query .= " ".$this->get;
+			}
+
+			$this->query .= " FROM `".$table."` ";
+
+			if($fields === NULL){
+				if(!empty($this->where)){
+					$this->query .= "WHERE ". $this->where;
+				}
+			}else{
+				$where = "";
+				foreach ($fields as $key => $value) {
+					array_push($this->parameters, $value);
+					if(empty($where)){
+						$where .= "`".$key. "` = ? ";
+					}else{
+						$where .= "&& `".$key. "` = ? ";
+					}
+				}
+				$this->query .= "WHERE ".$where;
+			}
+			$this->query .= " ".$this->order;
+			$this->query .= " ".$this->limit.";";
+			$this->pre_query = $this->query;
+			$stmt = $this->db->prepare($this->query);
+			$stmt->execute($this->parameters);
+			// $this->db->closeCursor();
+			// echo $this->query;
+			$this->reset_values();
+			return $stmt;
+		}
+
+		// get count 
+		public function get_count(){
+			return $this->db->query("SELECT FOUND_ROWS() AS `count`;");
 		}
 	}
  ?>

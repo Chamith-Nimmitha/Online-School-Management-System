@@ -72,23 +72,57 @@ function validate_parent_id(){
 	xhr.send();
 }
 
-function admission_search(input){
-	var value = input.value;
+function admission_search(page=null,per_page=null){
+	var value = document.getElementById("admission-search").value;
 	var type = document.getElementById("admission-state").value;
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST",base_url+"api/admission/search",true);
 	xhr.setRequestHeader("Content-Type", "application/json");
+	var func = "admission_search";
+	var route = "admission/list";
 	xhr.onload = function(){
 		if(this.status == 200){
 			var respond = xhr.responseText;
-			document.getElementById('tbody').innerHTML = respond;
+			var body =document.getElementById('tbody');
+			respond = JSON.parse(respond);
+			tbody.innerHTML = respond.rows;
+
+			var xhr2 = new XMLHttpRequest();
+			xhr2.open("POST",base_url+"api/pagination",true);
+			xhr2.setRequestHeader("Content-Type", "application/json");
+			xhr2.onload = function(){
+				if(this.status == 200){
+					var respond_p = xhr2.responseText;
+					var pagination =document.getElementById('pagination');
+					var row_count = document.getElementById('row_count');
+					var pagination_data =document.getElementById('pagination_data');
+					row_count.textContent = count;
+					pagination_data.innerHTML = respond_p;
+				}
+			}
+			var count = respond.count;
+			if(page == null){
+				var data2 = {route:route, count:count,func:func};
+			}else{
+				var data2 = {route:route,count:count,page:page,per_page:per_page,func:func};
+			}
+			xhr2.send( JSON.stringify(data2) );
 		}
 	}
-	xhr.onerror = function(){
-		console.log(xhr.error);
+
+	if(page == null){
+		var data = {type:type,id:value};
+	}else{
+		var data = {type:type,id:value,page:page,per_page:per_page};
 	}
-	var data = {type:type,value:value};
 	xhr.send( JSON.stringify(data) );
+}
+
+
+// call admission_search in pagination
+function admission_search_pagination(button){
+	var page = button.dataset.page;
+	var per_page = button.dataset.perPage;
 }
 
 function get_subject_data(field,input){
@@ -145,62 +179,56 @@ function get_teacher_data(field,input){
 
 
 // without pagination
-function get_student_data2(target_id,id="",name="",grade="",className=""){
-	var target_div = document.getElementById(target_id);
-	var idVal ="";
-	var nameVal ="";
-	var gradeVal ="";
-	var classVal ="";
-	if(id !== ""){
-		var idVal = document.getElementById(id).value;
+function get_student_data(page=null,per_page=null){
+	var target_div = document.getElementById("student-list-table");
+	var idVal =document.getElementById("student-id").value;
+	var nameVal =idVal
+	var gradeVal = document.getElementById("grade").value;;
+	var classVal = document.getElementById("class").value;;
+	var route = "student/list";
+	var func = "get_student_data";
+	if(idVal.length == 0){
+		var idVal = "";
 	}
-	if(name !== ""){
-		var nameVal = document.getElementById(name).value;
-	}
-	if(grade !== ""){
-		var gradeVal = document.getElementById(grade).value;
-		if(gradeVal === "all"){
-			gradeVal = "";
-		}
-	}
-	if(className !== ""){
-		var classVal = document.getElementById(className).value;
-		if(classVal === "all"){
-			classVal ="";
-		}
+	if(nameVal.length == 0){
+		var nameVal = "";
 	}
 
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", base_url+`api/student/search`, true);
 	xhr.setRequestHeader("Content-Type", "application/json");
-	var data = {id:idVal,name:nameVal,grade:gradeVal,class:classVal};
 	xhr.onload = function(){
 		if(this.status == 200){
 			var response = this.responseText; 
-			if(response.search("FALSE") == -1){
-				response = JSON.parse(response);
-				target_div.innerHTML = "";
-				for ( var i=0; i < response.length; i++){
-					var row = `<tr>
-					 <td>${response[i]['id']}</td>
-					 <td>${response[i]['name_with_initials']}</td>
-					 <td class="text-center">${response[i]['grade']}</td>
-					 <td class="text-center">${response[i]['class']}</td>
-					 <td>${response[i]['contact_number']}</td>
-					 <td>${response[i]['is_deleted']}</td>
-					 <td class='text-center'><a href='admin_student_timetable_view.php?student_id=${response[i]['id']}' class='btn btn-blue t-d-none p-1'>timetable</a></td>
-					 <td class='text-center'><a href='admin_student_profile.php?student-id=${response[i]['id']}' class='btn btn-blue t-d-none p-1'>profile</a></td>
-					 <td class='text-center'><a href='student_marks_report.php?student-id=${response[i]['id']}' class='btn btn-blue t-d-none p-1'>profile</a></td>
-					 <td class='text-center'><a href='student_list.php?delete=${response[i]['id']}' class='btn btn-lightred t-d-none p-1'>delete</a></td></tr>`;
-					target_div.innerHTML += row ;
+			response = JSON.parse(response);
+			target_div.innerHTML = response['rows'];
+
+			var xhr2 = new XMLHttpRequest();
+			xhr2.open("POST",base_url+"api/pagination",true);
+			xhr2.setRequestHeader("Content-Type", "application/json");
+			xhr2.onload = function(){
+				if(this.status == 200){
+					var respond_p = xhr2.responseText;
+					var pagination =document.getElementById('pagination');
+					var row_count = document.getElementById('row_count');
+					var pagination_data =document.getElementById('pagination_data');
+					row_count.textContent = count;
+					pagination_data.innerHTML = respond_p;
 				}
-			}else{
-				target_div.innerHTML = `
-							<tr'>
-								<td colspan=10 class='bg-red'><p class='text-center w-100'>Students Not found...</p></td>
-							</tr>`;
 			}
+			var count = response.count;
+			if(page == null){
+				var data2 = {route:route, count:count, func:func};
+			}else{
+				var data2 = {route:route,count:count,page:page,per_page:per_page,func:func};
+			}
+			xhr2.send( JSON.stringify(data2) );
 		}
+	}
+	if(page == null){
+		var data = {id:idVal,name:nameVal,grade:gradeVal,class:classVal};
+	}else{
+		var data = {id:idVal,name:nameVal,grade:gradeVal,class:classVal,page:page,per_page:per_page};
 	}
 	xhr.send( JSON.stringify(data));
 }
