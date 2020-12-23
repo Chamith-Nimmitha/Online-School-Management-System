@@ -439,7 +439,6 @@ table th, td{
 	color: var(--table-th-color);
 	border-right-color: var(--table-th-border);
 	text-align: center;
-	/*border-color: white;*/
 }
 
 .table-strip-dark thead th:last-child{

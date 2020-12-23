@@ -76,14 +76,27 @@ function admission_search(page=null,per_page=null){
 	var value = document.getElementById("admission-search").value;
 	var type = document.getElementById("admission-state").value;
 	var xhr = new XMLHttpRequest();
+	var tbody =document.getElementById('tbody');
 	xhr.open("POST",base_url+"api/admission/search",true);
 	xhr.setRequestHeader("Content-Type", "application/json");
 	var func = "admission_search";
 	var route = "admission/list";
+
+	// for loader
+	var loader = document.querySelector(".loader");
+	loader.classList.remove('hide-loader');
+	xhr.addEventListener("readystatechange", ()=>{
+		if(xhr.readyState !== 4){
+			loader.classList.remove('hide-loader');
+		}else{
+			loader.classList.add('hide-loader');
+		}
+	})// end of loader
+
+
 	xhr.onload = function(){
+		var respond = xhr.responseText;
 		if(this.status == 200){
-			var respond = xhr.responseText;
-			var body =document.getElementById('tbody');
 			respond = JSON.parse(respond);
 			tbody.innerHTML = respond.rows;
 
@@ -107,6 +120,9 @@ function admission_search(page=null,per_page=null){
 				var data2 = {route:route,count:count,page:page,per_page:per_page,func:func};
 			}
 			xhr2.send( JSON.stringify(data2) );
+		}else{
+			respond = JSON.parse(respond);
+			tbody.innerHTML = respond.rows;			
 		}
 	}
 
@@ -197,6 +213,18 @@ function get_student_data(page=null,per_page=null){
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", base_url+`api/student/search`, true);
 	xhr.setRequestHeader("Content-Type", "application/json");
+
+	// for loader
+	var loader = document.querySelector(".loader");
+	loader.classList.remove('hide-loader');
+	xhr.addEventListener("readystatechange", ()=>{
+		if(xhr.readyState !== 4){
+			loader.classList.remove('hide-loader');
+		}else{
+			loader.classList.add('hide-loader');
+		}
+	})// end of loader
+	
 	xhr.onload = function(){
 		if(this.status == 200){
 			var response = this.responseText; 

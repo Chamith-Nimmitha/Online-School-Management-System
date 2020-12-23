@@ -1,0 +1,147 @@
+<style>
+	
+	#loader{
+		position: fixed;
+		width: 100%;
+		height: 100vh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: rgba(255,255,255,0.8);
+		z-index: 999;
+	}
+
+	#loader >div{
+		position: relative;
+		width: 100px;
+		height: 100px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	#loader #one{
+		position: absolute;
+		width: 100px;
+		height: 100px;
+		top : 0%;
+		left: 0%;
+		display: flex;
+		justify-content: center;
+		align-items: flex-end;
+		animation: circular-dots 2s linear infinite;
+	}
+
+	#loader #one >div{
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		background-color: red;
+	}
+
+	#loader #two{
+		position: absolute;
+		width: 100px;
+		height: 100px;
+		top : 0%;
+		left: 0%;
+		display: flex;
+		justify-content: center;
+		align-items: flex-end;
+		animation: circular-dots 2s 0.2s linear infinite;
+	}
+
+	#loader #two >div{
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		background-color: red;
+	}
+
+	#loader #three{
+		position: absolute;
+		width: 100px;
+		height: 100px;
+		top : 0%;
+		left: 0%;
+		display: flex;
+		justify-content: center;
+		align-items: flex-end;
+		animation: circular-dots 2s 0.4s linear infinite;
+	}
+
+	#loader #three >div{
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		background-color: red;
+	}
+
+	#loader #four{
+		position: absolute;
+		width: 100px;
+		height: 100px;
+		top : 0%;
+		left: 0%;
+		display: flex;
+		justify-content: center;
+		align-items: flex-end;
+		animation: circular-dots 2s 0.6s linear infinite;
+	}
+
+	#loader #four >div{
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		background-color: red;
+	}
+
+	#loader #five{
+		position: absolute;
+		width: 100px;
+		height: 100px;
+		top : 0%;
+		left: 0%;
+		display: flex;
+		justify-content: center;
+		align-items: flex-end;
+		animation: circular-dots 2s 0.8s linear infinite;
+	}
+
+	#loader #five >div{
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		background-color: red;
+	}
+
+	.hide-loader{
+		animation: hide_loader 1s linear;
+		animation-fill-mode: forwards;
+	}
+
+	@keyframes hide_loader {
+		0%{opacity: 1 !important;}
+		90%{opacity: 0 !important;}
+		100%{opacity:0; top:-100%; left: -100%;}
+	}
+
+
+	@keyframes circular-dots{
+	    0%{ transform: rotateZ(0deg)}
+	    30%{ transform: rotateZ(180deg)}
+	    60%{ transform: rotateZ(360deg)}
+	    100%{ transform: rotateZ(360deg)}
+	}
+
+</style>
+
+<div id="loader">
+ 	<div>
+		<div id="one"><div></div></div>
+		<div id="two"><div></div></div>
+		<div id="three"><div></div></div>
+		<div id="four"><div></div></div>
+		<div id="five"></div>
+ 	</div>
+</div>

@@ -68,14 +68,18 @@
 				</div>
 			</form>
 		</div>
-		<div class="col-12 flex-col" style="overflow-x: scroll;overflow-y: hidden;">
+		<div class="mt-5 col-12 flex-col" style="position:relative;overflow-x: scroll;overflow-y: hidden;">
+			<div class="loader hide-loader">
+				 	<div class="col-12">
+						<div id="one"><div></div></div>
+						<div id="two"><div></div></div>
+						<div id="three"><div></div></div>
+						<div id="four"><div></div></div>
+						<div id="five"></div>
+				 	</div>
+				</div>
 			<?php 
-				$table = "<table class='table-strip-dark'>
-							<caption class=\"p-5\">";
-				 if(isset($grade)){ 
-				 	$table .= " Grade ".$grade;
-				 }
-				$table .= " Students</caption>";
+				$table = "<table class='table-strip-dark'>";
 				$table .= "<thead>
 								<tr>
 									<th>ID</th>

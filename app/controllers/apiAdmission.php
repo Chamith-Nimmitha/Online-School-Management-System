@@ -12,7 +12,7 @@ class ApiAdmission extends Controller{
 			$state = NULL;
 		}
 		$id = $post->id;
-		if(empty($id)){
+		if(empty($id) && strlen($id) ===0){
 			$id = NULL;
 		}
 
@@ -29,7 +29,7 @@ class ApiAdmission extends Controller{
 			$page = 1;
 		}
 		$this->load->model("admission");
-		$result_set = $this->load->admission->get_list($start,$per_page,$id,$state);
+		$result_set = $this->load->admission->get_list($start,$per_page,$id,$id,$id,$state);
 		$data['count'] = $this->load->admission->get_count()->fetch()['count'];
 
 		if($result_set && $result_set->rowCount() >0){

@@ -208,7 +208,7 @@
 			$data['admission_search'] = $admission_search;
 			$data['admission_state'] = $admission_state;
 			$this->load->model("admission");
-			$result_set = $this->load->admission->get_list($start,$per_page,$admission_search,$admission_state);
+			$result_set = $this->load->admission->get_list($start,$per_page,$admission_search,$admission_search,$admission_search,$admission_state);
 			if($result_set){
 				$result_set = $result_set->fetchAll();
 			}
