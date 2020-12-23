@@ -52,7 +52,18 @@ document.addEventListener("DOMContentLoaded",function(){
 	var goToTop = document.getElementById("goToTop");
 	// when click the button goto top of the page
 	goToTop.addEventListener("click", () => {
-		document.documentElement.scrollTop = 0;
+		var distance = document.documentElement.scrollTop;
+		var per_frame = 100;
+		var fps = 10;
+
+		let timer = setInterval(scroll_page, 1000/fps);
+		function scroll_page(){
+			if(document.documentElement.scrollTop <= 0){
+				clearInterval(timer);
+				return;
+			}
+			document.documentElement.scrollTop -= per_frame;
+		}
 	});
 	// check whether page is scroll or not
 	setInterval( () => {
