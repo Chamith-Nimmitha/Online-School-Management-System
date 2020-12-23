@@ -60,8 +60,16 @@
 			</form>
 		</div>
 
-		<div class="col-10 flex-col" style="overflow-x: scroll;overflow-y: hidden;">
-
+		<div class="col-10 flex-col" style="position:relative;overflow-x: scroll;overflow-y: hidden;">
+			<div class="loader hide-loader">
+			 	<div class="col-12">
+					<div id="one"><div></div></div>
+					<div id="two"><div></div></div>
+					<div id="three"><div></div></div>
+					<div id="four"><div></div></div>
+					<div id="five"></div>
+			 	</div>
+			</div>
 		    <table class="table-strip-dark">
 			    <caption class="p-5">Classrooms</caption>
 			    <thead>

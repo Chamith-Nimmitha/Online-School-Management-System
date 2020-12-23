@@ -3,6 +3,11 @@ document.addEventListener("DOMContentLoaded",function(){
 	var schoolHeader = document.querySelector(".school-name");
 	var charArry = schoolHeader.innerText.split("");
 
+	window.addEventListener("load", function(){
+		var loader = document.getElementById("loader");
+		loader.classList.add("hide-loader");
+	})
+
 	var html = "";
 	for( c in charArry ){
 		html += "<span>"+charArry[c]+"</span>";

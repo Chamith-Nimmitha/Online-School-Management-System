@@ -73,7 +73,7 @@
 
 								<td>
 									<div>
-										<a class="btn btn-lightred" href="delete/' .$result['id'] .' onclick=\"return confirm(\'Are you sure to delete?\');\">Delete</a>
+										<a class="btn btn-lightred" href="delete/' .$result['id'] .'" onclick="return confirm(\'Are you sure to delete?\');">Delete</a>
 				    				</div>
 								</td>';
 								}

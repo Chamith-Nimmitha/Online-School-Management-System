@@ -19,15 +19,40 @@
 		}
 
 		// get admission list
-		public function get_list($start, $count, $id=NULL, $state=NULL){
+		public function get_list($start, $count, $id=NULL,$name=NULL,$grade=NULL, $state=NULL){
 			$query = "SELECT SQL_CALC_FOUND_ROWS * FROM `admission` ";
 			$params = [];
 			$flag = 0;
-			if($id !== NULL){
-				$query .= "WHERE `id` LIKE ?";
-				array_push($params, "%{$id}%");
-				$flag = 1;
+			if( !is_numeric($grade) || strlen($grade) >2 ){
+				if($id !== NULL){
+					$query .= " WHERE (`id` LIKE ?";
+					array_push($params, "%{$id}%");
+					$flag = 1;
+				}
+
+				if($name !== NULL){
+					if($flag === 0){
+						$query .= " WHERE (`name_with_initials` LIKE ?";
+					}else{
+						$query .= " || `name_with_initials` LIKE ?";
+					}
+					array_push($params, "%{$name}%");
+					$flag = 1;
+				}
+				if($flag === 1){
+					$query .= ")";
+				}
+			}else{
+				if($grade !== NULL){
+					if($flag === 0 ){
+						$query .= "WHERE `grade` = ?";
+					}else{
+						$query .= " && `grade` = ?";
+					}
+					array_push($params, $grade);
+				}
 			}
+
 
 			if($state !== NULL){
 				if($flag === 0 ){
@@ -40,8 +65,6 @@
 			$query .= " LIMIT $start,$count";
 			$stmt = $this->con->db->prepare($query);
 			$result = $stmt->execute($params);
-			// print_r($query);
-			// exit();
 			if($result){
 				return $stmt;
 			}else{
