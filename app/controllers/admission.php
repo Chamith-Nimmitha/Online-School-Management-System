@@ -212,6 +212,7 @@
 			if($result_set){
 				$result_set = $result_set->fetchAll();
 			}
+			unset($_POST);
 			$data['result_set'] = $result_set;
 			$data['count'] = $this->load->admission->get_count()->fetch()['count'];
 			$this->view_header_and_aside();

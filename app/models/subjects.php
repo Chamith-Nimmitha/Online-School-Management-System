@@ -6,9 +6,9 @@
 		}
 
 		// filter and get subject list
-		public function get_subject_list($subject_id=NULL, $subject_name=NULL, $subject_code=NULL, $grade = NULL, $medium=NULL){
+		public function get_subject_list($start,$count,$subject_id=NULL, $subject_name=NULL, $subject_code=NULL, $grade = NULL, $medium=NULL){
 
-			$query = "SELECT * FROM `subject` ";
+			$query = "SELECT SQL_CALC_FOUND_ROWS * FROM `subject` ";
 			$params = [];
 			$flag = 0;
 
@@ -60,6 +60,7 @@
 				array_push($params, $medium);
 				$flag = 1;
 			}
+			$query .= " LIMIT $start,$count";
 			$stmt = $this->con->db->prepare($query);
 			$result= $stmt->execute($params);
 			if($result){
@@ -67,6 +68,11 @@
 			}else{
 				return FALSE;
 			}
+		}
+
+		// get result count
+		public function get_count(){
+			return $this->con->get_count();
 		}
 
 		// register a new subject

@@ -13,17 +13,26 @@
 					</div>
 					<div class="ml-5">
 						<label for="parent-id">Parent ID/Name</label>
-						<input type="text" name="parent-id" id="parent-id" placeholder="ID, Name" value="<?php if(isset($_POST['parent-id'])){echo $_POST['parent-id'];} ?>">
+						<input type="text" name="parent-id" id="parent-id" placeholder="ID, Name" value="<?php if(isset($_POST['parent-id'])){echo $_POST['parent-id'];} ?>" oninput="parent_search()">
 					</div>
 					<div class="ml-5">
 						<label for="occupation">Occupation</label>
 						<input type="text" name="occupation" id="occupation" placeholder="ID, Name" value="<?php if(isset($_POST['occupation'])){echo $_POST['occupation'];} ?>">
 					</div>
-					<input type="submit" class="btn btn-blue ml-3 mt-5" name="search" value="Show">
+					<button onclick="parent_search()" class="btn btn-blue ml-3 mt-5">Filter</button>
 				</div>
 			</form>
 		</div>
-		<div class="d-flex justify-content-center col-12" style="overflow-x: scroll;overflow-y: hidden;">
+		<div class="col-12 mt-5 flex-col" style="position:relative;overflow-x: scroll;overflow-y: hidden;">
+			<div class="loader hide-loader">
+			 	<div class="col-12">
+					<div id="one"><div></div></div>
+					<div id="two"><div></div></div>
+					<div id="three"><div></div></div>
+					<div id="four"><div></div></div>
+					<div id="five"></div>
+			 	</div>
+			</div>
 			<table class="table-strip-dark">
 				<thead>
 					<tr>
@@ -37,7 +46,7 @@
 						<th>Delete</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody id="tbody">
 				<?php if($result_set && !empty($result_set)){
 					foreach ($result_set as $result) { ?>
 						<tr>
@@ -54,7 +63,7 @@
 							</td>
 							<td>
 								<div>
-									<a href="" class="btn btn-lightred t-d-none" onclick="return confirm('Are you sure to delete?')">delete</a>
+									<button href="" class="btn btn-lightred t-d-none" onclick="return confirm('Are you sure to delete?')">delete</button>
 								</div>
 							</td>
 						</tr>		
@@ -65,6 +74,13 @@
 				} ?>
 				</tbody>
 			</table>
+		</div>
+		<div id="pagination" class="col-12">
+			<span>Number of results found : <span id="row_count"><?php echo $count; ?></span></span>
+			<div id="pagination_data" class="col-12">
+				<?php require_once(INCLUDES."pagination.php"); ?>
+				<?php display_pagination($count,$page,$per_page, "parent/list","parent_search"); ?>
+			</div>
 		</div>
 
 	</div>

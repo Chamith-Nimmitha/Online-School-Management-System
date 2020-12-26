@@ -110,6 +110,8 @@
 	$routes['api/admission/search'] = "apiAdmission/search";
 	$routes['api/classroom/search'] = "apiClassroom/search";
 	$routes['api/student/search'] = "apiStudent/search";
+	$routes['api/subject/search'] = "apiSubject/search";
+	$routes['api/parent/search'] = "apiParent/search";
 	$routes['api/classroom/grade/$1'] = "apiClassroom/get_grades/$1";
 	$routes['api/pagination'] = "apiPagination/pagination";
 
