@@ -132,53 +132,69 @@
 		}
 
 		// view classroom list for admin
-		public function classroom_list($info="",$error=""){
+		public function classroom_list($page=NULL, $per_page=NULL,$info="",$error=""){
 			if(!$this->checkPermission->check_permission("classroom_list","view")){
 				$this->view_header_and_aside();
 				$this->load->view("common/error");
 				$this->load->view("templates/footer");
 				return;
 			}
+			// count page info for pagination
+			if($per_page === NULL){
+				$per_page = 1;
+			}
+			if($page === Null){
+				$page = 1;
+				$start = 0;
+			}else{
+				$start = ($page-1)*$per_page;
+			}
+
+			$data['page'] = $page;
+			$data['per_page'] = $per_page;
+			$data['start'] = $start;
+
 			$this->load->model("classrooms");
 
 			if(!isset($_POST['classroom-id']) || empty($_POST['classroom-id'])){
                 $data['classroom_id'] = "";
                 if(isset($_POST['grade']) && $_POST['grade'] != 'all'){
                     if(isset($_POST['class']) && $_POST['class'] != 'all'){
-                        $result_set = $this->load->classrooms->get_classroom_list(null,$_POST['grade'],$_POST['class']);
+                        $result_set = $this->load->classrooms->get_classroom_list($start,$per_page,null,$_POST['grade'],$_POST['class']);
                         $data['grade'] = $_POST['grade'];
                         $data['class'] = $_POST['class'];
                     }else{
-                        $result_set = $this->load->classrooms->get_classroom_list(null,$_POST['grade']);
+                        $result_set = $this->load->classrooms->get_classroom_list($start,$per_page,null,$_POST['grade']);
                         $data['grade'] = $_POST['grade'];
                     }
                 }else{
                     if(isset($_POST['class']) && $_POST['class'] != 'all'){
-                        $result_set = $this->load->classrooms->get_classroom_list(null,null,$_POST['class']);
+                        $result_set = $this->load->classrooms->get_classroom_list($start,$per_page,null,null,$_POST['class']);
                         $data['class'] = $_POST['class'];
                     }else{
-                        $result_set = $this->load->classrooms->get_classroom_list();
+                        $result_set = $this->load->classrooms->get_classroom_list($start,$per_page);
                     }
                 }
             }else{
                 $data['classroom_id'] = $_POST['classroom-id'];
                 if(isset($_POST['grade']) && $_POST['grade'] != 'all'){
                     if(isset($_POST['class']) && $_POST['class'] != 'all'){
-                        $result_set = $this->load->classrooms->get_classroom_list($_POST['classroom-id'],$_POST['grade'],$_POST['class']);
+                        $result_set = $this->load->classrooms->get_classroom_list($start,$per_page,$_POST['classroom-id'],$_POST['grade'],$_POST['class']);
                     }else{
-                        $result_set = $this->load->classrooms->get_classroom_list($_POST['classroom-id'],$_POST['grade']);
+                        $result_set = $this->load->classrooms->get_classroom_list($start,$per_page,$_POST['classroom-id'],$_POST['grade']);
                     }
                 }else{
                     if(isset($_POST['class']) && $_POST['class'] != 'all'){
-                        $result_set = $this->load->classrooms->get_classroom_list($_POST['classroom-id'],null,$_POST['class']);
+                        $result_set = $this->load->classrooms->get_classroom_list($start,$per_page,$_POST['classroom-id'],null,$_POST['class']);
                     }else{
-                        $result_set = $this->load->classrooms->get_classroom_list($_POST['classroom-id']);
+                        $result_set = $this->load->classrooms->get_classroom_list($start,$per_page,$_POST['classroom-id']);
                     }
                 }
             }
 
             unset($_POST);
 			$data['result_set'] = $result_set;
+			$data['count'] = $this->load->classrooms->get_count()->fetch()['count'];
 			$data['info'] = $info;
 			$data['error'] = $error;
 			$this->view_header_and_aside();
