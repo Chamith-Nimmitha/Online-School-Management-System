@@ -20,7 +20,7 @@
 					</div>
 					<div class="ml-5">
 						<label for="classroom-id">Classroom ID</label>
-						<input type="text" name="classroom-id" id="classroom-id" placeholder="classroom ID" value="<?php if(isset($_POST['classroom-id'])){echo $_POST['classroom-id'];} ?>">
+						<input type="text" name="classroom-id" id="classroom-id" placeholder="classroom ID" value="<?php if(isset($_POST['classroom-id'])){echo $_POST['classroom-id'];} ?>" oninput="classroom_search()">
 					</div>
 					<div  class="  ml-5 align-items-center">
 						<label for="grade" class="mr-3 d-normal">Grade : </label>
@@ -55,7 +55,7 @@
 							<option value="H" <?php if(isset($class) && ($class == "H")){echo 'selected="selected"';} ?> >H</option>
 						</select>				
 					</div>
-					<input type="submit" class="btn btn-blue ml-3 mt-5" name="search" value="Show">
+					<button onclick="classroom_search()" class="btn btn-blue ml-3 mt-5">Filter</button>
 				</div>
 			</form>
 		</div>
@@ -71,7 +71,6 @@
 			 	</div>
 			</div>
 		    <table class="table-strip-dark">
-			    <caption class="p-5">Classrooms</caption>
 			    <thead>
 				    <tr>
                         <th>CLASS ID</th>
@@ -83,9 +82,9 @@
 					    <th>UPDATE</th>
 					    <th>DELETE</th>
 				    </tr>
-			    </thead>
+			    </thead> 
 			    
-                <tbody>
+                <tbody id="tbody">
 
 				<?php 
 				if(isset($result_set) && !empty($result_set)){
@@ -139,6 +138,13 @@
             </table>
         
 
+		</div>
+		<div id="pagination" class="col-12">
+			<span>Number of results found : <span id="row_count"><?php echo $count; ?></span></span>
+			<div id="pagination_data" class="col-12">
+				<?php require_once(INCLUDES."pagination.php"); ?>
+				<?php display_pagination($count,$page,$per_page, "classroom/list","classroom_search"); ?>
+			</div>
 		</div>  
         <div class="login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center">
             <a class="btn btn-blue" href="<?php echo set_url('classroom/registration'); ?> ">Add Classes</a>

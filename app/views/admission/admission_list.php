@@ -17,7 +17,7 @@
 				</div>
 				<div  class="d-flex flex-col  ml-5 align-items-center">
 					<label for="admission-type" class="mr-3 d-normal">Type : </label>
-					<select name="admission-state" id="admission-state" style="width: 110px" onchange="set_aside_link_selector(this,'aside-link-selector')">
+					<select name="admission-state" id="admission-state" style="width: 110px">
 						<option value="all" <?php if(isset($admission_state) && $admission_state ){if($admission_state  && $admission_state == NULL){echo 'selected="selected"';}}else{echo 'selected="selected"';} ?>>All</option>
 						<option value="unread" <?php if(isset($admission_state) && $admission_state  && ($admission_state  && $admission_state == "unread")){echo 'selected="selected"';} ?> >Unread</option>
 						<option value="read" <?php if(isset($admission_state) && $admission_state  && ($admission_state  && $admission_state == "read")){echo 'selected="selected"';} ?> >Read</option>
@@ -27,7 +27,7 @@
 						<option value="deleted" <?php if(isset($admission_state) && $admission_state  && ($admission_state  && $admission_state == "deleted")){echo 'selected="selected"';} ?> >Deleted</option>
 					</select>
 				</div>
-				<input type="submit" class="btn btn-blue ml-3 mt-5" value="Show">
+				<button onclick="admission_search()" class="btn btn-blue ml-3 mt-5">Filter</button>
 			</form>
 		</div>
 		<div class="col-12 mt-5 flex-col" style="position:relative;overflow-x: scroll;overflow-y: hidden;">

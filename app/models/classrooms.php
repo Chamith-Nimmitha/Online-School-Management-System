@@ -9,9 +9,9 @@
 		}
 
 		// get all classrooms data
-		public function get_classroom_list($classroom_id=NULL,$grade=NULL,$class=NULL){
+		public function get_classroom_list($start,$count,$classroom_id=NULL,$grade=NULL,$class=NULL){
 
-			$query = "SELECT `c`.`id` FROM `classroom` AS `c` JOIN `section` AS `s` WHERE `s`.`id`=`c`.`section_id` ";
+			$query = "SELECT SQL_CALC_FOUND_ROWS `c`.`id` FROM `classroom` AS `c` JOIN `section` AS `s` WHERE `s`.`id`=`c`.`section_id` ";
 			$params = [];
 			$where_flag = 0;
 
@@ -43,12 +43,18 @@
 			if($where_flag === 1){
 				$query .= ")";
 			}
+			$query .= " LIMIT $start,$count";
 			$stmt = $this->con->db->prepare($query);
 			$result = $stmt->execute($params);
 			if($result){
 				$result_set = $stmt->fetchAll();
 				return $this->get_all_data($result_set);
 			}
+		}
+
+		// get result count
+		public function get_count(){
+			return $this->con->get_count();
 		}
 
 		// get distict section category
