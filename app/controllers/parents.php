@@ -7,16 +7,33 @@
 		}
 
 		// search and view parent list
-		public function list(){
+		public function list($page=NULL,$per_page=NULL){
 			if(!$this->checkPermission->check_permission("parent_list","view")){
 				$this->view_header_and_aside();
 				$this->load->view("common/error");
 				$this->load->view("templates/footer");
 				return;
 			}
+
+			// count page info for pagination
+            if($per_page === NULL){
+                $per_page = 1;
+            }
+            if($page === Null){
+                $page = 1;
+                $start = 0;
+            }else{
+                $start = ($page-1)*$per_page;
+            }
+
+            $data['page'] = $page;
+            $data['per_page'] = $per_page;
+            $data['start'] = $start;
+
 			$parent_id = NULL;
 			$parent_name = NULL;
 			$occupation = NULL;
+
 			if(isset($_POST['search'])){
 				$parent_id = addslashes(trim($_POST['parent-id']));
 				$parent_name = $parent_id;
@@ -33,7 +50,8 @@
 			}
 
 			$this->load->model("parents");
-			$result_set = $this->load->parents->search($parent_id,$parent_name,$occupation);
+			$result_set = $this->load->parents->search($start, $per_page,$parent_id,$parent_name,$occupation);
+            $data['count'] = $this->load->parents->get_count()->fetch()['count'];
 			$data['result_set'] = $result_set;
 			$this->view_header_and_aside();
 			$this->load->view("parent/parent_list",$data);

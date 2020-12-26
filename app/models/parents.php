@@ -5,8 +5,8 @@
 			parent::__construct();
 		}
 
-		public function search($id=NULL,$name=NULL,$occupation=NULL){
-			$query = "SELECT * FROM `parent` ";
+		public function search($start,$per_page,$id=NULL,$name=NULL,$occupation=NULL){
+			$query = "SELECT SQL_CALC_FOUND_ROWS * FROM `parent` ";
 			$where_flag = 0;
 			$params = [];
 			if($id !== NULL){
@@ -35,7 +35,7 @@
 				array_push($params, "%{$occupation}%");
 				$where_flag = 1;
 			}
-
+			$query .=  "LIMIT $start,$per_page";
 			$stmt = $this->con->db->prepare($query);
 			$result = $stmt->execute($params);
 			if($result){
@@ -43,6 +43,11 @@
 			}else{
 				return FALSE;
 			}
+		}
+
+		// get result count
+		public function get_count(){
+			return $this->con->get_count();
 		}
 	}
 

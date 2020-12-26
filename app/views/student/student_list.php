@@ -29,7 +29,7 @@
 					</div>
 					<div class="ml-5">
 						<label for="studebt-id">Student ID</label>
-						<input type="text" name="student-id" id="student-id" placeholder="Student ID" value="<?php if(isset($student_id)){echo $student_id;} ?>" oninput="get_student_data()">
+						<input type="text" name="student-id" id="student-id" placeholder="Student ID" value="<?php if(isset($student_id)){echo $student_id;} ?>" oninput="student_search()">
 					</div>
 					<div  class="  ml-5 align-items-center">
 						<label for="grade" class="mr-3 d-normal">Grade : </label>
@@ -64,20 +64,20 @@
 							<option value="H" <?php if(isset($class) && ($class == "H")){echo 'selected="selected"';} ?> >H</option>
 						</select>				
 					</div>
-					<input type="submit" class="btn btn-blue ml-3 mt-5" name="search" value="Show">
+					<button onclick="student_search()" class="btn btn-blue ml-3 mt-5">Filter</button>
 				</div>
 			</form>
 		</div>
 		<div class="mt-5 col-12 flex-col" style="position:relative;overflow-x: scroll;overflow-y: hidden;">
 			<div class="loader hide-loader">
-				 	<div class="col-12">
-						<div id="one"><div></div></div>
-						<div id="two"><div></div></div>
-						<div id="three"><div></div></div>
-						<div id="four"><div></div></div>
-						<div id="five"></div>
-				 	</div>
-				</div>
+			 	<div class="col-12">
+					<div id="one"><div></div></div>
+					<div id="two"><div></div></div>
+					<div id="three"><div></div></div>
+					<div id="four"><div></div></div>
+					<div id="five"></div>
+			 	</div>
+			</div>
 			<?php 
 				$table = "<table class='table-strip-dark'>";
 				$table .= "<thead>

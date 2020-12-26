@@ -60,7 +60,7 @@
 			</form>
 		</div>
 
-		<div class="col-10 flex-col" style="position:relative;overflow-x: scroll;overflow-y: hidden;">
+		<div class="col-12 mt-5 flex-col" style="position:relative;overflow-x: scroll;overflow-y: hidden;">
 			<div class="loader hide-loader">
 			 	<div class="col-12">
 					<div id="one"><div></div></div>

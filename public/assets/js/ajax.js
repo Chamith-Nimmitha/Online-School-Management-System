@@ -197,14 +197,14 @@ function get_teacher_data(field,input){
 
 
 //  search student with pagination
-function get_student_data(page=null,per_page=null){
+function student_search(page=null,per_page=null){
 	var target_div = document.getElementById("student-list-table");
 	var idVal =document.getElementById("student-id").value;
 	var nameVal =idVal
 	var gradeVal = document.getElementById("grade").value;;
 	var classVal = document.getElementById("class").value;;
 	var route = "student/list";
-	var func = "get_student_data";
+	var func = "student_search";
 	if(idVal.length == 0){
 		var idVal = "";
 	}
@@ -348,6 +348,134 @@ function classroom_search(page=null, per_page=null){
 		var data = {id:id,grade:grade,classroom:classroom};
 	}else{
 		var data = {id:id,grade:grade,classroom:classroom,page:page,per_page:per_page};
+	}
+	xhr.send( JSON.stringify(data) );
+}
+
+function subject_search(page=null, per_page=null){
+	e = window.event;
+	e.preventDefault();
+	var id = document.getElementById("subject-id").value;
+	var grade = document.getElementById("grade").value;
+	var medium = document.getElementById("medium").value;
+	var xhr = new XMLHttpRequest();
+	var tbody =document.getElementById('tbody');
+	xhr.open("POST",base_url+"api/subject/search",true);
+	xhr.setRequestHeader("Content-Type", "application/json");
+	var func = "subject_search";
+	var route = "subject/list";
+
+	// for loader
+	var loader = document.querySelector(".loader");
+	loader.classList.remove('hide-loader');
+	xhr.addEventListener("readystatechange", ()=>{
+		if(xhr.readyState !== 4){
+			loader.classList.remove('hide-loader');
+		}else{
+			loader.classList.add('hide-loader');
+		}
+	})// end of loader
+
+
+	xhr.onload = function(){
+		var respond = xhr.responseText;
+		if(this.status == 200){
+			respond = JSON.parse(respond);
+			tbody.innerHTML = respond.body;
+
+			var xhr2 = new XMLHttpRequest();
+			xhr2.open("POST",base_url+"api/pagination",true);
+			xhr2.setRequestHeader("Content-Type", "application/json");
+			xhr2.onload = function(){
+				if(this.status == 200){
+					var respond_p = xhr2.responseText;
+					var pagination =document.getElementById('pagination');
+					var row_count = document.getElementById('row_count');
+					var pagination_data =document.getElementById('pagination_data');
+					row_count.textContent = count;
+					pagination_data.innerHTML = respond_p;
+				}
+			}
+			var count = respond.count;
+			if(page == null){
+				var data2 = {route:route, count:count,func:func};
+			}else{
+				var data2 = {route:route,count:count,page:page,per_page:per_page,func:func};
+			}
+			xhr2.send( JSON.stringify(data2) );
+		}else{
+			respond = JSON.parse(respond);
+			tbody.innerHTML = respond.body;			
+		}
+	}
+
+	if(page == null){
+		var data = {id:id,grade:grade,medium:medium};
+	}else{
+		var data = {id:id,grade:grade,medium:medium,page:page,per_page:per_page};
+	}
+	xhr.send( JSON.stringify(data) );
+}
+
+function parent_search(page=null, per_page=null){
+	e = window.event;
+	e.preventDefault();
+	var id = document.getElementById("parent-id").value;
+	var occupation = document.getElementById("occupation").value;
+	var xhr = new XMLHttpRequest();
+	var tbody =document.getElementById('tbody');
+	xhr.open("POST",base_url+"api/parent/search",true);
+	xhr.setRequestHeader("Content-Type", "application/json");
+	var func = "parent_search";
+	var route = "parent/list";
+
+	// for loader
+	var loader = document.querySelector(".loader");
+	loader.classList.remove('hide-loader');
+	xhr.addEventListener("readystatechange", ()=>{
+		if(xhr.readyState !== 4){
+			loader.classList.remove('hide-loader');
+		}else{
+			loader.classList.add('hide-loader');
+		}
+	})// end of loader
+
+	xhr.onload = function(){
+		var respond = xhr.responseText;
+		if(this.status == 200){
+			respond = JSON.parse(respond);
+			tbody.innerHTML = respond.body;
+
+			var xhr2 = new XMLHttpRequest();
+			xhr2.open("POST",base_url+"api/pagination",true);
+			xhr2.setRequestHeader("Content-Type", "application/json");
+			xhr2.onload = function(){
+				if(this.status == 200){
+					var respond_p = xhr2.responseText;
+					var pagination =document.getElementById('pagination');
+					var row_count = document.getElementById('row_count');
+					var pagination_data =document.getElementById('pagination_data');
+					row_count.textContent = count;
+					pagination_data.innerHTML = respond_p;
+				}
+			}
+			var count = respond.count;
+			if(page == null){
+				var data2 = {route:route, count:count,func:func};
+			}else{
+				var data2 = {route:route,count:count,page:page,per_page:per_page,func:func};
+			}
+			xhr2.send( JSON.stringify(data2) );
+		}else{
+			respond = JSON.parse(respond);
+			tbody.innerHTML = respond.body;			
+		}
+	}
+
+	if(page == null){
+		var data = {id:id,occupation:occupation};
+	}else{
+		var data = {id:id,occupation:occupation,page:page,per_page:per_page};
 	}
 	xhr.send( JSON.stringify(data) );
 }
