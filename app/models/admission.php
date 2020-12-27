@@ -49,6 +49,7 @@
 					}else{
 						$query .= " && `grade` = ?";
 					}
+					$flag = 1;
 					array_push($params, $grade);
 				}
 			}
@@ -60,6 +61,7 @@
 				}else{
 					$query .= " && `state` = ?";
 				}
+				$flag = 1;
 				array_push($params, $state);
 			}
 			$query .= " LIMIT $start,$count";

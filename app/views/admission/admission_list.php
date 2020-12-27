@@ -16,7 +16,7 @@
 					<input class="form-control" type="text" name="admission-search" id="admission-search" oninput="admission_search()" value="<?php if(isset($admission_search) && $admission_search !== NULL){echo $admission_search;} ?>" placeholder="Id, Grade, Name">
 				</div>
 				<div  class="d-flex flex-col  ml-5 align-items-center">
-					<label for="admission-type" class="mr-3 d-normal">Type : </label>
+					<label for="admission-state" class="mr-3 d-normal">Type : </label>
 					<select name="admission-state" id="admission-state" style="width: 110px">
 						<option value="all" <?php if(isset($admission_state) && $admission_state ){if($admission_state  && $admission_state == NULL){echo 'selected="selected"';}}else{echo 'selected="selected"';} ?>>All</option>
 						<option value="unread" <?php if(isset($admission_state) && $admission_state  && ($admission_state  && $admission_state == "unread")){echo 'selected="selected"';} ?> >Unread</option>

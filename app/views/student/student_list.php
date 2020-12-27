@@ -12,7 +12,7 @@
                 <label>Select a File:</label>
                 <input type="file" name="file"/>
                 <br/>
-                <input type="submit" name="submit" value="Import" class="btn btn-info"/>
+                <input type="submit" name="submit" value="Import"  class="btn btn-info"/>
             </div>
         </form>
 
@@ -129,7 +129,7 @@
 			<span>Number of results found : <span id="row_count"><?php echo $count; ?></span></span>
 			<div id="pagination_data" class="col-12">
 				<?php require_once(INCLUDES."pagination.php"); ?>
-				<?php display_pagination($count,$page,$per_page, "student/list","get_student_data"); ?>
+				<?php display_pagination($count,$page,$per_page, "student/list","student_search"); ?>
 			</div>
 		</div>
         <br>
