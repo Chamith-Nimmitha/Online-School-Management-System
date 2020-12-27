@@ -1,3 +1,5 @@
+<script src="<?php echo BASE_URL.'public/assets/js/chartJs.js'; ?>"></script>
+<script src="<?php echo BASE_URL.'public/assets/js/jquery.js'; ?>"></script>
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 	<?php 
 		if(isset($msg)){
@@ -6,6 +8,7 @@
 			echo "</p>";
 		}  
 	?>
+
 	<div id="school-statistics" class="col-12  justify-content-center ">
 		<h2 class="text-center p-5">School Statistics</h2>
 		<div class="statistics-flex justify-content-center">	
@@ -38,25 +41,19 @@
 		<h2 class="text-center p-5">School Attendance</h2>
 		<div class="col-12 d-flex justify-content-center">
 			<form action="">
-				<div class="d-flex">
+				<div class="d-flex align-items-center">
 					<label for="date">Date</label>
-					<input type="date" name="date" id="date" class="ml-3">
+					<input type="date" name="date" id="date" class="ml-3 p-2">
 				</div>
 			</form>
 		</div>
-		<div class="statistics-flex  justify-content-center">	
-			<div id="total-students-attendance" class="d-flex flex-col align-items-center bg-lightblue l-item m-2 p-3">
-				<h3 class="bb pb-1 text-center">Total Students Attendance</h3>
-				<span class="pt-1"> Presents : 900</span>
-				<span class="pt-1"> Absent : 100</span>
-			</div> <!-- #total-student-attendance -->
-
-			<div id="total-teachers-attendance" class="d-flex flex-col align-items-center bg-lightblue l-item m-2 p-3">
-				<h3 class="bb pb-1 text-center">Total Teachers Attendance</h3>
-				<span> Presents : 135</span>
-				<span> Absent : 10</span>
-			</div> <!-- #total-teachers-attendance -->
-
+		<div class="col-12 d-flex align-items-center mt-5 justify-content-around">
+			<div class="bg-white p-5" style="width: 45%;">
+				<canvas id="dashboard_student_attendance" width="100" height="100"></canvas>
+			</div>
+			<div class="bg-white p-5" style="width: 45%;">
+				<canvas id="dashboard_teacher_attendance" width="100" height="100"></canvas>
+			</div>
 		</div>
 	</div> <!-- #school-attendance -->
 </div> <!-- #content -->

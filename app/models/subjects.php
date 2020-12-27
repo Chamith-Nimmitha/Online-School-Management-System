@@ -70,6 +70,31 @@
 			}
 		}
 
+		// set by teacher id
+		public function set_by_teacher_id($teacher_id){
+			$result_set = $this->con->select("teacher_subject", ['teacher_id'=>$teacher_id]);
+			if($result_set){
+				$result_set = $result_set->fetchAll();
+				try {
+					$this->con->db->beginTransaction();
+					$data = [];
+					foreach ($result_set as $result) {
+						$sub = new SubjectModel();
+						$result = $sub->set_by_id($result['subject_id']);
+						if(!$result){
+							throw new PDOException();
+						}
+						$data[] = $result->get_data();
+					}
+					return $data;
+				} catch (Exception $e) {
+					return FALSE;
+				}
+			}else{
+				return FALSE;
+			}
+		}
+
 		// get result count
 		public function get_count(){
 			return $this->con->get_count();
