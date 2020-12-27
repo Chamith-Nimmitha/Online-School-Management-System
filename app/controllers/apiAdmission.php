@@ -31,7 +31,6 @@ class ApiAdmission extends Controller{
 		$this->load->model("admission");
 		$result_set = $this->load->admission->get_list($start,$per_page,$id,$id,$id,$state);
 		$data['count'] = $this->load->admission->get_count()->fetch()['count'];
-
 		if($result_set && $result_set->rowCount() >0){
 			$body = "";
 			foreach ($result_set as $result) {
