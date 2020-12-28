@@ -125,7 +125,11 @@
 		}
 
 		// get classroom student list array
-		public function get_studets_data(){
+		public function get_students_data($filters=""){
+			if(!empty($filters)){
+				$this->con->get($filters);
+			}
+			$this->con->orderBy("id");
 			$result = $this->con->select("student", array("classroom_id"=>$this->id));
 			if($result){
 				return $result->fetchAll();

@@ -27,6 +27,11 @@ body{
 	color: white;
 }
 
+#aside-nav-wrapper a i{
+	width: 60px;
+	font-size: 30px;
+	text-align: center;
+}
 .school-name span{
 	-webkit-text-stroke: 0.3px yellow;
 	color : #20295b ;
@@ -103,7 +108,7 @@ footer{
 }
 
 .sub-nav{
-	margin-left: 20px;
+	margin-left: 50px;
 	font-size: 14px;
 }
 

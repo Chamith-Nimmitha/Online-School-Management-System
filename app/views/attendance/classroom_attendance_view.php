@@ -17,139 +17,45 @@
             </div>
         </form>
     </div>
-    <form action="" method="POST" class="col-12 d-flex justify-content-center">
+    <form action="<?php echo set_url('attendance/classroom/mark/'.$classroom_id) ?>" method="POST" class="col-12 d-flex justify-content-center">
         <div class="col-8 flex-col" style="overflow-x: scroll;overflow-y: hidden;">  
             <table class="table-strip-dark">
-                <caption class="p-5"><b>Attendance Sheet <br>2020-10-10 <br>Class 12-B</b></caption>
+                <caption class="p-5"><b>Attendance Sheet <br> <?php if(isset($date)){echo $date;}else{echo date("Y-m-d");} ?> <br>Class <?php echo $classroom_data['grade']."-".$classroom_data['class']; ?></b></caption>
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Student Name</th>
                             <th>Attendance</th>
+                            <th>Note</th>
                             <th>View Attendance</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                Raj Shekhar
-                                <input type="hidden" name="student_name[]" value="Raj Shekhar" />
-                            </td>
-                            <td>
-                                <label for="present0">
-                                    <input type="radio" id="present0" name="attendance_status[0]" value="Present"> Present
+                        <?php 
+                            if(isset($student_list) && !empty($student_list)){
+                                foreach ($student_list as $student) {
+                         ?>
+                         <tr>
+                            <td><?php echo $student['id']; ?></td>
+                            <td><?php echo $student['name_with_initials']; ?></td>
+                            <td class="d-flex flex-col">
+                                <label for="present-<?php echo $student['id']; ?>">
+                                    <input type="radio" id="present-<?php echo $student['id']; ?>" name="attendance-<?php echo $student['id']; ?>" value="1" <?php if($student['attendance'] === 1){echo "checked='checked'";} ?> > Present
                                 </label>
-                                <label for="absent0">
-                                    <input type="radio" id="absent0" name="attendance_status[0]" value="Absent"> Absent
-                                </label>
-                            </td>
-                            <td class="text-center">
-                                <div>
-                                    <a class="btn btn-blue" href="<?php echo set_url('pages/student_attendance_view.php'); ?>" >VIEW REPORT</a>
-                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>
-                                Pankaj Kumar
-                                <input type="hidden" name="student_name[]" value="Pankaj Kumar" />
-                            </td>
-                            <td>
-                                <label for="present1">
-                                    <input type="radio" id="present1" name="attendance_status[1]" value="Present"> Present
-                                </label>
-                                <label for="absent1">
-                                    <input type="radio" id="absent1" name="attendance_status[1]" value="Absent"> Absent
+                                <label for="absent-<?php echo $student['id']; ?>">
+                                    <input type="radio" id="absent-<?php echo $student['id']; ?>" name="attendance-<?php echo $student['id']; ?>" value="0" <?php if($student['attendance'] === 0){echo "checked='checked'";} ?> > Absent
                                 </label>
                             </td>
-                            <td class="text-center">
-                                <div>
-                                    <a class="btn btn-blue" href="<?php echo set_url('pages/student_attendance_view.php'); ?>" >VIEW REPORT</a>
-                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>
-                                Amit Singh
-                                <input type="hidden" name="student_name[]" value="Amit Singh" />
-                            </td>
-                            <td>
-                                <label for="present2">
-                                    <input type="radio" id="present2" name="attendance_status[2]" value="Present"> Present
-                                </label>
-                                <label for="absent2">
-                                    <input type="radio" id="absent2" name="attendance_status[2]" value="Absent"> Absent
-                                </label>
-                            </td>
-                            <td class="text-center">
-                                <div>
-                                    <a class="btn btn-blue" href="<?php echo set_url('pages/student_attendance_view.php'); ?>" >VIEW REPORT</a>
-                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>
-                                Arjun Kumar
-                                <input type="hidden" name="student_name[]" value="Arjun Kumar" />
-                            </td>
-                            <td>
-                                <label for="present3">
-                                    <input type="radio" id="present3" name="attendance_status[3]" value="Present"> Present
-                                </label>
-                                <label for="absent3">
-                                    <input type="radio" id="absent3" name="attendance_status[3]" value="Absent"> Absent
-                                </label>
-                            </td>
-                            <td class="text-center">
-                                <div>
-                                    <a class="btn btn-blue" href="<?php echo set_url('pages/student_attendance_view.php'); ?>" >VIEW REPORT</a>
-                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>
-                                Amit Kumar
-                                <input type="hidden" name="student_name[]" value="Amit Kumar" />
-                            </td>
-                            <td>
-                                <label for="present4">
-                                    <input type="radio" id="present4" name="attendance_status[4]" value="Present"> Present
-                                </label>
-                                <label for="absent4">
-                                    <input type="radio" id="absent4" name="attendance_status[4]" value="Absent"> Absent
-                                </label>
-                            </td>
-                            <td class="text-center">
-                                <div>
-                                    <a class="btn btn-blue" href="<?php echo set_url('pages/student_attendance_view.php'); ?>" >VIEW REPORT</a>
-                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>
-                                Suraj Tiwari
-                                <input type="hidden" name="student_name[]" value="Suraj Tiwari" />
-                            </td>
-                            <td>
-                                <label for="present5">
-                                    <input type="radio" id="present5" name="attendance_status[5]" value="Present"> Present
-                                </label>
-                                <label for="absent5">
-                                    <input type="radio" id="absent5" name="attendance_status[5]" value="Absent"> Absent
-                                </label>
-                            </td>
-                            <td class="text-center">
-                                <div>
-                                    <a class="btn btn-blue" href="<?php echo set_url('pages/student_attendance_view.php'); ?>" >VIEW REPORT</a>
-                                 </div>
-                            </td>
-                        </tr>
+                            <td><input type="text" name="note-<?php echo $student['id']; ?>" value="<?php echo $student['note']; ?>"></td>
+                            <td> <button class="btn btn-blue">View Report</button></td>
+                         </tr>
+                            
+                        <?php 
+                                }
+                            }else{
+                                echo "<tr><td colspan=8 class='text-center bg-red'>Student not found...</td></tr>";
+                            }
+                         ?>                                    
                     </tbody>
             </table>
         </div>

@@ -372,14 +372,14 @@ form code{
 .nav-item{
 	list-style: none;
 	padding: 2px;
-	align-items: center;
 	margin: 2px;
+	align-items: center;
 }
 
 .nav-link{
 	width: 80%;
 	display: inline-block;
-	padding: 5px 20px;
+	padding: 5px;
 	text-decoration: none;
 }
 

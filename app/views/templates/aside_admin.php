@@ -57,12 +57,19 @@
 					<nav class="nav fs-18">
 						<ul class="d-flex flex-col" id="aside_nav">
 							<li class="nav-item aside-li">
-								<a href="<?php echo set_url('dashboard'); ?>" class="nav-link active">Dashbord</a>
+								<a href="<?php echo set_url('dashboard'); ?>" class="nav-link active">
+									<i class="fas fa-chart-line"></i>Dashbord
+								</a>
 							</li>
-							<li class="nav-item aside-li" id="admission-li"><a href="<?php echo set_url('admission/list'); ?>" class="nav-link">Admissions</a>
+							<li class="nav-item aside-li" id="admission-li">
+								<a href="<?php echo set_url('admission/list'); ?>" class="nav-link">
+									<i class="far fa-address-card"></i>Admissions
+								</a>
 							</li>
 							<li class="nav-item aside-li" id="attendance-li">
-								<a href="<?php echo set_url('attendance/classroom/list'); ?>" class="nav-link">Attendance</a>
+								<a href="<?php echo set_url('attendance/classroom/list'); ?>" class="nav-link">
+									<i class="far fa-calendar-check"></i>Attendance
+								</a>
 								<button class="toggle-button" target="attendance-nav">
 									<img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" width="20px" alt="">
 								</button>
@@ -75,7 +82,9 @@
 								</nav>
 							</li>
 							<li class="nav-item aside-li" id="student-li">
-								<a href="<?php echo set_url('student/list'); ?>" class="nav-link">Students</a>
+								<a href="<?php echo set_url('student/list'); ?>" class="nav-link">
+									<i class="fas fa-user-graduate"></i>Students
+								</a>
 								<button class="toggle-button" target="student-nav">
 									<img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" width="20px" alt="">
 								</button>
@@ -88,7 +97,9 @@
 								</nav>
 							</li>
 							<li class="nav-item aside-li" id="teacher-li">
-								<a href="<?php echo set_url('teacher/list'); ?>" class="nav-link">Teachers</a>
+								<a href="<?php echo set_url('teacher/list'); ?>" class="nav-link">
+									<i class="fas fa-user-tie"></i>Teachers
+								</a>
 								<button class="toggle-button" target="teacher-nav">
 									<img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" width="20px" alt="">
 								</button>
@@ -101,7 +112,10 @@
 									</ul>
 								</nav>
 							</li>
-							<li class="nav-item aside-li" id="classroom-li"><a href="<?php echo set_url('classroom/list') ?>" class="nav-link">Class Rooms</a>
+							<li class="nav-item aside-li" id="classroom-li">
+								<a href="<?php echo set_url('classroom/list') ?>" class="nav-link">
+									<i class="fas fa-store-alt"></i>Class Rooms
+								</a>
 								<button class="toggle-button" target="classroom-nav">
 									<img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" width="20px" alt="">
 								</button>
@@ -115,7 +129,9 @@
 								</nav>
 							</li>
 							<li class="nav-item aside-li" id="subject-li">
-								<a href="<?php echo set_url('subject/list') ?>" class="nav-link">Subjects</a>
+								<a href="<?php echo set_url('subject/list') ?>" class="nav-link">
+									<i class="fas fa-book"></i>Subjects
+								</a>
 								<button class="toggle-button" target="subject-nav">
 									<img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" width="20px" alt="">
 								</button>
@@ -132,7 +148,9 @@
 								</nav>
 							</li>
 							<li id="interview-li" class="nav-item aside-li">
-								<a href="<?php echo set_url('interviewpanel/list') ?>" class="nav-link">Interviews</a>
+								<a href="<?php echo set_url('interviewpanel/list') ?>" class="nav-link">
+									<i class="fas fa-clock"></i>Interviews
+								</a>
 								<button class="toggle-button" target="interview-nav">
 									<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px">
 								</button>
@@ -148,14 +166,19 @@
 								</nav>
 							</li>
 							<li class="nav-item aside-li">
-								<a href="<?php echo set_url('userrole/permission') ?>" class="nav-link">User Roles</a>
+								<a href="<?php echo set_url('userrole/permission') ?>" class="nav-link">
+									<i class="fas fa-users-cog"></i>User Roles
+								</a>
 
 							</li>
 							<li class="nav-item aside-li">
-								<a href="<?php echo set_url('parent/list') ?>" class="nav-link" class="nav-link">Parents</a>
+								<a href="<?php echo set_url('parent/list') ?>" class="nav-link" class="nav-link">
+									<i class="fas fa-user-shield"></i>Parents
+								</a>
 							</li>
 							<li id="settings-li" class="nav-item aside-li">
-								<a href="<?php echo set_url('settings/school') ?>" class="nav-link">All Settings</a>
+								<a href="<?php echo set_url('settings/school') ?>" class="nav-link">
+									<i class="fas fa-sliders-h"></i>All Settings</a>
 								<button class="toggle-button" target="settings-nav">
 									<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px">
 								</button>
