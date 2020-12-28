@@ -2,35 +2,38 @@
      class Teacher extends Controller{
 		
 		//view the list of teachers
-		public function list(){
-			if(!$this->checkPermission->check_permission("teacher_list","view")){
-				$this->view_header_and_aside();
-				$this->load->view("common/error");
-				$this->load->view("templates/footer");
-				return;
+		public function list($page=Null, $per_page=Null){
+			if($per_page === NULL){
+				$per_page = 1;
+			}
+			if($page === Null){
+				$page = 1;
+				$start = 0;
+			}else{
+				$start = ($page-1)*$per_page;
 			}
 
-			$obj = new TeachersInfo();
+			$data['page'] = $page;
+			$data['per_page'] = $per_page;
+			$data['start'] = $start;
+
+			if(isset($_POST['teacher-id']) && !empty($_POST['teacher-id'])){
+				$teacher_search = $_POST['teacher-id'];
+			}else{
+				$teacher_search = NULL;
+			}
 			
-			if(!isset($_POST['teacher-id']) || empty($_POST['teacher-id'])){
-				$result_set = $obj->get_teacher_list();
+			$data['teacher_search'] = $teacher_search;
+			$this->load->model("teachers");
+			$result_set = $this->load->teachers->get_list($start,$per_page,$teacher_search,$teacher_search);
+			$data['result_set'] = $result_set;
+			$data['count'] = $this->load->teachers->get_count()->fetch()['count'];
+			
+			$this->view_header_and_aside();
+			$this->load->view("teacher/teacher_all",$data);
+			$this->load->view("templates/footer");
 
-			}
-			else{
-				$data['teacher_id'] = $_POST['teacher-id'];
-				if(is_numeric($_POST['teacher-id'])){
-					$result_set = $obj->get_teacher_list($_POST['teacher-id'],null);	
-				}
-				else{
-					$result_set = $obj->get_teacher_list(null,$_POST['teacher-id']);
-				}
-			}
 
-            unset($_POST);
-            $data['result_set'] = $result_set;
-		    $this->view_header_and_aside();
-            $this->load->view("teacher/teacher_all",$data);
-            $this->load->view("templates/footer");
 		}
 		//register new teachers
 		public function new_teacher(){
