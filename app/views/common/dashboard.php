@@ -49,11 +49,43 @@
 		</div>
 		<div class="col-12 d-flex align-items-center mt-5 justify-content-around">
 			<div class="bg-white p-5" style="width: 45%;">
-				<canvas id="dashboard_student_attendance" width="100" height="100"></canvas>
+				<canvas id="dashboard_student_attendance_pie" width="100" height="100"></canvas>
 			</div>
 			<div class="bg-white p-5" style="width: 45%;">
-				<canvas id="dashboard_teacher_attendance" width="100" height="100"></canvas>
+				<canvas id="dashboard_teacher_attendance_pie" width="100" height="100"></canvas>
 			</div>
 		</div>
 	</div> <!-- #school-attendance -->
+
+	<div class="col-12 justify-content-around">
+		<!-- classroom student attendance -->
+		<div class="mt-5" style="width: 45%;">
+			<div class="bg-white p-5 w-100">
+				<canvas id="dashboard_classroom_student_attendance_bar" width="100" height="100"></canvas>
+			</div>
+		</div>
+
+		<!-- school teacher attendance -->
+		<div class="mt-5" style="width: 45%;">
+			<div class="bg-white p-5 w-100">
+				<canvas id="dashboard_teacher_attendance_bar" width="100" height="100"></canvas>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 justify-content-around">
+		<!-- subject grades pie -->
+		<div class="mt-5" style="width: 45%;">
+			<div class="bg-white p-5 w-100">
+				<canvas id="subject_grades_pie" width="100" height="100"></canvas>
+			</div>
+		</div>
+
+		<!-- classroom student attendance -->
+		<div class="mt-5" style="width: 45%;">
+			<div class="bg-white p-5 w-100">
+				<canvas id="student_result_overview" width="100" height="100"></canvas>
+			</div>
+		</div>
+	</div>
+
 </div> <!-- #content -->
