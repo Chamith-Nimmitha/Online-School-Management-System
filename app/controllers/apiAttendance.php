@@ -1,16 +1,11 @@
 <?php 
 
-	class apiClassroom extends Controller{
+	class apiAttendance extends Controller{
 		public function __construct() {
 			parent::__construct();
 		}
 
-		public function get_grades($category){
-			$data['category'] = $category;
-			$this->load->view("../../public/assets/api/classrooms",$data);
-		}
-
-		public function search(){
+		public function classroom_search(){
 			$post = json_decode(file_get_contents("php://input"));
 
 			$id = $post->id;
@@ -54,25 +49,9 @@
 					$body .= "<td>".$result['grade']."</td>";
 					$body .= "<td>".$result['class']."</td>";
 					$body .= "<td>".$result['class_teacher_id']."</td>";
-					$body .= "<td>
-								<div class='login_buttons col-12 col-md-12 justify-content-end d-flex align-items-center'>
-	                				<a class='btn btn-blue p-1' href='".set_url('classroom/student/list/'.$result['id'])."'>List</a>
-	                				<a class='btn btn-blue p-1 ml-3' href='".set_url('classroom/student/add/'.$result['id'])."'>Add</a>
-			    				</div>
-							</td>";
-					$body .= "<td>
-								<div class='login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center'>
-	                				<a class='btn btn-blue p-1' href='". set_url('classroom/timetable/'.$result['id'])."'>View</a>
-			    				</div>
-							</td>";
-					$body .= "<td>
-								<div class='login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center'>
-	                				<a class='btn btn-blue p-1' href='".set_url('classroom/update/'.$result['id'])."'>Update</a>
-			    				</div>
-							</td>";
-					$body .= "<td>
-								<div class='login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center'>
-									<a class='btn btn-lightred p-1' href='".set_url('classroom/delete/'.$result['id']) ."' onclick=\"return confirm('Are you sure to delete?')\">Delete</a>
+					$body .= "<td class='text-center'>
+								<div>
+	                				<a class='btn btn-blue' href='". set_url('attendance/classroom/view/'.$result['id'])."'>View</a>
 			    				</div>
 							</td>";
 					$body .= "</tr>";

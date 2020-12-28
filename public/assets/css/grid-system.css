@@ -400,9 +400,9 @@ form code{
 .toggle-button{margin-left: 10px;}
 
 
-.no-collapsed{display: none;}
+.no-collapsed{display: none !important;}
 
-.collapsed{display: inherit;}
+.collapsed{display: inherit !important;}
 
 
 /* borders*/

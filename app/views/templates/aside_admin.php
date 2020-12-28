@@ -2,7 +2,7 @@
 				<!-- for small devices -->
 				<!-- <div class="d-md-none flex-col align-items-center bg-blue">
 					<ul class="" id="aside-nav-xm-ul">
-						<li class="nav-item aside-xm-li" id="admission-xm-li"><a href="<?php echo set_url('pages/admissions_all.php?aside-link-selector=all') ?>" class="nav-link"><img src="<?php echo set_url('public/assets/img/close-menu.png'); ?>" alt="da" ></a>
+						<li class="nav-item aside-xm-li" id="admission-xm-li"><a href="<?php echo set_url('pages/admissions_all.php?aside-link-selector=all') ?>" class="nav-link"><img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" alt="da" ></a>
 							<nav class="nav sub-nav no-collapsed theme-darkblue" id="admission-xm-nav">
 								<ul class="d-flex flex-col">
 									<li class="nav-item">
@@ -29,7 +29,7 @@
 								</ul>
 							</nav>
 						</li>
-						<li class="nav-item aside-xm-li" id="teacher-xm-li"><a href="<?php echo set_url('pages/admissions_all.php?admission-search=all') ?>" class="nav-link"><img src="<?php echo set_url('public/assets/img/close-menu.png'); ?>" alt="da"></a>
+						<li class="nav-item aside-xm-li" id="teacher-xm-li"><a href="<?php echo set_url('pages/admissions_all.php?admission-search=all') ?>" class="nav-link"><img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" alt="da"></a>
 							<nav class="nav sub-nav no-collapsed theme-darkblue" id="teacher-xm-nav">
 								<ul class="d-flex flex-col">
 									<li class="nav-item"><a href="#" class="nav-link" parent-li="teacher-xm-li">Teachers Attendance</a></li>
@@ -39,13 +39,13 @@
 								</ul>
 							</nav>
 						</li>
-						<li class="nav-item"><a href="" class="nav-link"><img src="<?php echo set_url('public/assets/img/close-menu.png'); ?>" alt="da"></a></li>
-						<li class="nav-item"><a href="" class="nav-link"><img src="<?php echo set_url('public/assets/img/close-menu.png'); ?>" alt="da"></a></li>
-						<li class="nav-item"><a href="" class="nav-link"><img src="<?php echo set_url('public/assets/img/close-menu.png'); ?>" alt="da"></a></li>
-						<li class="nav-item"><a href="" class="nav-link"><img src="<?php echo set_url('public/assets/img/close-menu.png'); ?>" alt="da"></a></li>
-						<li class="nav-item"><a href="" class="nav-link"><img src="<?php echo set_url('public/assets/img/close-menu.png'); ?>" alt="da"></a></li>
-						<li class="nav-item"><a href="" class="nav-link"><img src="<?php echo set_url('public/assets/img/close-menu.png'); ?>" alt="da"></a></li>
-						<li class="nav-item"><a href="" class="nav-link"><img src="<?php echo set_url('public/assets/img/close-menu.png'); ?>" alt="da"></a></li>
+						<li class="nav-item"><a href="" class="nav-link"><img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" alt="da"></a></li>
+						<li class="nav-item"><a href="" class="nav-link"><img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" alt="da"></a></li>
+						<li class="nav-item"><a href="" class="nav-link"><img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" alt="da"></a></li>
+						<li class="nav-item"><a href="" class="nav-link"><img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" alt="da"></a></li>
+						<li class="nav-item"><a href="" class="nav-link"><img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" alt="da"></a></li>
+						<li class="nav-item"><a href="" class="nav-link"><img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" alt="da"></a></li>
+						<li class="nav-item"><a href="" class="nav-link"><img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" alt="da"></a></li>
 					</ul>
 				</div>
 					 -->
@@ -64,7 +64,7 @@
 							<li class="nav-item aside-li" id="attendance-li">
 								<a href="<?php echo set_url('attendance/classroom/list'); ?>" class="nav-link">Attendance</a>
 								<button class="toggle-button" target="attendance-nav">
-									<img src="<?php echo set_url('public/assets/img/close-menu.png'); ?>" width="20px" alt="">
+									<img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" width="20px" alt="">
 								</button>
 
 								<nav class="nav sub-nav no-collapsed" id="attendance-nav">
@@ -77,7 +77,7 @@
 							<li class="nav-item aside-li" id="student-li">
 								<a href="<?php echo set_url('student/list'); ?>" class="nav-link">Students</a>
 								<button class="toggle-button" target="student-nav">
-									<img src="<?php echo set_url('public/assets/img/close-menu.png'); ?>" width="20px" alt="">
+									<img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" width="20px" alt="">
 								</button>
 
 								<nav class="nav sub-nav no-collapsed" id="student-nav">
@@ -90,7 +90,7 @@
 							<li class="nav-item aside-li" id="teacher-li">
 								<a href="<?php echo set_url('teacher/list'); ?>" class="nav-link">Teachers</a>
 								<button class="toggle-button" target="teacher-nav">
-									<img src="<?php echo set_url('public/assets/img/close-menu.png'); ?>" width="20px" alt="">
+									<img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" width="20px" alt="">
 								</button>
 
 								<nav class="nav sub-nav no-collapsed" id="teacher-nav">
@@ -103,7 +103,7 @@
 							</li>
 							<li class="nav-item aside-li" id="classroom-li"><a href="<?php echo set_url('classroom/list') ?>" class="nav-link">Class Rooms</a>
 								<button class="toggle-button" target="classroom-nav">
-									<img src="<?php echo set_url('public/assets/img/close-menu.png'); ?>" width="20px" alt="">
+									<img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" width="20px" alt="">
 								</button>
 
 								<nav  id="classroom-nav" class="nav sub-nav no-collapsed">
@@ -117,7 +117,7 @@
 							<li class="nav-item aside-li" id="subject-li">
 								<a href="<?php echo set_url('subject/list') ?>" class="nav-link">Subjects</a>
 								<button class="toggle-button" target="subject-nav">
-									<img src="<?php echo set_url('public/assets/img/close-menu.png'); ?>" width="20px" alt="">
+									<img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" width="20px" alt="">
 								</button>
 
 								<nav class="nav sub-nav no-collapsed" id="subject-nav">
@@ -134,7 +134,7 @@
 							<li id="interview-li" class="nav-item aside-li">
 								<a href="<?php echo set_url('interviewpanel/list') ?>" class="nav-link">Interviews</a>
 								<button class="toggle-button" target="interview-nav">
-									<img src="<?php echo set_url('public/assets/img/close-menu.png') ?>" width="20px">
+									<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px">
 								</button>
 								<nav id="interview-nav" class="no-collapsed nav sub-nav">
 									<ul class="d-flex flex-col">
@@ -157,7 +157,7 @@
 							<li id="settings-li" class="nav-item aside-li">
 								<a href="<?php echo set_url('settings/school') ?>" class="nav-link">All Settings</a>
 								<button class="toggle-button" target="settings-nav">
-									<img src="<?php echo set_url('public/assets/img/close-menu.png') ?>" width="20px">
+									<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px">
 								</button>
 								<nav id="settings-nav" class="no-collapsed nav sub-nav">
 									<ul class="d-flex flex-col">
