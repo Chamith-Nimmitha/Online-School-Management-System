@@ -61,7 +61,7 @@
 				$row .= "<td>".$result['contact_number']."</td>";
 				$row .= "<td>".$result['nic']."</td>";
 
-				$row .= "<td><a href=". set_url('teacher/list/').$result['id'].">List</a>";
+				$row .= "<td><a href=". set_url('teacher/subject/list/').$result['id'].">List</a>";
 				$row .= "<td><a href=". set_url('teacher/update/').$result['id'].">Update</a>";
 				$row .= "<td><a href=". set_url('teacher/delete/').$result['id']." onclick=\"return confirm('Are you sure to delete?')\">Delete</a>";
 				$row .= "</tr>";

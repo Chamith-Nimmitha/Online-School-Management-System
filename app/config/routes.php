@@ -101,6 +101,7 @@
 	// attendance routes
 	$routes['attendance/classroom/list'] = "attendance/classroom_list";
 	$routes['attendance/classroom/view/$1'] = "attendance/classroom_view/$1";
+	$routes['attendance/classroom/mark/$1'] = "attendance/mark_student_attendance/$1";
 	$routes['attendance/teacher/list'] = "attendance/teacher_list";
 	$routes['attendance/teacher/view/$1'] = "attendance/teacher_view/$1";
 

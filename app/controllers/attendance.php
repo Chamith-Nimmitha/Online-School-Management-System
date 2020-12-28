@@ -39,9 +39,51 @@
 
 		// view classroom attendance
 		public function classroom_view($classroom_id){
+			if(!$this->checkPermission->check_permission("attendance","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
+
+			$this->load->model("classroom");
+			$this->load->model("attendance");
+			$result = $this->load->classroom->set_by_id($classroom_id);
+			if(!$result){
+				echo "classroom not found.";
+				exit();
+			}
+			$data['classroom_data'] = $this->load->classroom->get_data();
+			$data['student_list'] = $this->load->attendance->get_classroom_attendance($classroom_id);
+			$data["classroom_id"] = $classroom_id;
 			$this->view_header_and_aside();
-			$this->load->view("attendance/classroom_attendance_view");
+			$this->load->view("attendance/classroom_attendance_view",$data);
 			$this->load->view("templates/footer");	
+		}
+
+		public function mark_student_attendance($classroom_id){
+			if(!$this->checkPermission->check_permission("attendance","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
+
+			if(!isset($_POST['submit'])){
+				echo "form error";
+				exit();
+			}
+			$std_list = [];
+			foreach ($_POST as $key => $value) {
+				if( strpos($key, "attendance") === 0 ){
+					$exp = explode("-", $key);
+					$std_list[] = ["id"=>$exp[1], "attendance"=>$value,"note"=>$_POST["note-".$exp[1]]];
+				}
+			}
+			$this->load->model("attendance");
+			$this->load->attendance->mark_classroom_attendance($classroom_id,$std_list);
+			unset($this->load->attendance);
+			$this->classroom_view($classroom_id);
 		}
 
 		// get teacher list

@@ -135,7 +135,6 @@
 			$this->pre_query = $this->query;
 			$stmt = $this->db->prepare($this->query);
 			$stmt->execute($this->parameters);
-			// echo $this->query."<br>";
 			$this->reset_values();
 			return $stmt;
 		}
