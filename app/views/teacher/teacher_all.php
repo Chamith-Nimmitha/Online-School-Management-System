@@ -1,28 +1,33 @@
-
+<script>
+	if ( window.history.replaceState ) {
+	  window.history.replaceState( null, null, window.location.href );
+	}
+</script>
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 		<div class="d-flex justify-content-center align-items-center">
-			<form action="<?php echo set_url('teacher/list'); ?>" method="POST" class="d-flex align-items-center col-12">
+			<form action="<?php echo set_url('teacher/list'); ?>" method="post" class="d-flex align-items-center col-12" enctype="multipart/form-data">
 				<div class="d-flex col-12 align-items-center justify-content-center">
-					<div class="mt-5">
-						<input type="reset" class="btn btn-blue" onclick="reset_form(this)" value="reset">
-					</div>
 					<div class="ml-5">
-						<label for="teacher-id">teacher ID/Name</label>
-						<input type="text" name="teacher-id" id="teacher-id" placeholder="ID, Name" value="<?php if(isset($teacher_id)){echo $teacher_id;} ?>" >
-					</div>
-					<div class="ml-5">
-						<label for="subject-id">Subject ID/Name</label>
-						<input type="text" name="subject-id" id="subject-id" placeholder="ID, Name" value="<?php if(isset($_POST['subject-id'])){echo $_POST['subject-id'];} ?>">
+						<label for="teacher-id">Teacher ID/Name</label>
+						<input type="text" name="teacher-id" id="teacher-id" placeholder="ID, Name" oninput="teacher_search()"  value="<?php if(isset($teacher_id) && $teacher_id !== NULL){echo $teacher_id;} ?>" >
 					</div>
 					<input type="submit" class="btn btn-blue ml-3 mt-5" value="Show">
 				</div>
 			</form>
 		</div>
 
-		<div class="col-12 flex-col" style="overflow-x: scroll;overflow-y: hidden;">
+		<div class="col-12 flex-col" style="position:relative;overflow-x: scroll;overflow-y: hidden;">
+			<div class="loader hide-loader">
+				 	<div class="col-12">
+						<div id="one"><div></div></div>
+						<div id="two"><div></div></div>
+						<div id="three"><div></div></div>
+						<div id="four"><div></div></div>
+						<div id="five"></div>
+				 	</div>
+			</div>
 
 		    <table class="table-strip-dark">
-			    <caption class="p-5"><b>TEACHERS' LIST</b></caption>
 			    <thead>
 				    <tr>
 						<th>ID</th>
@@ -43,70 +48,49 @@
 				    </tr>
 			    </thead>
 			    
-                <tbody>
+                <tbody id="tbody">
 
 				<?php 
-				if(isset($result_set) && !empty($result_set)){
-					foreach ($result_set as $result) {
-	                ?>
+		if($result_set){
+			//$row = "";
+			foreach ($result_set as $result) {
+				$row ="<tr>";
+				$row .= "<td>".$result['id']."</td>";
+				$row .= "<td>".stripslashes($result['name_with_initials'])."</td>";
+				$row .= "<td>".$result['email']."</td>";
+				$row .= "<td>".$result['contact_number']."</td>";
+				$row .= "<td>".$result['nic']."</td>";
 
-						<tr>
-							<td><?php echo $result['id']; ?></td>
-							<td><?php echo $result['name_with_initials']; ?></td>
-							<td><?php echo $result['email']; ?></td>
-							<td><?php echo $result['contact_number']; ?></td>
-							<td><?php echo $result['nic']; ?></td>
-							
-							<td class="text-center">
-								<div>
-	                				<a class="btn btn-blue" href="subject/list/<?php echo $result['id'];?>">List</a>
-			    				</div>
-							</td>
-							<?php
-								if($_SESSION['role']==='admin'){
-									echo '
-								<td>
-									<div>
-		                				<a class="btn btn-blue" href="update/' .$result['id'] .' ">Update</a>
-				    				</div>
-								</td>
-
-								<td>
-									<div>
-										<a class="btn btn-lightred" href="delete/' .$result['id'] .'" onclick="return confirm(\'Are you sure to delete?\');">Delete</a>
-				    				</div>
-								</td>';
-								}
-							?>
-						</tr>
-				<?php
-					}
-				}else{
-					echo "<tr><td colspan=8 class='text-center bg-red'>teacher not found...</td></tr>";
-				}
+				$row .= "<td><a href=". set_url('teacher/list/').$result['id'].">List</a>";
+				$row .= "<td><a href=". set_url('teacher/update/').$result['id'].">Update</a>";
+				$row .= "<td><a href=". set_url('teacher/delete/').$result['id']." onclick=\"return confirm('Are you sure to delete?')\">Delete</a>";
+				$row .= "</tr>";
+				echo $row;
+			}
+				echo "</tbody>";
+				echo "</table>";
+			
+		}else{
+			$row =  "<tr><td colspan=8 class='text-center bg-red'>Teacher not found...</td></tr>";
+				echo "</tbody>";
+				echo "</table>";
+		}
                 ?>
-                </tbody>
-        
-			</table>
+
 				
-
-
 		</div>  
         <br>
 		<div>
             <a class="btn btn-blue" onClick="window.print()">Download as a PDF</a>
 		</div>
 
-		<div class="d-flex justify-content-start col-12">
-			
-				<?php /*if($count){
-					$count = $count->fetch()['count'];*/
-				 ?>
-				<!--<p class="mt-3 pl-5"><code><?php 	echo $count; ?> results found.</code> </p>-->	
-			<?php ///} ?>
-
+		<div id="pagination" class="col-12">
+			<span>Number of results found : <span id="row_count"><?php echo $count; ?></span></span>
+			<div id="pagination_data" class="col-12">
+				<?php require_once(INCLUDES."pagination.php"); ?>
+				<?php display_pagination($count,$page,$per_page, "teacher/list","teacher_search"); ?>
+			</div>
 		</div>
-                 <?php //display_pagination($count,$_POST['page'],$per_page); ?>
 
 </div>
 
