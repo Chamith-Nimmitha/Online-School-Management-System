@@ -6,9 +6,32 @@
 		}
 
 		// get classroom list
-		public function classroom_list(){
+		public function classroom_list($page=NULL, $per_page=NULL){
+
+			if(!$this->checkPermission->check_permission("attendance","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
+			// count page info for pagination
+			if($per_page === NULL){
+				$per_page = 1;
+			}
+			if($page === Null){
+				$page = 1;
+				$start = 0;
+			}else{
+				$start = ($page-1)*$per_page;
+			}
+
+			$data['page'] = $page;
+			$data['per_page'] = $per_page;
+			$data['start'] = $start;
+
 			$this->load->model("classrooms");
-			$data['result_set'] = $this->load->classrooms->get_classroom_list();
+			$data['result_set'] = $this->load->classrooms->get_classroom_list($start,$per_page);
+			$data['count'] = $this->load->classrooms->get_count()->fetch()['count'];
 			$this->view_header_and_aside();
 			$this->load->view("attendance/attendance_classroom_list",$data);
 			$this->load->view("templates/footer");
