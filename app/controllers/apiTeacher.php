@@ -57,5 +57,63 @@ class ApiTeacher extends Controller{
 	}
 
 
+	public function subject($input){
+		//$post = json_decode(file_get_contents("php://input"));
+		//echo json_encode($post);
+		//$id=$post->id;
+		//echo $post->id;
+
+		/*if(empty($id) && strlen($id) ===0){
+			$id = NULL;
+		}*/
+
+		//if($id!==NULL){
+			//$id = $_GET['id'];
+		if(is_numeric($input)){
+		$id=$input;
+		$this->load->model("subject");
+		$this->load->subject->set_by_id($id);
+		$sub_data=$this->load->subject->get_data();
+		}
+		else{
+			$code = $input;
+			$this->load->model("subject");
+			$this->load->subject->set_by_code($code);
+			$sub_data=$this->load->subject->get_data();
+		}
+
+		if(isset($sub_data['id'])){
+			echo json_encode($sub_data);}
+		else{
+			echo "error";
+		}
+
+		//}
+		/* if(isset($_GET['code'])){
+			$code = $_GET['code'];
+			$this->load->model("subject");
+			$this->load->subject->set_by_code($code);
+			$sub_data=$this->load->subject->get_data();
+			$data1['data'] = $sub_data;
+			echo json_encode($sub_data);
+		}
+		else{
+			echo 'error1';
+		}*/
+
+		/*if(isset($_GET['name'])){
+			$name = $_GET['name'];
+		}*/
+
+
+	}
+
+		public function delete_teacher_subject($subject_id,$teacher_id){
+			$con=new Database();
+			return $con->delete("teacher_subject",["subject_id"=>$subject_id,"teacher_id"=>$teacher_id]);
+
+		}
+
+
 }
 ?>

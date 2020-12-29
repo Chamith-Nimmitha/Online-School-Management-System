@@ -258,7 +258,7 @@ function interview_add_teacher(element,target){
 function teacher_subject_add(parent_id,add_button){
 	var parent = document.getElementById(parent_id);
 	var children = parent.children; 
-	var count = children.length+1;
+	var count = children.length;
 
 	var html = `<label for="subject-01">Subject-0${count}</label>
 					<div class=" d-flex flex-wrap justify-content-between"> 
@@ -277,6 +277,15 @@ function teacher_subject_add(parent_id,add_button){
 
 function teacher_subject_remove(remove_button){
 	remove_button.parentElement.parentElement.remove();
+	var ids = remove_button.id.split(" ");
+	var sub_id=ids[0];
+	var tea_id=ids[1];
+	if(remove_button.id !=""){
+	window.location.replace(base_url+'teacher/subject/list/'+ids[1]);
+	}
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET",base_url+"api/teacher/subject/delete/"+sub_id+"/"+tea_id,true);
+	xhr.send();
 }
 
 // For interview timetable

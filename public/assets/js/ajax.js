@@ -147,8 +147,8 @@ function get_subject_data(field,input){
 	var input_value = input.value;
 	var inputs = input.parentNode.getElementsByTagName("input");
 	var xhr = new XMLHttpRequest();
-	var resquest = base_url+"include/getdata/get_subject_info.php?"+field+"="+input_value;
-	xhr.open("GET",resquest,true);
+	//var resquest = base_url+"include/getdata/get_subject_info.php?"+field+"="+input_value;
+	xhr.open("GET",base_url+"api/teacher/subject/"+input_value,true);
 	xhr.onload = function(){
 		if(this.status == 200){
 			var response = xhr.responseText;
@@ -192,6 +192,7 @@ function get_teacher_data(field,input){
 			}
 		}
 	}
+	var data = {id:value,code:nameVal};
 	xhr.send();
 }
 
