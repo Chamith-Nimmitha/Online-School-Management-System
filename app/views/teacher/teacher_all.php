@@ -61,9 +61,9 @@
 				$row .= "<td>".$result['contact_number']."</td>";
 				$row .= "<td>".$result['nic']."</td>";
 
-				$row .= "<td><a href=". set_url('teacher/subject/list/').$result['id'].">List</a>";
-				$row .= "<td><a href=". set_url('teacher/update/').$result['id'].">Update</a>";
-				$row .= "<td><a href=". set_url('teacher/delete/').$result['id']." onclick=\"return confirm('Are you sure to delete?')\">Delete</a>";
+				$row .= "<td><a href=". set_url('teacher/subject/list/').$result['id']." class='btn btn-blue t-d-none p-1'>List</a>";
+				$row .= "<td><a href=". set_url('teacher/update/').$result['id']." class='btn btn-blue t-d-none p-1'>Update</a>";
+				$row .= "<td><a href=". set_url('teacher/delete/').$result['id']." onclick=\"return confirm('Are you sure to delete?')\" class='btn btn-blue t-d-none p-1'>Delete</a>";
 				$row .= "</tr>";
 				echo $row;
 			}

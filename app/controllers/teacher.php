@@ -365,8 +365,8 @@
 			$result_set =$con->select("teacher_subject",array("teacher_id"=>$teacher_id));
 			$teacher_subject = $result_set->fetchAll();
 
-			$this->load->model("subjects");
-			$subjects = $this->load->subjects->set_by_teacher_id($teacher_id);
+			$this->load->model("subject");
+			$subjects = $this->load->subject->set_by_teacher_id($teacher_id);
 
 
 			$this->load->model("teacher");

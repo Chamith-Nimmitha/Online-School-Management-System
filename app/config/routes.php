@@ -114,6 +114,9 @@
 	$routes['api/subject/search'] = "apiSubject/search";
 	$routes['api/parent/search'] = "apiParent/search";
 	$routes['api/teacher/search'] = "apiTeacher/search";
+	$routes['api/teacher/subject/$1'] = "apiTeacher/subject/$1";
+	$routes['api/teacher/subject/delete/$1/$2'] = "apiTeacher/delete_teacher_subject/$1/$2";
+	$routes['api/teacher/subject'] = "apiTeacher/subject";
 	$routes['api/attendance/classroom/search'] = "apiAttendance/classroom_search";
 	$routes['api/classroom/grade/$1'] = "apiClassroom/get_grades/$1";
 	$routes['api/pagination'] = "apiPagination/pagination";
