@@ -158,7 +158,7 @@
             }else{
                 $data['result_set'] = FALSE;
             }
-
+            $data['student_id'] = $student_id;
             $this->view_header_and_aside();
             $this->load->view("student/student_attendance_view",$data);
             $this->load->view("templates/footer");

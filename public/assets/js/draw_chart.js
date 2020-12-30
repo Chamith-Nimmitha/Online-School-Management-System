@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded",() => {
 		subject_grades_pie();
 		student_result_overview_bar();
 	}
+	if( document.getElementById('student_attendance_overview_bar')){
+		student_attendance_overview_bar();
+	}
 })
 
 function get_color_array(len,opacity,position = 0){
@@ -266,4 +269,69 @@ function student_result_overview_bar(){
 		    },
 	    }
 	});
+}
+
+// before redraw destroy the existing charts, otherwise charts are overlaped
+var student_attendance_overview_bar_chart = undefined;
+
+function student_attendance_overview_bar(){
+	console.log("Called");
+
+	var form = new FormData(document.getElementById('student_attendance_overview'));
+
+	fetch( base_url+'api/draw_charts/attendance/student',{
+		method : 'post',
+		body : form
+	}).then( (res) => {
+		return res.text();
+	}).then( (text) => {
+		var response = JSON.parse(text)
+		console.log(response)
+		var canvas = document.getElementById('student_attendance_overview_bar')
+		var ctx = canvas.getContext('2d');
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		if(student_attendance_overview_bar_chart != undefined){
+			student_attendance_overview_bar_chart.destroy();
+		}
+		var myChart = new Chart(ctx, {
+		    type: 'bar',
+		    data: {
+		        labels: response.labels,
+		        datasets: [
+		        	{
+		            	label: 'Present ',
+		            	data : response.data.present,
+		            	backgroundColor : get_color_array(1,0.5,0)[0],
+		            	hoverBackgroundColor : get_color_array(1,1,0)[0]
+		            },
+		            {
+		            	label: 'Absent ',
+		            	data : response.data.absent,
+		            	backgroundColor : get_color_array(1,0.5,1)[0],
+		            	hoverBackgroundColor : get_color_array(1,1,1)[0]
+		            }
+		        ]
+		    },
+		    options: {
+		        scales: {
+		            yAxes: [{
+		            	ticks: {
+		            		beginAtZero : true,
+		            	}
+		            }]
+		        },
+		        legend: {
+		        	display : true
+		        },
+		        title: {
+			        display: true,
+			        text: "Student Attendance overview",
+			        fontSize : 20
+			    },
+		    }
+		});
+		student_attendance_overview_bar_chart = myChart;
+	});
+
+	
 }

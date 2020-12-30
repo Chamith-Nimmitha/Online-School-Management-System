@@ -39,6 +39,7 @@
 
 		// view classroom attendance
 		public function classroom_view($classroom_id){
+			date_default_timezone_set("Asia/Colombo");
 			if(!$this->checkPermission->check_permission("attendance","view")){
 				$this->view_header_and_aside();
 				$this->load->view("common/error");
