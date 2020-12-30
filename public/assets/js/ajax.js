@@ -622,7 +622,7 @@ function teacher_search_pagination(button){
 }
 
 // attendance search
-function attendance_search(){
+function classroom_attendance_search(){
 	window.event.preventDefault();
 	var form = new FormData(document.getElementById("attendance_filter"));
 
@@ -662,6 +662,50 @@ function mark_attendance(){
 		}
 	}).catch( ( error) => {
 		console.error(error)
+	})
+}
+
+// filter attendance by year,month,week for specific student
+function student_attendance_filter(){
+	window.event.preventDefault();
+	var form = new FormData(document.getElementById("student_attendance_filter"));
+	var tbody = document.getElementById("tbody");
+	fetch(base_url+"api/attendance/student/filter",{
+		method : 'post',
+		body : form
+	}).then( (res) => {
+		return res.text();
+	}).then( (text) => {
+		tbody.innerHTML = "";
+		if( text.indexOf("FALSE") !== -1 || text.length === 0){
+			tbody.innerHTML = `<tr><td colspan=8 class='text-center bg-red'>Attendance not found...</td></tr>`
+		}else{
+			var result_set = JSON.parse(text);
+			for ( i in result_set ){
+				row = "<tr>";
+				row += `<td>${i+1}</td>`;
+				row += `<td>${result_set[i]['date']}</td>`;
+				row += `<td class="d-flex flex-col align-items-center">
+							<label>
+                                <input type="radio" value="1"`;
+                            if(result_set[i]['attendance'] === 1){
+                            	row +="checked='checked'"
+                            } 
+                            row += `> Present
+                            </label>
+                            <label>
+                                <input type="radio" value="0"`;
+                            if(result_set[i]['attendance'] === 0){
+                            	row +="checked='checked'"
+                            } 
+                            row += `> Absent
+                            </label>
+						</td>`;
+				row += "</tr>";
+
+				tbody.innerHTML += row;
+			}
+		}
 	})
 
 }

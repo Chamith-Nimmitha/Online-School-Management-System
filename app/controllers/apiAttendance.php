@@ -150,6 +150,45 @@
 			}
 			unset($this->load->attendance);
 		}
+
+		// search student attendance by year,month,week
+		public function student_attendance_filter(){
+			if(!$this->checkPermission->check_permission("attendance","view")){
+				echo "Permission denied...";
+				return;
+			}
+
+			if(!isset($_POST['year'])){
+				echo "form error";
+				exit();
+			}
+
+			$student_id = $_POST['student_id'];
+			$year = $_POST['year'];
+			$month = $_POST['month'];
+			$week = $_POST['week'];
+
+			if($year === "this"){
+				$year = date('Y');
+			}
+			if($month === "this"){
+				$month = date("m");
+			}
+			if($week === "this"){
+				$week = date('W', mktime());
+			}else{
+				$week = date('W', mktime(0,0,0,$month,($week-1)*7+1,$year));
+			}
+
+			// echo $year."-" . $month ."-" . $week;
+			$this->load->model("attendance");
+			$result_set = $this->load->attendance->student_attendance_filter($student_id,$year,$month,$week);
+			if($result_set && $result_set->rowCount() !== 0 ){
+				echo json_encode($result_set->fetchAll());
+			}else{
+				echo "FALSE";
+			}
+		}
 	}
 
  ?>

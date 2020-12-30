@@ -128,6 +128,63 @@
 			}
 		}
 
+		// filter specific student attendance by year,month,week
+		public function student_attendance_filter($student_id,$year,$month,$week){
+			$query = "SELECT `st_at`.`date`,`st_at`.`attendance` FROM `student_attendance` AS `st_at` INNER JOIN `stu_att` AS `sa` ON `st_at`.`id`=`sa`.`id` WHERE `sa`.`student_id`= ? ";
+			$params = ["$student_id"];
+
+			if($year !== NULL){
+				$query .= " AND YEAR(`st_at`.`date`)= ? ";
+				array_push($params,$year);
+			}
+			if($month !== NULL){
+				$query .= " AND MONTH(`st_at`.`date`)= ? ";
+				array_push($params,$month);
+			}
+			if($week !== NULL){
+				$query .= " AND WEEK(`st_at`.`date`)= ? ";
+				array_push($params,$week-1);
+			}
+			$query .= "ORDER BY `st_at`.`date` DESC";
+
+			$stmt = $this->con->db->prepare($query);
+			$result = $stmt->execute($params);
+			if($result){
+				return $stmt;
+			}else{
+				return FALSE;
+			}
+		}
+
+		// get attendance data for bar chart
+		public function student_attendance_overview_bar($student_id,$year=NULL,$month=NULL,$state=1){
+			$query = " FROM `student_attendance` AS `st_at` INNER JOIN `stu_att` AS `sa` ON `st_at`.`id`=`sa`.`id` WHERE `sa`.`student_id`= ? AND `st_at`.`attendance`= ? ";
+			$params = ["$student_id"];
+			array_push($params,$state);
+			$month_flag = 0;
+
+			if($year !== NULL){
+				$query .= " AND YEAR(`st_at`.`date`)= ? ";
+				array_push($params,$year);
+			}
+			if($month !== NULL){
+				$query .= " AND MONTH(`st_at`.`date`)= ? ";
+				array_push($params,$month);
+				$month_flag = 1;
+				$query = "SELECT WEEK(`st_at`.`date`) AS `week`, COUNT(*)AS `count` ". $query;
+				$query .= "GROUP BY WEEK(`st_at`.`date`) ORDER BY WEEK(`st_at`.`date`) ASC";
+			}else{
+				$query = "SELECT MONTH(`st_at`.`date`) AS `month`, COUNT(*)AS `count` ". $query;
+				$query .= "GROUP BY MONTH(`st_at`.`date`) ORDER BY MONTH(`st_at`.`date`) ASC";
+			}
+			$stmt = $this->con->db->prepare($query);
+			$result = $stmt->execute($params);
+			if($result){
+				return $stmt;
+			}else{
+				return FALSE;
+			}
+		}
 	}
 
  ?>

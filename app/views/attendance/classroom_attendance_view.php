@@ -11,13 +11,13 @@
                 </div>
                 <div class="ml-5">
                     <label for="studebt-id">Student ID</label>
-                    <input type="text" name="student-id" id="student-id" placeholder="Student ID" value="<?php if(isset($_GET['student-id'])){echo $_GET['student-id'];} ?>" oninput="attendance_search()">
+                    <input type="text" name="student-id" id="student-id" placeholder="Student ID" value="<?php if(isset($_GET['student-id'])){echo $_GET['student-id'];} ?>" oninput="classroom_attendance_search()">
                 </div>
                 <div class="ml-5 d-flex flex-col">
                     <label for="date">Date</label>
                     <input type="date" name="date" id="date" placeholder="Student ID" value="<?php if(isset($_GET['date'])){echo $_GET['date'];} ?>">
                 </div>
-                <button  class="btn btn-blue ml-3 mt-5" name="filter" onclick="attendance_search()" value="Show">Filter</button>
+                <button  class="btn btn-blue ml-3 mt-5" name="filter" onclick="classroom_attendance_search()" value="Show">Filter</button>
             </div>
         </form>
     </div>
@@ -45,7 +45,7 @@
                          <tr>
                             <td><?php echo $student['id']; ?></td>
                             <td><?php echo $student['name_with_initials']; ?></td>
-                            <td><?php echo $student['date']; ?></td>
+                            <td><?php if(isset($student['date'])){echo $studen['date'];}else{echo date("y-m-d");}; ?></td>
                             <td class="d-flex flex-col">
                                 <label for="present-<?php echo $student['id']; ?>">
                                     <input type="radio" id="present-<?php echo $student['id']; ?>" name="attendance-<?php echo $student['id']; ?>" value="1" <?php if(isset($student['attendance']) && $student['attendance'] === 1){echo "checked='checked'";} ?> > Present
