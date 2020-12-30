@@ -104,7 +104,6 @@
 			$stmt = $this->db->prepare($this->query);
 			$stmt->execute($this->parameters);
 			// $this->db->closeCursor();
-			// echo $this->query;
 			$this->reset_values();
 			return $stmt;
 		}
@@ -204,8 +203,8 @@
 			return $stmt;
 		}
 
-		public function orderBy($or){
-			$this->order = " ORDER BY `".$or."` ASC ";
+		public function orderBy($field,$order="ASC"){
+			$this->order = " ORDER BY `".$field."` {$order} ";
 		}
 		public function limit($start,$count=NULL){
 			if($count === NULL){

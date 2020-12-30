@@ -2,14 +2,14 @@
 
 
 		<div class="d-flex justify-content-center align-items-center">
-			<form action="<?php echo set_url('pages/attendance_classroom_list.php'); ?>" method="get" class="d-flex align-items-center col-12">
+			<form action="<?php echo set_url('pages/attendance_classroom_list.php'); ?>" method="post" id="classroom_filter" class="d-flex align-items-center col-12">
 				<div class="d-flex col-12 align-items-center justify-content-center">
 					<div class="mt-5">
-						<input type="reset" class="btn btn-blue" onclick="reset_form(this)" value="reset">
+						<input type="reset" class="btn btn-blue" onclick="reset_form('classroom_filter')" value="reset">
 					</div>
 					<div class="ml-5">
 						<label for="classroom-id">Classroom ID</label>
-						<input type="text" name="classroom-id" id="classroom-id" placeholder="classroom ID" value="<?php if(isset($_POST['classroom-id'])){echo $_POST['classroom-id'];} ?>" oninput="classroom_search()">
+						<input type="text" name="classroom-id" id="classroom-id" placeholder="classroom ID" value="<?php if(isset($_POST['classroom-id'])){echo $_POST['classroom-id'];} ?>" oninput="attendance_classroom_search()">
 					</div>
 					<div  class="  ml-5 align-items-center">
 						<label for="grade" class="mr-3 d-normal">Grade : </label>
@@ -44,7 +44,7 @@
 							<option value="H" <?php if(isset($class) && ($class == "H")){echo 'selected="selected"';} ?> >H</option>
 						</select>				
 					</div>
-					<button onclick="classroom_search()" class="btn btn-blue ml-3 mt-5">Filter</button>
+					<button onclick="attendance_classroom_search()" class="btn btn-blue ml-3 mt-5">Filter</button>
 				</div>
 			</form>
 		</div>
@@ -98,6 +98,8 @@
 					<?php
 					$grade = $result['grade'];
 					}
+				}else{
+					echo "<tr><td colspan=8 class='text-center bg-red'>Classrooms not found...</td></tr>";
 				}
                 ?>
                  

@@ -5,6 +5,7 @@
 			parent::__construct();
 		}
 
+		// classroom search
 		public function classroom_search(){
 			$post = json_decode(file_get_contents("php://input"));
 
@@ -65,6 +66,89 @@
 				$data['count'] = 0;
 				echo json_encode($data);
 			}
+		}
+
+		// attendance search
+		public function search(){
+			
+			$student_id = addslashes(trim($_POST['student-id']));
+			$date = $_POST['date'];
+			$classroom_id = $_POST['classroom_id'];
+
+			if(empty($student_id)){
+				$student_id = NULL;
+			}
+
+			if(empty($date)){
+				$date =  date("Y-m-d");
+			}
+
+			$this->load->model("attendance");
+			$result_set = $this->load->attendance->search($classroom_id,$student_id,$date);
+			if($result_set && $result_set->rowCount() !== 0){
+				$result_set = $result_set->fetchAll();
+				$body = "";
+				foreach ($result_set as $result) {
+					$body .= "<tr>";
+					$body .= "<td>{$result['id']}</td>";
+					$body .= "<td>{$result['name_with_initials']}</td>";
+					$body .= "<td>{$result['date']}</td>";
+					$body .= "<td class='d-flex flex-col'>
+                                <label for='present-".$result['id']."'>
+                                    <input type='radio' id='present-".$result['id']."' name='attendance-".$result['id']."' value='1'";
+                                    if(isset($result['attendance']) && $result['attendance'] === 1){
+                                    	$body .= "checked='checked'";
+                                    }
+                                    $body .= "> Present
+                                </label>
+                                <label for='absent-".$result['id']."'>
+                                    <input type='radio' id='absent-".$result['id']."' name='attendance-".$result['id']."' value='0'";
+                                    if(isset($result['attendance']) && $result['attendance'] === 0){
+                                    	$body .= "checked='checked'";
+                                    }
+                                    $body .= "> Absent
+                                </label>
+                            </td>";
+					$body .= "<td><input type='text' name='note-".$result['id']."' value='".$result['note']."'></td>";
+                    $body .= "<td> <a href='".set_url('student/attendance/'.$result['id'])."' class='btn btn-blue'>View Report</a></td>";
+					$body .= "</tr>";
+				}
+				echo $body;
+			}else{
+				echo "<tr><td colspan=8 class='text-center bg-red'>Attendance not found...</td></tr>";
+			}
+		}
+
+		public function mark_attendance(){
+			if(!$this->checkPermission->check_permission("attendance","view")){
+				echo "Permission denied...";
+				return;
+			}
+
+			if(!isset($_POST['date_hidden'])){
+				echo "form error";
+				exit();
+			}
+			$std_list = [];
+			$classroom_id = $_POST['classroom_id_hidden'];
+			$date = $_POST['date_hidden'];
+			if( empty($date) ){
+				$date = date("Y-m-d");
+			}
+			foreach ($_POST as $key => $value) {
+				if( strpos($key, "attendance") === 0 ){
+					$exp = explode("-", $key);
+					$std_list[] = ["id"=>$exp[1], "attendance"=>$value,"note"=>$_POST["note-".$exp[1]]];
+				}
+			}
+			$this->load->model("attendance");
+			$result = $this->load->attendance->mark_classroom_attendance($classroom_id,$std_list,$date);
+			if($result){
+				echo "TRUE";
+			}else{
+				"Attendance mark failed.";
+			}
+			unset($this->load->attendance);
 		}
 	}
 

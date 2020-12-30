@@ -621,3 +621,47 @@ function teacher_search_pagination(button){
 	var per_page = button.dataset.perPage;
 }
 
+// attendance search
+function attendance_search(){
+	window.event.preventDefault();
+	var form = new FormData(document.getElementById("attendance_filter"));
+
+	fetch(base_url+"api/attendance/search", {
+		method : 'post',
+		body : form
+	}).then( (res) => {
+		return res.text();
+	}).then( (text) => {
+		document.getElementById('tbody').innerHTML = text;
+		var date = document.getElementById('date').value;
+		document.getElementById('attendance_date').innerHTML = date;
+		document.getElementById('date_hidden').value = date
+	}).catch( ( error) => {
+		console.error(error)
+	})
+}
+
+// mark attendance
+function mark_attendance(){
+	window.event.preventDefault();
+	var form = new FormData(document.getElementById("mark_attendance"));
+	var notification = document.getElementById("attendance_notification");
+	notification.classList.remove("d-none");
+	notification.querySelector("p").innerHTML = "Updating. Please wait...";
+
+	fetch(base_url+"api/attendance/mark", {
+		method : 'post',
+		body : form
+	}).then( (res) => {
+		return res.text();
+	}).then( (text) => {
+		if( text.indexOf('TRUE') !== -1){
+			notification.querySelector("p").innerHTML = "Attendance marked successfully.";
+		}else{;
+			notification.querySelector("p").innerHTML = text;
+		}
+	}).catch( ( error) => {
+		console.error(error)
+	})
+
+}

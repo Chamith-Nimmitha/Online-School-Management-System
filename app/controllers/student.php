@@ -145,9 +145,22 @@
         }
 
         // attendance
-        public function attendance(){
+        public function attendance($student_id=NULL){
+
+            if($student_id == NULL){
+                $student_id = $_POST['id'];
+            }
+
+            $this->load->model("attendance");
+            $result_set = $this->load->attendance->get_attendance_by_student_id($student_id);
+            if($result_set){
+                $data['result_set'] = $result_set->fetchAll();
+            }else{
+                $data['result_set'] = FALSE;
+            }
+
             $this->view_header_and_aside();
-            $this->load->view("student/student_attendance_view");
+            $this->load->view("student/student_attendance_view",$data);
             $this->load->view("templates/footer");
         }
 
