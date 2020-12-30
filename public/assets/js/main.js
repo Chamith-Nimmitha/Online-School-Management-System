@@ -491,29 +491,8 @@ function update_student_removed_set(checkbox){
 	}
 }
 
-function reset_form(ele){
-	var value = ele.value;
-	var p_ele = ele.parentElement;
-	while(p_ele.nodeName != "FORM"){
-		if(p_ele.nodeName == "HTML"){
-			break;
-		}
-		p_ele = p_ele.parentElement;
-	}
-	if(p_ele.nodeName == "FORM"){
-		var inputs = p_ele.getElementsByTagName("input");
-		var select = p_ele.getElementsByTagName("select");
-		for (var i=0; i< inputs.length; i++){
-			if(inputs[i].type == "text"){
-				inputs[i].setAttribute("value","");
-			}
-		}
-		for (var i=0; i< select.length; i++){
-			var selected = select[i].options[select[i].selectedIndex];
-			selected.removeAttribute("selected");
-			select[i].firstElementChild.setAttribute("selected","selected");
-		}
-	}
+function reset_form(form_id){
+	document.getElementById(form_id).reset();
 }
 
 function create_subject_code(ele){

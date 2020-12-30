@@ -70,6 +70,7 @@
 	$routes['student/exam/$1'] = "student/exam_report/$1";
 	$routes['student/delete/$1'] = "admin/student_delete/$1";
 	$routes['student/attendance'] = "student/attendance";
+	$routes['student/attendance/$1'] = "student/attendance/$1";
 	$routes['student/attendance/report'] = "student/attendance_report";
 	$routes['student/subject/list'] = "student/subject_list";
 	$routes['student/view/parent/$2'] = "user/profile_view/$1/$2";
@@ -117,6 +118,8 @@
 	$routes['api/teacher/subject/$1'] = "apiTeacher/subject/$1";
 	$routes['api/teacher/subject/delete/$1/$2'] = "apiTeacher/delete_teacher_subject/$1/$2";
 	$routes['api/teacher/subject'] = "apiTeacher/subject";
+	$routes['api/attendance/search'] = "apiAttendance/search";
+	$routes['api/attendance/mark'] = "apiAttendance/mark_attendance";
 	$routes['api/attendance/classroom/search'] = "apiAttendance/classroom_search";
 	$routes['api/classroom/grade/$1'] = "apiClassroom/get_grades/$1";
 	$routes['api/pagination'] = "apiPagination/pagination";

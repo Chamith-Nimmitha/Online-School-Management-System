@@ -5,6 +5,7 @@
 			parent::__construct();
 		}
 
+		// get all classroom list
 		public function get_classroom_attendance($classroom_id){
 			require_once( dirname( __FILE__ )."/classroom.php");
 			$classroom = new ClassroomModel();
@@ -38,7 +39,8 @@
 			}
 		}
 
-		public function mark_classroom_attendance($classroom_id,$students_list){
+		// mark classroom attendance
+		public function mark_classroom_attendance($classroom_id,$students_list,$date){
 
 			try {
 				$this->con->db->beginTransaction();
@@ -57,18 +59,18 @@
 						$result = $this->con->select("stu_att",["student_id"=>$student['id'], "classroom_id"=>$classroom_id]);
 						$stu_att_id = $result->fetch()['id'];
 
-						$result = $this->con->insert("student_attendance",["id"=>$stu_att_id, "date"=>date("Y-m-d"), "attendance"=> $student["attendance"],"note"=>$student['note']]);
+						$result = $this->con->insert("student_attendance",["id"=>$stu_att_id, "attendance"=> $student["attendance"],"note"=>$student['note'],"date"=>$date]);
 						if(!$result){
 							throw new PDOException();
 						}
 					}else{
 						$stu_att_id = $result->fetch()['id'];
-						$result = $this->con->insert("student_attendance",["id"=>$stu_att_id, "date"=>date("Y-m-d"), "attendance"=> $student["attendance"],"note"=>$student['note']]);
+						$result = $this->con->insert("student_attendance",["id"=>$stu_att_id, "attendance"=> $student["attendance"],"note"=>$student['note'],"date"=>$date]);
 						if(!$result){
 							throw new PDOException();
 						}
 						if($result && $result->rowCount() === 0 ){
-							$result = $this->con->update("student_attendance",["attendance"=> $student["attendance"],"note"=>$student['note']], ["id"=>$stu_att_id, "date"=>date("Y-m-d")]);
+							$result = $this->con->update("student_attendance",["attendance"=> $student["attendance"],"note"=>$student['note']], ["id"=>$stu_att_id ,"date"=>$date]);
 							if(!$result){
 								throw new PDOException();
 							}
@@ -86,6 +88,46 @@
 			unset($classroom);
 			return $students_list;
 		}
+
+		// filter classroom attendance
+		public function search($classroom_id,$student_id=NULL,$date=NULL){
+			$params = [];
+			$query = "SELECT SQL_CALC_FOUND_ROWS `s`.`id`,`s`.`name_with_initials`,`st_at`.`attendance`,`st_at`.`note`,`st_at`.`date` FROM `stu_att` AS `sa` INNER JOIN `student_attendance` AS `st_at` ON `sa`.`id`=`st_at`.`id` INNER JOIN `student` AS `s` ON `sa`.`student_id`=`s`.`id` WHERE `sa`.`classroom_id`=? ";
+			array_push($params, $classroom_id);
+
+			if($student_id !== NULL ){
+				$query .= " && `sa`.`student_id` LIKE ? ";
+				array_push($params, "%{$student_id}%");
+			}
+
+			if($date !== NULL){
+				$query .= " && `st_at`.`date`= ? ";
+				array_push($params, $date);
+			}
+
+			$stmt = $this->con->db->prepare($query);
+			$result = $stmt->execute($params);
+			if($result){
+				return $stmt;
+			}else{
+				return FALSE;
+			}
+		}
+
+		// get all attendance records by student id
+		public function get_attendance_by_student_id($student_id){
+
+			$query = "SELECT `st_at`.`date`,`st_at`.`attendance` FROM `student_attendance` AS `st_at` INNER JOIN `stu_att` AS `sa` ON `st_at`.`id`=`sa`.`id` WHERE `sa`.`student_id`= ? ORDER BY `st_at`.`date` DESC";
+			$params = ["$student_id"];
+			$stmt = $this->con->db->prepare($query);
+			$result = $stmt->execute($params);
+			if($result){
+				return $stmt;
+			}else{
+				return FALSE;
+			}
+		}
+
 	}
 
  ?>

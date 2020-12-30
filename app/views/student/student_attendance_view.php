@@ -27,14 +27,10 @@
 
         <form action="" method="POST" class="col-12 d-flex flex-col align-items-center">
             <div class="d-flex justify-content-center align-items-center">
-                <form action="<?php echo set_url('student/attendance'); ?>" method="get" class="d-flex align-items-center col-12">
+                <form action="<?php echo set_url('student/attendance'); ?>" method="post" class="d-flex align-items-center col-12" id="student_attendance_filter">
                     <div class="d-flex col-12 align-items-center justify-content-center">
                         <div class="mt-5">
-                            <input type="reset" class="btn btn-blue" onclick="reset_form(this)" value="reset">
-                        </div>
-                        <div class="ml-5 d-flex flex-col">
-                            <label for="date">Date</label>
-                            <input type="date" name="date" id="date" placeholder="Student ID" value="<?php if(isset($_GET['date'])){echo $_GET['date'];} ?>">
+                            <input type="reset" class="btn btn-blue" onclick="reset_form('student_attendance_filter')" value="reset">
                         </div>
                         <div class="ml-5 d-flex flex-col">
                             <label for="month">Month</label>
@@ -70,7 +66,7 @@
                 </form>
             </div>
             <div class="col-8 flex-col" style="overflow-x: scroll;overflow-y: hidden;">
-    		    <table class="table-strip-dark">
+    		    <table class="table-strip-dark text-center">
     			    <caption class="p-5"><b>Recent 10 Attendance</b></caption>
     			    <thead>
     				    <tr>
@@ -80,20 +76,26 @@
     				    </tr>
     			    </thead>  
                     <tbody>
-                        <?php for($i=0; $i< 10; $i++) { ?>
+                        <?php 
+                            if(isset($result_set) && !empty($result_set)){
+                                for ($i=0; $i < count($result_set); $i++) { 
+                         ?>
                             <tr>
-                                <td class="text-center"><?php echo $i+1; ?></td>
-                                <td class="text-center"><?php echo "2020/11/".(16-$i);?></td>
-                                <td class="text-center">
-                                    <label for="present0">
-                                        <input type="radio" name="attendance_status[<?php echo $i; ?>]" value="Present" <?php if($i %2 ===0){echo "checked";} ?> disabled="disabled"> Present
+                                <td><?php echo $i+1; ?></td>
+                                <td><?php echo $result_set[$i]['date']; ?></td>
+                                <td class="d-flex flex-col align-items-center">
+                                    <label>
+                                        <input type="radio" value="1" <?php if(isset($result_set[$i]['attendance']) && $result_set[$i]['attendance'] === 1){echo "checked='checked'";} ?> > Present
                                     </label>
-                                    <label for="absent0">
-                                        <input type="radio"  name="attendance_status[<?php echo $i; ?>]" value="Absent" <?php if($i % 2 ===1){echo "checked";} ?> disabled="disabled"> Absent
+                                    <label>
+                                        <input type="radio" value="0" <?php if(isset($result_set[$i]['attendance']) && $result_set[$i]['attendance'] === 0){echo "checked='checked'";} ?> > Absent
                                     </label>
                                 </td>
-                            </tr>
-                        <?php } ?>
+                            </tr>    
+                        <?php 
+                                }
+                            }
+                         ?>
                     </tbody>
                 </table>
                 <div class="w-100 p-1"></div>
@@ -101,8 +103,8 @@
             <div>
                 
             </div>
-            <div class="form-group d-flex flex-row w-90 justify-content-end">
-    	        <button type="submit" name="submit" class="btn btn-blue w-auto m-1">Download as pdf</button>
-            </div>
         </form>
+        <div class="form-group d-flex flex-row w-90 justify-content-end">
+	        <button type="button" name="submit" onclick="window.print()" class="btn btn-blue w-auto m-1">Download as pdf</button>
+        </div>
     </div>
