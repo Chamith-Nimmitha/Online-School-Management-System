@@ -285,8 +285,8 @@ function student_attendance_overview_bar(){
 	}).then( (res) => {
 		return res.text();
 	}).then( (text) => {
+		console.log(text)
 		var response = JSON.parse(text)
-		console.log(response)
 		var canvas = document.getElementById('student_attendance_overview_bar')
 		var ctx = canvas.getContext('2d');
 		ctx.clearRect(0, 0, canvas.width, canvas.height);

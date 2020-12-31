@@ -172,11 +172,12 @@
 				array_push($params,$month);
 				$month_flag = 1;
 				$query = "SELECT WEEK(`st_at`.`date`) AS `week`, COUNT(*)AS `count` ". $query;
-				$query .= "GROUP BY WEEK(`st_at`.`date`) ORDER BY WEEK(`st_at`.`date`) ASC";
+				$query .= "GROUP BY WEEK(`st_at`.`date`) ORDER BY WEEK(`st_at`.`date`) DESC";
 			}else{
 				$query = "SELECT MONTH(`st_at`.`date`) AS `month`, COUNT(*)AS `count` ". $query;
 				$query .= "GROUP BY MONTH(`st_at`.`date`) ORDER BY MONTH(`st_at`.`date`) ASC";
 			}
+			// print_r($query);
 			$stmt = $this->con->db->prepare($query);
 			$result = $stmt->execute($params);
 			if($result){

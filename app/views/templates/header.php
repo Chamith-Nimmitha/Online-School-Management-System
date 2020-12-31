@@ -38,11 +38,11 @@
 					<div class="d-none d-md-flex">
 						<div>
 							<img src="';
-							//if(isset($_SESSION['profile_photo']) && $_SESSION['profile_photo'] !=""){
-								//$user_info .= set_url("public/uploads/".$_SESSION['role']."_profile_photo/".$_SESSION['profile_photo']);
-							//}else{
-								//$user_info .= "";
-							//}
+							if(isset($_SESSION['profile_photo']) && $_SESSION['profile_photo'] !=""){
+								$user_info .= set_url("public/uploads/".$_SESSION['role']."_profile_photo/".$_SESSION['profile_photo']);
+							}else{
+								$user_info .= "";
+							}
 						$user_info .= '" alt="" style="width:50px; height:50px; border: 2px solid orange;">
 						</div>
 						<div class="mr-3 d-lg-flex flex-col d-md-none">
@@ -51,7 +51,7 @@
 						</div>
 					</div>
 					<button class="toggle-button" target="user-nav">
-						<img src="'.set_url('public/assets/img/close-menu.png').'" width="20px" height="20px" alt="">
+						<img src="'.set_url('public/assets/img/menu_arrow.png').'" width="20px" height="20px" alt="">
 					</button>
 				</div>
 				<div class="no-collapsed theme-darkblue w-100" id="user-nav">
