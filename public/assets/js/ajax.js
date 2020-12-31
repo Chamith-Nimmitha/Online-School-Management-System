@@ -681,9 +681,9 @@ function student_attendance_filter(){
 			tbody.innerHTML = `<tr><td colspan=8 class='text-center bg-red'>Attendance not found...</td></tr>`
 		}else{
 			var result_set = JSON.parse(text);
-			for ( i in result_set ){
+			for (var i in result_set ){
 				row = "<tr>";
-				row += `<td>${i+1}</td>`;
+				row += `<td>${parseInt(i)+1}</td>`;
 				row += `<td>${result_set[i]['date']}</td>`;
 				row += `<td class="d-flex flex-col align-items-center">
 							<label>
@@ -691,14 +691,14 @@ function student_attendance_filter(){
                             if(result_set[i]['attendance'] === 1){
                             	row +="checked='checked'"
                             } 
-                            row += `> Present
+                            row += ` disabled="disabled"> Present
                             </label>
                             <label>
                                 <input type="radio" value="0"`;
                             if(result_set[i]['attendance'] === 0){
                             	row +="checked='checked'"
                             } 
-                            row += `> Absent
+                            row += ` disabled="disabled"> Absent
                             </label>
 						</td>`;
 				row += "</tr>";

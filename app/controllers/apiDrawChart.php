@@ -39,35 +39,29 @@
 				$present_result_set = $present_result_set->fetchAll();
 				$absent_result_set = $absent_result_set->fetchAll();
 				if($month == NULL){
+					$formatted_data['present'] = [0,0,0,0,0,0,0,0,0,0,0,0];
+					$formatted_data['absent'] = [0,0,0,0,0,0,0,0,0,0,0,0];
+					$labels = [1,2,3,4,5,6,7,8,9,10,11,12];
+					for ($i=0; $i < count($labels); $i++) {
+						$labels[$i] = date("F", mktime(0,0,0,$labels[$i],1,$year));
+					}
 					foreach ($present_result_set as $result) {
-						$m = date("F", mktime(0,0,0,$result['month'],1,$year));
-						if( !in_array($m,$labels)){
-							array_push($labels, $m);
-						}
-						array_push($formatted_data["present"], $result['count']);
+						$formatted_data["present"][$result['month']-1] = $result['count'];
 					}
 					foreach ($absent_result_set as $result) {
-						$m = date("F", mktime(0,0,0,$result['month'],1,$year));
-						if( !in_array($m,$labels)){
-							array_push($labels, $m);
-						}
-						array_push($formatted_data["absent"], $result['count']);
+						$formatted_data["absent"][$result['month']-1] = $result['count'];
 					}
 				}else{
+					$formatted_data['present'] = [0,0,0,0,0,0];
+					$formatted_data['absent'] = [0,0,0,0,0,0];
+					$labels = ["week-1","week-2","week-3","week-4","week-5","week-6"];
 					foreach ($present_result_set as $result) {
-						$week_no = "week-".($result['week'] +2 - date("W", mktime(0,0,0,$month,1,$year)));
-
-						if( !in_array($week_no,$labels)){
-							array_push($labels, $week_no);
-						}
-						array_push($formatted_data["present"], $result['count']);
+						$week_no = ($result['week'] +2 - date("W", mktime(0,0,0,$month,1,$year)));
+						$formatted_data["present"][$week_no] = $result['count'];
 					}
 					foreach ($absent_result_set as $result) {
-						$week_no = "week-".($result['week'] +2 -date("W", mktime(0,0,0,$month,1,$year)));
-						if( !in_array($week_no,$labels)){
-							array_push($labels, $week_no);
-						}
-						array_push($formatted_data["absent"], $result['count']);
+						$week_no = ($result['week'] +2 - date("W", mktime(0,0,0,$month,1,$year)));
+						$formatted_data["absent"][$week_no] = $result['count'];
 					}
 				}
 				echo json_encode(["labels"=>$labels,"data"=>$formatted_data]);

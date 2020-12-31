@@ -45,7 +45,7 @@
                          <tr>
                             <td><?php echo $student['id']; ?></td>
                             <td><?php echo $student['name_with_initials']; ?></td>
-                            <td><?php if(isset($student['date'])){echo $studen['date'];}else{echo date("y-m-d");}; ?></td>
+                            <td><?php if(isset($student['date'])){echo $student['date'];}else{echo date("y-m-d");}; ?></td>
                             <td class="d-flex flex-col">
                                 <label for="present-<?php echo $student['id']; ?>">
                                     <input type="radio" id="present-<?php echo $student['id']; ?>" name="attendance-<?php echo $student['id']; ?>" value="1" <?php if(isset($student['attendance']) && $student['attendance'] === 1){echo "checked='checked'";} ?> > Present

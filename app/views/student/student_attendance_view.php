@@ -1,8 +1,8 @@
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 
 	<div class="col-12 flex-col justify-content-center align-items-center">
-        <div id="attendance-statistics" class="col-12  justify-content-center ">
-    		<h2 class="text-center p-5">Attendance Statistics</h2>
+    		<h2 class="text-center p-5">Attendance Report</h2>
+        <!-- <div id="attendance-statistics" class="col-12  justify-content-center ">
     		<div class="statistics-flex justify-content-center">	
     			<div  class="d-flex flex-col s-item align-items-center bg-lightblue m-2 p-3">
     				<h3 class="bb pb-1 text-center">Total Days</h3>
@@ -23,7 +23,7 @@
     			
     			
     		</div>
-    	</div>
+    	</div> -->
         <div class="col-12 justify-content-center align-items-center">
             <div class="d-flex justify-content-center align-items-center">
                 <form id="student_attendance_filter" method="post" class="d-flex align-items-center col-12">
@@ -35,7 +35,7 @@
                         <div class="ml-5 d-flex flex-col">
                             <label for="year">Year</label>
                             <select name="year">
-                                <option value="this">This</option>
+                                <option value="this">This Year</option>
                                 <option value="2020">2020</option>
                                 <option value="2019">2019</option>
                             </select>
@@ -43,7 +43,7 @@
                         <div class="ml-5 d-flex flex-col">
                             <label for="month">Month</label>
                             <select name="month">
-                                <option value="this">This</option>
+                                <option value="this">This Month</option>
                                 <option value="1">January</option>
                                 <option value="2">February</option>
                                 <option value="3">March</option>
@@ -61,17 +61,18 @@
                         <div class="ml-5 d-flex flex-col">
                             <label for="week">Week</label>
                             <select name="week">
-                                <option value="this">This</option>
+                                <option value="this">This Week</option>
                                 <option value="1">Week-01</option>
                                 <option value="2">Week-02</option>
                                 <option value="3">Week-03</option>
                                 <option value="4">Week-04</option>
-                                <option value="4">Week-05</option>
+                                <option value="5">Week-05</option>
+                                <option value="6">Week-06</option>
                             </select>
                         </div>
                         <button type="button" onclick="student_attendance_filter()" class="btn btn-blue ml-3 mt-5">Filter</button>
 
-                        <a href="<?php echo set_url('student/attendance/report') ?>" class="btn btn-green-outline ml-2 mt-5 p-1" value="Show">View This year attendance</a>
+                        <!-- <a href="<?php echo set_url('student/attendance/report') ?>" class="btn btn-green-outline ml-2 mt-5 p-1" value="Show">View This year attendance</a> -->
                     </div>
                 </form>
             </div>
@@ -95,10 +96,10 @@
                                 <td><?php echo $result_set[$i]['date']; ?></td>
                                 <td class="d-flex flex-col align-items-center">
                                     <label>
-                                        <input type="radio" value="1" <?php if(isset($result_set[$i]['attendance']) && $result_set[$i]['attendance'] === 1){echo "checked='checked'";} ?> > Present
+                                        <input type="radio" value="1" <?php if(isset($result_set[$i]['attendance']) && $result_set[$i]['attendance'] === 1){echo "checked='checked'";} ?> disabled="disabled"> Present
                                     </label>
                                     <label>
-                                        <input type="radio" value="0" <?php if(isset($result_set[$i]['attendance']) && $result_set[$i]['attendance'] === 0){echo "checked='checked'";} ?> > Absent
+                                        <input type="radio" value="0" <?php if(isset($result_set[$i]['attendance']) && $result_set[$i]['attendance'] === 0){echo "checked='checked'";} ?> disabled="disabled"> Absent
                                     </label>
                                 </td>
                             </tr>    
@@ -125,7 +126,7 @@
                     <div class="d-flex flex-col align-items-center pr-5" style="width: 150px;">
                         <label class="pr-2" for="year_bar">Year: </label>
                         <select name="year_bar" id="year_bar">
-                            <option value="this">This</option>
+                            <option value="this">This Year</option>
                             <option value="2020">2020</option>
                             <option value="2019">2019</option>
                         </select>
@@ -134,7 +135,7 @@
                         <label class="pr-2" for="month_bar">Month: </label>
                         <select name="month_bar" id="month_bar">
                             <option value="0">None</option>
-                            <option value="this">This</option>
+                            <option value="this">This Month</option>
                             <option value="1">January</option>
                             <option value="2">February</option>
                             <option value="3">March</option>
