@@ -76,7 +76,16 @@
                     </div>
                 </form>
             </div>
-            <div class="col-8 flex-col" style="overflow-x: scroll;overflow-y: hidden;">
+            <div class="col-8 flex-col" style="position: relative; overflow-x: scroll;overflow-y: hidden;" id="attendance_table">
+                <div class="loader hide-loader">
+                    <div class="col-12">
+                        <div id="one"><div></div></div>
+                        <div id="two"><div></div></div>
+                        <div id="three"><div></div></div>
+                        <div id="four"><div></div></div>
+                        <div id="five"></div>
+                    </div>
+                </div>
     		    <table class="table-strip-dark text-center">
     			    <caption class="p-5"><b>Recent 10 Attendance</b></caption>
     			    <thead>
@@ -155,7 +164,16 @@
             </form>            
         </div>
         <div class="mt-5 col-12 d-flex justify-content-center align-items-center">
-            <div class="bg-white p-5">
+            <div class="bg-white p-5" id="attendance_bar" style="position: relative;">
+                <div class="loader hide-loader">
+                    <div class="col-12">
+                        <div id="one"><div></div></div>
+                        <div id="two"><div></div></div>
+                        <div id="three"><div></div></div>
+                        <div id="four"><div></div></div>
+                        <div id="five"></div>
+                    </div>
+                </div>
                 <canvas id="student_attendance_overview_bar" width="800" height="500"></canvas>
             </div>
         </div>

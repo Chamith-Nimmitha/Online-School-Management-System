@@ -122,6 +122,7 @@
 	$routes['api/attendance/mark'] = "apiAttendance/mark_attendance";
 	$routes['api/attendance/student/filter'] = "apiAttendance/student_attendance_filter";
 	$routes['api/draw_charts/attendance/student'] = "apiDrawChart/student_attendance_overview_bar";
+	$routes['api/draw_charts/dashboard/attendance/student'] = "apiDrawChart/dashboard_student_attendance_overview_bar";
 	$routes['api/attendance/classroom/search'] = "apiAttendance/classroom_search";
 	$routes['api/classroom/grade/$1'] = "apiClassroom/get_grades/$1";
 	$routes['api/pagination'] = "apiPagination/pagination";
