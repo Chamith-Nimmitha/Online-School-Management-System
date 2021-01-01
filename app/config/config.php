@@ -4,4 +4,4 @@
 	define('BASEPATH',$_SERVER["DOCUMENT_ROOT"].DS."mymvc/");
 
 	// pagination default info
-	define("PER_PAGE", 1);
+	define("PER_PAGE", 10);

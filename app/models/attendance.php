@@ -186,6 +186,18 @@
 				return FALSE;
 			}
 		}
+
+		// get school attendance for dashboard
+		public function dashboard_student_attendance_overview_bar($date,$attendance){
+			$query = "SELECT COUNT(*) AS `count` FROM `student_attendance` WHERE `date` = ? AND `attendance`= ?";
+			$stmt = $this->con->db->prepare($query);
+			$result = $stmt->execute([$date,$attendance]);
+			if($result){
+				return $stmt->fetch()['count'];
+			}else{
+				return FALSE;
+			}
+		}
 	}
 
  ?>

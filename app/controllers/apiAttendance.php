@@ -153,6 +153,7 @@
 
 		// search student attendance by year,month,week
 		public function student_attendance_filter(){
+			date_default_timezone_set("Asia/Colombo");
 			if(!$this->checkPermission->check_permission("attendance","view")){
 				echo "Permission denied...";
 				return;
@@ -175,9 +176,17 @@
 				$month = date("m");
 			}
 			if($week === "this"){
-				$week = date('W', mktime());
+				if( date('W', mktime(0,0,0,1,1,$year)) != 1 ){
+					$week = (date('W')+1)%53;
+				}else{
+					$week = (date('W'));
+				}
 			}else{
-				$week = date('W', mktime(0,0,0,$month,($week-1)*7+1,$year));
+				if( date('W', mktime(0,0,0,1,1,$year)) != 1 ){
+					$week = (date('W', mktime(0,0,0,$month,($week-1)*7+1,$year))+1)%53;
+				}else{
+					$week = date('W', mktime(0,0,0,$month,($week-1)*7+1,$year));
+				}
 			}
 
 			// echo $year."-" . $month ."-" . $week;

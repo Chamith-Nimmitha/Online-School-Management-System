@@ -5,6 +5,7 @@
 			parent::__construct();
 		}
 
+		// for overview particular student attendance
 		public function student_attendance_overview_bar(){
 
 			if(!isset($_POST)){
@@ -56,17 +57,43 @@
 					$formatted_data['absent'] = [0,0,0,0,0,0];
 					$labels = ["week-1","week-2","week-3","week-4","week-5","week-6"];
 					foreach ($present_result_set as $result) {
-						$week_no = ($result['week'] +2 - date("W", mktime(0,0,0,$month,1,$year)));
+						if( date('W', mktime(0,0,0,1,1,$year)) != 1 ){
+							$week_no = ($result['week'] +1 - (date("W", mktime(0,0,0,$month,1,$year))+1)%53);
+						}else{
+							$week_no = ($result['week'] +1 - date("W", mktime(0,0,0,$month,1,$year)));
+						}
 						$formatted_data["present"][$week_no] = $result['count'];
 					}
 					foreach ($absent_result_set as $result) {
-						$week_no = ($result['week'] +2 - date("W", mktime(0,0,0,$month,1,$year)));
+						if( date('W', mktime(0,0,0,1,1,$year)) != 1 ){
+							$week_no = ($result['week'] +1 - (date("W", mktime(0,0,0,$month,1,$year))+1)%53);
+						}else{
+							$week_no = ($result['week'] +1 - date("W", mktime(0,0,0,$month,1,$year)));
+						}
 						$formatted_data["absent"][$week_no] = $result['count'];
 					}
 				}
 				echo json_encode(["labels"=>$labels,"data"=>$formatted_data]);
 			}else{
 				echo "FALSE";
+			}
+		}
+
+		// for dashboard
+		public function dashboard_student_attendance_overview_bar(){
+			$date = $_POST['date'];
+
+			if(empty($date)){
+				$date = date("Y-m-d");
+			}
+			$this->load->model('attendance');
+			$present_result = $this->load->attendance->dashboard_student_attendance_overview_bar($date,1);
+			$absent_result = $this->load->attendance->dashboard_student_attendance_overview_bar($date,0);
+
+			if($present_result !== FALSE && $absent_result !== FALSE){
+				echo json_encode(['present'=>$present_result,'absent'=>$absent_result]);
+			}else{
+				echo 'FALSE';
 			}
 		}
 	}

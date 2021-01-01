@@ -181,7 +181,7 @@
 			}
 			// count page info for pagination
 			if($per_page === NULL){
-				$per_page = 1;
+				$per_page = PER_PAGE;
 			}
 			if($page === Null){
 				$page = 1;

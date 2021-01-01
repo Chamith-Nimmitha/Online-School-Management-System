@@ -4,7 +4,7 @@
 		//view the list of teachers
 		public function list($page=Null, $per_page=Null){
 			if($per_page === NULL){
-				$per_page = 1;
+				$per_page = PER_PAGE;
 			}
 			if($page === Null){
 				$page = 1;

@@ -670,6 +670,11 @@ function student_attendance_filter(){
 	window.event.preventDefault();
 	var form = new FormData(document.getElementById("student_attendance_filter"));
 	var tbody = document.getElementById("tbody");
+
+	// for loader
+	var loader = document.querySelector("#attendance_table .loader");
+	loader.classList.remove('hide-loader');
+
 	fetch(base_url+"api/attendance/student/filter",{
 		method : 'post',
 		body : form
@@ -706,6 +711,7 @@ function student_attendance_filter(){
 				tbody.innerHTML += row;
 			}
 		}
+		loader.classList.add('hide-loader');
 	})
 
 }

@@ -6,6 +6,7 @@
 		protected $view_header_flag = 0;
 		protected $view_aside_flag = 0;
 		public function __construct(){
+			date_default_timezone_set("Asia/Colombo");
 			// create Load object
 			$this->load = new Load();
 			$this->load->model("home");

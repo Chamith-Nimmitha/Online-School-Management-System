@@ -1,8 +1,8 @@
 
 // load charts when DOM finished load
 document.addEventListener("DOMContentLoaded",() => {
-	if( document.getElementById('dashboard_student_attendance_pie') ){
-		dashboard_student_attendance_pie();
+	if( document.getElementById('dashboard_student_attendance_doughnut') ){
+		dashboard_student_attendance_doughnut();
 		dashboard_teacher_attendance_pie();
 		dashboard_classroom_student_attendance_bar();
 		dashboard_teacher_attendance_bar();
@@ -31,47 +31,68 @@ function get_color_array(len,opacity,position = 0){
 	return bgColors;
 }
 
-function dashboard_student_attendance_pie(){
-	var ctx = document.getElementById('dashboard_student_attendance_pie').getContext('2d');
-	var myChart = new Chart(ctx, {
-	    type: 'doughnut',
-	    data: {
-	        labels: ['present','absent'],
-	        datasets: [{
-	            labels: '# of students',
-	            data: [906, 105],
-	            backgroundColor: "white",
-	            backgroundColor: [
-	                'rgba(255, 99, 132, 0.5)',
-	                'rgba(54, 162, 235, 0.5)',
-	            ],
-	            borderColor: [
-	                'rgba(255, 99, 132, 0.8)',
-	                'rgba(54, 162, 235, 0.8)',
-	            ],
-	            borderWidth: 1,
-	            hoverBackgroundColor:[
-	                'rgba(255, 99, 132, 1)',
-	                'rgba(54, 162, 235, 1)',
-	            ],
-	            hoverboderwidth:3,
-	            hoverbodercolor: [
-	                'rgba(255, 99, 132, 1)',
-	                'rgba(54, 162, 235, 1)',
-	            ]
-	        }]
-	    },
-	    options: {
-	        scales: {
-	            display:false
-	        },
-	        title: {
-		        display: true,
-		        text: "Student attendance",
-		        fontSize : 20
-		    },
-	    }
-	});
+function dashboard_student_attendance_doughnut(){
+	var ctx = document.getElementById('dashboard_student_attendance_doughnut').getContext('2d');
+	var form = new FormData( document.getElementById('dashboard_attendance_filter') );
+
+	// for loader
+	var loader = document.querySelector(".loader");
+	loader.classList.remove('hide-loader');
+
+	fetch(base_url+"api/draw_charts/dashboard/attendance/student",{
+		method : 'post',
+		body : form
+	}).then( (res) => {
+		return res.text();
+	}).then( (text) => {
+		if( text.indexOf("FALSE") === -1){
+			var response = JSON.parse(text);
+			var myChart = new Chart(ctx, {
+			    type: 'doughnut',
+			    data: {
+			        labels: ['present','absent'],
+			        datasets: [{
+			            labels: '# of students',
+			            data: [response.present, response.absent],
+			            backgroundColor: "white",
+			            backgroundColor: [
+			                'rgba(255, 99, 132, 0.5)',
+			                'rgba(54, 162, 235, 0.5)',
+			            ],
+			            borderColor: [
+			                'rgba(255, 99, 132, 0.8)',
+			                'rgba(54, 162, 235, 0.8)',
+			            ],
+			            borderWidth: 1,
+			            hoverBackgroundColor:[
+			                'rgba(255, 99, 132, 1)',
+			                'rgba(54, 162, 235, 1)',
+			            ],
+			            hoverboderwidth:3,
+			            hoverbodercolor: [
+			                'rgba(255, 99, 132, 1)',
+			                'rgba(54, 162, 235, 1)',
+			            ]
+			        }]
+			    },
+			    options: {
+			        scales: {
+			            display:false
+			        },
+			        title: {
+				        display: true,
+				        text: "Student attendance",
+				        fontSize : 20
+				    },
+			    }
+			});
+		}
+		
+		loader.classList.add('hide-loader');
+		
+	})
+
+	
 }
 
 function dashboard_teacher_attendance_pie(){
@@ -225,7 +246,7 @@ function subject_grades_pie(){
 }
 
 function student_result_overview_bar(){
-	var ctx = document.getElementById('student_result_overview').getContext('2d');
+	var ctx = document.getElementById('student_result_overview_bar').getContext('2d');
 	var myChart = new Chart(ctx, {
 	    type: 'bar',
 	    data: {
@@ -275,9 +296,13 @@ function student_result_overview_bar(){
 var student_attendance_overview_bar_chart = undefined;
 
 function student_attendance_overview_bar(){
-	console.log("Called");
 
 	var form = new FormData(document.getElementById('student_attendance_overview'));
+
+	// for loader
+	var loader = document.querySelector("#attendance_bar .loader");
+	loader.classList.remove('hide-loader');
+
 
 	fetch( base_url+'api/draw_charts/attendance/student',{
 		method : 'post',
@@ -285,7 +310,7 @@ function student_attendance_overview_bar(){
 	}).then( (res) => {
 		return res.text();
 	}).then( (text) => {
-		console.log(text)
+		// console.log(text)
 		var response = JSON.parse(text)
 		var canvas = document.getElementById('student_attendance_overview_bar')
 		var ctx = canvas.getContext('2d');
@@ -331,7 +356,6 @@ function student_attendance_overview_bar(){
 		    }
 		});
 		student_attendance_overview_bar_chart = myChart;
-	});
-
-	
+		loader.classList.add('hide-loader');
+	});	
 }
