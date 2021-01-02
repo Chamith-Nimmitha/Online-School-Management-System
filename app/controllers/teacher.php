@@ -25,7 +25,7 @@
 			
 			$data['teacher_search'] = $teacher_search;
 			$this->load->model("teachers");
-			$result_set = $this->load->teachers->get_list($start,$per_page,$teacher_search,$teacher_search);
+			$result_set = $this->load->teachers->get_teacher_list($start,$per_page,$teacher_search,$teacher_search);
 			$data['result_set'] = $result_set;
 			$data['count'] = $this->load->teachers->get_count()->fetch()['count'];
 			

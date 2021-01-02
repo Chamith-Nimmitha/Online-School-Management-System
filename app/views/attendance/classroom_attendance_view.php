@@ -3,7 +3,7 @@
         <p style="background: #eee;" class="w-100 p-2 text-center fg-red"> </p>
     </div>
     <div class="d-flex justify-content-center align-items-center">
-        <form action="<?php echo set_url('pages/student_list.php'); ?>" id="attendance_filter" method="get" class="d-flex align-items-center col-12">
+        <form id="attendance_filter" class="d-flex align-items-center col-12">
             <div class="d-flex col-12 align-items-center justify-content-center">
                 <input type="hidden" name="classroom_id" class="btn btn-blue" value="<?php echo $classroom_data['id']; ?>">
                 <div class="mt-5">
@@ -23,7 +23,7 @@
     </div>
     <form  id="mark_attendance" class="col-12 d-flex justify-content-center">
         <div class="col-10 flex-col" style="overflow-x: scroll;overflow-y: hidden;">  
-                <input type="hidden" name="classroom_id_hidden" class="btn btn-blue" value="<?php echo $classroom_data['id']; ?>">
+            <input type="hidden" name="classroom_id_hidden" class="btn btn-blue" value="<?php echo $classroom_data['id']; ?>">
             <input type="hidden" name="date_hidden" id="date_hidden" value="<?php if(isset($date)){echo $date;}else{echo date("Y-m-d");} ?>">
             <table class="table-strip-dark">
                 <caption class="p-5"><b>Attendance Sheet <br><span id="attendance_date"><?php if(isset($date)){echo $date;}else{echo date("Y-m-d");} ?></span> <br>Class <?php echo $classroom_data['grade']."-".$classroom_data['class']; ?></b></caption>
@@ -45,7 +45,7 @@
                          <tr>
                             <td><?php echo $student['id']; ?></td>
                             <td><?php echo $student['name_with_initials']; ?></td>
-                            <td><?php if(isset($student['date'])){echo $student['date'];}else{echo date("y-m-d");}; ?></td>
+                            <td><?php if(isset($student['date'])){echo $student['date'];}else{echo date("Y-m-d");}; ?></td>
                             <td class="d-flex flex-col">
                                 <label for="present-<?php echo $student['id']; ?>">
                                     <input type="radio" id="present-<?php echo $student['id']; ?>" name="attendance-<?php echo $student['id']; ?>" value="1" <?php if(isset($student['attendance']) && $student['attendance'] === 1){echo "checked='checked'";} ?> > Present
@@ -54,8 +54,9 @@
                                     <input type="radio" id="absent-<?php echo $student['id']; ?>" name="attendance-<?php echo $student['id']; ?>" value="0" <?php if(isset($student['attendance']) && $student['attendance'] === 0){echo "checked='checked'";} ?> > Absent
                                 </label>
                             </td>
-                            <td><input type="text" name="note-<?php echo $student['id']; ?>" value="<?php if(isset($student['body'])) {echo $student['note'];} ?>"></td>
+                            <td><input type="text" name="note-<?php echo $student['id']; ?>" value="<?php if(isset($student['note'])) {echo $student['note'];} ?>"></td>
                             <td> <a href="<?php echo set_url("student/attendance/".$student['id']) ?>" class="btn btn-blue">View Report</a></td>
+
                          </tr>
                             
                         <?php 
@@ -68,7 +69,7 @@
             </table>
         </div>
         <div class="d-flex flex-row w-75 justify-content-end">
-            <button type="submit" name="submit" onclick="mark_attendance()" class="btn btn-blue m-1">Mark Attendance</button>
+            <button type="submit" name="submit" onclick="mark_classroom_attendance()" class="btn btn-blue m-1">Mark Attendance</button>
         </div>
     </form>
 </div>

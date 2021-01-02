@@ -118,8 +118,10 @@
 	$routes['api/teacher/subject/$1'] = "apiTeacher/subject/$1";
 	$routes['api/teacher/subject/delete/$1/$2'] = "apiTeacher/delete_teacher_subject/$1/$2";
 	$routes['api/teacher/subject'] = "apiTeacher/subject";
-	$routes['api/attendance/search'] = "apiAttendance/search";
-	$routes['api/attendance/mark'] = "apiAttendance/mark_attendance";
+	$routes['api/attendance/classroom/student/search'] = "apiAttendance/classroom_attendance_search";
+	$routes['api/attendance/teacher/search'] = "apiAttendance/teacher_attendance_search";
+	$routes['api/attendance/classroom/mark'] = "apiAttendance/mark_classroom_attendance";
+	$routes['api/attendance/teacher/mark'] = "apiAttendance/mark_teacher_attendance";
 	$routes['api/attendance/student/filter'] = "apiAttendance/student_attendance_filter";
 	$routes['api/draw_charts/attendance/student'] = "apiDrawChart/student_attendance_overview_bar";
 	$routes['api/draw_charts/dashboard/attendance/student'] = "apiDrawChart/dashboard_student_attendance_overview_bar";
