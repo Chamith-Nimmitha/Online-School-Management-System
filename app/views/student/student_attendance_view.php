@@ -93,6 +93,7 @@
                             <th>No</th>
                             <th>Date</th>
                             <th>ATTENDANCE</th>
+                            <th>NOTE</th>
     				    </tr>
     			    </thead>  
                     <tbody id="tbody">
@@ -103,14 +104,8 @@
                             <tr>
                                 <td><?php echo $i+1; ?></td>
                                 <td><?php echo $result_set[$i]['date']; ?></td>
-                                <td class="d-flex flex-col align-items-center">
-                                    <label>
-                                        <input type="radio" value="1" <?php if(isset($result_set[$i]['attendance']) && $result_set[$i]['attendance'] === 1){echo "checked='checked'";} ?> disabled="disabled"> Present
-                                    </label>
-                                    <label>
-                                        <input type="radio" value="0" <?php if(isset($result_set[$i]['attendance']) && $result_set[$i]['attendance'] === 0){echo "checked='checked'";} ?> disabled="disabled"> Absent
-                                    </label>
-                                </td>
+                                <td><?php if($result_set[$i]['attendance'] == 1){echo 'Present';}else{echo "Absent";} ?></td>
+                                <td><?php echo $result_set[$i]['note']; ?></td>
                             </tr>    
                         <?php 
                                 }
@@ -123,7 +118,6 @@
         </div>
 
         <!-- student attendance overview-->
-
         <div class="col-10 mt-5">
             <div class="col-12 mt-5 justify-content-center">
                 <h3>Student Attendance Overview</h3>

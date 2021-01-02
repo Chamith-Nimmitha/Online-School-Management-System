@@ -1,7 +1,7 @@
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 
 	<div class="col-12 flex-col justify-content-center align-items-center">
-        <div id="attendance-statistics" class="col-12  justify-content-center ">
+        <!-- <div id="attendance-statistics" class="col-12  justify-content-center ">
     		<h2 class="text-center p-5">Attendance Statistics</h2>
     		<div class="statistics-flex justify-content-center">	
     			<div  class="d-flex flex-col s-item align-items-center bg-lightblue m-2 p-3">
@@ -23,88 +23,155 @@
     			
     			
     		</div>
-    	</div>
+    	</div> -->
 
-        <form action="" method="POST" class="col-12 d-flex flex-col align-items-center">
-            <div class="d-flex justify-content-center align-items-center">
-                <form action="<?php echo set_url('pages/student_list.php'); ?>" method="get" class="d-flex align-items-center col-12">
-                    <div class="d-flex col-12 align-items-center justify-content-center">
-                        <div class="mt-5">
-                            <input type="reset" class="btn btn-blue" onclick="reset_form(this)" value="reset">
-                        </div>
-                        <div class="ml-5 d-flex flex-col">
-                            <label for="date">Date</label>
-                            <input type="date" name="date" id="date" placeholder="Student ID" value="<?php if(isset($_GET['date'])){echo $_GET['date'];} ?>">
+        <div  class="d-flex justify-content-center align-items-center">
+            <form id="teacher_attendance_filter" class="d-flex align-items-center col-12">
+                <div class="d-flex col-12 align-items-center justify-content-center">
+                    <input type="hidden" name="teacher_id" value="<?php if(isset($teacher_id)){echo $teacher_id;} ?>">
+                    <div class="mt-5">
+                        <input type="reset" class="btn btn-blue" value="reset">
+                    </div>
+                    <div class="ml-5 d-flex flex-col">
+                            <label for="year">Year</label>
+                            <select name="year">
+                                <option value="this">This Year</option>
+                                <option value="2020">2020</option>
+                                <option value="2019">2019</option>
+                            </select>
                         </div>
                         <div class="ml-5 d-flex flex-col">
                             <label for="month">Month</label>
                             <select name="month">
-                                <option value="None">None</option>
-                                <option value="January">January</option>
-                                <option value="February">February</option>
-                                <option value="March">March</option>
-                                <option value="April">April</option>
-                                <option value="May">May</option>
-                                <option value="June">June</option>
-                                <option value="July">July</option>
-                                <option value="August">August</option>
-                                <option value="Semtember">Semtember</option>
-                                <option value="October">October</option>
-                                <option value="November">November</option>
-                                <option value="December">December</option>
+                                <option value="this">This Month</option>
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">Semtember</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
                             </select>
                         </div>
                         <div class="ml-5 d-flex flex-col">
-                            <label for="month">Week</label>
-                            <select name="month">
-                                <option value="None">None</option>
-                                <option value="Week-01">Week-01</option>
-                                <option value="Week-02">Week-02</option>
-                                <option value="Week-03">Week-03</option>
-                                <option value="Week-04">Week-04</option>
+                            <label for="week">Week</label>
+                            <select name="week">
+                                <option value="this">This Week</option>
+                                <option value="1">Week-01</option>
+                                <option value="2">Week-02</option>
+                                <option value="3">Week-03</option>
+                                <option value="4">Week-04</option>
+                                <option value="5">Week-05</option>
+                                <option value="6">Week-06</option>
                             </select>
                         </div>
-                        <input type="submit" class="btn btn-blue ml-3 mt-5" value="Show">
+                    <button type="button" onclick="teacher_attendance_filter()" class="btn btn-blue ml-3 mt-5">Filter</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-8 flex-col" style="position: relative; overflow-x: scroll;overflow-y: hidden;" id="attendance_table">
+            <div class="loader hide-loader">
+                <div class="col-12">
+                    <div id="one"><div></div></div>
+                    <div id="two"><div></div></div>
+                    <div id="three"><div></div></div>
+                    <div id="four"><div></div></div>
+                    <div id="five"></div>
+                </div>
+            </div>
+		    <table class="table-strip-dark text-center">
+			    <caption class="p-5"><b>Recent 10 Attendance</b></caption>
+			    <thead>
+				    <tr>
+                        <th>No</th>
+                        <th>Date</th>
+                        <th>ATTENDANCE</th>
+                        <th>NOTE</th>
+				    </tr>
+			    </thead>  
+                <tbody id="tbody">
+                    <?php 
+                        if(isset($result_set) && !empty($result_set)){
+                            for($i=0; $i<count($result_set); $i++){
+                     ?>
+                     <tr>
+                         <td><?php echo $i+1; ?></td>
+                         <td><?php echo $result_set[$i]['date']; ?></td>
+                         <td><?php if($result_set[$i]['attendance'] == 1){echo 'Present';}else{echo "Absent";} ?></td>
+                         <td><?php echo $result_set[$i]['note']; ?></td>
+                     </tr>
+                     <?php 
+                        }
+                    } ?>
+                </tbody>
+            </table>
+            <div class="w-100 p-1"></div>
+		</div>
+
+        <!-- teacher attendance overview-->
+        <div class="col-10 mt-5">
+            <div class="col-12 mt-5 justify-content-center">
+                <h3>Teacher Attendance Overview</h3>
+            </div>
+            <form id="teacher_attendance_overview" class="col-12">
+                <input type="hidden" name="teacher_id_bar" value="<?php if(isset($teacher_id)){echo $teacher_id;} ?>">
+                <div class="col-12 justify-content-center align-items-center mt-5">
+                    <input type="reset" class="btn btn-blue mr-2 mt-5 p-2" value="reset">
+                    <div class="d-flex flex-col align-items-center pr-5" style="width: 150px;">
+                        <label class="pr-2" for="year_bar">Year: </label>
+                        <select name="year_bar" id="year_bar">
+                            <option value="this">This Year</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                        </select>
                     </div>
-                </form>
+                    <div class="d-flex flex-col align-items-center" style="width: 150px;">
+                        <label class="pr-2" for="month_bar">Month: </label>
+                        <select name="month_bar" id="month_bar">
+                            <option value="0">None</option>
+                            <option value="this">This Month</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">Semtember</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                    <button type="button" onclick="teacher_attendance_overview_bar()" class="btn btn-blue ml-2 mt-5 p-2">Filter</button>
+                </div>
+            </form>            
+        </div>
+        <div class="mt-5 col-12 d-flex justify-content-center align-items-center">
+            <div class="bg-white p-5" id="attendance_bar" style="position: relative;">
+                <div class="loader hide-loader">
+                    <div class="col-12">
+                        <div id="one"><div></div></div>
+                        <div id="two"><div></div></div>
+                        <div id="three"><div></div></div>
+                        <div id="four"><div></div></div>
+                        <div id="five"></div>
+                    </div>
+                </div>
+                <canvas id="teacher_attendance_overview_bar" width="800" height="500"></canvas>
             </div>
-            <div class="col-8 flex-col" style="overflow-x: scroll;overflow-y: hidden;">
-    		    <table class="table-strip-dark">
-    			    <caption class="p-5"><b>Recent 10 Attendance</b></caption>
-    			    <thead>
-    				    <tr>
-                            <th>No</th>
-                            <th>Date</th>
-                            <th>ATTENDANCE</th>
-    				    </tr>
-    			    </thead>  
-                    <tbody>
-                        <?php for($i=0; $i< 10; $i++) { ?>
-                            <tr>
-                                <td class="text-center"><?php echo $i+1; ?></td>
-                                <td class="text-center"><?php echo "2020/11/".(16-$i);?></td>
-                                <td class="text-center">
-                                    <label for="present0">
-                                        <input type="radio" name="attendance_status[<?php echo $i; ?>]" value="Present" <?php if($i %3 ===0){echo "checked";} ?> disabled="disabled"> Present
-                                    </label>
-                                    <label for="absent0">
-                                        <input type="radio"  name="attendance_status[<?php echo $i; ?>]" value="Absent" <?php if($i % 3 ===2){echo "checked";} ?> disabled="disabled"> Absent
-                                    </label>
-                                    <label for="present0">
-                                        <input type="radio" name="attendance_status[<?php echo $i; ?>]" value="Half" <?php if($i %3 ===1){echo "checked";} ?> disabled="disabled"> Half
-                                    </label>
-                                </td>
-                            </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-                <div class="w-100 p-1"></div>
-    		</div>
-            <div class="form-group d-flex flex-row w-90 justify-content-end">
-                <div>
-                    <a class="btn btn-blue" onClick="window.print()">Download as a PDF</a>
-		        </div>
-            </div>
-        </form>
+        </div>
+
+        <div class="form-group d-flex flex-row w-90 justify-content-end">
+            <div>
+                <a class="btn btn-blue" onClick="window.print()">Download as a PDF</a>
+	        </div>
+        </div>
     </div>
 </div>

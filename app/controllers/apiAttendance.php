@@ -257,6 +257,53 @@
 				echo "FALSE";
 			}
 		}
+
+		// search teacher attendance by year,month,week
+		public function teacher_attendance_filter(){
+			date_default_timezone_set("Asia/Colombo");
+			if(!$this->checkPermission->check_permission("attendance","view")){
+				echo "Permission denied...";
+				return;
+			}
+
+			if(!isset($_POST['year'])){
+				echo "form error";
+				exit();
+			}
+
+			$teacher_id = $_POST['teacher_id'];
+			$year = $_POST['year'];
+			$month = $_POST['month'];
+			$week = $_POST['week'];
+
+			if($year === "this"){
+				$year = date('Y');
+			}
+			if($month === "this"){
+				$month = date("m");
+			}
+			if($week === "this"){
+				if( date('W', mktime(0,0,0,1,1,$year)) != 1 ){
+					$week = (date('W')+1)%53;
+				}else{
+					$week = (date('W'));
+				}
+			}else{
+				if( date('W', mktime(0,0,0,1,1,$year)) != 1 ){
+					$week = (date('W', mktime(0,0,0,$month,($week-1)*7+1,$year))+1)%53;
+				}else{
+					$week = date('W', mktime(0,0,0,$month,($week-1)*7+1,$year));
+				}
+			}
+
+			$this->load->model("attendance");
+			$result_set = $this->load->attendance->teacher_attendance_filter($teacher_id,$year,$month,$week);
+			if($result_set && $result_set->rowCount() !== 0 ){
+				echo json_encode($result_set->fetchAll());
+			}else{
+				echo "FALSE";
+			}
+		}
 	}
 
  ?>

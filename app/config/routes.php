@@ -44,6 +44,7 @@
 	$routes['teacher/subject/list/$1'] = "teacher/subject_list/$1";
 	$routes['teacher/subject/student/list'] = "teacher/student_list";
 	$routes['teacher/subject/student/list/$1'] = "teacher/student_list/$1";
+	$routes['teacher/attendance/$1'] = "teacher/attendance/$1";
 
 	//classroom routes
 	$routes['classroom/list'] = "classroom/classroom_list";
@@ -118,14 +119,20 @@
 	$routes['api/teacher/subject/$1'] = "apiTeacher/subject/$1";
 	$routes['api/teacher/subject/delete/$1/$2'] = "apiTeacher/delete_teacher_subject/$1/$2";
 	$routes['api/teacher/subject'] = "apiTeacher/subject";
+
 	$routes['api/attendance/classroom/student/search'] = "apiAttendance/classroom_attendance_search";
 	$routes['api/attendance/teacher/search'] = "apiAttendance/teacher_attendance_search";
 	$routes['api/attendance/classroom/mark'] = "apiAttendance/mark_classroom_attendance";
 	$routes['api/attendance/teacher/mark'] = "apiAttendance/mark_teacher_attendance";
 	$routes['api/attendance/student/filter'] = "apiAttendance/student_attendance_filter";
-	$routes['api/draw_charts/attendance/student'] = "apiDrawChart/student_attendance_overview_bar";
-	$routes['api/draw_charts/dashboard/attendance/student'] = "apiDrawChart/dashboard_student_attendance_overview_bar";
+	$routes['api/attendance/teacher/filter'] = "apiAttendance/teacher_attendance_filter";
 	$routes['api/attendance/classroom/search'] = "apiAttendance/classroom_search";
+
+	// draw charts
+	$routes['api/draw_charts/attendance/student'] = "apiDrawChart/student_attendance_overview_bar";
+	$routes['api/draw_charts/attendance/teacher'] = "apiDrawChart/teacher_attendance_overview_bar";
+	$routes['api/draw_charts/dashboard/attendance/student'] = "apiDrawChart/dashboard_student_attendance_overview_doughnut";
+
 	$routes['api/classroom/grade/$1'] = "apiClassroom/get_grades/$1";
 	$routes['api/pagination'] = "apiPagination/pagination";
 
