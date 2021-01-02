@@ -68,8 +68,8 @@
 			}
 		}
 
-		// attendance search
-		public function search(){
+		// classroom attendance search
+		public function classroom_attendance_search(){
 			
 			$student_id = addslashes(trim($_POST['student-id']));
 			$date = $_POST['date'];
@@ -84,7 +84,7 @@
 			}
 
 			$this->load->model("attendance");
-			$result_set = $this->load->attendance->search($classroom_id,$student_id,$date);
+			$result_set = $this->load->attendance->classroom_attendance_search($classroom_id,$student_id,$date);
 			if($result_set && $result_set->rowCount() !== 0){
 				$result_set = $result_set->fetchAll();
 				$body = "";
@@ -119,7 +119,8 @@
 			}
 		}
 
-		public function mark_attendance(){
+		// mark classroom student attendance
+		public function mark_classroom_attendance(){
 			if(!$this->checkPermission->check_permission("attendance","view")){
 				echo "Permission denied...";
 				return;
@@ -135,6 +136,7 @@
 			if( empty($date) ){
 				$date = date("Y-m-d");
 			}
+			print_r($_POST);
 			foreach ($_POST as $key => $value) {
 				if( strpos($key, "attendance") === 0 ){
 					$exp = explode("-", $key);
@@ -193,6 +195,63 @@
 			$this->load->model("attendance");
 			$result_set = $this->load->attendance->student_attendance_filter($student_id,$year,$month,$week);
 			if($result_set && $result_set->rowCount() !== 0 ){
+				echo json_encode($result_set->fetchAll());
+			}else{
+				echo "FALSE";
+			}
+		}
+
+		// mark teacher attendance
+		public function mark_teacher_attendance(){
+			if(!$this->checkPermission->check_permission("attendance","view")){
+				echo "Permission denied...";
+				return;
+			}
+
+			if(!isset($_POST['date_hidden'])){
+				echo "form error";
+				exit();
+			}
+			$tea_list = [];
+			$date = $_POST['date_hidden'];
+			if( empty($date) ){
+				$date = date("Y-m-d");
+			}
+			foreach ($_POST as $key => $value) {
+				if( strpos($key, "attendance") === 0 ){
+					$exp = explode("-", $key);
+					$tea_list[] = ["id"=>$exp[1], "attendance"=>$value,"note"=>$_POST["note-".$exp[1]]];
+				}
+			}
+			$this->load->model("attendance");
+			$result = $this->load->attendance->mark_teacher_attendance($tea_list,$date);
+			if($result){
+				echo "TRUE";
+			}else{
+				"Attendance mark failed.";
+			}
+			unset($this->load->attendance);
+		}
+
+		// teacher attendance search
+		public function teacher_attendance_search(){
+			
+			$teacher_id = addslashes(trim($_POST['teacher-id']));
+			$teacher_name = $teacher_id;
+			$date = $_POST['date'];
+
+			if(empty($teacher_id)){
+				$teacher_id = NULL;
+				$teacher_name = NULL;
+			}
+
+			if(empty($date)){
+				$date =  date("Y-m-d");
+			}
+
+			$this->load->model("attendance");
+			$result_set = $this->load->attendance->teacher_attendance_search($teacher_id,$teacher_name,$date);
+			if($result_set && $result_set->rowCount() !== 0){
 				echo json_encode($result_set->fetchAll());
 			}else{
 				echo "FALSE";

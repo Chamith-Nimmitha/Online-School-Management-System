@@ -83,14 +83,10 @@
 				$this->con->db->rollback();
 				return FALSE;
 			}
-				
-
-			unset($classroom);
-			return $students_list;
 		}
 
 		// filter classroom attendance
-		public function search($classroom_id,$student_id=NULL,$date=NULL){
+		public function classroom_attendance_search($classroom_id,$student_id=NULL,$date=NULL){
 			$params = [];
 			$query = "SELECT SQL_CALC_FOUND_ROWS `s`.`id`,`s`.`name_with_initials`,`st_at`.`attendance`,`st_at`.`note`,`st_at`.`date` FROM `stu_att` AS `sa` INNER JOIN `student_attendance` AS `st_at` ON `sa`.`id`=`st_at`.`id` INNER JOIN `student` AS `s` ON `sa`.`student_id`=`s`.`id` WHERE `sa`.`classroom_id`=? ";
 			array_push($params, $classroom_id);
@@ -198,6 +194,107 @@
 				return FALSE;
 			}
 		}
-	}
 
+		// get teacher list
+		public function get_teacher_attendance(){
+			$this->con->get(['id','name_with_initials']);
+			$teacher_list = $this->con->select("teacher",['is_deleted'=>0]);
+			$teacher_list = $teacher_list->fetchAll();
+
+			try {
+				$this->con->db->beginTransaction();
+				for ($i=0; $i < count($teacher_list); $i++) { 
+					$result = $this->con->select("teacher_attendance", ["teacher_id"=>$teacher_list[$i]['id'], "date"=>date("Y-m-d")]);
+					if($result && $result->rowCount() === 1 ){
+						$result = $result->fetch();
+						$teacher_list[$i]['attendance'] = $result["attendance"];
+						$teacher_list[$i]['note'] = $result["note"];
+						$teacher_list[$i]['date'] = $result["date"];
+					}
+				}
+				$this->con->db->commit();		
+				return $teacher_list;
+			} catch (Exception $e) {
+				$this->con->db->rollback();		
+				return FALSE;
+			}
+		}
+
+		// mark teacher attendance
+		public function mark_teacher_attendance($teacher_list,$date){
+
+			try {
+				$this->con->db->beginTransaction();
+				foreach ($teacher_list as $teacher) {
+					$result = $this->con->select("teacher_attendance",["teacher_id"=>$teacher['id'],"date"=>$date]);
+					if(!$result){
+						throw new PDOException();
+					}
+					if($result->rowCount() === 0){
+						$result = $this->con->insert("teacher_attendance",["teacher_id"=>$teacher['id'], "attendance"=> $teacher["attendance"],"note"=>$teacher['note'],"date"=>$date]);
+						if(!$result){
+							throw new PDOException();
+						}
+					}else{
+						$result = $this->con->update("teacher_attendance",["attendance"=> $teacher["attendance"],"note"=>$teacher['note']],["teacher_id"=>$teacher['id'],"date"=>$date]);
+						if(!$result){
+							throw new PDOException();
+						}
+					}
+				}
+				$this->con->db->commit();
+				return TRUE;
+			} catch (Exception $e) {
+				$this->con->db->rollback();
+				return FALSE;
+			}
+		}
+
+		// filter teacher attendance
+		public function teacher_attendance_search($teacher_id=NULL,$teacher_name=NULL,$date=NULL){
+			$params = [];
+			$query = "SELECT SQL_CALC_FOUND_ROWS `t`.`id`,`t`.`name_with_initials`,`ta`.`attendance`,`ta`.`note`,`ta`.`date` FROM `teacher_attendance` AS `ta` INNER JOIN `teacher` AS `t` ON `ta`.`teacher_id`=`t`.`id` ";
+
+			$flag = 0;
+			$name_flag = 0;
+			if($teacher_id !== NULL ){
+				$query .= " WHERE (`ta`.`teacher_id` LIKE ? ";
+				array_push($params, "%{$teacher_id}%");
+				$flag = 1;
+			}
+
+			if($teacher_name !== NULL ){
+				if( $flag === 0){
+					$query .= " WHERE `t`.`name_with_initials` LIKE ? ";
+				}else{
+					$query .= " OR `t`.`name_with_initials` LIKE ? ) ";
+				}
+				array_push($params, "%{$teacher_name}%");
+				$flag = 1;
+				$name_flag = 1;
+			}
+
+			if($date !== NULL){
+				if($flag === 0){
+					$query .= " WHERE `ta`.`date`= ? ";
+				}else{
+					if($name_flag===0){
+						$query .= ") && `ta`.`date`= ? ";
+					}else{
+						$query .= " && `ta`.`date`= ? ";
+					}
+				}
+				array_push($params, $date);
+			}
+			// print_r($query);
+			// print_r($params);
+			$stmt = $this->con->db->prepare($query);
+			$result = $stmt->execute($params);
+			if($result){
+				return $stmt;
+			}else{
+				return FALSE;
+			}
+		}
+	}
  ?>

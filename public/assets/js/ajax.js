@@ -621,12 +621,12 @@ function teacher_search_pagination(button){
 	var per_page = button.dataset.perPage;
 }
 
-// attendance search
+// classroom attendance search
 function classroom_attendance_search(){
 	window.event.preventDefault();
 	var form = new FormData(document.getElementById("attendance_filter"));
 
-	fetch(base_url+"api/attendance/search", {
+	fetch(base_url+"api/attendance/classroom/student/search", {
 		method : 'post',
 		body : form
 	}).then( (res) => {
@@ -641,20 +641,21 @@ function classroom_attendance_search(){
 	})
 }
 
-// mark attendance
-function mark_attendance(){
+// mark clasroom attendance
+function mark_classroom_attendance(){
 	window.event.preventDefault();
 	var form = new FormData(document.getElementById("mark_attendance"));
 	var notification = document.getElementById("attendance_notification");
 	notification.classList.remove("d-none");
 	notification.querySelector("p").innerHTML = "Updating. Please wait...";
 
-	fetch(base_url+"api/attendance/mark", {
+	fetch(base_url+"api/attendance/classroom/mark", {
 		method : 'post',
 		body : form
 	}).then( (res) => {
 		return res.text();
 	}).then( (text) => {
+		console.log(text)
 		if( text.indexOf('TRUE') !== -1){
 			notification.querySelector("p").innerHTML = "Attendance marked successfully.";
 		}else{;
@@ -713,5 +714,80 @@ function student_attendance_filter(){
 		}
 		loader.classList.add('hide-loader');
 	})
+}
 
+// mark teacher attendance
+function mark_teacher_attendance(){
+	window.event.preventDefault();
+	var form = new FormData(document.getElementById("mark_teacher_attendance"));
+	var notification = document.getElementById("attendance_notification");
+	notification.classList.remove("d-none");
+	notification.querySelector("p").innerHTML = "Updating. Please wait...";
+	fetch(base_url+"api/attendance/teacher/mark", {
+		method : 'post',
+		body : form
+	}).then( (res) => {
+		return res.text();
+	}).then( (text) => {
+		console.log(text)
+		if( text.indexOf('TRUE') !== -1){
+			notification.querySelector("p").innerHTML = "Attendance marked successfully.";
+		}else{;
+			notification.querySelector("p").innerHTML = text;
+		}
+	}).catch( ( error) => {
+		console.error(error)
+	})
+}
+
+// teacher attendance search
+function teacher_attendance_search(){
+	window.event.preventDefault();
+	var form = new FormData(document.getElementById("attendance_filter"));
+
+	fetch(base_url+"api/attendance/teacher/search", {
+		method : 'post',
+		body : form
+	}).then( (res) => {
+		return res.text();
+	}).then( (text) => {
+		document.getElementById('tbody').innerHTML = "";
+		if( text.indexOf('FALSE') === -1){
+			var response = JSON.parse(text);
+			for(let i in response) {
+				var body = `<tr>
+						<td>${parseInt(i)+1}</td>
+						<td>${response[i]['id']}</td>
+						<td>${response[i]['date']}</td>
+						<td>${response[i]['name_with_initials']}</td>
+						<td class='d-flex flex-col'>
+	                        <label for='present-${response[i]['id']}'>
+	                            <input type='radio' id='present-${response[i]['id']}' name='attendance-${response[i]['id']}' value='1'`
+                            if(response[i]['attendance'] == 1){
+                            	body += "checked='checked'";
+                            }
+                    body += `> Present
+	                        </label>
+	                        <label for='absent-${response[i]['id']}'>
+	                            <input type='radio' id='absent-${response[i]['id']}' name='attendance-${response[i]['id']}' value='0'`;
+                            if(response[i]['attendance'] == 0){
+                            	body += "checked='checked'";
+                            }
+                    body += `> Absent
+	                        </label>
+	                    </td>
+						<td><input type='text' name='note-${response[i]['id']}' value='${response[i]['note']}'></td>
+	            		<td> <a href='`+base_url+`student/attendance/${response[i]['id']}' class='btn btn-blue'>View Report</a></td>
+					</tr>`;
+				document.getElementById('tbody').innerHTML += body;
+			}
+		}else{
+			document.getElementById('tbody').innerHTML += `<tr><td colspan=8 class='text-center bg-red'>Attendance not found...</td></tr>`;
+		}
+		var date = document.getElementById('date').value;
+		// document.getElementById('attendance_date').innerHTML = date;
+		// document.getElementById('date_hidden').value = date
+	// }).catch( ( error) => {
+	// 	console.error(error)
+	})
 }

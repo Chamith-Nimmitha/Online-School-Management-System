@@ -5,14 +5,6 @@
 			parent::__construct();
 		}
 
-		public function get_teacher_list(){
-			$result_set = $this->con->select("teacher");
-			if(!$result_set){
-				return FALSE;
-			}
-			return $result_set->fetchAll();
-		}
-
 		public function get_not_class_teacher_list(){
 			$query = "SELECT `t`.* FROM `teacher` AS  `t` WHERE `t`.`id` NOT IN (SELECT DISTINCT `c`.`class_teacher_id` FROM `classroom` AS `c` WHERE `c`.`class_teacher_id` is NOT NULL);";
 			$result_set = $this->con->pure_query($query);
@@ -23,7 +15,7 @@
 			}
 		}
 
-		public function get_list($start, $count, $id=NULL,$name=NULL){
+		public function get_teacher_list($start=NULL, $count=NULL, $id=NULL,$name=NULL){
 			$query = "SELECT SQL_CALC_FOUND_ROWS * FROM `teacher` ";
 			$params = [];
 			$flag = 0;
@@ -46,8 +38,10 @@
 				if($flag === 1){
 					$query .= ")";
 				}
-
-				$query .= " LIMIT $start,$count";
+				$query .= " ORDER BY `id` ";
+				if($start!= NULL){
+					$query .= " LIMIT $start,$count";
+				}
 				$result_set = $this->con->pure_query($query);
 			if($result_set){
 				$result_set = $result_set->fetchAll();
