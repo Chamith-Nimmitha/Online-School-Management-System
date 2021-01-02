@@ -58,7 +58,7 @@
                                 </label>
                             </td>
                             <td><input type="text" name="note-<?php echo $teacher_list[$i]['id']; ?>" value="<?php if(isset($teacher_list[$i]['note'])) {echo $teacher_list[$i]['note'];} ?>"></td>
-                            <td> <a href="<?php echo set_url("teacher/attendance/".$teacher[$i]['id']) ?>" class="btn btn-blue">View Report</a></td>
+                            <td> <a href="<?php echo set_url("teacher/attendance/".$teacher_list[$i]['id']) ?>" class="btn btn-blue">View Report</a></td>
 
                         </tr>
                         <?php 

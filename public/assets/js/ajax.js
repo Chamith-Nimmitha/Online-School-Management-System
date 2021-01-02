@@ -691,22 +691,14 @@ function student_attendance_filter(){
 				row = "<tr>";
 				row += `<td>${parseInt(i)+1}</td>`;
 				row += `<td>${result_set[i]['date']}</td>`;
-				row += `<td class="d-flex flex-col align-items-center">
-							<label>
-                                <input type="radio" value="1"`;
-                            if(result_set[i]['attendance'] === 1){
-                            	row +="checked='checked'"
-                            } 
-                            row += ` disabled="disabled"> Present
-                            </label>
-                            <label>
-                                <input type="radio" value="0"`;
-                            if(result_set[i]['attendance'] === 0){
-                            	row +="checked='checked'"
-                            } 
-                            row += ` disabled="disabled"> Absent
-                            </label>
-						</td>`;
+				row += `<td>`;
+				if( result_set[i]['attendance'] == 1){
+					row += `Present`;
+				}else{
+					row += `Absent`;
+				}
+				row += `</td>`;
+				row += `<td>${result_set[i]['note']}</td>`;
 				row += "</tr>";
 
 				tbody.innerHTML += row;
@@ -777,7 +769,7 @@ function teacher_attendance_search(){
 	                        </label>
 	                    </td>
 						<td><input type='text' name='note-${response[i]['id']}' value='${response[i]['note']}'></td>
-	            		<td> <a href='`+base_url+`student/attendance/${response[i]['id']}' class='btn btn-blue'>View Report</a></td>
+	            		<td> <a href='`+base_url+`teacher/attendance/${response[i]['id']}' class='btn btn-blue'>View Report</a></td>
 					</tr>`;
 				document.getElementById('tbody').innerHTML += body;
 			}
@@ -785,9 +777,51 @@ function teacher_attendance_search(){
 			document.getElementById('tbody').innerHTML += `<tr><td colspan=8 class='text-center bg-red'>Attendance not found...</td></tr>`;
 		}
 		var date = document.getElementById('date').value;
-		// document.getElementById('attendance_date').innerHTML = date;
+		document.getElementById('attendance_date').innerHTML = date;
 		// document.getElementById('date_hidden').value = date
-	// }).catch( ( error) => {
-	// 	console.error(error)
+	}).catch( ( error) => {
+		console.error(error)
+	})
+}
+
+// filter attendance by year,month,week for specific teacher
+function teacher_attendance_filter(){
+	window.event.preventDefault();
+	var form = new FormData(document.getElementById("teacher_attendance_filter"));
+	var tbody = document.getElementById("tbody");
+
+	// for loader
+	var loader = document.querySelector("#attendance_table .loader");
+	loader.classList.remove('hide-loader');
+
+	fetch(base_url+"api/attendance/teacher/filter",{
+		method : 'post',
+		body : form
+	}).then( (res) => {
+		return res.text();
+	}).then( (text) => {
+		tbody.innerHTML = "";
+		if( text.indexOf("FALSE") !== -1 || text.length === 0){
+			tbody.innerHTML = `<tr><td colspan=4 class='text-center bg-red'>Attendance not found...</td></tr>`
+		}else{
+			var result_set = JSON.parse(text);
+			for (var i in result_set ){
+				row = "<tr>";
+				row += `<td>${parseInt(i)+1}</td>`;
+				row += `<td>${result_set[i]['date']}</td>`;
+				row += `<td>`;
+				if( result_set[i]['attendance'] == 1){
+					row += `Present`;
+				}else{
+					row += `Absent`;
+				}
+				row += `</td>`;
+				row += `<td>${result_set[i]['note']}</td>`;
+				row += "</tr>";
+
+				tbody.innerHTML += row;
+			}
+		}
+		loader.classList.add('hide-loader');
 	})
 }

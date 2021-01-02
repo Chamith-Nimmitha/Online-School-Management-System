@@ -113,7 +113,7 @@
 		// get all attendance records by student id
 		public function get_attendance_by_student_id($student_id){
 
-			$query = "SELECT `st_at`.`date`,`st_at`.`attendance` FROM `student_attendance` AS `st_at` INNER JOIN `stu_att` AS `sa` ON `st_at`.`id`=`sa`.`id` WHERE `sa`.`student_id`= ? ORDER BY `st_at`.`date` DESC";
+			$query = "SELECT `st_at`.`date`,`st_at`.`attendance`,`st_at`.`note` FROM `student_attendance` AS `st_at` INNER JOIN `stu_att` AS `sa` ON `st_at`.`id`=`sa`.`id` WHERE `sa`.`student_id`= ? ORDER BY `st_at`.`date` DESC LIMIT 10";
 			$params = ["$student_id"];
 			$stmt = $this->con->db->prepare($query);
 			$result = $stmt->execute($params);
@@ -126,7 +126,7 @@
 
 		// filter specific student attendance by year,month,week
 		public function student_attendance_filter($student_id,$year,$month,$week){
-			$query = "SELECT `st_at`.`date`,`st_at`.`attendance` FROM `student_attendance` AS `st_at` INNER JOIN `stu_att` AS `sa` ON `st_at`.`id`=`sa`.`id` WHERE `sa`.`student_id`= ? ";
+			$query = "SELECT `st_at`.`date`,`st_at`.`attendance`,`st_at`.`note` FROM `student_attendance` AS `st_at` INNER JOIN `stu_att` AS `sa` ON `st_at`.`id`=`sa`.`id` WHERE `sa`.`student_id`= ? ";
 			$params = ["$student_id"];
 
 			if($year !== NULL){
@@ -288,6 +288,78 @@
 			}
 			// print_r($query);
 			// print_r($params);
+			$stmt = $this->con->db->prepare($query);
+			$result = $stmt->execute($params);
+			if($result){
+				return $stmt;
+			}else{
+				return FALSE;
+			}
+		}
+
+		// get all attendance records by teacher id
+		public function get_attendance_by_teacher_id($teacher_id){
+
+			$query = "SELECT `date`,`attendance`,`note` FROM `teacher_attendance` WHERE `teacher_id`= ? ORDER BY `date` DESC LIMIT 10";
+			$params = ["{$teacher_id}"];
+			$stmt = $this->con->db->prepare($query);
+			$result = $stmt->execute($params);
+			if($result){
+				return $stmt;
+			}else{
+				return FALSE;
+			}
+		}
+
+		// filter specific teacher attendance by year,month,week
+		public function teacher_attendance_filter($teacher_id,$year,$month,$week){
+			$query = "SELECT `date`,`attendance`,`note` FROM `teacher_attendance` WHERE `teacher_id`= ? ";
+			$params = ["$teacher_id"];
+
+			if($year !== NULL){
+				$query .= " AND YEAR(`date`)= ? ";
+				array_push($params,$year);
+			}
+			if($month !== NULL){
+				$query .= " AND MONTH(`date`)= ? ";
+				array_push($params,$month);
+			}
+			if($week !== NULL){
+				$query .= " AND WEEK(`date`)= ? ";
+				array_push($params,$week-1);
+			}
+			$query .= "ORDER BY `date` DESC";
+
+			$stmt = $this->con->db->prepare($query);
+			$result = $stmt->execute($params);
+			if($result){
+				return $stmt;
+			}else{
+				return FALSE;
+			}
+		}
+
+		// get attendance data for bar chart
+		public function teacher_attendance_overview_bar($teacher_id,$year=NULL,$month=NULL,$state=1){
+			$query = " FROM `teacher_attendance` WHERE `teacher_id`= ? AND `attendance`= ? ";
+			$params = ["{$teacher_id}"];
+			array_push($params,$state);
+			$month_flag = 0;
+
+			if($year !== NULL){
+				$query .= " AND YEAR(`date`)= ? ";
+				array_push($params,$year);
+			}
+			if($month !== NULL){
+				$query .= " AND MONTH(`date`)= ? ";
+				array_push($params,$month);
+				$month_flag = 1;
+				$query = "SELECT WEEK(`date`) AS `week`, COUNT(*)AS `count` ". $query;
+				$query .= "GROUP BY WEEK(`date`) ORDER BY WEEK(`date`) DESC";
+			}else{
+				$query = "SELECT MONTH(`date`) AS `month`, COUNT(*)AS `count` ". $query;
+				$query .= "GROUP BY MONTH(`date`) ORDER BY MONTH(`date`) ASC";
+			}
 			$stmt = $this->con->db->prepare($query);
 			$result = $stmt->execute($params);
 			if($result){

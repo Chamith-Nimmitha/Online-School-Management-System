@@ -406,7 +406,33 @@
             $this->load->view("templates/footer");
 		}
 
+		// view individual teacher attendance
+		public function attendance($teacher_id){
 
+			if(!$this->checkPermission->check_permission("attendance","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
+			$data = [];
+			$this->load->model("attendance");
+            $result_set = $this->load->attendance->get_attendance_by_teacher_id($teacher_id);
+            if($result_set){
+                $data['result_set'] = $result_set->fetchAll();
+            }else{
+                $data['result_set'] = FALSE;
+            }
+            $data['teacher_id'] = $teacher_id;
+            // echo "<pre>";
+            // print_r($data);
+            // echo "</pre>";
+            // exit();
+			$this->view_header_and_aside();
+            $this->load->view("attendance/teacher_attendance_view",$data);
+            $this->load->view("templates/footer");
+
+		}
 		
 		
 	 }
