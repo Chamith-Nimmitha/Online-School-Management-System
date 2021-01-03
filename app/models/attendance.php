@@ -138,7 +138,7 @@
 				array_push($params,$month);
 			}
 			if($week !== NULL){
-				$query .= " AND WEEK(`st_at`.`date`)= ? ";
+				$query .= " AND WEEK(`st_at`.`date`,5)= ? ";
 				array_push($params,$week-1);
 			}
 			$query .= "ORDER BY `st_at`.`date` DESC";
@@ -167,8 +167,8 @@
 				$query .= " AND MONTH(`st_at`.`date`)= ? ";
 				array_push($params,$month);
 				$month_flag = 1;
-				$query = "SELECT WEEK(`st_at`.`date`) AS `week`, COUNT(*)AS `count` ". $query;
-				$query .= "GROUP BY WEEK(`st_at`.`date`) ORDER BY WEEK(`st_at`.`date`) DESC";
+				$query = "SELECT WEEK(`st_at`.`date`,5) AS `week`, COUNT(*)AS `count` ". $query;
+				$query .= "GROUP BY WEEK(`st_at`.`date`,5) ORDER BY WEEK(`st_at`.`date`,5) DESC";
 			}else{
 				$query = "SELECT MONTH(`st_at`.`date`) AS `month`, COUNT(*)AS `count` ". $query;
 				$query .= "GROUP BY MONTH(`st_at`.`date`) ORDER BY MONTH(`st_at`.`date`) ASC";
@@ -325,7 +325,7 @@
 				array_push($params,$month);
 			}
 			if($week !== NULL){
-				$query .= " AND WEEK(`date`)= ? ";
+				$query .= " AND WEEK(`date`,5)= ? ";
 				array_push($params,$week-1);
 			}
 			$query .= "ORDER BY `date` DESC";
@@ -354,8 +354,8 @@
 				$query .= " AND MONTH(`date`)= ? ";
 				array_push($params,$month);
 				$month_flag = 1;
-				$query = "SELECT WEEK(`date`) AS `week`, COUNT(*)AS `count` ". $query;
-				$query .= "GROUP BY WEEK(`date`) ORDER BY WEEK(`date`) DESC";
+				$query = "SELECT WEEK(`date`,5) AS `week`, COUNT(*)AS `count` ". $query;
+				$query .= "GROUP BY WEEK(`date`,5) ORDER BY WEEK(`date`,5) DESC";
 			}else{
 				$query = "SELECT MONTH(`date`) AS `month`, COUNT(*)AS `count` ". $query;
 				$query .= "GROUP BY MONTH(`date`) ORDER BY MONTH(`date`) ASC";
@@ -364,6 +364,18 @@
 			$result = $stmt->execute($params);
 			if($result){
 				return $stmt;
+			}else{
+				return FALSE;
+			}
+		}
+
+		// get teacher attendance for dashboard
+		public function dashboard_teacher_attendance_overview_bar($date,$attendance){
+			$query = "SELECT COUNT(*) AS `count` FROM `teacher_attendance` WHERE `date` = ? AND `attendance`= ?";
+			$stmt = $this->con->db->prepare($query);
+			$result = $stmt->execute([$date,$attendance]);
+			if($result){
+				return $stmt->fetch()['count'];
 			}else{
 				return FALSE;
 			}

@@ -178,14 +178,20 @@
 				$month = date("m");
 			}
 			if($week === "this"){
-				if( date('W', mktime(0,0,0,1,1,$year)) != 1 ){
-					$week = (date('W')+1)%53;
+				if( date('W', mktime(0,0,0,1,1,$year)) != 1){
+					$week = (date('W')+53 - date("W",mktime(0,0,0,1,1,$year)))%53;
+					if($week == 0){
+						$week = 1;
+					}
 				}else{
 					$week = (date('W'));
 				}
 			}else{
-				if( date('W', mktime(0,0,0,1,1,$year)) != 1 ){
-					$week = (date('W', mktime(0,0,0,$month,($week-1)*7+1,$year))+1)%53;
+				if( date('W', mktime(0,0,0,1,1,$year)) != 1){
+					$week = ( date('W', mktime(0,0,0,$month,($week-1)*7+1,$year)) +53 - date("W",mktime(0,0,0,1,1,$year)))%53;
+					if($week == 0){
+						$week = 1;
+					}
 				}else{
 					$week = date('W', mktime(0,0,0,$month,($week-1)*7+1,$year));
 				}
@@ -283,14 +289,20 @@
 				$month = date("m");
 			}
 			if($week === "this"){
-				if( date('W', mktime(0,0,0,1,1,$year)) != 1 ){
-					$week = (date('W')+1)%53;
+				if( date('W', mktime(0,0,0,1,1,$year)) != 1){
+					$week = (date('W')+53 - date("W",mktime(0,0,0,1,1,$year)))%53;
+					if($week == 0){
+						$week = 1;
+					}
 				}else{
 					$week = (date('W'));
 				}
 			}else{
-				if( date('W', mktime(0,0,0,1,1,$year)) != 1 ){
-					$week = (date('W', mktime(0,0,0,$month,($week-1)*7+1,$year))+1)%53;
+				if( date('W', mktime(0,0,0,1,1,$year)) != 1){
+					$week = ( date('W', mktime(0,0,0,$month,($week-1)*7+1,$year)) +53 - date("W",mktime(0,0,0,1,1,$year)))%53;
+					if($week == 0){
+						$week = 1;
+					}
 				}else{
 					$week = date('W', mktime(0,0,0,$month,($week-1)*7+1,$year));
 				}

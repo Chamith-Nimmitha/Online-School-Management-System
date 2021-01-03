@@ -682,6 +682,7 @@ function student_attendance_filter(){
 	}).then( (res) => {
 		return res.text();
 	}).then( (text) => {
+		console.log(text)
 		tbody.innerHTML = "";
 		if( text.indexOf("FALSE") !== -1 || text.length === 0){
 			tbody.innerHTML = `<tr><td colspan=8 class='text-center bg-red'>Attendance not found...</td></tr>`
