@@ -80,6 +80,12 @@ footer{
 .s-item{
 	min-width: 200px;
 	max-width: 25%;
+	transition: background-color,color 0.4s linear;
+}
+
+.s-item:hover{
+	background-color: rgba(100,30,200,0.5);
+	color: white;
 }
 
 .l-item{
@@ -165,6 +171,15 @@ footer{
 	display: initial !important;
 }
 
+.delete-button{
+	text-align: center;
+	font-size: 20px;
+	color: red;
+}
+
+.delete-button:hover{
+	color: black;
+}
 
 
 @media  (min-width:0px){

@@ -10,24 +10,24 @@
 	<div id="school-statistics" class="col-12  justify-content-center ">
 		<h2 class="text-center p-5">School Statistics</h2>
 		<div class="statistics-flex justify-content-center">	
-			<div  class="d-flex flex-col s-item align-items-center bg-lightblue m-2 p-3" style="cursor: pointer;" onclick="window.open('<?php echo set_url('student/list')?>')">
-				<h3 class="bb pb-1 text-center">Total Students</h3>
+			<div class="d-flex flex-col s-item align-items-center bg-lightblue m-2 p-3" style="cursor: pointer;" onclick="window.open('<?php echo set_url('student/list')?>')">
+				<i style="font-size: 40px" class="fas fa-user-graduate"></i><h3  class="bb pb-1 text-center">Total Students</h3>
 				<span class="pt-1"><?php if(isset($count['student'])){echo $count['student']; } ?></span>
 			</div> 
 			<div  class="d-flex flex-col s-item align-items-center bg-lightblue m-2 p-3" style="cursor: pointer;" onclick="window.open('<?php echo set_url('teacher/list')?>')">
-				<h3 class="bb pb-1 text-center">Total Teachers</h3>
+				<i style="font-size: 40px" class="fas fa-user-tie"></i><h3 class="bb pb-1 text-center">Total Teachers</h3>
 				<span class="pt-1"><?php if(isset($count['teacher'])){echo $count['teacher']; } ?></span>
 			</div> 
 			<div  class="d-flex flex-col s-item align-items-center bg-lightblue m-2 p-3" style="cursor: pointer;" onclick="window.open('<?php echo set_url('subject/list')?>')">
-				<h3 class="bb pb-1  text-center">Total Subjects</h3>
+				<i style="font-size: 40px" class="fas fa-book"></i><h3 class="bb pb-1  text-center">Total Subjects</h3>
 				<span class="pt-1"><?php if(isset($count['subject'])){echo $count['subject']; } ?></span>
 			</div> 
 			<div  class="d-flex flex-col s-item align-items-center bg-lightblue m-2 p-3" style="cursor: pointer;" onclick="window.open('<?php echo set_url('classroom/list')?>')">
-				<h3 class="bb pb-1  text-center">Total Classrooms</h3>
+				<i style="font-size: 40px" class="fas fa-store-alt"></i><h3 class="bb pb-1  text-center">Total Classrooms</h3>
 				<span class="pt-1"><?php if(isset($count['classroom'])){echo $count['classroom']; } ?></span>
 			</div>
 			<div  class="d-flex flex-col s-item align-items-center bg-lightblue m-2 p-3" style="cursor: pointer;" onclick="window.open('<?php echo set_url('parent/list')?>')">
-				<h3 class="bb pb-1  text-center">Total Parents</h3>
+				<i style="font-size: 40px" class="fas fa-user-shield"></i><h3 class="bb pb-1  text-center">Total Parents</h3>
 				<span class="pt-1"><?php if(isset($count['parent'])){echo $count['parent']; } ?></span>
 			</div>
 			

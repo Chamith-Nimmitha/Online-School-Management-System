@@ -11,6 +11,7 @@
 		<hr>
 		<div class="d-flex justify-content-center align-items-center">
 			<form action="<?php echo set_url('admission/list'); ?>" method="post" class="d-flex align-items-center">
+				<input type="reset" value="Reset" class="btn btn-blue mt-5 mr-2">
 				<div class="w-50">
 					<label for="admission-search">Search : </label>
 					<input class="form-control" type="text" name="admission-search" id="admission-search" oninput="admission_search()" value="<?php if(isset($admission_search) && $admission_search !== NULL){echo $admission_search;} ?>" placeholder="Id, Grade, Name">
@@ -27,7 +28,7 @@
 						<option value="deleted" <?php if(isset($admission_state) && $admission_state  && ($admission_state  && $admission_state == "deleted")){echo 'selected="selected"';} ?> >Deleted</option>
 					</select>
 				</div>
-				<button onclick="admission_search()" class="btn btn-blue ml-3 mt-5">Filter</button>
+				<button onclick="admission_search()" style="width:100px;" class="btn btn-blue ml-3 mt-5 d-felx"><i class="fas fa-search pr-2"></i>Filter</button>
 			</form>
 		</div>
 		<div class="col-12 mt-5 flex-col" style="position:relative;overflow-x: scroll;overflow-y: hidden;">
@@ -74,8 +75,8 @@
 								$row .= "<td style='background:#333333;color:white;'>".$result['state']."</td>";
 							}
 
-							$row .= "<td><a href=". set_url('admission/view/').$result['id'].">view</a>";
-							$row .= "<td><a href=". set_url('admission/delete/').$result['id']." onclick=\"return confirm('Are you sure to delete?')\">delete</a>";
+							$row .= "<td><a class='btn btn-blue p-1 pr-2 pl-2' href=". set_url('admission/view/').$result['id'].">view</a>";
+							$row .= "<td class='text-center'><a title='delete' href=". set_url('admission/delete/').$result['id']." onclick=\"show_dialog(this,'Delete message','Are you sure to delete?')\"><i class='fas fa-trash delete-button'></i></a>";
 							$row .= "</tr>";
 							echo $row;
 						}
