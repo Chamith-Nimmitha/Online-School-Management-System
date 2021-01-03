@@ -230,7 +230,7 @@
 			}
 			$con = new Database();
 			$con->update("admission",array("state"=>"deleted"),array("id"=>$admission_id));
-			header("Location:".set_url('admission/list/all'));
+			header("Location:".set_url('admission/list'));
 		}
 
 		public function view_admission($admission_id){

@@ -15,6 +15,7 @@
 	<?php require_once(VIEWS."common/goToTop.html"); ?>
 	<?php require_once(VIEWS."common/preLoader.html"); ?>
 	<?php require_once(VIEWS."common/loader.html"); ?>
+	<?php require_once(ASSETS."gadgets/dialog_box.html"); ?>
 	<div class="container bg-lightgray">
 		<div class="row theme-header sticky-top" id="top-header">
 			<div class="school-badge col-4 col-md-3 justify-content-center pt-2">
