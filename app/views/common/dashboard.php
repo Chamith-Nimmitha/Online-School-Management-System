@@ -41,13 +41,13 @@
 			<form id="dashboard_attendance_filter">
 				<div class="d-flex align-items-center">
 					<label for="date">Date</label>
-					<input type="date" name="date" value="<?php if(isset($date)){ echo $date;}else{echo date('Y-m-d');} ?>" onchange="dashboard_student_attendance_doughnut()" id="date" class="ml-3 p-2">
+					<input type="date" name="date" value="<?php if(isset($date)){ echo $date;}else{echo date('Y-m-d');} ?>" onchange="load_dashboard_attendacne()" id="date" class="ml-3 p-2">
 				</div>
 			</form>
 		</div>
 		<div class="col-12 d-flex align-items-center mt-5 justify-content-around">
 			<div class="bg-white p-5" style="position: relative;width: 45%;">
-				<div class="loader">
+				<div class="loader" id="dashboard_student_attendance_doughnut_loader">
 				 	<div class="col-12">
 						<div id="one"><div></div></div>
 						<div id="two"><div></div></div>
@@ -58,8 +58,17 @@
 				</div>
 				<canvas id="dashboard_student_attendance_doughnut" width="100" height="100"></canvas>
 			</div>
-			<div class="bg-white p-5" style="width: 45%;">
-				<canvas id="dashboard_teacher_attendance_pie" width="100" height="100"></canvas>
+			<div class="bg-white p-5" style="position: relative; width: 45%;">
+				<div class="loader" id="dashboard_teacher_attendance_doughnut_loader">
+				 	<div class="col-12">
+						<div id="one"><div></div></div>
+						<div id="two"><div></div></div>
+						<div id="three"><div></div></div>
+						<div id="four"><div></div></div>
+						<div id="five"></div>
+				 	</div>
+				</div>
+				<canvas id="dashboard_teacher_attendance_doughnut" width="100" height="100"></canvas>
 			</div>
 		</div>
 	</div> <!-- #school-attendance -->

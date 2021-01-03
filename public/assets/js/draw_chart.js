@@ -3,7 +3,7 @@
 document.addEventListener("DOMContentLoaded",() => {
 	if( document.getElementById('dashboard_student_attendance_doughnut') ){
 		dashboard_student_attendance_doughnut();
-		dashboard_teacher_attendance_pie();
+		dashboard_teacher_attendance_doughnut();
 		dashboard_classroom_student_attendance_bar();
 		dashboard_teacher_attendance_bar();
 		subject_grades_pie();
@@ -34,12 +34,17 @@ function get_color_array(len,opacity,position = 0){
 	return bgColors;
 }
 
+function load_dashboard_attendacne(){
+	dashboard_student_attendance_doughnut();	
+	dashboard_teacher_attendance_doughnut();	
+}
+
 function dashboard_student_attendance_doughnut(){
 	var ctx = document.getElementById('dashboard_student_attendance_doughnut').getContext('2d');
 	var form = new FormData( document.getElementById('dashboard_attendance_filter') );
 
 	// for loader
-	var loader = document.querySelector(".loader");
+	var loader = document.querySelector("#dashboard_student_attendance_doughnut_loader");
 	loader.classList.remove('hide-loader');
 
 	fetch(base_url+"api/draw_charts/dashboard/attendance/student",{
@@ -93,52 +98,68 @@ function dashboard_student_attendance_doughnut(){
 		
 		loader.classList.add('hide-loader');
 		
-	})
-
-	
+	})	
 }
 
-function dashboard_teacher_attendance_pie(){
-	var ctx = document.getElementById('dashboard_teacher_attendance_pie').getContext('2d');
-	var myChart = new Chart(ctx, {
-	    type: 'doughnut',
-	    data: {
-	        labels: ['present','absent'],
-	        datasets: [{
-	            label: '# of teachers',
-	            data: [90, 10],
-	            backgroundColor: "white",
-	            backgroundColor: [
-	                'rgba(255, 99, 132, 0.5)',
-	                'rgba(54, 162, 235, 0.5)',
-	            ],
-	            borderColor: [
-	                'rgba(255, 99, 132, 0.8)',
-	                'rgba(54, 162, 235, 0.8)',
-	            ],
-	            borderWidth: 1,
-	            hoverBackgroundColor:[
-	                'rgba(255, 99, 132, 1)',
-	                'rgba(54, 162, 235, 1)',
-	            ],
-	            hoverboderwidth:3,
-	            hoverbodercolor: [
-	                'rgba(255, 99, 132, 1)',
-	                'rgba(54, 162, 235, 1)',
-	            ]
-	        }]
-	    },
-	    options: {
-	        scales: {
-	            display:false
-	        },
-	        title: {
-		        display: true,
-		        text: "Teacher Attendance",
-		        fontSize : 20
-		    },
-	    }
-	});
+function dashboard_teacher_attendance_doughnut(){
+	var ctx = document.getElementById('dashboard_teacher_attendance_doughnut').getContext('2d');
+	var form = new FormData( document.getElementById('dashboard_attendance_filter') );
+	// for loader
+	var loader = document.querySelector("#dashboard_teacher_attendance_doughnut_loader");
+	loader.classList.remove('hide-loader');
+
+	fetch(base_url+"api/draw_charts/dashboard/attendance/teacher",{
+		method : 'post',
+		body : form
+	}).then( (res) => {
+		return res.text();
+	}).then( (text) => {
+		if( text.indexOf("FALSE") === -1){
+			var response = JSON.parse(text);
+			var myChart = new Chart(ctx, {
+			    type: 'doughnut',
+			    data: {
+			        labels: ['present','absent'],
+			        datasets: [{
+			            labels: '# of students',
+			            data: [response.present, response.absent],
+			            backgroundColor: "white",
+			            backgroundColor: [
+			                'rgba(255, 99, 132, 0.5)',
+			                'rgba(54, 162, 235, 0.5)',
+			            ],
+			            borderColor: [
+			                'rgba(255, 99, 132, 0.8)',
+			                'rgba(54, 162, 235, 0.8)',
+			            ],
+			            borderWidth: 1,
+			            hoverBackgroundColor:[
+			                'rgba(255, 99, 132, 1)',
+			                'rgba(54, 162, 235, 1)',
+			            ],
+			            hoverboderwidth:3,
+			            hoverbodercolor: [
+			                'rgba(255, 99, 132, 1)',
+			                'rgba(54, 162, 235, 1)',
+			            ]
+			        }]
+			    },
+			    options: {
+			        scales: {
+			            display:false
+			        },
+			        title: {
+				        display: true,
+				        text: "Student attendance",
+				        fontSize : 20
+				    },
+			    }
+			});
+		}
+		
+		loader.classList.add('hide-loader');
+		
+	})
 }
 
 function dashboard_classroom_student_attendance_bar(){

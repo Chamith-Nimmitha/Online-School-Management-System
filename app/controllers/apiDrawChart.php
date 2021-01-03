@@ -79,7 +79,7 @@
 			}
 		}
 
-		// for dashboard
+		// for dashboard student attendance
 		public function dashboard_student_attendance_overview_doughnut(){
 			$date = $_POST['date'];
 
@@ -168,6 +168,24 @@
 				echo json_encode(["labels"=>$labels,"data"=>$formatted_data]);
 			}else{
 				echo "FALSE";
+			}
+		}
+
+		// for dashboard teacher attendance
+		public function dashboard_teacher_attendance_overview_doughnut(){
+			$date = $_POST['date'];
+
+			if(empty($date)){
+				$date = date("Y-m-d");
+			}
+			$this->load->model('attendance');
+			$present_result = $this->load->attendance->dashboard_teacher_attendance_overview_bar($date,1);
+			$absent_result = $this->load->attendance->dashboard_teacher_attendance_overview_bar($date,0);
+
+			if($present_result !== FALSE && $absent_result !== FALSE){
+				echo json_encode(['present'=>$present_result,'absent'=>$absent_result]);
+			}else{
+				echo 'FALSE';
 			}
 		}
 	}
