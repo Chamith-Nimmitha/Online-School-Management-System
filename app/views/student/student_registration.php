@@ -144,6 +144,8 @@
 							}
 						 ?>
 					</div>
+					
+
 				</fieldset>
 			</div>
 			<div  class="col-12 col-md-6 p-3 flex-col">
@@ -330,12 +332,14 @@
 						 ?>
 							</div>	
 						</div>
+					
 						<div class="w-100 p-1"></div>
 						<div class="form-group d-flex flex-row w-auto float-right">
 							<a href="<?php echo set_url('student/registration'); ?>" class="btn btn-blue m-1">Reset Form</a>
 							<button type="submit" name="submit" id="submit" class="btn btn-blue w-auto m-1">Submit</button>
 						</div>
 					</div>
+
 				</fieldset>
 			</div>
 		</form>

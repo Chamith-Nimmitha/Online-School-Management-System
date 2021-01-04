@@ -173,6 +173,33 @@
             }
             $this->list($info,$error);
         }
+
+        function import(){
+			if(isset($_POST['save']))
+			{
+					$file = $_FILES['file']['tmp_name'];
+					$handle = fopen($file, "r");
+					$c = 0;/*
+					while(($filesop = fgetcsv($handle, 1000, ",")) !== false)*/
+					{
+						$name = $filesop[0];
+						$grade = $filesop[1];
+						$medium = $filesop[2];
+						$data = array(
+							'id'=> null,
+							'grade' =>$name,
+							'medium' =>$grade,
+							'medium' => $medium
+						);
+						if($c<>0){					/*SKIP THE FIRST ROW*/
+							$this->model->submit_details($data);
+						}
+						$c = $c + 1;
+					}
+					echo "Data imported successfully !"	;
+			}
+			$this->load->view('subject/import_data');
+	}
     }
 
 ?>

@@ -22,5 +22,10 @@
 				return $result_set->fetchAll();
 			}
 		}
+
+		public function submit_details($data)
+	    {
+		        $this->con->insert("teacher", $data);
+	    }
 	}
  ?>

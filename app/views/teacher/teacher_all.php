@@ -19,6 +19,22 @@
 			</form>
 		</div>
 
+		<center>
+		    <form enctype="multipart/form-data" method="post" role="form">
+	            <div class="form-group">
+	                <label for="exampleInputFile">File Upload</label>
+	                <input type="file" name="file" id="file" size="150">
+	                <p class="help-block">Only Excel/CSV File Import.</p>
+	            </div>
+	            <button type="submit" class="btn btn-default" name="save" value="submit">Upload</button>
+            </form>
+		</center>
+
+		<form action="<?php echo URL; ?>import/verification" method="post" onsubmit="return confirm('Do you really want to submit the form?');">
+	        <button type="submit" class="btn-info" value="submit" name="save">Submit</button>
+	        <button type="submit" class="btn-info" value="submit" name="resend">Resend</button></center>
+        </form>
+        
 		<div class="col-12 flex-col" style="overflow-x: scroll;overflow-y: hidden;">
 
 		    <table class="table-strip-dark">
@@ -85,6 +101,8 @@
 					echo "<tr><td colspan=8 class='text-center bg-red'>teacher not found...</td></tr>";
 				}
                 ?>
+
+                
                 </tbody>
         
 			</table>
