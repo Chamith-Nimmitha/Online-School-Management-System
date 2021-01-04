@@ -159,7 +159,7 @@ div{
 .nm-2{margin: -10px;}
 .nm-3{margin: -15px;}
 .nm-4{margin: -20px;}
-.nm-5{margin: -25px;}
+.nm-5{margin: -25px !important;}
 .nmt-1{margin-top: -5px;}
 .nmt-2{margin-top: -10px;}
 .nmt-3{margin-top: -15px;}
@@ -199,6 +199,7 @@ div{
 .justify-content-start{justify-content: flex-start;}
 .justify-content-end{justify-content: flex-end;}
 .justify-content-between{justify-content: space-between;}
+.justify-content-around{justify-content: space-around;}
 .justify-items-center{justify-items: center;}
 .justify-self-center{justify-self:center;}
 .justify-self-end{justify-self:end;}
@@ -371,14 +372,14 @@ form code{
 .nav-item{
 	list-style: none;
 	padding: 2px;
-	align-items: center;
 	margin: 2px;
+	align-items: center;
 }
 
 .nav-link{
 	width: 80%;
 	display: inline-block;
-	padding: 5px 20px;
+	padding: 5px;
 	text-decoration: none;
 }
 
@@ -399,9 +400,9 @@ form code{
 .toggle-button{margin-left: 10px;}
 
 
-.no-collapsed{display: none;}
+.no-collapsed{display: none !important;}
 
-.collapsed{display: inherit;}
+.collapsed{display: inherit !important;}
 
 
 /* borders*/
@@ -439,7 +440,6 @@ table th, td{
 	color: var(--table-th-color);
 	border-right-color: var(--table-th-border);
 	text-align: center;
-	/*border-color: white;*/
 }
 
 .table-strip-dark thead th:last-child{

@@ -34,7 +34,7 @@
 				</div>
 				<div class="ml-5">
 					<label for="subject-id">Subject ID/Name/Code</label>
-					<input type="text" name="subject-id" id="subject-id" placeholder="subject ID/Name/Code" value="<?php if(isset($subject_id)){echo $subject_id;} ?>" >
+					<input type="text" name="subject-id" id="subject-id" placeholder="subject ID/Name/Code" value="<?php if(isset($subject_id)){echo $subject_id;} ?>" oninput="subject_search()">
 				</div>
 				<div  class="  ml-5 align-items-center">
 					<label for="grade" class="mr-3 d-normal">Grade : </label>
@@ -64,14 +64,22 @@
 						<option value="tamil" <?php if(isset($medium) && ($medium == "tamil")){echo 'selected="selected"';} ?> >Tamil</option>
 					</select>				
 				</div>
-				<input type="submit" class="btn btn-blue ml-3 mt-5" name="search" value="Show">
+				<button onclick="subject_search()" class="btn btn-blue ml-3 mt-5">Filter</button>
 			</div>
 		</form>
 	</div>
 
-	<div class="col-11 flex-col" style="overflow-x: scroll;overflow-y: hidden;">
-	    <table class="table-strip-dark">
-		    <caption class="p-5"><b>ALL SUBJECTS</b></caption>
+	<div class="col-11 mt-5 flex-col" style="position:relative;overflow-x: scroll;overflow-y: hidden;">
+		<div class="loader hide-loader">
+		 	<div class="col-12">
+				<div id="one"><div></div></div>
+				<div id="two"><div></div></div>
+				<div id="three"><div></div></div>
+				<div id="four"><div></div></div>
+				<div id="five"></div>
+		 	</div>
+		</div>
+	    <table class="table-strip-dark text-center">
 		    <thead>
 			    <tr>
 					<th>SUBJECT ID</th>
@@ -84,27 +92,27 @@
 			    </tr>
 		    </thead>
 		    
-            <tbody>
+            <tbody id="tbody">
 
 			<?php 
 			if(isset($result_set) && !empty($result_set)){
 				foreach ($result_set as $result) {
             ?>
 				<tr>
-					<td class="text-center"><?php echo $result['id']; ?></td>
-					<td class="text-center"><?php echo $result['grade']; ?></td>
-					<td class="text-center"><?php echo $result['medium']; ?></td>
-					<td class="text-center"><?php echo $result['name']; ?></td>
-					<td class="text-center"><?php echo $result['code']; ?></td>
+					<td><?php echo $result['id']; ?></td>
+					<td><?php echo $result['grade']; ?></td>
+					<td><?php echo $result['medium']; ?></td>
+					<td><?php echo $result['name']; ?></td>
+					<td><?php echo $result['code']; ?></td>
 					
 					
-					<td class="text-center">
+					<td>
 						<div class="login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center">
 							<a class="btn btn-blue" href="<?php echo set_url('subject/update/').$result['id']; ?>">Update</a>
 	    				</div>
 					</td>
 
-					<td class="text-center">
+					<td>
 						<div class="login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center">
 							<a class="btn btn-lightred" href="<?php echo set_url('subject/delete/').$result['id']; ?>" onclick="return confirm('Are you sure to delete?')">Delete</a>
 	    				</div>
@@ -119,7 +127,14 @@
              
             </tbody>
 		</table>
-	</div>  
+	</div>
+	<div id="pagination" class="col-12">
+		<span>Number of results found : <span id="row_count"><?php echo $count; ?></span></span>
+		<div id="pagination_data" class="col-12">
+			<?php require_once(INCLUDES."pagination.php"); ?>
+			<?php display_pagination($count,$page,$per_page, "subject/list","subject_search"); ?>
+		</div>
+	</div>
     <div class="login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center">
 	   <a class="btn btn-blue" href="<?php echo set_url('subject/registration'); ?> ">Add Subject</a>
     </div>

@@ -110,7 +110,7 @@
         }
 
         // view all subjects in the system
-        public function list($info="", $error="")
+        public function list($page=NULL, $per_page=NULL,$info="", $error="")
         {
             if(!$this->checkPermission->check_permission("subject","view")){
                 $this->view_header_and_aside();
@@ -118,6 +118,22 @@
                 $this->load->view("templates/footer");
                 return;
             }
+
+            // count page info for pagination
+            if($per_page === NULL){
+                $per_page = PER_PAGE;
+            }
+            if($page === Null){
+                $page = 1;
+                $start = 0;
+            }else{
+                $start = ($page-1)*$per_page;
+            }
+
+            $data['page'] = $page;
+            $data['per_page'] = $per_page;
+            $data['start'] = $start;
+
             $this->load->model("subjects");
 
             if(isset($_POST['search'])){
@@ -138,15 +154,16 @@
                 if($medium == 'all'){
                     $medium = NULL;
                 }
-                $result_set = $this->load->subjects->get_subject_list($subject_id,$subject_name,$subject_code,$grade,$medium);
+                $result_set = $this->load->subjects->get_subject_list($start,$per_page,$subject_id,$subject_name,$subject_code,$grade,$medium);
                 $data['subject_id'] = $subject_id;
                 $data['grade'] = $grade;
                 $data['medium'] = $medium;
             }else{
-                $result_set = $this->load->subjects->get_subject_list();
+                $result_set = $this->load->subjects->get_subject_list($start,$per_page);
             }
             unset($_POST);
             $data['result_set'] = $result_set;
+            $data['count'] = $this->load->subjects->get_count()->fetch()['count'];
             $data['info'] = $info;
             $data['error'] = $error;
             $this->view_header_and_aside();

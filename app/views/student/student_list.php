@@ -5,6 +5,18 @@
 </script>
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 	<div class="student-header mt-5">
+	<center>
+	    <form method="POST" enctype="multipart/form-data">
+            <br/><br/><br/>
+            <div align="center">
+                <label>Select a File:</label>
+                <input type="file" name="file"/>
+                <br/>
+                <input type="submit" name="submit" value="Import"  class="btn btn-info"/>
+            </div>
+        </form>
+
+	</center>
 		<h2 class="fs-30">Student List</h2>
 	</div> <!-- .student-header -->
 	<div id="all-admission-table"  class="admissions-table">
@@ -17,7 +29,7 @@
 					</div>
 					<div class="ml-5">
 						<label for="studebt-id">Student ID</label>
-						<input type="text" name="student-id" id="student-id" placeholder="Student ID" value="<?php if(isset($student_id)){echo $student_id;} ?>" oninput="get_student_data2('student-list-table','student-id','','grade','class')">
+						<input type="text" name="student-id" id="student-id" placeholder="Student ID" value="<?php if(isset($student_id)){echo $student_id;} ?>" oninput="student_search()">
 					</div>
 					<div  class="  ml-5 align-items-center">
 						<label for="grade" class="mr-3 d-normal">Grade : </label>
@@ -52,18 +64,22 @@
 							<option value="H" <?php if(isset($class) && ($class == "H")){echo 'selected="selected"';} ?> >H</option>
 						</select>				
 					</div>
-					<input type="submit" class="btn btn-blue ml-3 mt-5" name="search" value="Show">
+					<button onclick="student_search()" class="btn btn-blue ml-3 mt-5">Filter</button>
 				</div>
 			</form>
 		</div>
-		<div class="col-12 flex-col" style="overflow-x: scroll;overflow-y: hidden;">
+		<div class="mt-5 col-12 flex-col" style="position:relative;overflow-x: scroll;overflow-y: hidden;">
+			<div class="loader hide-loader">
+			 	<div class="col-12">
+					<div id="one"><div></div></div>
+					<div id="two"><div></div></div>
+					<div id="three"><div></div></div>
+					<div id="four"><div></div></div>
+					<div id="five"></div>
+			 	</div>
+			</div>
 			<?php 
-				$table = "<table class='table-strip-dark'>
-							<caption class=\"p-5\">";
-				 if(isset($grade)){ 
-				 	$table .= " Grade ".$grade;
-				 }
-				$table .= " Students</caption>";
+				$table = "<table class='table-strip-dark'>";
 				$table .= "<thead>
 								<tr>
 									<th>ID</th>
@@ -108,6 +124,13 @@
 				echo "</tbody>";
 				echo "</table>";
 			 ?>
+		</div>
+		<div id="pagination" class="col-12">
+			<span>Number of results found : <span id="row_count"><?php echo $count; ?></span></span>
+			<div id="pagination_data" class="col-12">
+				<?php require_once(INCLUDES."pagination.php"); ?>
+				<?php display_pagination($count,$page,$per_page, "student/list","student_search"); ?>
+			</div>
 		</div>
         <br>
 		<center>

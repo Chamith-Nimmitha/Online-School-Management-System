@@ -3,6 +3,11 @@ document.addEventListener("DOMContentLoaded",function(){
 	var schoolHeader = document.querySelector(".school-name");
 	var charArry = schoolHeader.innerText.split("");
 
+	window.addEventListener("load", function(){
+		var loader = document.getElementById("loader");
+		loader.classList.add("hide-loader");
+	})
+
 	var html = "";
 	for( c in charArry ){
 		html += "<span>"+charArry[c]+"</span>";
@@ -47,7 +52,18 @@ document.addEventListener("DOMContentLoaded",function(){
 	var goToTop = document.getElementById("goToTop");
 	// when click the button goto top of the page
 	goToTop.addEventListener("click", () => {
-		document.documentElement.scrollTop = 0;
+		var distance = document.documentElement.scrollTop;
+		var per_frame = 100;
+		var fps = 10;
+
+		let timer = setInterval(scroll_page, 1000/fps);
+		function scroll_page(){
+			if(document.documentElement.scrollTop <= 0){
+				clearInterval(timer);
+				return;
+			}
+			document.documentElement.scrollTop -= per_frame;
+		}
 	});
 	// check whether page is scroll or not
 	setInterval( () => {
@@ -242,7 +258,7 @@ function interview_add_teacher(element,target){
 function teacher_subject_add(parent_id,add_button){
 	var parent = document.getElementById(parent_id);
 	var children = parent.children; 
-	var count = children.length+1;
+	var count = children.length;
 
 	var html = `<label for="subject-01">Subject-0${count}</label>
 					<div class=" d-flex flex-wrap justify-content-between"> 
@@ -261,6 +277,15 @@ function teacher_subject_add(parent_id,add_button){
 
 function teacher_subject_remove(remove_button){
 	remove_button.parentElement.parentElement.remove();
+	var ids = remove_button.id.split(" ");
+	var sub_id=ids[0];
+	var tea_id=ids[1];
+	if(remove_button.id !=""){
+	window.location.replace(base_url+'teacher/subject/list/'+ids[1]);
+	}
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET",base_url+"api/teacher/subject/delete/"+sub_id+"/"+tea_id,true);
+	xhr.send();
 }
 
 // For interview timetable
@@ -466,29 +491,8 @@ function update_student_removed_set(checkbox){
 	}
 }
 
-function reset_form(ele){
-	var value = ele.value;
-	var p_ele = ele.parentElement;
-	while(p_ele.nodeName != "FORM"){
-		if(p_ele.nodeName == "HTML"){
-			break;
-		}
-		p_ele = p_ele.parentElement;
-	}
-	if(p_ele.nodeName == "FORM"){
-		var inputs = p_ele.getElementsByTagName("input");
-		var select = p_ele.getElementsByTagName("select");
-		for (var i=0; i< inputs.length; i++){
-			if(inputs[i].type == "text"){
-				inputs[i].setAttribute("value","");
-			}
-		}
-		for (var i=0; i< select.length; i++){
-			var selected = select[i].options[select[i].selectedIndex];
-			selected.removeAttribute("selected");
-			select[i].firstElementChild.setAttribute("selected","selected");
-		}
-	}
+function reset_form(form_id){
+	document.getElementById(form_id).reset();
 }
 
 function create_subject_code(ele){

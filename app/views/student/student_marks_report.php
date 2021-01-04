@@ -33,6 +33,19 @@
 
 </div>
 
+  <center>
+	    <form method="POST" enctype="multipart/form-data">
+            <br/><br/><br/>
+            <div align="center">
+                <label>Select a File:</label>
+                <input type="file" name="file"/>
+                <br/>
+                <input type="submit" name="submit" value="Import" class="btn btn-info"/>
+            </div>
+        </form>
+
+	</center>
+
   <table  class="w-100 mt-5 table table-strip-dark text-center">
 
     <thead class="bg-navyblue1 fs-white">

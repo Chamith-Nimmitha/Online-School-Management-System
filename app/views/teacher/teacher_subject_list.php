@@ -109,7 +109,7 @@
 												<input type="hidden" name="old-subject-0'.$i.'-id" id="old-subject-0'.$i.'-id" class="col-3  d-inline-block" placeholder="Subject ID" oninput="get_subject_data(\'id\',this)" value='.$subject_info[$i-1]['id'].'>
 											</div>
 											<div class="w-100 justify-content-end d-flex pr-5">
-												<button class="btn btn-blue" type="button" onclick="teacher_subject_remove(this)" >- remove subject</button>
+												<button class="btn btn-blue" type="button" id="'.$subject_info[$i-1]['id'].' '.$teacher_info['id'].'" onclick="teacher_subject_remove(this)" >- remove subject</button>
 											</div>
 										</div>';
 										echo $sub;

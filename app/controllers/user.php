@@ -77,7 +77,7 @@
 
 		//view dashboard for all users
 		public function dashboard($msg=""){
-			if($_SESSION['permissions']['dashboard']['view'] != 1){
+			if(!$this->checkPermission->check_permission("dashboard","view")){
 				$this->view_header_and_aside();
 				$this->load->view("common/error");
 				$this->load->view("templates/footer");

@@ -7,7 +7,7 @@
         }
 
         // show list of student
-        public function list(){
+        public function list($page=Null, $per_page=NULL){
 
             if(!$this->checkPermission->check_permission("student_list","view")){
                 $this->view_header_and_aside();
@@ -15,6 +15,22 @@
                 $this->load->view("templates/footer");
                 return;
             }
+
+            // count page info for pagination
+            if($per_page === NULL){
+                $per_page = PER_PAGE;
+            }
+            if($page === Null){
+                $page = 1;
+                $start = 0;
+            }else{
+                $start = ($page-1)*$per_page;
+            }
+
+            $data['page'] = $page;
+            $data['per_page'] = $per_page;
+            $data['start'] = $start;
+
             $this->load->model("studentsInfo");
 
             if(isset($_POST['search'])){
@@ -33,15 +49,16 @@
                 if($class == 'all'){
                     $class = NULL;
                 }
-                $result_set = $this->load->studentsInfo->get_student_list($student_id,$student_name,$grade,$class);
+                $result_set = $this->load->studentsInfo->get_student_list($start,$per_page,$student_id,$student_name,$grade,$class);
 
                 $data['student_id'] = $student_id;
                 $data['grade'] = $_POST['grade'];
                 $data['class'] = $_POST['class'];
             }else{
-                $result_set = $this->load->studentsInfo->get_student_list();
+                $result_set = $this->load->studentsInfo->get_student_list($start,$per_page);
             }
             unset($_POST);
+            $data['count'] = $this->load->studentsInfo->get_count()->fetch()['count'];
             $data['result_set'] = $result_set;
             $this->view_header_and_aside();
             $this->load->view("student/student_list",$data);
@@ -128,9 +145,22 @@
         }
 
         // attendance
-        public function attendance(){
+        public function attendance($student_id=NULL){
+
+            if($student_id == NULL){
+                $student_id = $_POST['id'];
+            }
+
+            $this->load->model("attendance");
+            $result_set = $this->load->attendance->get_attendance_by_student_id($student_id);
+            if($result_set){
+                $data['result_set'] = $result_set->fetchAll();
+            }else{
+                $data['result_set'] = FALSE;
+            }
+            $data['student_id'] = $student_id;
             $this->view_header_and_aside();
-            $this->load->view("student/student_attendance_view");
+            $this->load->view("student/student_attendance_view",$data);
             $this->load->view("templates/footer");
         }
 
