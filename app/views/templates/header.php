@@ -12,9 +12,10 @@
 	<script src="https://kit.fontawesome.com/970e009013.js" crossorigin="anonymous"></script>
 </head>
 <body>
-	<?php require_once(VIEWS."common/goToTop.html"); ?>
-	<?php require_once(VIEWS."common/preLoader.html"); ?>
+	<?php require_once(ASSETS."gadgets/goToTop.html"); ?>
+	<?php require_once(ASSETS."gadgets/preLoader.html"); ?>
 	<?php require_once(ASSETS."gadgets/dialog_box.html"); ?>
+	<?php require_once(ASSETS."gadgets/snackbar.html"); ?>
 	<div class="container bg-lightgray">
 		<div class="row theme-header sticky-top" id="top-header">
 			<div class="school-badge col-4 col-md-3 justify-content-center pt-2">

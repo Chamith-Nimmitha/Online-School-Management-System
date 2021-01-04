@@ -52,7 +52,7 @@ class ApiAdmission extends Controller{
 				}
 
 				$body .= "<td><a href=". set_url('admission/view/').$result['id'].">view</a>";
-				$body .= "<td><a href=". set_url('admission/delete/').$result['id']." onclick=\"return confirm('Are you sure to delete?')\">delete</a>";
+				$body .= "<td><a title='delete' href=". set_url('admission/delete/').$result['id']." onclick=\"show_dialog(this,'Delete message','Are you sure to delete?')\"><i class='fas fa-trash delete-button'></i></a>";
 				$body .= "</tr>";
 			}
 			$data['body'] = $body;

@@ -1,0 +1,47 @@
+<style>
+	#snackbar{
+		position: fixed;
+		bottom: -50px;
+		padding: 10px;
+		background-color: rgba(0,0,0,0.8);
+		color : white;
+		border-radius: 5px;
+		opacity: 0;
+		z-index: 2000;
+		left: 50%;
+	}
+
+	#snackbar.snackbar-show{
+		-webkit-animation: fadeinout 4s;
+		animation: fadeinout 3s;
+	}
+	
+	@keyframes fadeinout {
+		0%{bottom: -50px,opacity :0;}
+		10%{bottom: 30px; opacity:1}
+		20%{bottom: 30px; opacity: 1;}
+		60%{bottom: 30px; opacity:1;}
+		90%{bottom: 30px; opacity:0;}
+		100%{bottom: -50px, opacity:0;}
+	}
+</style>
+<div id="snackbar">
+	<div id="snackbar-msg">Snackbar message</div>
+</div>
+<script>
+	var snackbar_proccess = false;
+	
+	function show_snackbar(msg){
+		var snackbar = document.getElementById('snackbar');
+		document.getElementById('snackbar-msg').innerHTML = msg;
+		document.body.appendChild(snackbar);
+		var documentwidth = document.body.clientWidth;
+		var snackbarwidth = snackbar.clientWidth;
+		if(snackbar_proccess){
+			snackbar.classList.remove('snackbar-show');
+		}else{
+			snackbar.style.left = (documentwidth-snackbarwidth)/2+"px";
+			snackbar.classList.add('snackbar-show');
+		}
+	}
+</script>
