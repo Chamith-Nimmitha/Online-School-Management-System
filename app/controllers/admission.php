@@ -171,7 +171,7 @@
 		}
 
 		// show admissions list
-		public function list($page=Null, $per_page=Null){
+		public function list($page=Null, $per_page=Null,$msg=NULL){
 			// check view  permissions
 			if(!$this->checkPermission->check_permission("admission","view")){
 				$this->view_header_and_aside();
@@ -215,6 +215,7 @@
 			unset($_POST);
 			$data['result_set'] = $result_set;
 			$data['count'] = $this->load->admission->get_count()->fetch()['count'];
+			$data['msg'] = $msg;
 			$this->view_header_and_aside();
 			$this->load->view("admission/admission_list",$data);
 			$this->load->view("templates/footer");
@@ -230,7 +231,7 @@
 			}
 			$con = new Database();
 			$con->update("admission",array("state"=>"deleted"),array("id"=>$admission_id));
-			header("Location:".set_url('admission/list'));
+			$this->list(NULL,NULL,"Admission {$admission_id} deleted.");
 		}
 
 		public function view_admission($admission_id){
