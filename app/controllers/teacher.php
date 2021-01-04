@@ -421,7 +421,7 @@
 							'id'=> null,
 							'name_with_initials' =>$name_with_initials,
 							'email' =>$email,
-							'contact_number' => $contact_number
+							'contact_number' => $contact_number,
 							'nic' => $nic
 						);
 						if($c<>0){					/*SKIP THE FIRST ROW*/
