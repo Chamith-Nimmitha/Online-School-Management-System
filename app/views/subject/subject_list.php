@@ -11,6 +11,21 @@
             echo "</p>";
         }
     ?>
+
+    <form enctype="multipart/form-data" method="post" role="form">
+	    <div class="form-group">
+	        <label for="exampleInputFile">File Upload</label>
+	        <input type="file" name="file" id="file" size="150">
+	        <p class="help-block">Only Excel/CSV File Import.</p>
+	    </div>
+	    <button type="submit" class="btn btn-default" name="save" value="submit">Upload</button>
+    </form>
+
+	<form action="<?php echo URL; ?>hello/verification" method="post" onsubmit="return confirm('Do you really want to submit the form?');">
+	    <button type="submit" class="btn-info" value="submit" name="save">Submit</button>
+	    <button type="submit" class="btn-info" value="submit" name="resend">Resend</button></center>
+    </form>
+
 	<div class="d-flex justify-content-center align-items-center">
 		<form action="<?php echo set_url('subject/list'); ?>" method="post" class="d-flex align-items-center col-12">
 			<div class="d-flex col-12 align-items-center justify-content-center">

@@ -36,6 +36,7 @@
 
 	// teacher routes
 	$routes['teacher/list'] = "teacher/list";
+	$routes['teacher/import_details'] = "teacher/import";
 	$routes['teacher/registration'] = "teacher/new_teacher";
 	$routes['teacher/update'] = "teacher/teacher_list_update";
 	$routes['teacher/update/$1'] = "teacher/update_teacher/$1";
@@ -58,6 +59,7 @@
 
 	// subject routes
 	$routes['subject/list'] = "subject/list";
+	$routes['subject/import_details'] = "subject/import";
 	$routes['subject/registration'] = "subject/registration";
 	$routes['subject/update/$1'] = "subject/update/$1";
 	$routes['subject/delete/$1'] = "subject/delete/$1";

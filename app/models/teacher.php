@@ -125,7 +125,7 @@
 			return $result = $this->con->insert("teacher",$data);
 		}
 
-
+        
 
 
 	}

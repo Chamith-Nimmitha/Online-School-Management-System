@@ -124,6 +124,12 @@
 		public function delete_subject($id){
 			return $this->con->delete("subject",["id"=>$id]);
 		}
+
+		//import subject details
+		public function submit_details($data)
+	    {
+		    $this->con->insert("subject", $data);
+	    }
 	}
 
  ?>

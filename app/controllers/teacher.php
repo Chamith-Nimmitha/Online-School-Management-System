@@ -33,7 +33,6 @@
 			$this->load->view("teacher/teacher_all",$data);
 			$this->load->view("templates/footer");
 
-
 		}
 		//register new teachers
 		public function new_teacher(){
@@ -405,6 +404,35 @@
         	}
             $this->load->view("templates/footer");
 		}
+        
+		public function import(){
+			if(isset($_POST['save']))
+			{
+					$file = $_FILES['file']['tmp_name'];
+					$handle = fopen($file, "r");
+					$c = 0;/*
+					while(($filesop = fgetcsv($handle, 1000, ",")) !== false)*/
+					{
+						$name_with_initials = $filesop[0];
+						$email = $filesop[1];
+						$contact_number = $filesop[2];
+						$nic = $filesop[3];
+						$data = array(
+							'id'=> null,
+							'name_with_initials' =>$name_with_initials,
+							'email' =>$email,
+							'contact_number' => $contact_number
+							'nic' => $nic
+						);
+						if($c<>0){					/*SKIP THE FIRST ROW*/
+							$this->model->submit_details($data);
+						}
+						$c = $c + 1;
+					}
+					echo "Data imported successfully !"	;
+			}
+			$this->load->view('teacher/teacher_all');
+	}
 
 		// view individual teacher attendance
 		public function attendance($teacher_id){
@@ -432,8 +460,6 @@
             $this->load->view("attendance/teacher_attendance_view",$data);
             $this->load->view("templates/footer");
 
-		}
-		
-		
+		}	
 	 }
 ?>

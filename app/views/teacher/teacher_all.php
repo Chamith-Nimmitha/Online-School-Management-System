@@ -16,6 +16,23 @@
 			</form>
 		</div>
 
+		<center>
+		    <form enctype="multipart/form-data" method="post" role="form">
+	            <div class="form-group">
+	                <label for="exampleInputFile">File Upload</label>
+	                <input type="file" name="file" id="file" size="150">
+	                <p class="help-block">Only Excel/CSV File Import.</p>
+	            </div>
+	            <button type="submit" class="btn btn-default" name="save" value="submit">Upload</button>
+            </form>
+		</center>
+
+		<form action="<?php echo URL; ?>import/verification" method="post" onsubmit="return confirm('Do you really want to submit the form?');">
+	        <button type="submit" class="btn-info" value="submit" name="save">Submit</button>
+	        <button type="submit" class="btn-info" value="submit" name="resend">Resend</button></center>
+        </form>
+        
+		<div class="col-12 flex-col" style="overflow-x: scroll;overflow-y: hidden;">
 		<div class="col-12 flex-col" style="position:relative;overflow-x: scroll;overflow-y: hidden;">
 			<div class="loader hide-loader">
 				 	<div class="col-12">
@@ -26,7 +43,6 @@
 						<div id="five"></div>
 				 	</div>
 			</div>
-
 		    <table class="table-strip-dark">
 			    <thead>
 				    <tr>
@@ -50,7 +66,7 @@
 			    
                 <tbody id="tbody">
 
-				<?php 
+		<?php 
 		if($result_set){
 			//$row = "";
 			foreach ($result_set as $result) {
@@ -75,9 +91,7 @@
 				echo "</tbody>";
 				echo "</table>";
 		}
-                ?>
-
-				
+  ?>
 		</div>  
         <br>
 		<div>
