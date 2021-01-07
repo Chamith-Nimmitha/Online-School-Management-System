@@ -3,14 +3,14 @@
 if(isset($_GET['ajax'])){
 	display_pagination($_GET['count'],$_GET['current_page'],$_GET['per_page']);
 }
-function display_pagination($count,$current_page,$per_page,$route,$function_name){
+function display_pagination($count,$current_page,$per_page,$route,$function_name,$options=[]){
 	if(is_numeric($count)){
 		$total = $count;
 	}else{
 		$total = $count->fetch()['count'];
 	}
 	$num_pages = ceil($total / $per_page);
-	echo "<div id='pagination_div' class='mt-5 d-flex align-items-center justify-content-start w-100 flex-wrap'>";
+	echo "<div class='pagination_div mt-5 d-flex align-items-center justify-content-start w-100 flex-wrap'>";
 	$actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]"."/".explode("/", $_SERVER['REQUEST_URI'])[1]."/".$route;
 	if($current_page != 1){
 		// echo "<a class='t-d-none btn btn-blue' href='".$actual_link."/".($current_page-1)."/".$per_page."'>Perv</a>";

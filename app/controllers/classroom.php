@@ -90,7 +90,7 @@
 					$data["student_list"]= [];
 					$data["classroom_info"] = [];
 				}else{
-					$data["student_list"] = $this->load->classroom->get_studets_data();
+					$data["student_list"] = $this->load->classroom->get_students_data();
 					$data["classroom_info"] = $this->load->classroom->get_data();
 				}
 

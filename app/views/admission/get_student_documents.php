@@ -1,6 +1,3 @@
-<?php include_once("session.php"); ?>
-<?php require_once("../php/database.php") ?>
-<?php require_once("../php/common.php") ?>
 <?php 
 	
 	if(isset($_POST['submit'])){
@@ -119,7 +116,3 @@
 		</fieldset>
 	</form>
 </div>
-
-
-
-<?php require_once("../templates/footer.php") ?>

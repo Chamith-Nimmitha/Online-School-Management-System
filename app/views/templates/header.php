@@ -14,6 +14,7 @@
 <body>
 	<?php require_once(ASSETS."gadgets/goToTop.html"); ?>
 	<?php require_once(ASSETS."gadgets/preLoader.html"); ?>
+	<?php require_once(ASSETS."gadgets/loader.html"); ?>
 	<?php require_once(ASSETS."gadgets/dialog_box.html"); ?>
 	<?php require_once(ASSETS."gadgets/snackbar.html"); ?>
 	<div class="container bg-lightgray">

@@ -5,6 +5,18 @@
 			parent::__construct();
 		}
 
+		public function get_interview_data($admission_id){
+			return $this->con->select("interview",array("admission_id"=>$admission_id));
+		}
+
+		public function set_interview_data($data){
+			return $this->con->insert('interview',$data);
+		}
+
+		public function update_interview_data($admission_id,$data){
+			return $this->con->update('interview',$data,['admission_id'=>$admission_id]);
+		}
+
 		public function search($admission_id=NULL,$panel_id=NULL,$state=NULL){
 			$query = "SELECT * FROM `interview`";
 			$where_flag = 0;
@@ -41,6 +53,11 @@
 			}else{
 				return FALSE;
 			}
+		}
+
+		// change interview state
+		public function change_state($admission_id,$state){
+			return $this->con->update("interview",["state"=>$state],["admission_id"=>$admission_id]);
 		}
 	}
 

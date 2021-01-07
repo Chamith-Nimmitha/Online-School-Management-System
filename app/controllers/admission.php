@@ -194,26 +194,16 @@
 			$data['per_page'] = $per_page;
 			$data['start'] = $start;
 
-
-			if(isset($_POST['admission-state']) && $_POST['admission-state'] != "all"){
-				$admission_state = $_POST['admission-state'];
-			}else{
-				$admission_state = NULL;
-			}
-			if(isset($_POST['admission-search']) && !empty($_POST['admission-search'])){
-				$admission_search = $_POST['admission-search'];
-			}else{
-				$admission_search = NULL;
-			}
-			$data['admission_search'] = $admission_search;
-			$data['admission_state'] = $admission_state;
 			$this->load->model("admission");
-			$result_set = $this->load->admission->get_list($start,$per_page,$admission_search,$admission_search,$admission_search,$admission_state);
-			if($result_set){
+			$result_set = $this->load->admission->get_list($start,$per_page,NULL,NULL,NULL,["Read","Unread","Accepted"]);
+			$u_result_set = $this->load->admission->get_list($start,$per_page,NULL,NULL,NULL,["Not Interviewed","Registered","Rejected"]);
+			if($result_set && $u_result_set){
 				$result_set = $result_set->fetchAll();
+				$u_result_set = $u_result_set->fetchAll();
 			}
 			unset($_POST);
 			$data['result_set'] = $result_set;
+			$data['u_result_set'] = $u_result_set;
 			$data['count'] = $this->load->admission->get_count()->fetch()['count'];
 			$data['msg'] = $msg;
 			$this->view_header_and_aside();
@@ -229,8 +219,8 @@
 				$this->load->view("templates/footer");
 				return;
 			}
-			$con = new Database();
-			$con->update("admission",array("state"=>"deleted"),array("id"=>$admission_id));
+			$this->load->model("admission");
+			$this->load->admission->delete_admission($admission_id);
 			$this->list(NULL,NULL,"Admission {$admission_id} deleted.");
 		}
 
@@ -241,15 +231,12 @@
 				$this->load->view("templates/footer");
 				return;
 			}
-			$con = new Database();
-			if(isset($_POST['accept'])){
-				$con->update('admission',array("state"=>"accepted"),array("id"=>$admission_id));
-				header("Location:".set_url("interview/set"));
-			}else if(isset($_POST['reject'])){
-				$con->update('admission',array("state"=>"rejected"),array("id"=>$admission_id));
-				header("Location:".set_url('admission/list'));
-			}else if(isset($_POST['delete'])){
-				$con->update('admission',array("state"=>"deleted"),array("id"=>$admission_id));
+			$this->load->model("admission");
+			if(isset($_POST['Accept'])){
+				$this->load->admission->change_state($admission_id,"Accepted");
+				header("Location:".set_url("interview/set/".$admission_id));
+			}else if(isset($_POST['Reject'])){
+				$this->load->admission->change_state($admission_id,"Rejected");
 				header("Location:".set_url('admission/list'));
 			}
 			$this->load->model("admission");
@@ -258,8 +245,8 @@
 				echo "Admisiion not found";
 				exit();
 			}
-			if($admission_data['state'] === "unread"){
-				$con->update('admission',array("state"=>"read"),array("id"=>$admission_id));
+			if($admission_data['state'] === "Unread"){
+				$this->load->admission->change_state($admission_id,"Read");
 			}
 
 			$data['result'] = $admission_data;

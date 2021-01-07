@@ -195,14 +195,14 @@ function validate_contact_number(element){
   	var errors = Array();
 	if(isNaN(element.value)){
 		errors.push("Contact number must numbers.<br>");
-	}else{
-		var regex = /(0(70|71|72|75|76|77|78))+/;
-		if(!regex.test(element.value) && element.value.length >2){
-    		errors.push("Contact number must begin with 070, 071, 072, 075, 076, 077 or 078. <br>");
+	// }else{
+	// 	var regex = /(0(70|71|72|75|76|77|78))+/;
+	// 	if(!regex.test(element.value) && element.value.length >2){
+ //    		errors.push("Contact number must begin with 070, 071, 072, 075, 076, 077 or 078. <br>");
 		}else{
-			// form_errors.splice('contact_number',1);
+			form_errors.splice('contact_number',1);
 			errors = errors.concat(validate_user_input(element,10,10,1));
-		}
+		// }
 	}
 	if(errors.length == 0){
 		if(element.nextElementSibling != null && element.nextElementSibling.nodeName == "P"){

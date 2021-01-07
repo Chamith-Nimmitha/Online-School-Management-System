@@ -14,7 +14,7 @@
 			$this->checkPermission = new checkPermission();
 			// if user not logged in, then redirect to the login page
 			$curPageName = $_SERVER['QUERY_STRING'];
-			$alloed_pages = ["homepage","login","forget_password","verification_code","change_password","student/registration","school/contact","school/about"];
+			$alloed_pages = ["homepage","login","forget_password","verification_code","change_password","student/registration","school/contact","school/about","api/admission/parent/validation"];
 			if (!(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) || !isset($_SESSION['username']) ) {
 				$flag = 0;
 				foreach ($alloed_pages as $page) {

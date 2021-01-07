@@ -41,14 +41,19 @@ function dynamically_set(){
 		if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
 		    document.getElementById("header-school-other-info").style.cssText = "opacity:0";
 		    document.getElementById("school-badge").style.cssText = "width:50px;";
-		    document.getElementById("header-user-info").style.border = "none";
-		    document.getElementById("header-user-info").style.padding = "0";
-		    document.getElementById("header-user-info").style.marginBottom = "0";
+		    let user_info = document.getElementById("header-user-info");
+		    if(user_info){
+			    user_info.style.border = "none";
+			    user_info.style.padding = "0";
+			    user_info.style.marginBottom = "0";
+		    }
 		} else {
 		    document.getElementById("header-school-other-info").style.cssText = "opacity:1";
 		    document.getElementById("school-badge").style.cssText = "width:80px;";
-		    document.getElementById("header-user-info").style.border = "2px solid orange";
-		    
+		    let user_info = document.getElementById("header-user-info");
+		    if(user_info){
+			    user_info.style.border = "2px solid orange";    
+		    }
 		}
 	}
 }

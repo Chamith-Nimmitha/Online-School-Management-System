@@ -93,6 +93,7 @@
 	$routes['interview/set/$1'] = "interview/set/$1";
 	$routes['interview/list'] = "interview/list";
 	$routes['interview/view/$1'] = "interview/view_admission/$1";
+	$routes['"interview/get_files/$1'] = "interview/get_files/$1";
 
 
 	// interview panel routes
@@ -113,6 +114,8 @@
 
 	// FOR APIS
 	$routes['api/admission/search'] = "apiAdmission/search";
+	$routes['api/admission/u_search'] = "apiAdmission/u_search";
+	$routes['api/admission/parent/validation'] = "apiAdmission/parent_validation";
 	$routes['api/classroom/search'] = "apiClassroom/search";
 	$routes['api/student/search'] = "apiStudent/search";
 	$routes['api/subject/search'] = "apiSubject/search";
