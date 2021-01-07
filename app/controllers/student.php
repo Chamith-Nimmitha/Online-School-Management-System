@@ -148,7 +148,11 @@
         public function attendance($student_id=NULL){
 
             if($student_id == NULL){
-                $student_id = $_POST['id'];
+                if(isset($_POST['id'])){
+                    $student_id = $_POST['id'];
+                }else{
+                    $student_id = $_SESSION['user_id'];
+                }
             }
 
             $this->load->model("attendance");

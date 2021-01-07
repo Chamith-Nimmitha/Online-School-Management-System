@@ -14,7 +14,9 @@
 	<div class="mt-5">
 		<h2 class="fs-30">Admissions Managment</h2>
 	</div>
-	<div id="all-admission-table"  class="admissions-table">
+
+	<!-- For unread, read, accepted applications -->
+	<div id="useful-all-admission-table"  class="admissions-table">
 		<hr>
 		<div class="d-flex justify-content-center align-items-center">
 			<form action="<?php echo set_url('admission/list'); ?>" method="post" class="d-flex align-items-center">
@@ -26,19 +28,16 @@
 				<div  class="d-flex flex-col  ml-5 align-items-center">
 					<label for="admission-state" class="mr-3 d-normal">Type : </label>
 					<select name="admission-state" id="admission-state" style="width: 110px">
-						<option value="all" <?php if(isset($admission_state) && $admission_state ){if($admission_state  && $admission_state == NULL){echo 'selected="selected"';}}else{echo 'selected="selected"';} ?>>All</option>
-						<option value="unread" <?php if(isset($admission_state) && $admission_state  && ($admission_state  && $admission_state == "unread")){echo 'selected="selected"';} ?> >Unread</option>
-						<option value="read" <?php if(isset($admission_state) && $admission_state  && ($admission_state  && $admission_state == "read")){echo 'selected="selected"';} ?> >Read</option>
-						<option value="accepted" <?php if(isset($admission_state) && $admission_state  && ($admission_state  && $admission_state == "accepted")){echo 'selected="selected"';} ?> >Accepted</option>
-						<option value="rejected" <?php if(isset($admission_state) && $admission_state  && ($admission_state  && $admission_state == "rejected")){echo 'selected="selected"';} ?> >Rejected</option>
-						<option value="registered" <?php if(isset($admission_state) && $admission_state  && ($admission_state  && $admission_state == "registered")){echo 'selected="selected"';} ?> >Registered</option>
-						<option value="deleted" <?php if(isset($admission_state) && $admission_state  && ($admission_state  && $admission_state == "deleted")){echo 'selected="selected"';} ?> >Deleted</option>
+						<option value="all">All</option>
+						<option value="Unread">Unread</option>
+						<option value="Read">Read</option>
+						<option value="Accepted">Accepted</option>
 					</select>
 				</div>
 				<button onclick="admission_search()" style="width:100px;" class="btn btn-blue ml-3 mt-5 d-felx"><i class="fas fa-search pr-2"></i>Filter</button>
 			</form>
 		</div>
-		<div class="col-12 mt-5 flex-col" style="position:relative;overflow-x: scroll;overflow-y: hidden;">
+		<div class="col-12 mt-5 flex-col" style="position:relative;overflow-x: scroll;overflow-y: hidden;" id="admission_list_useful">
 				<div class="loader hide-loader">
 				 	<div class="col-12">
 						<div id="one"><div></div></div>
@@ -58,7 +57,6 @@
 										<th>Address</th>
 										<th>state</th>
 										<th>View</th>
-										<th>Delete</th>
 									</tr>
 								</thead>
 								<tbody id='tbody'>";
@@ -70,20 +68,17 @@
 							$row .= "<td>".stripslashes($result['name_with_initials'])."</td>";
 							$row .= "<td>".$result['grade']."</td>";
 							$row .= "<td>".stripslashes($result['address'])."</td>";
-							if($result['state'] == 'accepted'){
-								$row .= "<td style='background:#009922'>".$result['state']."</td>";
-							}else if($result['state'] == 'deleted'){
-								$row .= "<td style='background:#ff5555'>".$result['state']."</td>";
-							}else if($result['state'] == 'read'){
-								$row .= "<td style='background:#ffffff'>".$result['state']."</td>";
-							}else if($result['state'] == 'unread'){
-								$row .= "<td style='background:#00ffff'>".$result['state']."</td>";
+							if($result['state'] == 'Accepted'){
+								$row .= "<td class='text-center' style='background:#009922'>".$result['state']."</td>";
+							}else if($result['state'] == 'Read'){
+								$row .= "<td class='text-center' style='background:#ffffff'>".$result['state']."</td>";
+							}else if($result['state'] == 'Unread'){
+								$row .= "<td class='text-center' style='background:#00ffff'>".$result['state']."</td>";
 							}else{
-								$row .= "<td style='background:#333333;color:white;'>".$result['state']."</td>";
+								$row .= "<td class='text-center' style='background:#333333;color:white;'>".$result['state']."</td>";
 							}
 
-							$row .= "<td><a class='btn btn-blue p-1 pr-2 pl-2' href=". set_url('admission/view/').$result['id'].">view</a>";
-							$row .= "<td class='text-center'><a title='delete' href=". set_url('admission/delete/').$result['id']." onclick=\"show_dialog(this,'Delete message','Are you sure to delete?')\"><i class='fas fa-trash delete-button'></i></a>";
+							$row .= "<td class='text-center'><a class='btn btn-blue p-1 pr-2 pl-2' href=". set_url('admission/view/').$result['id'].">View</a>";
 							$row .= "</tr>";
 							echo $row;
 						}
@@ -97,11 +92,100 @@
 				 ?>
 		</div>
 		<div id="pagination" class="col-12">
-			<span>Number of results found : <span id="row_count"><?php echo $count; ?></span></span>
+			<span>Number of Results Found : <span id="row_count"><?php echo $count; ?></span></span>
 			<div id="pagination_data" class="col-12">
 				<?php require_once(INCLUDES."pagination.php"); ?>
 				<?php display_pagination($count,$page,$per_page, "admission/list","admission_search"); ?>
 			</div>
 		</div>
 	</div>
+
+	<!-- For rejected, NotInterviewed, Registered admissions  -->
+	<div class="mt-5">
+		<h2 class="fs-30">Already Viewed Admissions</h2>
+	</div>
+	<div id="unuseful-all-admission-table"  class="admissions-table">
+		<hr>
+		<div class="d-flex justify-content-center align-items-center">
+			<form action="<?php echo set_url('admission/list'); ?>" method="post" class="d-flex align-items-center">
+				<input type="reset" value="Reset" class="btn btn-blue mt-5 mr-2">
+				<div class="w-50">
+					<label for="u-admission-search">Search : </label>
+					<input class="form-control" type="text" name="u-admission-search" id="u-admission-search" oninput="admission_search_unuseful()" value="" placeholder="Id, Grade, Name">
+				</div>
+				<div  class="d-flex flex-col  ml-5 align-items-center">
+					<label for="u-admission-state" class="mr-3 d-normal">Type : </label>
+					<select name="u-admission-state" id="u-admission-state" style="width: 110px">
+						<option value="all">All</option>
+						<option value="Rejected">Rejected</option>
+						<option value="Not Interviewed">Not Interviewed</option>
+						<option value="Registered">Registered</option>
+					</select>
+				</div>
+				<button onclick="admission_search_unuseful()" style="width:100px;" class="btn btn-blue ml-3 mt-5 d-felx"><i class="fas fa-search pr-2"></i>Filter</button>
+			</form>
+		</div>
+		<div class="col-12 mt-5 flex-col" style="position:relative;overflow-x: scroll;overflow-y: hidden;" id="admission_list_unuseful">
+				<div class="loader hide-loader">
+				 	<div class="col-12">
+						<div id="one"><div></div></div>
+						<div id="two"><div></div></div>
+						<div id="three"><div></div></div>
+						<div id="four"><div></div></div>
+						<div id="five"></div>
+				 	</div>
+				</div>
+				<?php 
+					$table = "<table class='table-strip-dark'>";
+					$table .= "<thead>
+									<tr>
+										<th>Adm. ID</th>
+										<th>Name</th>
+										<th>grade</th>
+										<th>Address</th>
+										<th>state</th>
+										<th>View</th>
+									</tr>
+								</thead>
+								<tbody id='u-tbody'>";
+					echo $table;
+					if($u_result_set && !empty($u_result_set)){
+						foreach ($u_result_set as $result) {
+							$row ="<tr>";
+							$row .= "<td>".$result['id']."</td>";
+							$row .= "<td>".stripslashes($result['name_with_initials'])."</td>";
+							$row .= "<td>".$result['grade']."</td>";
+							$row .= "<td>".stripslashes($result['address'])."</td>";
+							if($result['state'] == 'Registered'){
+								$row .= "<td class='text-center' style='background:#ff5555'>".$result['state']."</td>";
+							}else if($result['state'] == 'Rejected'){
+								$row .= "<td class='text-center' style='background:#ffffff'>".$result['state']."</td>";
+							}else if($result['state'] == 'Not Interviewed'){
+								$row .= "<td class='text-center' style='background:#00ffff'>".$result['state']."</td>";
+							}else{
+								$row .= "<td class='text-center' style='background:#333333;color:white;'>".$result['state']."</td>";
+							}
+
+							$row .= "<td class='text-center'><a class='btn btn-blue p-1 pr-2 pl-2' href=". set_url('admission/view/').$result['id'].">View</a>";
+							$row .= "</tr>";
+							echo $row;
+						}
+							echo "</tbody>";
+							echo "</table>";
+					}else{
+						echo "<tr><td colspan=7 class='text-center bg-red'>Admissions not found...</td></tr>";
+							echo "</tbody>";
+							echo "</table>";
+					}
+				 ?>
+		</div>
+		<div id="u_pagination" class="col-12">
+			<span>Number of results found : <span id="u_row_count"><?php echo $count; ?></span></span>
+			<div id="u_pagination_data" class="col-12">
+				<?php require_once(INCLUDES."pagination.php"); ?>
+				<?php display_pagination($count,$page,$per_page, "admission/list","admission_search_unuseful"); ?>
+			</div>
+		</div>
+	</div>
+
 </div>

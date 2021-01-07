@@ -57,12 +57,12 @@ function validate_contact_number($str){
 		return "Contact number must be a number";
 	}
 	//check number is mobile number
-	if( strlen($number) >2){
-		$isp = substr($str, 0,3);
-		if( !($isp == "070" || $isp == "071" || $isp == "072" || $isp == "075" || $isp == "076" || $isp == "077" || $isp == "078")){
-			return "Contact number must begin with 070, 071, 072, 075, 076, 077 or 078.";
-		}
-	}
+	// if( strlen($number) >2){
+	// 	$isp = substr($str, 0,3);
+	// 	if( !($isp == "070" || $isp == "071" || $isp == "072" || $isp == "075" || $isp == "076" || $isp == "077" || $isp == "078")){
+	// 		return "Contact number must begin with 070, 071, 072, 075, 076, 077 or 078.";
+	// 	}
+	// }
 	//not have 10 digit
 	if(strlen($str) != 10 ){
 		return "Contact Number must be 10 characters";

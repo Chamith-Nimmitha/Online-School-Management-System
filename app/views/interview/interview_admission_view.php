@@ -184,7 +184,7 @@
 						<div class="w-100 p-1"></div>
 						<div class="form-group d-flex flex-row w-auto float-right">
 							<?php 
-								if(isset($result['state']) && $result['state'] != "registered"){
+								if(isset($result['state']) && $result['state'] != "Registered"){
 									echo "<button type=\"submit\" name=\"submit\" id=\"submit\" class=\"btn btn-blue w-auto p-2\" >Register</button>";
 								}else{
 									echo "<button type=\"submit\" name=\"submit\" id=\"submit\" class=\"btn btn-gray w-auto p-2\" disabled='disabled'>Already registered</button>";
