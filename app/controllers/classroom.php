@@ -365,6 +365,44 @@
 			$this->load->view("classroom/classroom_timetable_create",$data);
 			$this->load->view("templates/footer");
 		}
+
+		// classroom timetable view
+		public function timetable_view($classroom_id){
+			if(!$this->checkPermission->check_permission("classroom","view")){
+                $this->view_header_and_aside();
+                $this->load->view("common/error");
+                $this->load->view("templates/footer");
+                return;
+            }
+            $time_map = ["1"=>"7.50a.m - 8.30a.m", "2"=>"8.30a.m - 9.10a.m", "3"=>"9.10a.m - 9.50a.m", "4"=> "9.50a.m - 10.30a.m", "5"=> "10.50a.m - 11.30a.m", "6"=>"11.30a.m - 12.10p.m", "7"=> "12.10p.m - 12.50p.m", "8"=>"12.50p.m - 1.30p.m"];
+            $day_map = ["1"=>"mon","2"=>"tue","3"=>"wed","4"=>"thu","5"=>"fri"];
+            $timetable_data = [];
+            
+            $this->load->model("classroom");
+            $result = $this->load->classroom->set_by_id($classroom_id);
+            if(!$result){
+            	$timetable_data = FALSE;
+            }
+            $timetable = $this->load->classroom->get_timetabel_object();
+            if(!$timetable){
+            	$timetable_data = FALSE;
+
+            }else{
+	            $timetable_data =$timetable->get_timetable();
+            }
+
+            $data = [
+                'timetable_data'=>$timetable_data,
+                'time_map'=>$time_map,
+                "day_map"=>$day_map,
+                "classroom_id" =>$classroom_id,
+                "grade" =>$this->load->classroom->get_grade(),
+                "class" =>$this->load->classroom->get_class(),
+            ];
+            $this->view_header_and_aside();
+            $this->load->view("classroom/classroom_timetable_view",$data);
+            $this->load->view("templates/footer");
+		}
 		// update classroom
 		public function update($classroom_id){
 			if(!$this->checkPermission->check_permission("classroom","update")){

@@ -432,10 +432,10 @@
 					echo "Data imported successfully !"	;
 			}
 			$this->load->view('teacher/teacher_all');
-	}
+		}
 
 		// view individual teacher attendance
-		public function attendance($teacher_id){
+		public function attendance($teacher_id=NULL){
 
 			if(!$this->checkPermission->check_permission("attendance","view")){
 				$this->view_header_and_aside();
@@ -443,6 +443,17 @@
 				$this->load->view("templates/footer");
 				return;
 			}
+			if($teacher_id == NULL){
+                if(isset($_POST['id'])){
+                    $teacher_id = $_POST['id'];
+                }else{
+                    $teacher_id = $_SESSION['user_id'];
+                }
+            }else{
+                if($_SESSION['role'] == "teacher"){
+                    $teacher_id = $_SESSION['user_id'];
+                }
+            }
 			$data = [];
 			$this->load->model("attendance");
             $result_set = $this->load->attendance->get_attendance_by_teacher_id($teacher_id);
@@ -452,14 +463,9 @@
                 $data['result_set'] = FALSE;
             }
             $data['teacher_id'] = $teacher_id;
-            // echo "<pre>";
-            // print_r($data);
-            // echo "</pre>";
-            // exit();
 			$this->view_header_and_aside();
             $this->load->view("attendance/teacher_attendance_view",$data);
             $this->load->view("templates/footer");
-
 		}	
 	 }
 ?>

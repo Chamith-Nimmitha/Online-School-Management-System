@@ -16,7 +16,7 @@
 			<form action="<?php echo set_url('classroom/list'); ?>" method="post" class="d-flex align-items-center col-12">
 				<div class="d-flex col-12 align-items-center justify-content-center">
 					<div class="mt-5">
-						<input type="reset" class="btn btn-blue" onclick="reset_form(this)" value="reset">
+						<input type="reset" class="btn btn-blue" onclick="reset_form(this)" value="Reset">
 					</div>
 					<div class="ml-5">
 						<label for="classroom-id">Classroom ID</label>
@@ -70,7 +70,7 @@
 					<div id="five"></div>
 			 	</div>
 			</div>
-		    <table class="table-strip-dark">
+		    <table class="table-strip-dark text-center">
 			    <thead>
 				    <tr>
                         <th>CLASS ID</th>
@@ -79,8 +79,12 @@
                         <th>CLASS TEACHER</th>
                         <th>STUDENTS</th>
                         <th>TIMETABLE</th>
+                        <?php 
+	                        if($_SESSION['role']==='admin'){
+                         ?>
 					    <th>UPDATE</th>
 					    <th>DELETE</th>
+						<?php } ?>
 				    </tr>
 			    </thead> 
 			    
@@ -102,27 +106,39 @@
                         <td class="text-center"><?php echo $result['class']; ?></td>
                         <td><?php echo $result['class_teacher_id']; ?></td>
                         <td>
-							<div class="login_buttons col-12 col-md-12 justify-content-end d-flex align-items-center">
+							<div class="login_buttons col-12 col-md-12 justify-content-center d-flex align-items-center">
                 				<a class="btn btn-blue p-1" href="<?php  echo set_url('classroom/student/list/'.$result['id']); ?> ">List</a>
+                				<?php 
+			                        if($_SESSION['role']==='admin'){
+		                         ?>
                 				<a class="btn btn-blue p-1 ml-3" href="<?php  echo set_url('classroom/student/add/'.$result['id']); ?>">Add</a>
+	                			<?php } ?>
 		    				</div>
 						</td>
-						<td>
-							<div class="login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center">
-                				<a class="btn btn-blue p-1" href="<?php  echo set_url('classroom/timetable/'.$result['id']); ?>">View</a>
-		    				</div>
+						<td class="text-center">
+							<?php 
+								 if($_SESSION['role']==='admin'){
+							 ?>
+            				<a class="btn btn-blue p-1" href="<?php  echo set_url('classroom/timetable/'.$result['id']); ?>">View</a>
+	            			<?php }else{ ?>
+            				<a class="btn btn-blue p-1" href="<?php  echo set_url('classroom/timetable/view/'.$result['id']); ?>">View</a>
+	        				<?php } ?>
 						</td>
-						<td>
-							<div class="login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center">
-                				<a class="btn btn-blue p-1" href="<?php echo set_url('classroom/update/'.$result['id']); ?> ">Update</a>
-		    				</div>
-						</td>
+						<?php 
+	                        if($_SESSION['role']==='admin'){
+                         ?>
+							<td>
+								<div class="login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center">
+	                				<a class="btn btn-blue p-1" href="<?php echo set_url('classroom/update/'.$result['id']); ?> ">Update</a>
+			    				</div>
+							</td>
 
-						<td>
-							<div class="login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center">
-								<a class="btn btn-lightred p-1" href="<?php echo set_url('classroom/delete/').$result['id']; ?>" onclick="return confirm('Are you sure to delete?')">Delete</a>
-		    				</div>
-						</td>
+							<td>
+								<div class="login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center">
+									<a class="btn p-1" title='Delete' href="<?php echo set_url('classroom/delete/').$result['id']; ?>" onclick="show_dialog(this,'Delete message','Are you sure to delete?')"><i class='fas fa-trash delete-button'></i></a>
+			    				</div>
+							</td>
+						<?php } ?>
 					</tr>
 
 				<?php
