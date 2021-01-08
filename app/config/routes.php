@@ -45,7 +45,9 @@
 	$routes['teacher/subject/list/$1'] = "teacher/subject_list/$1";
 	$routes['teacher/subject/student/list'] = "teacher/student_list";
 	$routes['teacher/subject/student/list/$1'] = "teacher/student_list/$1";
+	$routes['teacher/attendance'] = "teacher/attendance";
 	$routes['teacher/attendance/$1'] = "teacher/attendance/$1";
+	$routes['teacher/classroom/attendance'] = "teacher/classroom_attendance";
 
 	//classroom routes
 	$routes['classroom/list'] = "classroom/classroom_list";
@@ -56,6 +58,7 @@
 	$routes['classroom/student/list/$1'] = "classroom/student_list/$1";
 	$routes['classroom/student/add/$1'] = "classroom/add_student/$1";
 	$routes['classroom/timetable/$1'] = "classroom/timetable/$1";
+	$routes['classroom/timetable/view/$1'] = "classroom/timetable_view/$1";
 
 	// subject routes
 	$routes['subject/list'] = "subject/list";
@@ -88,6 +91,7 @@
 	// parent routes
 	$routes['parent/list'] = "parents/list";
 	$routes['parent/student/list'] = "parents/student_list";
+	$routes['parent/delete/$1'] = "parents/delete/$1";
 
 	// interview routes
 	$routes['interview/set/$1'] = "interview/set/$1";

@@ -85,7 +85,6 @@
 			return $data;
 		}
 
-
 		// unset database connection and reduce parent count
 		public function __destruct(){
 			unset($this->con);

@@ -275,6 +275,7 @@ function get_teacher_data(field,input){
 
 //  search student with pagination
 function student_search(page=null,per_page=null){
+	window.event.preventDefault();
 	var target_div = document.getElementById("student-list-table");
 	var idVal =document.getElementById("student-id").value;
 	var nameVal =idVal

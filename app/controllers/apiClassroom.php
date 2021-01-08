@@ -55,33 +55,36 @@
 					$body .= "<td>".$result['class']."</td>";
 					$body .= "<td>".$result['class_teacher_id']."</td>";
 					$body .= "<td>
-								<div class='login_buttons col-12 col-md-12 justify-content-end d-flex align-items-center'>
-	                				<a class='btn btn-blue p-1' href='".set_url('classroom/student/list/'.$result['id'])."'>List</a>
-	                				<a class='btn btn-blue p-1 ml-3' href='".set_url('classroom/student/add/'.$result['id'])."'>Add</a>
-			    				</div>
+								<div class='login_buttons col-12 col-md-12 d-flex justify-content-center align-items-center'>
+	                				<a class='btn btn-blue p-1' href='".set_url('classroom/student/list/'.$result['id'])."'>List</a>";
+	                				if($_SESSION['role']==='admin'){
+	                					$body .= "<a class='btn btn-blue p-1 ml-3' href='".set_url('classroom/student/add/'.$result['id'])."'>Add</a>";
+	                				}
+
+	    				$body .="</div>
 							</td>";
-					$body .= "<td>
-								<div class='login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center'>
-	                				<a class='btn btn-blue p-1' href='". set_url('classroom/timetable/'.$result['id'])."'>View</a>
-			    				</div>
+					$body .= "<td class='text-center'>
+                				<a class='btn btn-blue p-1' href='". set_url('classroom/timetable/'.$result['id'])."'>View</a>
 							</td>";
-					$body .= "<td>
-								<div class='login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center'>
-	                				<a class='btn btn-blue p-1' href='".set_url('classroom/update/'.$result['id'])."'>Update</a>
-			    				</div>
-							</td>";
-					$body .= "<td>
-								<div class='login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center'>
-									<a class='btn btn-lightred p-1' href='".set_url('classroom/delete/'.$result['id']) ."' onclick=\"return confirm('Are you sure to delete?')\">Delete</a>
-			    				</div>
-							</td>";
+                    if($_SESSION['role']==='admin'){							
+						$body .= "<td>
+									<div class='login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center'>
+		                				<a class='btn btn-blue p-1' href='".set_url('classroom/update/'.$result['id'])."'>Update</a>
+				    				</div>
+								</td>";
+						$body .= "<td>
+									<div class='login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center'>
+										<a class='btn p-1' title='Delete' href='".set_url('classroom/delete/'.$result['id']) ."' onclick=\"show_dialog(this,'Delete message','Are you sure to delete?')\"><i class='fas fa-trash delete-button'></i></a>
+				    				</div>
+								</td>";
+					}
 					$body .= "</tr>";
 					$grade = $result['grade'];
 				}
 				$data['body'] = $body;
 				echo json_encode($data);
 			}else{
-				$body =  "<tr><td colspan=7 class='text-center bg-red'>Classrooms not found...</td></tr>";
+				$body =  "<tr><td colspan=8 class='text-center bg-red'>Classrooms not found...</td></tr>";
 				$data['body'] = $body;
 				$data['count'] = 0;
 				echo json_encode($data);
