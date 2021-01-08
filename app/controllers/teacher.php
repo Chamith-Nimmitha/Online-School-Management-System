@@ -466,6 +466,62 @@
 			$this->view_header_and_aside();
             $this->load->view("attendance/teacher_attendance_view",$data);
             $this->load->view("templates/footer");
-		}	
+		}
+
+		// interview panel view
+		public function interview_panel_view(){
+			if(!$this->checkPermission->check_permission("interview_panel","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
+
+			$this->load->model("teacher");
+			$this->load->teacher->set_by_id($_SESSION['user_id']);
+			$interview_panel_id = $this->load->teacher->get_interview_panel_id();
+
+			$this->load->model("interviewPanel");
+			$result = $this->load->interviewPanel->get_interview_panels(['id'=>$interview_panel_id]);
+			if($result){
+				$data['interview_panel'] = $result->fetch();
+				$result = $this->load->interviewPanel->get_interview_panel_teachers($interview_panel_id);
+				if($result){
+					$data['interview_panel_teachers'] = $result->fetchAll();
+				}
+			}
+
+			$this->view_header_and_aside();
+			$this->load->view("teacher/teacher_interview_panel_view",$data);
+			$this->load->view("templates/footer");
+		}
+
+		// get teacher related interview list
+		public function interview_list(){
+			if(!$this->checkPermission->check_permission("interview_panel","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
+
+
+			$time_map = ["1"=>"7.50a.m - 8.30a.m", "2"=>"8.30a.m - 9.10a.m", "3"=>"9.10a.m - 9.50a.m", "4"=> "9.50a.m - 10.30a.m", "5"=> "10.50a.m - 11.30a.m", "6"=>"11.30a.m - 12.10p.m", "7"=> "12.10p.m - 12.50p.m", "8"=>"12.50p.m - 1.30p.m"];
+
+			$this->load->model("teacher");
+			$this->load->teacher->set_by_id($_SESSION['user_id']);
+			$interview_panel_id = $this->load->teacher->get_interview_panel_id();
+
+			$this->load->model("interview");
+			$result = $this->load->interview->search(NULL,$interview_panel_id);
+			$data['time_map']= $time_map;
+			if($result){
+				$data['interviews'] = $result->fetchAll();
+			}
+
+			$this->view_header_and_aside();
+			$this->load->view("teacher/teacher_interview_list",$data);
+			$this->load->view("templates/footer");
+		}
 	 }
 ?>

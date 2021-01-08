@@ -1,25 +1,3 @@
-<?php include_once("session.php"); ?>
-<?php require_once('../php/database.php')?>
-
-<?php 
-	if(isset($_GET['interview-panel-id'])){
-		$con->where(array('id'=>$_GET['interview-panel-id']));
-		$result_set = $con->select('interview_panel');
-		if($result_set){
-			$interview_panel = $result_set->fetch();
-			$con->where(array('interview_panel_id'=>$_GET['interview-panel-id']));
-			$interview_teachers = $con->select('teacher');
-			$interview_teachers = $interview_teachers->fetchAll();
-		}
-	}else{
-		header("Location:".set_url("pages/interview_panels_all.php"));
-	}
- ?>
-
-<?php require_once('../templates/header.php') ?>
-<?php require_once('../templates/aside.php') ?>
-
-
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 
@@ -75,9 +53,9 @@
 				<div id="interview-teachers">
 					<?php 
 
-						if(isset($interview_teachers)){
+						if(isset($interview_panel_teachers) && !empty($interview_panel_teachers)){
 							$i =1;
-							foreach ($interview_teachers as $id) {
+							foreach ($interview_panel_teachers as $id) {
 								$row = '<div id="teacherid-'.$i.'" class="form-group interview-teacher-id">';
 								$row .= "<label for='teacher-".$i."'> Teacher ID (<code title=\"required\"> * </code>)</label>";
 								$row .= '<input type="text" name="teacher-'.$i.'" id="teacher-'.$i.'" required="required" value="';
@@ -94,4 +72,3 @@
 		</div>
 	</form>
 </div>
-<?php require_once("../templates/footer.php") ?>

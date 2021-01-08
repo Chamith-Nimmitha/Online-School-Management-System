@@ -37,7 +37,7 @@
 				$where_flag = 1;
 			}
 
-			if($state != 'all'){
+			if($state != NULL && $state != 'all'){
 				if($where_flag ===1){
 					$query .= " && `state`= ? ";
 				}else{
