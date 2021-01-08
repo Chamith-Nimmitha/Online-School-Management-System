@@ -76,13 +76,13 @@
 							</li>
 							<?php if(isset($interview_panel_id)){ ?>
 							<li id="interview-li" class="nav-item aside-li">
-								<a href="<?php echo set_url('teacher/interview/panel/'.$interview_panel_id);?>" class="nav-link">Interviews</a>
+								<a href="<?php echo set_url('teacher/interview/panel');?>" class="nav-link">Interviews</a>
 								<button class="toggle-button" target="interview-nav">
 									<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px">
 								</button>
 									<div id="interview-nav" class="no-collapsed nav sub-nav">
 										<ul class="d-flex flex-col">
-											<li class="nav-item"><a href="<?php echo set_url('teacher/interview/panel/'.$interview_panel_id);?>" class="nav-link"  parent-li="interview-li">My panel</a></li>
+											<li class="nav-item"><a href="<?php echo set_url('teacher/interview/panel');?>" class="nav-link"  parent-li="interview-li">My panel</a></li>
 											<li class="nav-item">
 												<a href="<?php echo set_url('teacher/interviews'); ?>"  class="nav-link" parent-li="interview-li">Interview List</a>
 											</li>
