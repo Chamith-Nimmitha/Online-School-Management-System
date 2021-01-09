@@ -12,6 +12,10 @@
 			echo "</p>";
 		}
 	 ?>
+
+	 <div class="d-flex justify-content-center mt-5">
+	 	<h2 style="font-size: 30px;">Teacher Subject List</h2>
+	 </div>
 	
 	<div class="col-8">
 		<form method="post" class="col-12">
@@ -67,14 +71,14 @@
 							$row .= "<td>".$subjects[$i]['name']."</td>";
 							$row .= "<td>".$subjects[$i]['code']."</td>";
 							$row .= "<td class='text-center'>".$subjects[$i]['grade']."</td>";
-							$row .= "<td class='text-center'><a href='/mymvc/teacher/subject/student/list/".$teacher_subject[$i]['id']."' class='btn btn-blue t-d-none p-1'>List</a></td>";
-							$row .= "<td class='text-center'><a href='teacher_subject_timetable.php?id=".$teacher_subject[$i]['id']."' class='btn btn-blue t-d-none p-1'>timetable</a></td>";
+							$row .= "<td class='text-center'><a href='/mymvc/teacher/subject/student/list/".$subjects[$i]['teacher_subject_id']."' class='btn btn-blue t-d-none p-1'>List</a></td>";
+							$row .= "<td class='text-center'><a href='".set_url('teacher/subject/timetable/'.$subjects[$i]['teacher_subject_id'])."' class='btn btn-blue t-d-none p-1'>timetable</a></td>";
 							$row .="</tr>";
 							echo $row;
 						}
 						$_SESSION['back'] = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 					}else{
-						echo "<tr><td colspan=9 class='text-center bg-red'>Students not found...</td></tr>";
+						echo "<tr><td colspan=9 class='text-center bg-red'>Students Not Found...</td></tr>";
 					}
 					echo "</tbody>";
 					echo "</table>";

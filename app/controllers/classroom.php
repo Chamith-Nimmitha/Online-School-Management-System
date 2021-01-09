@@ -256,7 +256,7 @@
 
 		// get classroom timetable
 		public function timetable($classroom_id){
-			if(!$this->checkPermission->check_permission("classroom","view")){
+			if(!$this->checkPermission->check_permission("classroom","create")){
 				$this->view_header_and_aside();
 				$this->load->view("common/error");
 				$this->load->view("templates/footer");

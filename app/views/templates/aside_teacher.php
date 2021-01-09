@@ -20,7 +20,9 @@
 								<nav class="nav sub-nav no-collapsed" id="attendance-nav">
 									<ul class="d-flex flex-col">
 										<li class="nav-item"><a href="<?php echo set_url('teacher/attendance') ?>" parent-li="attendance-li" class="nav-link">My Attendance</a></li>
+										<?php if(isset($classroom_id) && $classroom_id != FALSE){ ?>
 										<li class="nav-item"><a href="<?php echo set_url('teacher/classroom/attendance') ?>" parent-li="attendance-li" class="nav-link">Mark classroom Attendance</a></li>
+										<?php } ?>
 									</ul>
 								</nav>
 							</li>
@@ -60,7 +62,7 @@
 								</nav>
 							</li>
 							<li class="nav-item aside-li" id="subject-li">
-								<a href="<?php echo set_url('pages/teacher_subject_list.php',array('teacher_id'=>$_SESSION['user_id'])); ?>" class="nav-link">My Subjects</a>
+								<a href="<?php echo set_url('teacher/subject/list') ?>" class="nav-link">My Subjects</a>
 								<button class="toggle-button" target="subject-nav">
 									<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px" alt="">
 								</button>
@@ -68,9 +70,7 @@
 								<nav class="nav sub-nav no-collapsed" id="subject-nav">
 									<ul class="d-flex flex-col">
 										<li class="nav-item">
-											<a href="<?php echo set_url('pages/teacher_subject_list.php',array('teacher_id'=>$_SESSION['user_id'])); ?>" class="nav-link" parent-li="subject-li">Subjects list</a></li>
-										<li class="nav-item">
-											<a href="#" class="nav-link" parent-li="subject-li">Subjects Complaints</a></li>
+											<a href="<?php echo set_url('teacher/subject/list',array('teacher_id'=>$_SESSION['user_id'])); ?>" class="nav-link" parent-li="subject-li">Subjects list</a></li>
 									</ul>
 								</nav>
 							</li>

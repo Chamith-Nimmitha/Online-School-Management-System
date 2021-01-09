@@ -1,21 +1,4 @@
 
-<?php 
-
-	$student_list = array();
-	$student['id'] = "1";
-	$student['name_with_initials'] = "Kamal Perera";
-	$student['email'] = "kamal@gmail.com";
-	$student['contact_number'] = "0771234567";
-	$student['classroom_id'] = "20";
-	array_push($student_list, $student);
-	$student['id'] = "2";
-	$student['name_with_initials'] = "Sunil Gamage";
-	$student['email'] = "sunil@gmail.com";
-	$student['contact_number'] = "0775747474";
-	$student['classroom_id'] = "21";
-	array_push($student_list, $student);
- ?>
-
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 
 	<div class="p-5  w-100 d-flex align-items-center flex-col">
