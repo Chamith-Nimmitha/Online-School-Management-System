@@ -43,8 +43,8 @@
 	$routes['teacher/delete/$1'] = "teacher/delete/$1";
 	$routes['teacher/subject/list'] = "teacher/subject_list";
 	$routes['teacher/subject/list/$1'] = "teacher/subject_list/$1";
-	$routes['teacher/subject/student/list'] = "teacher/student_list";
 	$routes['teacher/subject/student/list/$1'] = "teacher/student_list/$1";
+	$routes['teacher/subject/timetable/$1'] = "teacher/subject_timetable/$1";
 	$routes['teacher/attendance'] = "teacher/attendance";
 	$routes['teacher/attendance/$1'] = "teacher/attendance/$1";
 	$routes['teacher/classroom/attendance'] = "teacher/classroom_attendance";

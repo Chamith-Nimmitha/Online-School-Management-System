@@ -70,34 +70,21 @@
 			}
 		}
 
-		// set by teacher id
-		public function set_by_teacher_id($teacher_id){
-			$result_set = $this->con->select("teacher_subject", ['teacher_id'=>$teacher_id]);
-			if($result_set){
-				$result_set = $result_set->fetchAll();
-				try {
-					$this->con->db->beginTransaction();
-					$data = [];
-					foreach ($result_set as $result) {
-						$sub = new SubjectModel();
-						$result = $sub->set_by_id($result['subject_id']);
-						if(!$result){
-							throw new PDOException();
-						}
-						$data[] = $result->get_data();
-					}
-					return $data;
-				} catch (Exception $e) {
-					return FALSE;
-				}
-			}else{
-				return FALSE;
-			}
-		}
-
 		// get result count
 		public function get_count(){
 			return $this->con->get_count();
+		}
+
+		// get student list for teacher_subject
+		public function get_student_list($teacher_subject_id){
+			$query = "SELECT `s`.* FROM `student` AS `s` INNER JOIN `tea_sub_student` AS `tss` ON `s`.`id`=`tss`.`student_id` WHERE `tss`.`teacher_subject_id`=?";
+			return $this->con->pure_query($query,[$teacher_subject_id]);
+		}
+
+		// get teacher and subject data using teacher_subject_id
+		public function get_teacher_subject_info($teacher_subject_id){
+			$query = "SELECT `s`.*,`ts`.`teacher_id` AS `teacher_id` FROM `subject` AS `s` INNER JOIN `teacher_subject` AS `ts` ON `s`.`id`=`ts`.`subject_id` WHERE `ts`.`id`=? ";
+			return $this->con->pure_query($query, [$teacher_subject_id]);
 		}
 
 		// register a new subject

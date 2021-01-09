@@ -67,7 +67,7 @@
 							$row .= "<td>".$subjects[$i]['name']."</td>";
 							$row .= "<td>".$subjects[$i]['code']."</td>";
 							$row .= "<td class='text-center'>".$subjects[$i]['grade']."</td>";
-							$row .= "<td class='text-center'><a href='/mymvc/teacher/subject/student/list/".$teacher_subject[$i]['id']."' class='btn btn-blue t-d-none p-1'>List</a></td>";
+							$row .= "<td class='text-center'><a href='/mymvc/teacher/subject/student/list/".$subjects[$i]['teacher_subject_id']."' class='btn btn-blue t-d-none p-1'>List</a></td>";
 							$row .= "<td class='text-center'><a href='teacher_subject_timetable.php' class='btn btn-blue t-d-none p-1'>timetable</a></td>";
 							$row .="</tr>";
 							echo $row;
@@ -98,18 +98,18 @@
 						<div id="assign-subject">
 							<input type="hidden" name="id" placeholder="Teacher ID" value="<?php if(isset($teacher_info['id'])){echo $teacher_info['id'];} ?>">
 							<?php 
-								if(isset($subject_info) && !empty($subject_info)){
-									for ($i=1; $i <= count($subject_info); $i++) {
+								if(isset($subjects) && !empty($subjects)){
+									for ($i=1; $i <= count($subjects); $i++) {
 										$sub = '<div  class="form-group d-flex flex-col border mb-5">
 											<label>Subject-0'.$i.'</label>
 											<div class=" d-flex flex-wrap justify-content-between"> 
-												<input type="text" name="subject-0'.$i.'-id" id="subject-0'.$i.'-id" class="col-3  d-inline-block" placeholder="Subject ID" oninput="get_subject_data(\'id\',this)" value='.$subject_info[$i-1]['id'].'>
-												<input type="text" name="subject-0'.$i.'-code" id="subject-0'.$i.'-code" class="col-3  d-inline-block" placeholder="Subject Code"  oninput="get_subject_data(\'code\',this)" value='.$subject_info[$i-1]['code'].'>
-												<input type="text" name="subject-0'.$i.'-name" id="subject-0'.$i.'-name" class="col-3  d-inline-block" placeholder="Subject Name" disabled="disabled" value='.$subject_info[$i-1]['name'].'>
-												<input type="hidden" name="old-subject-0'.$i.'-id" id="old-subject-0'.$i.'-id" class="col-3  d-inline-block" placeholder="Subject ID" oninput="get_subject_data(\'id\',this)" value='.$subject_info[$i-1]['id'].'>
+												<input type="text" name="subject-0'.$i.'-id" id="subject-0'.$i.'-id" class="col-3  d-inline-block" placeholder="Subject ID" oninput="get_subject_data(\'id\',this)" value='.$subjects[$i-1]['id'].'>
+												<input type="text" name="subject-0'.$i.'-code" id="subject-0'.$i.'-code" class="col-3  d-inline-block" placeholder="Subject Code"  oninput="get_subject_data(\'code\',this)" value='.$subjects[$i-1]['code'].'>
+												<input type="text" name="subject-0'.$i.'-name" id="subject-0'.$i.'-name" class="col-3  d-inline-block" placeholder="Subject Name" disabled="disabled" value='.$subjects[$i-1]['name'].'>
+												<input type="hidden" name="old-subject-0'.$i.'-id" id="old-subject-0'.$i.'-id" class="col-3  d-inline-block" placeholder="Subject ID" oninput="get_subject_data(\'id\',this)" value='.$subjects[$i-1]['id'].'>
 											</div>
 											<div class="w-100 justify-content-end d-flex pr-5">
-												<button class="btn btn-blue" type="button" id="'.$subject_info[$i-1]['id'].' '.$teacher_info['id'].'" onclick="teacher_subject_remove(this)" >- remove subject</button>
+												<button class="btn btn-blue" type="button" id="'.$subjects[$i-1]['id'].' '.$teacher_info['id'].'" onclick="teacher_subject_remove(this)" >- remove subject</button>
 											</div>
 										</div>';
 										echo $sub;

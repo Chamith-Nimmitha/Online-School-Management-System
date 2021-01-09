@@ -36,6 +36,7 @@
 				}
 				$c = $this->get_classroom_object();
 				if($c){
+					$this->classroom_id = $c->get_id();
 					$this->grade = $c->get_grade();
 					$this->class = $c->get_class();
 				}
@@ -55,6 +56,7 @@
 				}
 				$c = $this->get_classroom_object();
 				if( $c->get_grade() !== NULL){
+					$this->classroom_id = $c->get_id();
 					$this->grade = $c->get_grade();
 				}
 				$this->class = $c->get_class();
@@ -100,6 +102,7 @@
 			}
 		}
 
+		// get all related data
 		public function get_data(){
 			$data['id'] = $this->id;
 			$data['name_with_initials'] = $this->name_with_initials;
@@ -120,6 +123,15 @@
 			$data['is_deleted'] = $this->is_deleted;
 			return $data;
 		}
+
+		// get subjects this teacher teaches
+		public function get_subjects(){
+			$query = "SELECT `s`.*,`ts`.`id` AS `teacher_subject_id` FROM `subject` AS `s` INNER JOIN `teacher_subject` AS `ts` ON `s`.`id`=`ts`.`subject_id` WHERE `ts`.`teacher_id`= ?";
+			return $this->con->pure_query($query,[$this->id]);
+		}
+
+		// get teacher_subject ids
+		// public function 
 
 		public function insert_data($data){
 			return $result = $this->con->insert("teacher",$data);

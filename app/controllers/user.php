@@ -96,15 +96,15 @@
 
 		// user can  edit,view own profile
 		// admin can edit,view all profiles
-		public function profile($role="",$id=""){
+		public function profile($role="",$teacher_id=""){
 			if(!$this->checkPermission->check_permission("profile","view")){
 				$this->view_header_and_aside();
 				$this->load->view("common/error");
 				$this->load->view("templates/footer");
 				return;
 			}
-			if( empty($id)){
-				$id = $_SESSION['user_id'];
+			if( empty($teacher_id)){
+				$teacher_id = $_SESSION['user_id'];
 				$role = $_SESSION['role'];
 			}
 			if($_SESSION['role'] === "admin"){
@@ -112,13 +112,24 @@
 			}else{
 				$is_admin = FALSE;
 			}
+			if(empty($role) || $is_admin || $role == $_SESSION['role']){
+				$editable = TRUE;
+			}else{
+				$editable = FALSE;
+			}
 			$this->load->model($role);
-			$result = $this->load->{$role}->set_by_id($id);
+			$result = $this->load->{$role}->set_by_id($teacher_id);
+			if(!$result){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;	
+			}
 			$field_errors = [];
 
 			// if user update profile
 			if(isset($_POST['submit'])){
-				if(!$this->checkPermission->check_permission("profile","update")){
+				if(!$this->checkPermission->check_permission("profile","update") || ( !$is_admin &&  ($_SESSION['user_id'] != $teacher_id))){
 					$this->view_header_and_aside();
 					$this->load->view("common/error");
 					$this->load->view("templates/footer");
@@ -233,7 +244,7 @@
 				if(empty($field_errors)){
 					if(isset($_FILES['profile-photo']['tmp_name']) && !empty($_FILES['profile-photo']['tmp_name'])){
 						$target = BASEPATH."public/uploads/{$role}_profile_photo/";
-						$rename = $id;
+						$rename = $teacher_id;
 						$data['profile_photo'] = $rename . "." .strtolower(pathinfo($_FILES['profile-photo']['name'], PATHINFO_EXTENSION));
 						$res = upload_file($_FILES['profile-photo'],$target, 2000000, $rename);
 						if($res !== 1){
@@ -243,7 +254,7 @@
 
 					if(empty($field_errors)){
 						$this->load->model("user");
-						$result = $this->load->user->update_user_data("{$role}",$data,$id);
+						$result = $this->load->user->update_user_data("{$role}",$data,$teacher_id);
 						if($result === 1){
 							if(isset($_FILES['profile-photo']['tmp_name'])&& !empty($_FILES['profile-photo']['tmp_name'])){
 								if($_SESSION['role'] === $role){
@@ -256,18 +267,17 @@
 				}
 			}
 
+			$this->load->{$role}->set_by_id($teacher_id);
+			$result = $this->load->{$role}->get_data();
 			// load header and navbar
 			$this->view_header_and_aside();
-
 			// load profile page
-			$this->load->{$role}->set_by_id($id);
-			$result = $this->load->{$role}->get_data();
 			if(!empty($field_errors)){
-				$this->load->view("{$role}/{$role}_profile",["result"=>$result,"field_errors"=>$field_errors,"id"=>$id,"is_admin"=>$is_admin]);
+				$this->load->view("{$role}/{$role}_profile",["result"=>$result,"field_errors"=>$field_errors,"id"=>$teacher_id,"is_admin"=>$is_admin,"editable"=>$editable]);
 			}else if(isset($info) && !empty($info)){
-				$this->load->view("{$role}/{$role}_profile",["result"=>$result,"info"=>$info,"id"=>$id,"is_admin"=>$is_admin]);
+				$this->load->view("{$role}/{$role}_profile",["result"=>$result,"info"=>$info,"id"=>$teacher_id,"is_admin"=>$is_admin,"editable"=>$editable]);
 			}else{
-				$this->load->view("{$role}/{$role}_profile",["result"=>$result,"id"=>$id,"is_admin"=>$is_admin]);
+				$this->load->view("{$role}/{$role}_profile",["result"=>$result,"id"=>$teacher_id,"is_admin"=>$is_admin,"editable"=>$editable]);
 			}
 			$this->load->view("templates/footer");
 		}

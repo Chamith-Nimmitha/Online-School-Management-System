@@ -214,11 +214,20 @@
 			}
 		}
 
-		public function pure_query($query){
+		public function pure_query($query,$params=[]){
 			$this->reset_values();
-			$this->pre_query = $query;
-			// echo $query;
-			return $this->db->query($query);
+			if(empty($params)){
+				$this->pre_query = $query;
+				return $this->db->query($query);
+			}else{
+				$stmt = $this->db->prepare($query);
+				if($stmt->execute($params)){
+					return $stmt;
+				}else{
+					return FALSE;
+				}
+			}
+
 		}
 
 		public function get_next_auto_increment($tablename){

@@ -63,9 +63,13 @@
 
 	    				$body .="</div>
 							</td>";
-					$body .= "<td class='text-center'>
-                				<a class='btn btn-blue p-1' href='". set_url('classroom/timetable/'.$result['id'])."'>View</a>
-							</td>";
+					$body .= "<td class='text-center'>";
+						if($_SESSION['role']==='admin'){
+                			$body .= "<a class='btn btn-blue p-1' href='". set_url('classroom/timetable/'.$result['id'])."'>View</a>";
+            			}else{
+                			$body .= "<a class='btn btn-blue p-1' href='".set_url('classroom/timetable/view/'.$result['id'])."'>View</a>";
+            			}
+					$body .= "</td>";
                     if($_SESSION['role']==='admin'){							
 						$body .= "<td>
 									<div class='login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center'>

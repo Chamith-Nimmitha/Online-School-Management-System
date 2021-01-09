@@ -45,7 +45,7 @@
 							for ($j=1; $j <=5 ; $j++) { 
 								$row .= "<td class='text-center'>";
 								if( $timetable_data[$day_map[$j]][$period] != "FREE"){
-									$row .=  substr($timetable_data[$day_map[$j]][$period], strlen($student_grade)+3);
+									$row .=  substr($timetable_data[$day_map[$j]][$period], strlen($grade)+3);
 								}else{
 									$row .= $timetable_data[$day_map[$j]][$period];
 								}

@@ -56,31 +56,6 @@
 			}
 		}
 
-		// set data using teacher_id
-		public function set_by_teacher_id($teacher_id){
-				$subjects = array();
-				$result_set = $this->con->select("teacher_subject",array("teacher_id"=>$teacher_id));
-				if($result_set && $result_set->rowCount() >=1){
-					$teacher_subject = $result_set->fetchAll();
-						foreach ($teacher_subject as $result) {
-							$result =$this->con->select("subject",array("id"=>$result['subject_id']));
-							if($result && $result->rowCount() == 1){
-								array_push($subjects, $result->fetch());
-							}
-						}
-						foreach ($subjects as $subject) {
-							foreach ($subject as $key => $value) {
-								$this->$key = $value;
-							}
-						}
-										
-
-				return $subjects;
-			}else{
-				return FALSE;
-			}
-		}
-
 
 		// getters
 		public function get_id(){return $this->id;}
