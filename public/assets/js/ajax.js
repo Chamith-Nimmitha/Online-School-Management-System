@@ -711,7 +711,11 @@ function classroom_attendance_search(){
 	}).then( (text) => {
 		document.getElementById('tbody').innerHTML = text;
 		var date = document.getElementById('date').value;
-		document.getElementById('attendance_date').innerHTML = date;
+		if(date.length != 0 ){
+			document.getElementById('attendance_date').innerHTML = date;
+		}else{
+			document.getElementById('attendance_date').innerHTML = new Date().toISOString().slice(0, 10);
+		}
 		document.getElementById('date_hidden').value = date
 	}).catch( ( error) => {
 		console.error(error)

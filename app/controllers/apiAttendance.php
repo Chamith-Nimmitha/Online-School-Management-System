@@ -93,20 +93,22 @@
 					$body .= "<td>{$result['id']}</td>";
 					$body .= "<td>{$result['name_with_initials']}</td>";
 					$body .= "<td>{$result['date']}</td>";
-					$body .= "<td class='d-flex flex-col'>
-                                <label for='present-".$result['id']."'>
+					$body .= "<td>
+                                <label class='p-2 pr-4 pl-4' for='present-".$result['id']."'>
                                     <input type='radio' id='present-".$result['id']."' name='attendance-".$result['id']."' value='1'";
                                     if(isset($result['attendance']) && $result['attendance'] === 1){
                                     	$body .= "checked='checked'";
                                     }
-                                    $body .= "> Present
+                                    $body .= ">
                                 </label>
-                                <label for='absent-".$result['id']."'>
+                              </td>
+                              <td>
+                                <label class='p-2 pr-4 pl-4' for='absent-".$result['id']."'>
                                     <input type='radio' id='absent-".$result['id']."' name='attendance-".$result['id']."' value='0'";
                                     if(isset($result['attendance']) && $result['attendance'] === 0){
                                     	$body .= "checked='checked'";
                                     }
-                                    $body .= "> Absent
+                                    $body .= ">
                                 </label>
                             </td>";
 					$body .= "<td><input type='text' name='note-".$result['id']."' value='".$result['note']."'></td>";

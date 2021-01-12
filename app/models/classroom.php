@@ -124,6 +124,12 @@
 			}	
 		}
 
+		// get student count
+		public function get_student_count(){
+			$query = "SELECT COUNT(*) AS `count` FROM `student` WHERE `classroom_id`= ? ";
+			return $this->con->pure_query($query,[$this->id]);
+		}
+
 		// get classroom student list array
 		public function get_students_data($filters=""){
 			if(!empty($filters)){

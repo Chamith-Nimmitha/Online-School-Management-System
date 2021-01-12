@@ -13,12 +13,12 @@
 			if(isset($_POST['submit'])) {
 				$email = $_POST["email"];
 				$user_password = $_POST["password"];
+				$info = "";
 
 				$this->load->model("user");
 				$result = $this->load->user->get_user_data("user",$email);
 
 				if($result){
-					// $_SESSION['role'] = $result['role'];
 					$salt =$result['salt'];
 					$db_hashed_pass =$result['password'];
 					$user_hashed_pass = sha1($user_password.$salt);
@@ -67,11 +67,10 @@
 				}
 			}
 			$this->view_header_and_aside();
-			if( strlen($info) >0){
-				$this->load->view("common/login",["info"=>$info]);
-			}else{
-				$this->load->view("common/login");
-			}
+			$data['message'] = $message;
+			$data['info'] = $info;
+
+			$this->load->view("common/login",$data);
 			$this->load->view("templates/footer");
 		}
 
