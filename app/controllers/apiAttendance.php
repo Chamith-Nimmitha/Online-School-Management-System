@@ -46,10 +46,10 @@
 	        			$body .= "<tr><td colspan=8 class='text-center bg-gray'></td></tr>";
 	        		}
 					$body .="<tr>";
-					$body .= "<td>".$result['id']."</td>";
-					$body .= "<td>".$result['grade']."</td>";
-					$body .= "<td>".$result['class']."</td>";
-					$body .= "<td>".$result['class_teacher_id']."</td>";
+					$body .= "<td class='text-center'>".$result['id']."</td>";
+					$body .= "<td class='text-center'>".$result['grade']."</td>";
+					$body .= "<td class='text-center'>".$result['class']."</td>";
+					$body .= "<td class='text-center'>".$result['class_teacher_id']."</td>";
 					$body .= "<td class='text-center'>
 								<div>
 	                				<a class='btn btn-blue' href='". set_url('attendance/classroom/view/'.$result['id'])."'>View</a>
