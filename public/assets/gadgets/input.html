@@ -1,0 +1,106 @@
+<style>
+
+	#outer{
+		width: 100% !important;
+		height: 100vh !important;
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+	}
+	.test-field-outer{
+		width: 400px !important;
+		margin: 0 auto !important;
+		display: flex !important;
+		flex-direction: column !important;
+		justify-content: center !important;
+	}
+
+	.test-field-outer>.test-field-inner{
+		background: #E1F3F3;
+		height: 50px !important;
+		width: 100% !important;
+		position: relative !important;
+		display: flex !important;
+		align-items: center !important;
+		margin-bottom: 5px !important;
+		border-radius: 5px;
+	}
+
+	.test-field-inner>input{
+		width: 90% !important;
+		height: 100% !important;
+		border: none !important;
+		position: absolute !important;
+		right: 0 !important;
+		border-bottom: 1px solid gray !important;
+		outline: none !important;
+		padding-top: 20px !important;
+		border-radius: 0;
+		padding-left: 20px !important;
+		background: transparent;
+	}
+
+	.test-field-inner>input::placeholder{
+		opacity: 0 !important;
+	}
+
+	.test-field-inner>label{
+		position: absolute !important;
+		width: 90% !important;
+		height: 100% !important;
+		bottom: 0 !important;
+		right: 0 !important;
+		pointer-events: none !important;
+		overflow: hidden !important;
+	}
+
+	.test-field-inner>label::after{
+		content: "" !important;
+		position: absolute !important;
+		bottom: -1px !important;
+		width: 100% !important;
+		height: 100% !important;
+		bottom: 0;
+		left: 0;
+		border-bottom: 3px solid blue !important;
+		transition: all 0.3s linear !important;
+		transform: translateX(-100%) !important;
+	}
+
+	.test-field-inner>label>span{
+		position: absolute !important;
+		bottom: 5px !important;
+		left: 20px !important;
+		transition: all 0.3s linear !important;
+	}
+
+	.test-field-inner i{
+		font-size: 30px !important;
+		/*padding-top: 20px !important;*/
+	}
+
+	.test-field-inner>input:focus + label span,
+	.test-field-inner>input:not(:placeholder-shown) + label span{
+		transform: translateY(-110%) !important;
+		color: blue !important;
+		font-size: 14px !important;
+	}
+	.test-field-inner>input:focus + label::after,
+	.test-field-inner>input:not(:placeholder-shown) + label::after{
+		transform: translateX(0%) !important;
+	}		
+</style>
+
+	<!-- Sample -->
+	<!-- <div id="outer">
+		<div class="wrapper">
+			<div class="test-field-outer">
+				<div class="test-field-inner">
+					<i class="fas fa-envelope"></i>
+					<input type="text" name="email" id='email' autocomplete="off" placeholder="email">
+					<label for="email" id="label"><span class="label-span">Email</span></label>
+				</div>
+				<p class="bg-red fg-white pl-5 p-2  w-100">dfdfdf</p>
+			</div>
+		</div>
+	</div> -->

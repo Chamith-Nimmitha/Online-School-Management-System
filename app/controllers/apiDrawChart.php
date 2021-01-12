@@ -31,17 +31,39 @@
 				$month = NULL;
 			}
 
+			// get student count in classroom
+			$this->load->model('student');
+			$result = $this->load->student->set_by_id($student_id);
+			if(!$result){
+				return;
+			}
+			$classroom = $this->load->student->get_classroom_object();
+			if(!$result){
+				return;
+			}
+			$result = $classroom ->get_student_count();
+			$student_count = $result->fetch()['count'];
+			unset($classroom);
+
+			// get classroom attendance
 			$this->load->model('attendance');
 			$present_result_set = $this->load->attendance->student_attendance_overview_bar($student_id,$year,$month,1);
 			$absent_result_set = $this->load->attendance->student_attendance_overview_bar($student_id,$year,$month,0);
+			$overrole_present = $this->load->attendance->classroom_attendance_count($student_id,$year,$month,1);
+			$overrole_absent = $this->load->attendance->classroom_attendance_count($student_id,$year,$month,0);
+			// $overrole_absent = $this->load->attendance->classroom_attendance_count();
 			$formatted_data = ["present"=>[],"absent"=>[]];
 			$labels = [];
 			if($present_result_set && $absent_result_set){
 				$present_result_set = $present_result_set->fetchAll();
 				$absent_result_set = $absent_result_set->fetchAll();
+				$overrole_present = $overrole_present->fetchAll();
+				$overrole_absent = $overrole_absent->fetchAll();
 				if($month == NULL){
 					$formatted_data['present'] = [0,0,0,0,0,0,0,0,0,0,0,0];
 					$formatted_data['absent'] = [0,0,0,0,0,0,0,0,0,0,0,0];
+					$formatted_data['present_presentage'] = [0,0,0,0,0,0,0,0,0,0,0,0];
+					$formatted_data['absent_presentage'] = [0,0,0,0,0,0,0,0,0,0,0,0];
 					$labels = [1,2,3,4,5,6,7,8,9,10,11,12];
 					for ($i=0; $i < count($labels); $i++) {
 						$labels[$i] = date("F", mktime(0,0,0,$labels[$i],1,$year));
@@ -52,9 +74,22 @@
 					foreach ($absent_result_set as $result) {
 						$formatted_data["absent"][$result['month']-1] = $result['count'];
 					}
+
+					foreach ($overrole_present as $result) {
+						if($result['count'] != 0){
+							$formatted_data["present_presentage"][$result['month']-1] = $result['count']/$student_count;
+						}
+					}
+					foreach ($overrole_absent as $result) {
+						if($result['count'] != 0){
+							$formatted_data["absent_presentage"][$result['month']-1] = $result['count']/$student_count;
+						}
+					}
 				}else{
 					$formatted_data['present'] = [0,0,0,0,0,0];
 					$formatted_data['absent'] = [0,0,0,0,0,0];
+					$formatted_data['present_presentage'] = [0,0,0,0,0,0];
+					$formatted_data['absent_presentage'] = [0,0,0,0,0,0];
 					$labels = ["week-1","week-2","week-3","week-4","week-5","week-6"];
 					foreach ($present_result_set as $result) {
 						if( date('W', mktime(0,0,0,1,1,$year)) != 1 ){
@@ -71,6 +106,34 @@
 							$week_no = ($result['week'] +1 - date("W", mktime(0,0,0,$month,1,$year)));
 						}
 						$formatted_data["absent"][$week_no] = $result['count'];
+					}
+					foreach ($absent_result_set as $result) {
+						if( date('W', mktime(0,0,0,1,1,$year)) != 1 ){
+							$week_no = ($result['week'] +1 - (date("W", mktime(0,0,0,$month,1,$year))+1)%53);
+						}else{
+							$week_no = ($result['week'] +1 - date("W", mktime(0,0,0,$month,1,$year)));
+						}
+						$formatted_data["absent"][$week_no] = $result['count'];
+					}
+					foreach ($overrole_present as $result) {
+						if( date('W', mktime(0,0,0,1,1,$year)) != 1 ){
+							$week_no = ($result['week'] +1 - (date("W", mktime(0,0,0,$month,1,$year))+1)%53);
+						}else{
+							$week_no = ($result['week'] +1 - date("W", mktime(0,0,0,$month,1,$year)));
+						}
+						if( $result['count'] != 0){
+							$formatted_data["present_presentage"][$week_no] = $result['count']/$student_count;
+						}
+					}
+					foreach ($overrole_absent as $result) {
+						if( date('W', mktime(0,0,0,1,1,$year)) != 1 ){
+							$week_no = ($result['week'] +1 - (date("W", mktime(0,0,0,$month,1,$year))+1)%53);
+						}else{
+							$week_no = ($result['week'] +1 - date("W", mktime(0,0,0,$month,1,$year)));
+						}
+						if ($result['count'] != 0) {
+							$formatted_data["absent_presentage"][$week_no] = $result['count']/$student_count;
+						}
 					}
 				}
 				echo json_encode(["labels"=>$labels,"data"=>$formatted_data]);

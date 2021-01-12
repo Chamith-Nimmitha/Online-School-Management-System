@@ -123,8 +123,12 @@
 		public function get_classroom_object(){
 			require_once(MODELS."classroom.php");
 			$classroom = new ClassroomModel();
-			$classroom->set_by_id($this->classroom_id);
-			return $classroom;
+			$result = $classroom->set_by_id($this->classroom_id);
+			if($result){
+				return $classroom;
+			}else{
+				return FALSE;
+			}
 		}
 
 		//get timetable object which contains classroom timetable details

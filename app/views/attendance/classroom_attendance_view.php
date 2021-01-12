@@ -26,15 +26,19 @@
             <input type="hidden" name="classroom_id_hidden" class="btn btn-blue" value="<?php echo $classroom_data['id']; ?>">
             <input type="hidden" name="date_hidden" id="date_hidden" value="<?php if(isset($date)){echo $date;}else{echo date("Y-m-d");} ?>">
             <table class="table-strip-dark">
-                <caption class="p-5"><b>Attendance Sheet <br><span id="attendance_date"><?php if(isset($date)){echo $date;}else{echo date("Y-m-d");} ?></span> <br>Class <?php echo $classroom_data['grade']."-".$classroom_data['class']; ?></b></caption>
+                <caption class="p-5"><b>Attendance Sheet <br><span id="attendance_date"><?php if(isset($date) && !empty($date)){echo $date;}else{echo date("Y-m-d");} ?></span> <br>Class <?php echo $classroom_data['grade']."-".$classroom_data['class']; ?></b></caption>
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Student Name</th>
-                            <th>Date</th>
-                            <th>Attendance</th>
-                            <th>Note</th>
-                            <th>View Attendance</th>
+                            <th rowspan="2">ID</th>
+                            <th rowspan="2">Student Name</th>
+                            <th rowspan="2">Date</th>
+                            <th colspan="2">Attendance</th>
+                            <th rowspan="2">Note</th>
+                            <th rowspan="2">View Attendance</th>
+                        </tr>
+                        <tr>
+                            <th>Present</td>
+                            <th>Absent</td>
                         </tr>
                     </thead>
                     <tbody id="tbody">
@@ -46,12 +50,14 @@
                             <td><?php echo $student['id']; ?></td>
                             <td><?php echo $student['name_with_initials']; ?></td>
                             <td><?php if(isset($student['date'])){echo $student['date'];}else{echo date("Y-m-d");}; ?></td>
-                            <td class="d-flex flex-col">
-                                <label for="present-<?php echo $student['id']; ?>">
-                                    <input type="radio" id="present-<?php echo $student['id']; ?>" name="attendance-<?php echo $student['id']; ?>" value="1" <?php if(isset($student['attendance']) && $student['attendance'] === 1){echo "checked='checked'";} ?> > Present
+                            <td>
+                                <label class="p-2 pr-4 pl-4" for="present-<?php echo $student['id']; ?>">
+                                    <input type="radio" id="present-<?php echo $student['id']; ?>" name="attendance-<?php echo $student['id']; ?>" value="1" <?php if(isset($student['attendance']) && $student['attendance'] === 1){echo "checked='checked'";} ?> >
                                 </label>
-                                <label for="absent-<?php echo $student['id']; ?>">
-                                    <input type="radio" id="absent-<?php echo $student['id']; ?>" name="attendance-<?php echo $student['id']; ?>" value="0" <?php if(isset($student['attendance']) && $student['attendance'] === 0){echo "checked='checked'";} ?> > Absent
+                            </td>
+                            <td>
+                                <label class="p-2 pr-4 pl-4" for="absent-<?php echo $student['id']; ?>">
+                                    <input type="radio" id="absent-<?php echo $student['id']; ?>" name="attendance-<?php echo $student['id']; ?>" value="0" <?php if(isset($student['attendance']) && $student['attendance'] === 0){echo "checked='checked'";} ?> >
                                 </label>
                             </td>
                             <td><input type="text" name="note-<?php echo $student['id']; ?>" value="<?php if(isset($student['note'])) {echo $student['note'];} ?>"></td>
