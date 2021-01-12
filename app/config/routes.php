@@ -61,6 +61,7 @@
 	$routes['classroom/student/add/$1'] = "classroom/add_student/$1";
 	$routes['classroom/timetable/$1'] = "classroom/timetable/$1";
 	$routes['classroom/timetable/view/$1'] = "classroom/timetable_view/$1";
+	$routes['classroom/subjects/$1'] = "classroom/subjects/$1";
 
 	// subject routes
 	$routes['subject/list'] = "subject/list";

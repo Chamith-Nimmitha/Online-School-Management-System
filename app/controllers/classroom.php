@@ -481,6 +481,19 @@
 			$this->load->view("classroom/classroom_registration",$data);
 			$this->load->view("templates/footer");
 		}
+
+		public function subjects($classroom_id){
+			if(!$this->checkPermission->check_permission("classroom","create")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
+
+			$this->view_header_and_aside();
+			$this->load->view("classroom/classroom_subjects");
+			$this->load->view("templates/footer");
+		}
 	}
 
 ?>
