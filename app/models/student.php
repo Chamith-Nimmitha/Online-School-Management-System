@@ -58,12 +58,16 @@
 					$this->$key = $value;
 				}
 				$c = $this->get_classroom_object();
-				if( $c->get_grade() !== NULL){
-					$this->grade = $c->get_grade();
+				if($c){
+					if( $c->get_grade() !== NULL){
+						$this->grade = $c->get_grade();
+					}
+					$this->class = $c->get_class();
+					unset($c);
+					return TRUE;
+				}else{
+					return FALSE;
 				}
-				$this->class = $c->get_class();
-				unset($c);
-				return TRUE;
 			}else{
 				return FALSE;
 			}
