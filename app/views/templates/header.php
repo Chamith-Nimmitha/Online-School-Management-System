@@ -9,13 +9,16 @@
 	<link rel="stylesheet" href="<?php echo set_url('public/assets/css/main.css'); ?>">
 	<link rel="stylesheet" href="<?php echo set_url('public/assets/css/hemakanth.css'); ?>">
 	<link rel="stylesheet" href="<?php echo set_url('public/assets/css/chamith.css'); ?>">
+</style>
 	<script src="https://kit.fontawesome.com/970e009013.js" crossorigin="anonymous"></script>
 </head>
 <body>
-	<?php require_once(VIEWS."common/goToTop.html"); ?>
-	<?php require_once(VIEWS."common/preLoader.html"); ?>
-	<?php require_once(VIEWS."common/loader.html"); ?>
+	<?php require_once(ASSETS."gadgets/goToTop.html"); ?>
+	<?php require_once(ASSETS."gadgets/preLoader.html"); ?>
+	<?php require_once(ASSETS."gadgets/loader.html"); ?>
 	<?php require_once(ASSETS."gadgets/dialog_box.html"); ?>
+	<?php require_once(ASSETS."gadgets/snackbar.html"); ?>
+	<?php require_once(ASSETS."gadgets/input.html"); ?>
 	<div class="container bg-lightgray">
 		<div class="row theme-header sticky-top" id="top-header">
 			<div class="school-badge col-4 col-md-3 justify-content-center pt-2">
@@ -46,9 +49,8 @@
 							}
 						$user_info .= '" alt="" style="width:50px; height:50px; border: 2px solid orange;">
 						</div>
-						<div class="mr-3 d-lg-flex flex-col d-md-none">
+						<div class="mr-3 d-lg-flex flex-col justify-content-center d-md-none">
 							<span>'.$_SESSION['username'].'</span>
-							<span>role : '.$_SESSION['role'].'</span>
 						</div>
 					</div>
 					<button class="toggle-button" target="user-nav">

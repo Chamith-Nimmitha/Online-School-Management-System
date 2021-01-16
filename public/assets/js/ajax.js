@@ -45,11 +45,13 @@ function validate_parent_id(){
 	var id = this.value;
 	var ele = this;
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET","../php/validation/parent_id_validation.php?id="+id,true);
+	xhr.open("POST",base_url+"api/admission/parent/validation",true);
+	xhr.setRequestHeader("Content-Type", "application/json");
 	xhr.onload = function(){
-		var response = xhr.responseText;
-		if(validate_user_input(ele,7,7,1).length == 0){
-			if(response != "ok"){
+		if( this.status == 200){
+			var response = xhr.responseText;
+			console.log(response);
+			if(response.indexOf("false") !== -1){
 				if(ele.nextElementSibling != null && ele.nextElementSibling.nodeName == "P"){
 					var p_ele = ele.nextElementSibling;
 					p_ele.style.cssText = "display:inherit !important;";
@@ -64,12 +66,22 @@ function validate_parent_id(){
 					var p_ele = ele.nextElementSibling;
 					p_ele.style.cssText = "display:none !important;";
 					p_ele.innerHTML = "";
-					ele.parentElement.style.border = "none";
+					ele.parentElement.style.border = "1px solid green";
 				}
+			}
+		}else{
+			if(ele.nextElementSibling != null && ele.nextElementSibling.nodeName == "P"){
+				var p_ele = ele.nextElementSibling;
+				p_ele.style.cssText = "display:none !important;";
+				p_ele.innerHTML = "";
+				ele.parentElement.style.border = "none";
 			}
 		}
 	}
-	xhr.send();
+	if(validate_user_input(ele,7,7,1).length == 0){
+		var data = {parent_id:id};
+		xhr.send(JSON.stringify(data));
+	}
 }
 
 function admission_search(page=null,per_page=null){
@@ -85,7 +97,7 @@ function admission_search(page=null,per_page=null){
 	var route = "admission/list";
 
 	// for loader
-	var loader = document.querySelector(".loader");
+	var loader = document.querySelector("#admission_list_useful>.loader");
 	loader.classList.remove('hide-loader');
 	xhr.addEventListener("readystatechange", ()=>{
 		if(xhr.readyState !== 4){
@@ -111,6 +123,70 @@ function admission_search(page=null,per_page=null){
 					var pagination =document.getElementById('pagination');
 					var row_count = document.getElementById('row_count');
 					var pagination_data =document.getElementById('pagination_data');
+					row_count.textContent = count;
+					pagination_data.innerHTML = respond_p;
+				}
+			}
+			var count = respond.count;
+			if(page == null){
+				var data2 = {route:route, count:count,func:func};
+			}else{
+				var data2 = {route:route,count:count,page:page,per_page:per_page,func:func};
+			}
+			xhr2.send( JSON.stringify(data2) );
+		}else{
+			respond = JSON.parse(respond);
+			tbody.innerHTML = respond.body;			
+		}
+	}
+
+	if(page == null){
+		var data = {type:type,id:value};
+	}else{
+		var data = {type:type,id:value,page:page,per_page:per_page};
+	}
+	xhr.send( JSON.stringify(data) );
+}
+
+function admission_search_unuseful(page=null,per_page=null){
+	e = window.event;
+	e.preventDefault();
+	var value = document.getElementById("u-admission-search").value;
+	var type = document.getElementById("u-admission-state").value;
+	var xhr = new XMLHttpRequest();
+	var tbody =document.getElementById('u-tbody');
+	xhr.open("POST",base_url+"api/admission/u_search",true);
+	xhr.setRequestHeader("Content-Type", "application/json");
+	var func = "admission_search_unuseful";
+	var route = "admission/list";
+
+	// for loader
+	var loader = document.querySelector("#admission_list_unuseful>.loader");
+	loader.classList.remove('hide-loader');
+	xhr.addEventListener("readystatechange", ()=>{
+		if(xhr.readyState !== 4){
+			loader.classList.remove('hide-loader');
+		}else{
+			loader.classList.add('hide-loader');
+		}
+	})// end of loader
+
+
+	xhr.onload = function(){
+		var respond = xhr.responseText;
+		if(this.status == 200){
+			respond = JSON.parse(respond);
+			tbody.innerHTML = respond.body;
+
+			var xhr2 = new XMLHttpRequest();
+			xhr2.open("POST",base_url+"api/pagination",true);
+			xhr2.setRequestHeader("Content-Type", "application/json");
+			xhr2.onload = function(){
+				if(this.status == 200){
+					var respond_p = xhr2.responseText;
+					var pagination =document.getElementById('u_pagination');
+					var row_count = document.getElementById('u_row_count');
+					var pagination_data =document.getElementById('u_pagination_data');
 					row_count.textContent = count;
 					pagination_data.innerHTML = respond_p;
 				}
@@ -199,6 +275,7 @@ function get_teacher_data(field,input){
 
 //  search student with pagination
 function student_search(page=null,per_page=null){
+	window.event.preventDefault();
 	var target_div = document.getElementById("student-list-table");
 	var idVal =document.getElementById("student-id").value;
 	var nameVal =idVal
@@ -634,7 +711,11 @@ function classroom_attendance_search(){
 	}).then( (text) => {
 		document.getElementById('tbody').innerHTML = text;
 		var date = document.getElementById('date').value;
-		document.getElementById('attendance_date').innerHTML = date;
+		if(date.length != 0 ){
+			document.getElementById('attendance_date').innerHTML = date;
+		}else{
+			document.getElementById('attendance_date').innerHTML = new Date().toISOString().slice(0, 10);
+		}
 		document.getElementById('date_hidden').value = date
 	}).catch( ( error) => {
 		console.error(error)
@@ -682,7 +763,6 @@ function student_attendance_filter(){
 	}).then( (res) => {
 		return res.text();
 	}).then( (text) => {
-		console.log(text)
 		tbody.innerHTML = "";
 		if( text.indexOf("FALSE") !== -1 || text.length === 0){
 			tbody.innerHTML = `<tr><td colspan=8 class='text-center bg-red'>Attendance not found...</td></tr>`

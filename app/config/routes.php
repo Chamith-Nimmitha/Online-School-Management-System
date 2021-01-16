@@ -43,9 +43,13 @@
 	$routes['teacher/delete/$1'] = "teacher/delete/$1";
 	$routes['teacher/subject/list'] = "teacher/subject_list";
 	$routes['teacher/subject/list/$1'] = "teacher/subject_list/$1";
-	$routes['teacher/subject/student/list'] = "teacher/student_list";
 	$routes['teacher/subject/student/list/$1'] = "teacher/student_list/$1";
+	$routes['teacher/subject/timetable/$1'] = "teacher/subject_timetable/$1";
+	$routes['teacher/attendance'] = "teacher/attendance";
 	$routes['teacher/attendance/$1'] = "teacher/attendance/$1";
+	$routes['teacher/classroom/attendance'] = "teacher/classroom_attendance";
+	$routes['teacher/interview/panel'] = "teacher/interview_panel_view";
+	$routes['teacher/interviews'] = "teacher/interview_list";
 
 	//classroom routes
 	$routes['classroom/list'] = "classroom/classroom_list";
@@ -56,6 +60,8 @@
 	$routes['classroom/student/list/$1'] = "classroom/student_list/$1";
 	$routes['classroom/student/add/$1'] = "classroom/add_student/$1";
 	$routes['classroom/timetable/$1'] = "classroom/timetable/$1";
+	$routes['classroom/timetable/view/$1'] = "classroom/timetable_view/$1";
+	$routes['classroom/subjects/$1'] = "classroom/subjects/$1";
 
 	// subject routes
 	$routes['subject/list'] = "subject/list";
@@ -88,11 +94,13 @@
 	// parent routes
 	$routes['parent/list'] = "parents/list";
 	$routes['parent/student/list'] = "parents/student_list";
+	$routes['parent/delete/$1'] = "parents/delete/$1";
 
 	// interview routes
 	$routes['interview/set/$1'] = "interview/set/$1";
 	$routes['interview/list'] = "interview/list";
 	$routes['interview/view/$1'] = "interview/view_admission/$1";
+	$routes['"interview/get_files/$1'] = "interview/get_files/$1";
 
 
 	// interview panel routes
@@ -113,6 +121,8 @@
 
 	// FOR APIS
 	$routes['api/admission/search'] = "apiAdmission/search";
+	$routes['api/admission/u_search'] = "apiAdmission/u_search";
+	$routes['api/admission/parent/validation'] = "apiAdmission/parent_validation";
 	$routes['api/classroom/search'] = "apiClassroom/search";
 	$routes['api/student/search'] = "apiStudent/search";
 	$routes['api/subject/search'] = "apiSubject/search";

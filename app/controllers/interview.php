@@ -17,14 +17,15 @@
 			$con = new Database();
 			$error = "";
 			$info = "";
-			//when create inteview
+			$this->load->model("interview");
+			$this->load->model("admission");
+			$this->load->admission->change_state($admission_id,"Accepted");
+			//when cre ate inteview
 			if(isset($_POST['submit'])){
-
 				try{
 					$con->db->beginTransaction();
 					if($_POST['interview-panel'] === "0"){
 						throw new PDOException("Please select a interview panel.", 1);
-						
 					}
 					if($_POST['interview-date'] === "0"){
 						throw new PDOException("Please select a interview date.", 1);
@@ -33,11 +34,13 @@
 						throw new PDOException("Please select a interview time.", 1);
 					}
 
-					$data['admission_id'] = $_POST['admission-id'];
+					$data['admission_id'] = $admission_id;
 					$data['interview_panel_id'] = $_POST['interview-panel'];
 					$data['date'] = explode("#",$_POST['interview-date'])[0];
 					$data['period'] = $_POST['interview-time'];
-					$result = $con->select("interview",array("admission_id"=>$_POST["admission-id"]));
+
+
+					$result = $this->load->interview->get_interview_data($admission_id);
 					if($result->rowCount() === 0){
 						if(!$this->checkPermission->check_permission("interview","create")){
 							$this->view_header_and_aside();
@@ -45,7 +48,7 @@
 							$this->load->view("templates/footer");
 							return;
 						}
-						$result = $con->insert('interview',$data);
+						$result = $this->load->interview->set_interview_data($data);
 						if(!$result || $result->rowCount() !== 1){
 							throw new PDOException("Interview creation failed.", 1);
 						}
@@ -56,11 +59,14 @@
 							$this->load->view("templates/footer");
 							return;
 						}
-						$result = $con->update("interview",$data,array("admission_id"=>$_POST['admission-id']));
+						$result = $this->load->interview->update_interview_data($admission_id,$data);
 						if(!$result){
 							throw new PDOException("Interview Update failed.", 1);
-						}else if(!$result || $result->rowCount() !== 1){
-							throw new PDOException("Nothing to update.", 1);
+						}else{
+							$result = $this->load->admission->change_state($admission_id,"Not Interview");
+							if(!$result){
+								throw new PDOException("Admission State update failed.");
+							}
 						}
 					}
 					$info = "Set Interview successful..";
@@ -70,7 +76,7 @@
 					$error = $e->getMessage();
 				}
 			}else{
-				$result = $con->select('interview',array("admission_id"=>$admission_id));
+				$result = $this->load->interview->get_interview_data($admission_id);
 				if($result->rowCount() != 0){
 					$result = $result->fetch();
 					$_POST['interview-panel'] = $result["interview_panel_id"];
@@ -80,14 +86,13 @@
 			}
 
 			if(isset($admission_id)){
-				$con->update('admission',array("state"=>"accepted"),array("id"=>$admission_id));
 				$con->where(array("id"=>$admission_id));
 				$result = $con->select("admission")->fetch();
 			}else{
 				header("Location:". set_url("admission/list"));
 			}
-
-			$interview_panels = $con->select('interview_panel',array('grade'=>$result['grade']));
+			$this->load->model("interviewPanel");
+			$interview_panels = $this->load->interviewPanel->get_interview_panels(["grade"=>$result['grade']]);
 			$valid_panels = [];
 			$timetables = [];
 
@@ -121,6 +126,8 @@
 			$data['timetables'] = $timetables;
 			$data['result'] = $result;
 			$data['valid_panels'] = $valid_panels;
+			$data['day_map'] = $day_map;
+			$data['time_map'] = $time_map;
 			$this->view_header_and_aside();
 			$this->load->view("admission/admission_set_interview",$data);
 			$this->load->view("templates/footer");
@@ -175,6 +182,8 @@
 				$this->load->view("templates/footer");
 				return;
 			}
+			$this->load->model("admission");
+			$this->load->model("interview");
 			$con = new Database();
 			$error = "";
 			$field_errors = [];
@@ -270,19 +279,19 @@
 				}
 				if(empty($field_errors)){
 					$data = array();
-					 // $data["index_number"]= $index_number;
-					 $data["name_with_initials"]= $name_with_initials;
-					 $data["first_name"]= $first_name;
-					 $data["middle_name"]= $middle_name;
-					 $data["last_name"]= $last_name;
-					 $data["grade"]= $grade;
-					 $data["gender"]= $gender;
-					 $data["dob"]= $dob;
-					 $data["address"]= $address;
-					 $data["email"]= $email;
-					 $data["contact_number"]= $contact_number;
-					 $data['already_have_account'] = $already_have_account;
-					 if($already_have_account == 0){
+					// $data["index_number"]= $index_number;
+					$data["name_with_initials"]= $name_with_initials;
+					$data["first_name"]= $first_name;
+					$data["middle_name"]= $middle_name;
+					$data["last_name"]= $last_name;
+					$data["grade"]= $grade;
+					$data["gender"]= $gender;
+					$data["dob"]= $dob;
+					$data["address"]= $address;
+					$data["email"]= $email;
+					$data["contact_number"]= $contact_number;
+					$data['already_have_account'] = $already_have_account;
+					if($already_have_account == 0){
 						$data['parent_type'] = $_POST["parent-type"];
 					 	if($parent_type == "father"){
 							 $data["parent_name"]= $father_name;
@@ -309,14 +318,14 @@
 						if($contact_errors !== 1){
 							$field_errors['{$parent_type}_contact_number'] = "Invalid {$parent_type} Contact Number.";
 						}
-					 }else{
+					}else{
 						$data['parent_account_id'] = $parent_account_id;
 					 	$data["parent_name"]= "";
 						$data["parent_occupation"]= "";
 						$data["parent_contact_number"]= "";
 						$data["parent_email"]= "";
-					 }
-					$data["state"] = "registered";
+					}
+					$data["state"] = "Registered";
 					if(count($field_errors) === 0 ){
 						if(!$this->checkPermission->check_permission("admission","update") || !$this->checkPermission->check_permission("user_account","create")){
 							$this->view_header_and_aside();
@@ -335,24 +344,27 @@
 									$parent_data['address'] = $data["address"];
 									$parent_data['contact_number'] = $data["parent_contact_number"];
 									$parent_data['email'] = $data["parent_email"];
-									$result = $con->insert("parent",$parent_data);
+									$con->get(array("id"));
+									$result = $con->select("parent",array("email"=>$parent_data["email"]));
 									if(!$result){
 										throw new PDOException('Faild to insert to parent table', 1 );
-									}
-									$con->get(array("id"));
-									$result = $con->select("parent",array("name"=>$parent_data['name'],"email"=>$parent_data["email"]));
-									if($result->rowCount() == 0){
-										throw new PDOException('Error when get parent id', 1 );
-									}else if($result->rowCount() == 2){
-										throw new PDOException('Already have parent account', 1 );
-									}
-									$parent_id = $result->fetch()['id'];
-									$user_data = array();
-									$user_data['email'] = $data["parent_email"];
-									$user_data['role'] = "parent";
-									$result = $con->insert("user",$user_data);
-									if(!$result){
-										throw new PDOException('Faild to insert  parent to user table', 1 );
+									}else if($result->rowCount() == 1){
+										$parent_id = $result->fetch()['id'];
+									}else{
+										$result = $con->insert("parent",$parent_data);
+										$con->get(array("id"));
+										$result = $con->select("parent",array("name"=>$parent_data['name'],"email"=>$parent_data["email"]));
+										if($result->rowCount() == 0){
+											throw new PDOException('Error when get parent id', 1 );
+										}
+										$parent_id = $result->fetch()['id'];
+										$user_data = array();
+										$user_data['email'] = $data["parent_email"];
+										$user_data['role'] = "parent";
+										$result = $con->insert("user",$user_data);
+										if(!$result){
+											throw new PDOException('Faild to insert  parent to user table', 1 );
+										}
 									}
 								}else{
 									$parent_id = $data["parent_account_id"];
@@ -371,7 +383,7 @@
 
 								$result = $con->insert("student",$student_data);
 								if(!$result || $result->rowCount() ===0){
-									throw new PDOException('Faild to insert to student table', 1 );
+									throw new PDOException('Faild student insert to student table', 1 );
 								}
 								$user_data = array();
 								$user_data['email'] = $data["email"];
@@ -386,34 +398,36 @@
 									throw new PDOException('Faild to get student id', 1 );
 								}
 								$student_id = $result->fetch()['id'];
-
-								$result = $con->update("interview",array("state"=>"interviewed"),array("admission_id"=>$admission_id));
+								
+								$res1 = $this->load->admission->change_state($admission_id,"Registered");
+								$res2 = $this->load->interview->change_state($admission_id,"Interviewed");
+								if(!$res1 || !$res2){
+									throw new PDOException("State Upadate Failed.", 1);
+								}
+								
 								if(!$result){
 									throw new PDOException("Faild to update interview state.",1);
 								}
 
 								$con->db->commit();
-								header("Location:". set_url("admission/admision_student_register"));
+								// header("Location:". set_url("interview/get_files/".$admission_id));
 							}catch(Exception $e){
 								$con->db->rollback();
 								$error = $e->getMessage();
 							}
-
 						}else{
 							$error = "Account creation failed.";
 						}
 					}
-
 				}
 			}
 
 			// view admission data
-			$result = $con->select("admission",array("id"=>$admission_id));
-			if(!$result ||  $result->rowCount() == 0){
-				echo "admission not found";
+			$result = $this->load->admission->get_data($admission_id);
+			if(!$result){
+				echo "Admission Not Found";
 				exit();
 			}else{
-				$result = $result->fetch();
 				if($result['already_have_account'] != 1){
 					$parent_type = $result['parent_type'];
 					switch ($parent_type) {
@@ -444,7 +458,14 @@
 			$this->load->view("interview/interview_admission_view",$data);
 			$this->load->view("templates/footer");
 		}
-	}
 
+		// get documents
+		public function get_files($admission_id){
+			$this->view_header_and_aside();
+			$this->load->view("admission/admission_student_register",$data);
+			$this->load->view("templates/footer");
+		}
+
+	}
 
  ?>

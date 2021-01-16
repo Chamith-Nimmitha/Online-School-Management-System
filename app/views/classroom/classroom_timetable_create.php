@@ -20,7 +20,7 @@
 	 ?>
 
 	<div class="mt-5">
-		<h2>Timetable Create</h2>
+		<h2 style="font-size: 30px;">Classroom Timetable Create/Update</h2>
 	</div>
 	<div class="col-12 d-flex flex-col mt-5">
 		<hr class="w-100">
@@ -82,6 +82,53 @@
 				<div class="d-flex justify-content-end p-5">
 					<button type="submit" name="submit" class="btn btn-blue p-3" >Submit</button>
 				</div>
+
+				<!-- teachers for subjects is automatically choose by our system -->
+				<div class="d-flex flex-col align-items-center justify-content-center col-12 mb-5">
+					<div>
+						<h3 style="font-size: 25px;">Classroom Subjects</h3>
+					</div>
+					<div class="col-8">
+						<table class="table-strip-dark col-12">
+							<thead class="col-12">
+								<tr class="text-center col-12">
+									<th class="col-1 justify-content-center">No.</th>
+									<th class="col-3 justify-content-center">Subject Name</th>
+									<th class="col-3 justify-content-center">No of Periods</th>
+									<th class="col-5 justify-content-center">Teacher</th>
+								</tr>
+							</thead>
+							<tbody class="col-12">
+								<tr class="col-12 justify-content-center align-items-center">
+									<td class="text-center justify-content-center col-1">1</td>
+									<td class=" col-3">Sinhala</td>
+									<td class="text-center col-3 justify-content-center">6</td>
+									<td class=" col-5">
+										<select name="classroom-subject-techer-1" id="classroom-subject-techer-1">
+											<option value="None">None</option>
+											<option value="100001" selected="selected">A.B.Nimal</option>
+											<option value="100002">C.D.Kamal</option>
+										</select>
+									</td>
+								</tr>
+
+								<tr class="col-12 justify-content-center align-items-center">
+									<td class="text-center justify-content-center col-1">2</td>
+									<td class=" col-3">Maths</td>
+									<td class="text-center col-3 justify-content-center">6</td>
+									<td class=" col-5">
+										<select name="classroom-subject-techer-1" id="classroom-subject-techer-1">
+											<option value="None">None</option>
+											<option value="100001">A.B.Nimal</option>
+											<option value="100002" selected="selected">C.D.Kamal</option>
+										</select>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
                 <center>
 				    <div>
                         <a class="btn btn-blue" onClick="window.print()">Download as a PDF</a>

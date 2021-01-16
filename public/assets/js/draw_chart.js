@@ -335,7 +335,6 @@ function student_attendance_overview_bar(){
 	}).then( (res) => {
 		return res.text();
 	}).then( (text) => {
-		// console.log(text)
 		var response = JSON.parse(text)
 		var canvas = document.getElementById('student_attendance_overview_bar')
 		var ctx = canvas.getContext('2d');
@@ -359,6 +358,12 @@ function student_attendance_overview_bar(){
 		            	data : response.data.absent,
 		            	backgroundColor : get_color_array(1,0.5,1)[0],
 		            	hoverBackgroundColor : get_color_array(1,1,1)[0]
+		            },
+		            {
+		            	label: 'Classroom Average ',
+		            	data : response.data.present_presentage,
+		            	backgroundColor : get_color_array(1,0.5,2)[0],
+		            	hoverBackgroundColor : get_color_array(1,1,2)[0]
 		            }
 		        ]
 		    },

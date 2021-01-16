@@ -67,22 +67,24 @@
 						</div>
 						<div class="form-group ">
 							<label for="address">Address</label>
-							<input type="text" name="address" id="address" placeholder="Address" value="<?php if(isset($result)){echo htmlspecialchars(stripslashes($result['address']));} ?>"required="required" oninput="validate_user_input(this,0,100,1)">
+							<input type="text" name="address" id="address" placeholder="Address" value="<?php if(isset($result)){echo htmlspecialchars(stripslashes($result['address']));} ?>"required="required" oninput="validate_user_input(this,0,100,1)" <?php if(!$editable){ echo "disabled='disabled'";} ?>>
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>
 						<div class="form-group ">
 							<label for="email">Email</label>
-							<input type="text" name="email" id="email" placeholder="Email" value="<?php if(isset($result)){echo  htmlspecialchars(stripslashes($result['email']));} ?>" oninput="validate_email(this,0,100,1)">
+							<input type="text" name="email" id="email" placeholder="Email" value="<?php if(isset($result)){echo  htmlspecialchars(stripslashes($result['email']));} ?>" oninput="validate_email(this,0,100,1)" <?php if(!$editable){ echo "disabled='disabled'";} ?>>
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>
 						<div class="form-group ">
 							<label for="contact-number">Contact Number</label>
-							<input type="text" name="contact-number" id="contact-number" placeholder="Contact Number" value="<?php if(isset($result)){echo $result['contact_number'];} ?>" oninput="validate_contact_number(this)">
+							<input type="text" name="contact-number" id="contact-number" placeholder="Contact Number" value="<?php if(isset($result)){echo $result['contact_number'];} ?>" oninput="validate_contact_number(this)" <?php if(!$editable){ echo "disabled='disabled'";} ?>>
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>
-						<div class="justify-content-end pr-5 col-12  d-flex">
-							<input type="submit" value="save" name="submit" id="submit" class="btn btn-blue">
-						</div>
+						<?php if($editable || $is_admin){ ?>
+							<div class="justify-content-end pr-5 col-12  d-flex">
+								<input type="submit" value="save" name="submit" id="submit" class="btn btn-blue">
+							</div>
+						<?php } ?>
 				</div>
 			</form>
 	</div>

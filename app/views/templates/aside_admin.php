@@ -107,7 +107,6 @@
 								<nav class="nav sub-nav no-collapsed" id="student-nav">
 									<ul class="d-flex flex-col">
 										<li class="nav-item"><a href="<?php echo set_url('student/list'); ?>" class="nav-link"  parent-li="student-li">Students list</a></li>
-										<li class="nav-item"  parent-li="student-li"><a href="#" class="nav-link">Students Complaints</a></li>
 									</ul>
 								</nav>
 							</li>
@@ -123,7 +122,6 @@
 									<ul class="d-flex flex-col">
 										<li class="nav-item"><a href="<?php echo set_url('teacher/list'); ?>" class="nav-link" parent-li="teacher-li">Teachers List</a></li>
 										<li class="nav-item"><a href="<?php echo set_url('teacher/registration') ?>" class="nav-link"  parent-li="teacher-li">Add teacher</a></li>
-										<li class="nav-item"><a href="<?php echo set_url('pages/TComplaints.php') ?>" class="nav-link"  parent-li="teacher-li">Teachers Complaints</a></li>
 									</ul>
 								</nav>
 							</li>
@@ -139,7 +137,6 @@
 									<ul class="d-flex flex-col">
 										<li class="nav-item"><a href="<?php echo set_url('classroom/list') ?>" class="nav-link" parent-li="classroom-li">Classroom list</a></li>
 										<li class="nav-item"><a href="<?php echo set_url('classroom/registration') ?>" class="nav-link" parent-li="classroom-li">Add new Classroom</a></li>
-										<li class="nav-item"><a href="#" class="nav-link" parent-li="classroom-li">Class Complaints</a></li>
 									</ul>
 								</nav>
 							</li>
@@ -157,8 +154,6 @@
 											<a href="<?php echo set_url('subject/list') ?>" class="nav-link" parent-li="subject-li">Subjects list</a></li>
 										<li class="nav-item">
 											<a href="<?php echo set_url('subject/registration') ?>" class="nav-link" parent-li="subject-li">Add a Subject</a></li>
-										<li class="nav-item">
-											<a href="#" class="nav-link" parent-li="subject-li">Subjects Complaints</a></li>
 									</ul>
 								</nav>
 							</li>

@@ -247,6 +247,7 @@
             $this->load->view("templates/footer");
 		}
 
+		// delete a teacher
 		public function delete($teacher_id){
 			if(!$this->checkPermission->check_permission("teacher","delete")){
 				$this->view_header_and_aside();
@@ -260,13 +261,19 @@
 			header("Location:". set_url("teacher/list"));
 		}
 
-		public function subject_list($teacher_id){
+		// teacher subject list
+		public function subject_list($teacher_id=NULL){
 			if(!$this->checkPermission->check_permission("subject","view")){
 				$this->view_header_and_aside();
 				$this->load->view("common/error");
 				$this->load->view("templates/footer");
 				return;
 			}
+
+			if($teacher_id==NULL){
+				$teacher_id = $_SESSION['user_id'];
+			}
+
 			$con = new Database();
 			$info = "";
 			$error = "";
@@ -335,59 +342,39 @@
 					$error = "Invalid teacher ID";
 				}
 			}
-			if(isset($_GET['teacher_id']) || $_SESSION['role'] === "teacher"){
-				if(isset($_GET['teacher_id'])){
-					$teacher_id = $_GET['teacher_id'];
-				}else{
-					$teacher_id = $_SESSION['user_id'];
-				}
-				$result = $con->select("teacher_subject",array("teacher_id"=>$teacher_id));
-				$subject_info = array();
-				if($result && $result->rowCount() > 0){
-					$result = $result->fetchAll();			
-					try{
-						foreach ($result as $sub) {
-							$result = $con->select("subject",array("id"=>$sub['subject_id']));
-							if($result && $result->rowCount() == 1){
-								array_push($subject_info, $result->fetch());
-							}else{
-								throw new PDOException("Data getting failed.",1);
-							}
-						}
-					}catch (Exception $e){
-						$con->db->rollback();
-						$error = $e->getMessage();
-					}
-				}
-			}
 			
-			$result_set =$con->select("teacher_subject",array("teacher_id"=>$teacher_id));
-			$teacher_subject = $result_set->fetchAll();
-
-			$this->load->model("subject");
-			$subjects = $this->load->subject->set_by_teacher_id($teacher_id);
-
-
 			$this->load->model("teacher");
-			$this->load->teacher->set_by_id($teacher_id);
-			$teacher_data=$this->load->teacher->get_data();
-			$data1['data'] = $teacher_data;
-
-			foreach ($teacher_data as $name => $value) {
-				$row[$name]=$value;
+			$foundTeacher = $this->load->teacher->set_by_id($teacher_id);
+			if(!$foundTeacher){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;	
 			}
+			$result_set = $this->load->teacher->get_subjects();
+			if($result_set){
+				$data['subjects'] = $result_set->fetchAll();
+			}else{
+				$data['subjects'] = [];
+			}
+
+			$data['teacher_info']=$this->load->teacher->get_data();
+			$data['info'] = $info;
+			$data['error'] = $error;
 
 			$this->view_header_and_aside();
+
 			if(isset($_SESSION['role']) && $_SESSION['role']=='teacher'){
-            $this->load->view("teacher/teacher_subject_list_view",["teacher_info"=>$row,"subjects"=>$subjects,"teacher_subject"=>$teacher_subject,"subject_info"=>$subjects,"info"=>$info,"error"=>$error]);
+	            $this->load->view("teacher/teacher_subject_list_view",$data);
         	}
         	else if(isset($_SESSION['role']) && $_SESSION['role']=='admin'){
-            $this->load->view("teacher/teacher_subject_list",["teacher_info"=>$row,"subjects"=>$subjects,"teacher_subject"=>$teacher_subject,"subject_info"=>$subjects,"info"=>$info,"error"=>$error]);	
+	            $this->load->view("teacher/teacher_subject_list",$data);
         	}
             $this->load->view("templates/footer");
 		}
 
-		public function student_list($teacher_id){
+		// teacher specific subject allocated sudent list
+		public function student_list($teacher_subject_id){
 			if(!$this->checkPermission->check_permission("student","view")){
 				$this->view_header_and_aside();
 				$this->load->view("common/error");
@@ -395,12 +382,27 @@
 				return;
 			}
 
+			$this->load->model("subjects");
+			$result_set = $this->load->subjects->get_student_list($teacher_subject_id);
+			if($result_set){
+				$data['student_list'] = $result_set->fetchAll();
+			}else{
+				$data['student_list'] = [];
+			}
+
+			$result_set = $this->load->subjects->get_teacher_subject_info($teacher_subject_id);
+			if($result_set){
+				$data['teacher_subject_info'] = $result_set->fetch();
+			}else{
+				$data['teacher_subject_info'] = [];
+			}
+
 			$this->view_header_and_aside();
 			if(isset($_SESSION['role']) && $_SESSION['role']=='teacher'){
-            $this->load->view("teacher/teacher_subject_student_list_view");
+	            $this->load->view("teacher/teacher_subject_student_list_view",$data);
         	}
         	else if(isset($_SESSION['role']) && $_SESSION['role']=='admin'){
-            $this->load->view("teacher/teacher_subject_student_list");	
+	            $this->load->view("teacher/teacher_subject_student_list",$data);	
         	}
             $this->load->view("templates/footer");
 		}
@@ -571,8 +573,77 @@
             $this->load->view("templates/footer");
         }
 
+        
+        // teacher specific subject timetable
+
+        public function subject_timetable($teacher_subject_id){
+        	if(!$this->checkPermission->check_permission("subject","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
+
+			$time_map = ["1"=>"7.50a.m - 8.30a.m", "2"=>"8.30a.m - 9.10a.m", "3"=>"9.10a.m - 9.50a.m", "4"=> "9.50a.m - 10.30a.m", "5"=> "10.50a.m - 11.30a.m", "6"=>"11.30a.m - 12.10p.m", "7"=> "12.10p.m - 12.50p.m", "8"=>"12.50p.m - 1.30p.m"];
+			$day_map = ["1"=>"mon","2"=>"tue","3"=>"wed","4"=>"thu","5"=>"fri"];
+			$data['time_map'] = $time_map;
+			$data['day_map'] = $day_map;
+
+			// get timetable 
+			$this->load->model("timetable");
+			$result = $this->load->timetable->set_by_user_id($teacher_subject_id,"subject");
+			if(!$result){
+				$this->view_header_and_aside();
+				echo "Timetable not found";
+				$this->load->view("templates/footer");
+				return;
+			}
+
+			// get subject and grade info
+			$this->load->model("subjects");
+			$result = $this->load->subjects->get_teacher_subject_info($teacher_subject_id);
+			if($result){
+				$data['teacher_subject_info'] = $result->fetch();
+			}
+
+			$data['timetable'] = $this->load->timetable->get_timetable();
+			$this->view_header_and_aside();
+			$this->load->view("teacher/teacher_subject_timetable",$data);
+			$this->load->view("templates/footer");
+
+        } 
+
+		public function import(){
+			if(isset($_POST['save']))
+			{
+					$file = $_FILES['file']['tmp_name'];
+					$handle = fopen($file, "r");
+					$c = 0;/*
+					while(($filesop = fgetcsv($handle, 1000, ",")) !== false)*/
+					{
+						$name_with_initials = $filesop[0];
+						$email = $filesop[1];
+						$contact_number = $filesop[2];
+						$nic = $filesop[3];
+						$data = array(
+							'id'=> null,
+							'name_with_initials' =>$name_with_initials,
+							'email' =>$email,
+							'contact_number' => $contact_number,
+							'nic' => $nic
+						);
+						if($c<>0){					/*SKIP THE FIRST ROW*/
+							$this->model->submit_details($data);
+						}
+						$c = $c + 1;
+					}
+					echo "Data imported successfully !"	;
+			}
+			$this->load->view('teacher/teacher_all');
+		}
+
 		// view individual teacher attendance
-		public function attendance($teacher_id){
+		public function attendance($teacher_id=NULL){
 
 			if(!$this->checkPermission->check_permission("attendance","view")){
 				$this->view_header_and_aside();
@@ -580,6 +651,17 @@
 				$this->load->view("templates/footer");
 				return;
 			}
+			if($teacher_id == NULL){
+                if(isset($_POST['id'])){
+                    $teacher_id = $_POST['id'];
+                }else{
+                    $teacher_id = $_SESSION['user_id'];
+                }
+            }else{
+                if($_SESSION['role'] == "teacher"){
+                    $teacher_id = $_SESSION['user_id'];
+                }
+            }
 			$data = [];
 			$this->load->model("attendance");
             $result_set = $this->load->attendance->get_attendance_by_teacher_id($teacher_id);
@@ -589,14 +671,94 @@
                 $data['result_set'] = FALSE;
             }
             $data['teacher_id'] = $teacher_id;
-            // echo "<pre>";
-            // print_r($data);
-            // echo "</pre>";
-            // exit();
 			$this->view_header_and_aside();
             $this->load->view("attendance/teacher_attendance_view",$data);
             $this->load->view("templates/footer");
+		}
 
-		}	
+		// interview panel view
+		public function interview_panel_view(){
+			if(!$this->checkPermission->check_permission("interview_panel","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
+
+			$this->load->model("teacher");
+			$this->load->teacher->set_by_id($_SESSION['user_id']);
+			$interview_panel_id = $this->load->teacher->get_interview_panel_id();
+
+			$this->load->model("interviewPanel");
+			$result = $this->load->interviewPanel->get_interview_panels(['id'=>$interview_panel_id]);
+			if($result){
+				$data['interview_panel'] = $result->fetch();
+				$result = $this->load->interviewPanel->get_interview_panel_teachers($interview_panel_id);
+				if($result){
+					$data['interview_panel_teachers'] = $result->fetchAll();
+				}
+			}
+
+			$this->view_header_and_aside();
+			$this->load->view("teacher/teacher_interview_panel_view",$data);
+			$this->load->view("templates/footer");
+		}
+
+		// get teacher related interview list
+		public function interview_list(){
+			if(!$this->checkPermission->check_permission("interview_panel","view")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
+
+
+			$time_map = ["1"=>"7.50a.m - 8.30a.m", "2"=>"8.30a.m - 9.10a.m", "3"=>"9.10a.m - 9.50a.m", "4"=> "9.50a.m - 10.30a.m", "5"=> "10.50a.m - 11.30a.m", "6"=>"11.30a.m - 12.10p.m", "7"=> "12.10p.m - 12.50p.m", "8"=>"12.50p.m - 1.30p.m"];
+
+			$this->load->model("teacher");
+			$this->load->teacher->set_by_id($_SESSION['user_id']);
+			$interview_panel_id = $this->load->teacher->get_interview_panel_id();
+
+			$this->load->model("interview");
+			$result = $this->load->interview->search(NULL,$interview_panel_id);
+			$data['time_map']= $time_map;
+			if($result){
+				$data['interviews'] = $result->fetchAll();
+			}
+
+			$this->view_header_and_aside();
+			$this->load->view("teacher/teacher_interview_list",$data);
+			$this->load->view("templates/footer");
+		}
+
+		// get classroom attendance
+		public function classroom_attendance(){
+			if(!$this->checkPermission->check_permission("attendance","create")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
+
+			$this->load->model("teacher");
+			$result = $this->load->teacher->set_by_id($_SESSION['user_id']);
+			if(!$result){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
+
+			$classroom_id = $this->load->teacher->get_classroom_id();
+			if(!$classroom_id){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
+			$attendance_controller = new Attendance();
+			$attendance_controller->classroom_view($classroom_id);
+		}
 	 }
 ?>

@@ -47,16 +47,14 @@
 					$body .= "<td>".$result['type']."</td>";
 					$body .= "<td>".$result['occupation']."</td>";
 					$body .= "<td>".$result['email']."</td>";
-					$body .= "<td>".$result['contact_number']."</td>";
+					$body .= "<td class='text-center'>".$result['contact_number']."</td>";
 					$body .= "<td>
 								<div>
 									<a href='".set_url('profile/parent/'.$result['id']). "'' class='btn btn-blue t-d-none'>profile</a>
 								</div>
 							</td>";
-					$body .= "<td>
-								<div>
-									<button class='btn btn-lightred t-d-none' onclick=\"return confirm('Are you sure to delete?')\">delete</button>
-								</div>
+					$body .= "<td class='text-center'>
+								<a title='Delete' href='". set_url('parent/delete/'.$result['id'])."' class='btn t-d-none' onclick=\"show_dialog(this,'Delete message','Are you sure to delete?')\"><i class='fas fa-trash delete-button'></i></a>
 							</td>";
 					$body .="</tr>";
 					}

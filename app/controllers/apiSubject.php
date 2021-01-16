@@ -58,7 +58,7 @@
 							</td>";
 					$body .= "<td class='text-center'>
 								<div class='login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center'>
-									<a class='btn btn-lightred' href='".set_url('subject/delete/'.$result['id'])."' onclick=\"return confirm('Are you sure to delete?')\">Delete</a>
+									<a class='btn' title='Delete' href='".set_url('subject/delete/'.$result['id'])."' onclick=\"show_dialog(this,'Delete message','Are you sure to delete?')\"><i class='fas fa-trash delete-button'></i></a>
 			    				</div>
 							</td>";
 					$body .= "</tr>";

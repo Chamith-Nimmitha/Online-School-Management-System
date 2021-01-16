@@ -82,14 +82,14 @@
 					<div class="form-group">
 						<label for="already-have-account" class="ml-5 d-flex" style="color:red">
 							<p class="d-inline">Alredy have Parent account </p>
-							<input type="checkbox"  name="already-have-account" id="already-have-account" class="ml-3" <?php if(isset($result['already_have_account']) && $result['already_have_account']== true){echo "checked='checked'";} ?>  disabled="disabled">
+							<input type="checkbox"   class="ml-3" <?php if(isset($result['already_have_account']) && $result['already_have_account']== true){echo "checked='checked'";} ?>  disabled="disabled">
 						</label>
 					</div>
 
 					<div id="parent-account-field" class="col-12 no-collapsed">
 						<div class="form-group">
 							<label for="parent-account-id">Parent Account ID</label>
-							<input type="text" name="parent-account-id" id="parent-account-id" value="<?php if(isset($result['parent_account_id'])){echo $result['parent_account_id'];} ?>" placeholder="Parent Account ID" disabled="disabled">
+							<input type="text" value="<?php if(isset($result['parent_account_id'])){echo $result['parent_account_id'];} ?>" placeholder="Parent Account ID" disabled="disabled">
 						</div>
 					</div>
 
@@ -97,7 +97,7 @@
 						<div class="form-group">
 							<label for="parent-types">Select parent or guardian : </label>
 							<div class="d-flex">
-								<select name="parent-types" id="parent-types"  style="width: 200px;" disabled="disabled">
+								<select  style="width: 200px;" disabled="disabled">
 									<option value="father" <?php if(isset($result['parent_type'])){if($result['parent_type'] == "father"){echo 'selected="selected"';}}else{echo "selected='selected'";} ?> >Father</option>
 									<option value="mother" <?php if(isset($result['parent_type']) && ($result['parent_type'] == "mother")){echo "selected='selected'";}  ?> >Mother</option>
 									<option value="guardian" <?php if(isset($result['parent_type']) && ($result['parent_type'] == "guardian")){echo "selected='selected'";}  ?> >Guardian</option>
@@ -107,7 +107,7 @@
 						<div id="father" class="collapsed">
 							<div class="form-group">
 								<label for="father-name">Father Name (<code title="required"> * </code>)</label>
-								<input type="text" value="<?php if(isset($result['parent_name'])){echo $result['parent_name'];} ?>" name="father-name" placeholder="Father Name" id="father-name"  disabled="disabled">
+								<input type="text" value="<?php if(isset($result['parent_name'])){echo $result['parent_name'];} ?>" name="father-name" placeholder="Father Name" id="father-name" disabled="disabled">
 							</div>
 
 							<div class="form-group">
@@ -171,14 +171,13 @@
 						</div>
 						<div class="w-100 p-1"></div>
 						<div class="form-group d-flex flex-row w-auto float-right">
-							<button type="submit" name="delete" class="btn btn-blue w-auto m-1">Delete</button>
 							<?php 
 								if($result['state'] != "registered"){
-									echo '<button type="submit" name="reject" class="btn btn-blue w-auto m-1">Reject</button>';
-									if($result['state'] == "accepted"){
+									echo '<button type="submit" name="Reject" class="btn btn-blue w-auto m-1">Reject</button>';
+									if($result['state'] == "Accepted"){
 										echo "<a href='".set_url("interview/set/").$result['id']."' class='btn btn-blue w-auto m-1'>Set Interview Info</a>";
 									}else{
-										echo "<button type='submit' name='accept' class='btn btn-blue np-3'>Accept</button>";			
+										echo "<button type='submit' name='Accept' class='btn btn-blue np-3'>Accept</button>";			
 									}
 								}
 							 ?>

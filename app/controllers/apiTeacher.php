@@ -27,7 +27,7 @@ class ApiTeacher extends Controller{
 			$page = 1;
 		}
 		$this->load->model("teachers");
-		$result_set = $this->load->teachers->get_list($start,$per_page,$id,$t_name);
+		$result_set = $this->load->teachers->get_teacher_list($start,$per_page,$id,$t_name);
 		$data['count'] = $this->load->teachers->get_count()->fetch()['count'];
 
 		if($result_set && count($result_set) > 0){
@@ -40,15 +40,17 @@ class ApiTeacher extends Controller{
 				$row .= "<td>".$result['contact_number']."</td>";
 				$row .= "<td>".$result['nic']."</td>";
 
-				$row .= "<td><a href=". set_url('teacher/subject/list/').$result['id'].">List</a>";
-				$row .= "<td><a href=". set_url('teacher/update/').$result['id'].">Update</a>";
-				$row .= "<td><a href=". set_url('teacher/delete/').$result['id']." onclick=\"return confirm('Are you sure to delete?')\">Delete</a>";
+				$row .= "<td class='text-center'><a class='btn btn-blue t-d-none p-1' href=". set_url('teacher/subject/list/').$result['id'].">List</a>";
+				if($_SESSION['role']==='admin'){
+					$row .= "<td class='text-center'><a class='btn btn-blue t-d-none p-1' href=". set_url('teacher/update/').$result['id'].">Update</a>";
+					$row .= "<td class='text-center'><a title='Delete' href=". set_url('teacher/delete/').$result['id']." onclick=\"show_dialog(this,'Delete message','Are you sure to delete?')\"><i class='fas fa-trash delete-button'></i></a>";
+				}
 				$row .= "</tr>";
 			}
 			$data['rows'] = $row;
 			echo json_encode($data);
 		}else{
-			$row =  "<tr><td colspan=8 class='text-center bg-red'>Teacher not found...</td></tr>";
+			$row =  "<tr><td colspan=8 class='text-center bg-red'>Teacher Not Found...</td></tr>";
 			$data['rows'] = $row;
 			$data['count'] = 0;
 			echo json_encode($data);

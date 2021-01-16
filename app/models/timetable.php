@@ -51,8 +51,8 @@
 			try{
 				require_once(realpath( dirname( __FILE__)) .  "/".$this->type.".class.php");
 				$user = new ucfirst($this->type)."Class"();
-				$user->set_by_id($this->user_id);
-				if($user->get_state() == 1){
+				$state = $user->set_by_id($this->user_id);
+				if($state){
 					return $user;
 				}else{
 					return FALSE;

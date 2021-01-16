@@ -195,14 +195,14 @@ function validate_contact_number(element){
   	var errors = Array();
 	if(isNaN(element.value)){
 		errors.push("Contact number must numbers.<br>");
-	}else{
-		var regex = /(0(70|71|72|75|76|77|78))+/;
-		if(!regex.test(element.value) && element.value.length >2){
-    		errors.push("Contact number must begin with 070, 071, 072, 075, 076, 077 or 078. <br>");
+	// }else{
+	// 	var regex = /(0(70|71|72|75|76|77|78))+/;
+	// 	if(!regex.test(element.value) && element.value.length >2){
+ //    		errors.push("Contact number must begin with 070, 071, 072, 075, 076, 077 or 078. <br>");
 		}else{
-			// form_errors.splice('contact_number',1);
+			form_errors.splice('contact_number',1);
 			errors = errors.concat(validate_user_input(element,10,10,1));
-		}
+		// }
 	}
 	if(errors.length == 0){
 		if(element.nextElementSibling != null && element.nextElementSibling.nodeName == "P"){
@@ -441,6 +441,12 @@ function validate_user_input(ele,min,max,required=0,err = Array()){
 			p_ele.innerHTML = errors[0];
 			ele.parentElement.style.border = "1px solid red";
 			ele.parentElement.style.borderRadius = "5px";
+		}else if(ele.nextElementSibling != null && ele.nextElementSibling.nextElementSibling.nodeName == "P"){
+			var p_ele = ele.nextElementSibling.nextElementSibling;
+			p_ele.style.cssText = "display:inherit !important;";
+			p_ele.innerHTML = errors[0];
+			ele.parentElement.style.border = "1px solid red";
+			ele.parentElement.style.borderRadius = "5px";
 		}
 	}else{
 		if(ele.nextElementSibling != null && ele.nextElementSibling.nodeName == "P"){
@@ -448,6 +454,12 @@ function validate_user_input(ele,min,max,required=0,err = Array()){
 			p_ele.style.cssText = "display:none !important;";
 			p_ele.innerHTML = "";
 			ele.parentElement.style.border = "none";
+		}else if(ele.nextElementSibling != null && ele.nextElementSibling.nextElementSibling.nodeName == "P"){
+			var p_ele = ele.nextElementSibling.nextElementSibling;
+			p_ele.style.cssText = "display:none !important;";
+			p_ele.innerHTML = "";
+			ele.parentElement.style.border = "none";
+
 		}
 	}
 	return errors;
@@ -506,5 +518,29 @@ function create_subject_code(ele){
 	code += name.toUpperCase().substr(0,3);
 	document.getElementById('dis_code').value = code;
 	document.getElementById('code').value = code;
+}
 
+// classroom subjects
+var no_of_subjects = 3;
+var classroom_subject_button = document.querySelector("#classroom-subject-buttons");
+if(classroom_subject_button){
+	classroom_subject_button.querySelector("#add_classroom_subject").addEventListener("click",add_classroom_subject);
+	classroom_subject_button.querySelector("#remove_classroom_subject").addEventListener("click",remove_classroom_subject);
+}
+
+function add_classroom_subject(){
+	var classroom_subject_wrapper = document.querySelector("#classroom-subject-wrapper");
+	no_of_subjects+=1;
+	classroom_subject_wrapper.innerHTML += `<div class="d-flex col-12 align-items-center p-2 mb-3">
+					<label class="col-2" for="subject-${no_of_subjects}">Subject ${no_of_subjects}</label>
+					<input class="col-6 mr-2" type="text" name="subject-${no_of_subjects}" id="subject-${no_of_subjects}" placeholder="Subject Name" value="" oninput="validate_user_input(this,0,20,1)">
+					<input class="col-3" type="text" name="periods-${no_of_subjects}" id="periods-${no_of_subjects}" placeholder="No of Periods" value="" oninput="validate_user_input(this,0,20,1)">
+					<p class="bg-red fg-white pl-5 p-1 mt-2 d-none w-100 text-center"></p>
+				</div>`;
+}
+
+function remove_classroom_subject(){
+	var classroom_subject_wrapper = document.querySelector("#classroom-subject-wrapper");
+	no_of_subjects-=1;
+	classroom_subject_wrapper.lastElementChild.remove();
 }

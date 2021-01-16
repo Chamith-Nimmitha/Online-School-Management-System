@@ -195,6 +195,36 @@
 			}
 		}
 
+		// classroom aatendance_count using student id
+		public function classroom_attendance_count($student_id,$year=NULL,$month=NULL,$state=1){
+			$query = " FROM `student_attendance` AS `st_at` INNER JOIN `stu_att` AS `sa` ON `st_at`.`id`=`sa`.`id` INNER JOIN `student` AS `s` ON `sa`.`classroom_id`=`s`.`classroom_id` WHERE `s`.`id`= ? AND `st_at`.`attendance`= ? ";
+			$params = ["$student_id"];
+			array_push($params,$state);
+			$month_flag = 0;
+
+			if($year !== NULL){
+				$query .= " AND YEAR(`st_at`.`date`)= ? ";
+				array_push($params,$year);
+			}
+			if($month !== NULL){
+				$query .= " AND MONTH(`st_at`.`date`)= ? ";
+				array_push($params,$month);
+				$month_flag = 1;
+				$query = "SELECT WEEK(`st_at`.`date`,5) AS `week`, COUNT(*)AS `count` ". $query;
+				$query .= "GROUP BY WEEK(`st_at`.`date`,5) ORDER BY WEEK(`st_at`.`date`,5) DESC";
+			}else{
+				$query = "SELECT MONTH(`st_at`.`date`) AS `month`, COUNT(*)AS `count` ". $query;
+				$query .= "GROUP BY MONTH(`st_at`.`date`) ORDER BY MONTH(`st_at`.`date`) ASC";
+			}
+			$stmt = $this->con->db->prepare($query);
+			$result = $stmt->execute($params);
+			if($result){
+				return $stmt;
+			}else{
+				return FALSE;
+			}
+		}
+
 		// get teacher list
 		public function get_teacher_attendance(){
 			$this->con->get(['id','name_with_initials']);

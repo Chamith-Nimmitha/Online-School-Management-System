@@ -49,6 +49,11 @@
 		public function get_count(){
 			return $this->con->get_count();
 		}
+
+		//delete a parent
+		public function delete_parent($parent_id){
+			return $this->con->update("parent",['is_deleted'=>1],["id"=>$parent_id]);
+		}
 	}
 
  ?>

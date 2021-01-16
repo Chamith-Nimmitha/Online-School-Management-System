@@ -1,5 +1,12 @@
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
+	<?php 
+		if(isset($delete_msg) && $delete_msg != NULL){
+			echo "<script trpe='text/javasript'>
+				show_snackbar('{$delete_msg}');
+			</script>";
+		}
+	 ?>
 	<div class="mt-5">
 		<h2 class="fs-30">Parent List</h2>
 	</div>
@@ -55,16 +62,14 @@
 							<td><?php echo $result['type']; ?></td>
 							<td><?php echo $result['occupation']; ?></td>
 							<td><?php echo $result['email']; ?></td>
-							<td><?php echo $result['contact_number']; ?></td>
+							<td class='text-center'><?php echo $result['contact_number']; ?></td>
 							<td>
 								<div>
 									<a href="<?php echo set_url('profile/parent/'.$result['id']); ?>" class="btn btn-blue t-d-none">profile</a>
 								</div>
 							</td>
-							<td>
-								<div>
-									<button href="" class="btn btn-lightred t-d-none" onclick="return confirm('Are you sure to delete?')">delete</button>
-								</div>
+							<td class='text-center'>
+								<a title='Delete' href="<?php echo set_url('parent/delete/'.$result['id']); ?>" class="btn t-d-none" onclick="show_dialog(this,'Delete message','Are you sure to delete?')"><i class='fas fa-trash delete-button'></i></a>
 							</td>
 						</tr>		
 

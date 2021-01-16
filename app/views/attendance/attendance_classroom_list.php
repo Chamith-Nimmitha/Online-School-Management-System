@@ -65,9 +65,9 @@
 			    <thead>
 				    <tr>
                         <th>Classroom ID</th>
-                        <th>grade</th>
-                        <th>class</th>
-                        <th>class teacher</th>
+                        <th>Grade</th>
+                        <th>Class</th>
+                        <th>Class Teacher</th>
                         <th>Attendance</th>
 				    </tr>
 			    </thead>
@@ -84,7 +84,7 @@
 	                ?>
 
 						<tr>
-	                        <td><?php echo $result['id']; ?></td>
+	                        <td class='text-center'><?php echo $result['id']; ?></td>
 	                        <td class="text-center"><?php echo $result['grade']; ?></td>
 	                        <td class="text-center"><?php echo $result['class']; ?></td>
 	                        <td><?php echo $result['class_teacher_id']; ?></td>

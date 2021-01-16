@@ -146,9 +146,22 @@
 
         // attendance
         public function attendance($student_id=NULL){
-
+            if(!$this->checkPermission->check_permission("attendance","view")){
+                $this->view_header_and_aside();
+                $this->load->view("common/error");
+                $this->load->view("templates/footer");
+                return;
+            }
             if($student_id == NULL){
-                $student_id = $_POST['id'];
+                if(isset($_POST['id'])){
+                    $student_id = $_POST['id'];
+                }else{
+                    $student_id = $_SESSION['user_id'];
+                }
+            }else{
+                if($_SESSION['role'] == "student"){
+                    $student_id = $_SESSION['user_id'];
+                }
             }
 
             $this->load->model("attendance");

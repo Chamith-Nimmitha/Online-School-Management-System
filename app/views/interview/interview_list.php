@@ -23,8 +23,8 @@
 						<label for="class" class="mr-3 d-normal">State:</label>
 						<select name="state" id="state">
 							<option value="all" <?php if(isset($_POST['state']) && ($_POST['state'] == "all")){echo 'selected="selected"';} ?> >All</option>
-							<option value="interviewed" <?php if(isset($_POST['state']) && ($_POST['state'] == "interviewed")){echo 'selected="selected"';} ?> >Interviewed</option>
-							<option value="notInterviewed" <?php if(isset($_POST['state']) && ($_POST['state'] == "notInterviewed")){echo 'selected="selected"';} ?> >NotInterviewed</option>
+							<option value="Interviewed" <?php if(isset($_POST['state']) && ($_POST['state'] == "Interviewed")){echo 'selected="selected"';} ?> >Interviewed</option>
+							<option value="Not Interviewed" <?php if(isset($_POST['state']) && ($_POST['state'] == "Not Interviewed")){echo 'selected="selected"';} ?> >Not Interviewed</option>
 						</select>				
 					</div>
 					<input type="submit" class="btn btn-blue ml-3 mt-5" name="search" value="Show">
@@ -43,10 +43,10 @@
 									<tr>
 										<th>Interview ID</th>
 										<th>Adm. ID</th>
-										<th>date</th>
-										<th>time</th>
+										<th>Date</th>
+										<th>Time</th>
 										<th>Panel ID</th>
-										<th>state</th>
+										<th>State</th>
 										<th>View</th>
 									</tr>
 								</thead>
@@ -60,19 +60,19 @@
 							$row .= "<td>".$result['date']."</td>";
 							$row .= "<td>".$time_map[$result['period']]."</td>";
 							$row .= "<td>".$result['interview_panel_id']."</td>";
-							if($result['state'] == 'notInterviewed'){
+							if($result['state'] == 'Not Interviewed'){
 								$row .= "<td style='background:#009922'>".$result['state']."</td>";
 							}else{
 								$row .= "<td style='background:#333333;color:white;' class='text-center'>".$result['state']."</td>";
 							}
 
-							$row .= "<td><a class='t-d-none btn btn-blue p-1' href='".set_url('interview/view/').$result['admission_id']."'>view</a></td>";
+							$row .= "<td><a class='t-d-none btn btn-blue p-1' href='".set_url('interview/view/').$result['admission_id']."'>View</a></td>";
 							echo $row;
 						}
 						echo "</tbody>";
 						echo "</table>";
 					}else{
-						echo "<tr><td colspan=9 class='text-center bg-red'>Interviews not found...</td></tr>";
+						echo "<tr><td colspan=9 class='text-center bg-red'>Interviews Not Found...</td></tr>";
 						echo "</tbody>";
 						echo "</table>";
 					}

@@ -1,9 +1,4 @@
-<?php 
-	$day_map = ["mon"=>"monday", "tue"=>"tuesday", "wed"=>"wednesday", "thu"=>"thursday", "fri"=>"friday"];
 
-	$time_map = ["1"=>"7.50a.m - 8.30a.m", "2"=>"8.30a.m - 9.10a.m", "3"=>"9.10a.m - 9.50a.m", "4"=> "9.50a.m - 10.30a.m", "5"=> "10.50a.m - 11.30a.m", "6"=>"11.30a.m - 12.10p.m", "7"=> "12.10p.m - 12.50p.m", "8"=>"12.50p.m - 1.30p.m"];
-
- ?>
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 	<?php 
 		if(isset($error) && !empty($error)){
@@ -113,7 +108,6 @@
 				</select>
 			</div>
 			<div class="form-group d-flex justify-content-end">
-				<a href="<?php echo $_GET['back']; ?>" class="btn btn-blue">back</a>
 				<button type="submit" name="submit" id="submit" class="btn btn-blue p-2 ml-2">Arrange Interview</button>
 			</div>
 		</fieldset>

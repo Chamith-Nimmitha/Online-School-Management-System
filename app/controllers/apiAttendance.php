@@ -46,10 +46,10 @@
 	        			$body .= "<tr><td colspan=8 class='text-center bg-gray'></td></tr>";
 	        		}
 					$body .="<tr>";
-					$body .= "<td>".$result['id']."</td>";
-					$body .= "<td>".$result['grade']."</td>";
-					$body .= "<td>".$result['class']."</td>";
-					$body .= "<td>".$result['class_teacher_id']."</td>";
+					$body .= "<td class='text-center'>".$result['id']."</td>";
+					$body .= "<td class='text-center'>".$result['grade']."</td>";
+					$body .= "<td class='text-center'>".$result['class']."</td>";
+					$body .= "<td class='text-center'>".$result['class_teacher_id']."</td>";
 					$body .= "<td class='text-center'>
 								<div>
 	                				<a class='btn btn-blue' href='". set_url('attendance/classroom/view/'.$result['id'])."'>View</a>
@@ -93,20 +93,22 @@
 					$body .= "<td>{$result['id']}</td>";
 					$body .= "<td>{$result['name_with_initials']}</td>";
 					$body .= "<td>{$result['date']}</td>";
-					$body .= "<td class='d-flex flex-col'>
-                                <label for='present-".$result['id']."'>
+					$body .= "<td>
+                                <label class='p-2 pr-4 pl-4' for='present-".$result['id']."'>
                                     <input type='radio' id='present-".$result['id']."' name='attendance-".$result['id']."' value='1'";
                                     if(isset($result['attendance']) && $result['attendance'] === 1){
                                     	$body .= "checked='checked'";
                                     }
-                                    $body .= "> Present
+                                    $body .= ">
                                 </label>
-                                <label for='absent-".$result['id']."'>
+                              </td>
+                              <td>
+                                <label class='p-2 pr-4 pl-4' for='absent-".$result['id']."'>
                                     <input type='radio' id='absent-".$result['id']."' name='attendance-".$result['id']."' value='0'";
                                     if(isset($result['attendance']) && $result['attendance'] === 0){
                                     	$body .= "checked='checked'";
                                     }
-                                    $body .= "> Absent
+                                    $body .= ">
                                 </label>
                             </td>";
 					$body .= "<td><input type='text' name='note-".$result['id']."' value='".$result['note']."'></td>";
@@ -189,9 +191,7 @@
 			}else{
 				if( date('W', mktime(0,0,0,1,1,$year)) != 1){
 					$week = ( date('W', mktime(0,0,0,$month,($week-1)*7+1,$year)) +53 - date("W",mktime(0,0,0,1,1,$year)))%53;
-					if($week == 0){
-						$week = 1;
-					}
+						$week += 53 - date("W",mktime(0,0,0,1,1,$year)) +1;
 				}else{
 					$week = date('W', mktime(0,0,0,$month,($week-1)*7+1,$year));
 				}
@@ -300,9 +300,7 @@
 			}else{
 				if( date('W', mktime(0,0,0,1,1,$year)) != 1){
 					$week = ( date('W', mktime(0,0,0,$month,($week-1)*7+1,$year)) +53 - date("W",mktime(0,0,0,1,1,$year)))%53;
-					if($week == 0){
-						$week = 1;
-					}
+					$week += 53 - date("W",mktime(0,0,0,1,1,$year)) +1;
 				}else{
 					$week = date('W', mktime(0,0,0,$month,($week-1)*7+1,$year));
 				}

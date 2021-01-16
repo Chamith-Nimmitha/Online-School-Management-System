@@ -87,7 +87,7 @@
 									<th>Grade</th>
 									<th>Class</th>
 									<th>Phone</th>
-									<th>Is_deleted</th>
+									<th>State</th>
 									<th>Timetable</th>
 									<th>Profile</th>
 									<th>Exam Report</th>";
@@ -106,12 +106,18 @@
 						$row .= "<td class='text-center'>".$result['grade']."</td>";
 						$row .= "<td class='text-center'>".$result['class']."</td>";
 						$row .= "<td>".$result['contact_number']."</td>";
-						$row .= "<td class='text-center'>".$result['is_deleted']."</td>";
+						$row .= "<td class='text-center'>";
+						if( $result['is_deleted'] ==0 ){
+							$row .= "Active";
+						}else{
+							$row .= "Blocked";
+						}
+						$row .= "</td>";
 						$row .= "<td class='text-center'><a href='timetable/view/".$result['id']."' class='btn btn-blue t-d-none p-1'>timetable</a></td>";
 						$row .= "<td class='text-center'><a href='".set_url("profile/student/".$result['id'])."' class='btn btn-blue t-d-none p-1'>profile</a></td>";
 						$row .= "<td class='text-center'><a href='".set_url("student/exam/".$result['id'])."' class='btn btn-blue t-d-none p-1'>Marks</a></td>";
 						if($_SESSION['role'] !== "teacher"){
-							$row .= "<td class='text-center'><a href='".set_url("student/delete/".$result['id'])."' class='btn btn-lightred t-d-none p-1' onclick=\"return confirm('Are you sure to delete?')\">delete</a></td>";
+							$row .= "<td class='text-center'><a title='Delete' href='".set_url("student/delete/".$result['id'])."' class='btn t-d-none p-1' onclick=\"show_dialog(this,'Delete message','Are you sure to delete?')\"><i class='fas fa-trash delete-button'></i></a></td>";
 						}
 						$row .="</tr>";
 

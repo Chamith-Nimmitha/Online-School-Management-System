@@ -7,6 +7,10 @@
 			return $result = $this->con->insert("admission",$data);
 		}
 
+		public function change_state($admission_id,$state){
+			return $this->con->update("admission", ["state"=>$state],["id" =>$admission_id]);
+		}
+
 		// get admission form data
 		public function get_data($admission_id){
 			$this->con->where(array("id"=>$admission_id));
@@ -19,7 +23,7 @@
 		}
 
 		// get admission list
-		public function get_list($start, $count, $id=NULL,$name=NULL,$grade=NULL, $state=NULL){
+		public function get_list($start, $count, $id=NULL,$name=NULL,$grade=NULL, $state=[]){
 			$query = "SELECT SQL_CALC_FOUND_ROWS * FROM `admission` ";
 			$params = [];
 			$flag = 0;
@@ -55,14 +59,24 @@
 			}
 
 
-			if($state !== NULL){
+			if(count($state) != 0){
 				if($flag === 0 ){
-					$query .= "WHERE `state` = ?";
+					$query .= "WHERE `state` IN (";
 				}else{
-					$query .= " && `state` = ?";
+					$query .= " && `state` IN (";
 				}
+				$s="";
+
+				foreach ($state as $value) {
+					if(strlen($s) != 0){
+						$s .= ",";
+					}
+					$s .="?";
+					array_push($params, $value);
+				}
+				$s .= ")";
+				$query .= $s;
 				$flag = 1;
-				array_push($params, $state);
 			}
 			$query .= " LIMIT $start,$count";
 			$stmt = $this->con->db->prepare($query);
@@ -73,10 +87,18 @@
 				return FALSE;
 			}
 		}
-
+		// delete admission
+		public function delete_admission($admission_id){
+			$this->con->update("admission",array("state"=>"deleted"),array("id"=>$admission_id));
+		}
 		// get result count
 		public function get_count(){
 			return $this->con->get_count();
+		}
+
+		// check admission parent id
+		public function check_parent_id($parent_id){
+			return $this->con->select("parent",["id"=>$parent_id]);
 		}
 
 	}

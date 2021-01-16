@@ -7,92 +7,89 @@
 					<nav class="nav fs-18">
 						<ul class="d-flex flex-col" id="aside_nav">
 							<li class="nav-item aside-li">
-								<a href="<?php echo set_url('pages/admin.php'); ?>" class="nav-link active">Dashbord</a>
+								<a href="<?php echo set_url('dashboard'); ?>" class="nav-link active">Dashbord</a>
 							</li>
-							<li class="nav-item aside-li" id="admission-li"><a href="<?php echo set_url('pages/admissions_all.php?aside-link-selector=all'); ?>" class="nav-link">Admissions</a>
+							<li class="nav-item aside-li" id="admission-li"><a href="<?php echo set_url('admission/list'); ?>" class="nav-link">Admissions</a>
 							</li>
 							<li class="nav-item aside-li" id="attendance-li">
-								<a href="<?php echo set_url('pages/teacher_attendance_view.php') ?>" class="nav-link">Attendance</a>
+								<a href="<?php echo set_url('teacher/attendance') ?>" class="nav-link">Attendance</a>
 								<button class="toggle-button" target="attendance-nav">
-									<img src="<?php echo set_url('public/assets/img/close-menu.png') ?>" width="20px" alt="">
+									<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px" alt="">
 								</button>
 
 								<nav class="nav sub-nav no-collapsed" id="attendance-nav">
 									<ul class="d-flex flex-col">
-										<li class="nav-item"><a href="<?php echo set_url('pages/teacher_attendance_view.php') ?>" parent-li="attendance-li" class="nav-link">My Attendance</a></li>
-										<li class="nav-item"><a href="<?php echo set_url('pages/classroom_attendance_view.php') ?>" parent-li="attendance-li" class="nav-link">Mark classroom Attendance</a></li>
+										<li class="nav-item"><a href="<?php echo set_url('teacher/attendance') ?>" parent-li="attendance-li" class="nav-link">My Attendance</a></li>
+										<?php if(isset($classroom_id) && $classroom_id != FALSE){ ?>
+										<li class="nav-item"><a href="<?php echo set_url('teacher/classroom/attendance') ?>" parent-li="attendance-li" class="nav-link">Mark classroom Attendance</a></li>
+										<?php } ?>
 									</ul>
 								</nav>
 							</li>
 							<li class="nav-item aside-li" id="student-li">
-								<a href="<?php echo set_url('pages/student_list.php'); ?>" class="nav-link">Students</a>
+								<a href="<?php echo set_url('student/list'); ?>" class="nav-link">Students</a>
 								<button class="toggle-button" target="student-nav">
-									<img src="../img/close-menu.png" width="20px" alt="">
+									<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px" alt="">
 								</button>
 
 								<nav class="nav sub-nav no-collapsed" id="student-nav">
 									<ul class="d-flex flex-col">
-										<li class="nav-item"><a href="<?php echo set_url('pages/student_list.php'); ?>" class="nav-link"  parent-li="student-li">Students list</a></li>
-										<li class="nav-item"  parent-li="student-li"><a href="#" class="nav-link">Students Complaints</a></li>
+										<li class="nav-item"><a href="<?php echo set_url('student/list'); ?>" class="nav-link"  parent-li="student-li">Students list</a></li>
 									</ul>
 								</nav>
 							</li>
 							<li class="nav-item aside-li" id="teacher-li">
-								<a href="<?php echo set_url('pages/teacher_list_view.php'); ?>" class="nav-link">Teachers</a>
+								<a href="<?php echo set_url('teacher/list'); ?>" class="nav-link">Teachers</a>
 								<button class="toggle-button" target="teacher-nav">
-									<img src="../img/close-menu.png" width="20px" alt="">
+									<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px" alt="">
 								</button>
 
 								<nav class="nav sub-nav no-collapsed" id="teacher-nav">
 									<ul class="d-flex flex-col">
 										<li class="nav-item"><a href="<?php echo set_url('teacher/list'); ?>" class="nav-link" parent-li="teacher-li">Teachers List</a></li>
-										<li class="nav-item"><a href="<?php echo set_url('pages/TComplaints.php') ?>" class="nav-link"  parent-li="teacher-li">Teachers Complaints</a></li>
 									</ul>
 								</nav>
 							</li>
-							<li class="nav-item aside-li" id="classroom-li"><a href="<?php echo set_url('pages/teacher_classroom_list_view.php') ?>" class="nav-link">Class Rooms</a>
+							<li class="nav-item aside-li" id="classroom-li"><a href="<?php echo set_url('classroom/list') ?>" class="nav-link">Class Rooms</a>
 								<button class="toggle-button" target="classroom-nav">
-									<img src="../img/close-menu.png" width="20px" alt="">
+									<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px" alt="">
 								</button>
 
 								<nav  id="classroom-nav" class="nav sub-nav no-collapsed">
 									<ul class="d-flex flex-col">
-										<li class="nav-item"><a href="<?php echo set_url('pages/teacher_classroom_list_view.php') ?>" class="nav-link" parent-li="classroom-li">Classroom list</a></li>
-										<li class="nav-item"><a href="#" class="nav-link" parent-li="classroom-li">Class Complaints</a></li>
+										<li class="nav-item"><a href="<?php echo set_url('classroom/list') ?>" class="nav-link" parent-li="classroom-li">Classroom list</a></li>
 									</ul>
 								</nav>
 							</li>
 							<li class="nav-item aside-li" id="subject-li">
-								<a href="<?php echo set_url('pages/teacher_subject_list.php',array('teacher_id'=>$_SESSION['user_id'])); ?>" class="nav-link">My Subjects</a>
+								<a href="<?php echo set_url('teacher/subject/list') ?>" class="nav-link">My Subjects</a>
 								<button class="toggle-button" target="subject-nav">
-									<img src="../img/close-menu.png" width="20px" alt="">
+									<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px" alt="">
 								</button>
 
 								<nav class="nav sub-nav no-collapsed" id="subject-nav">
 									<ul class="d-flex flex-col">
 										<li class="nav-item">
-											<a href="<?php echo set_url('pages/teacher_subject_list.php',array('teacher_id'=>$_SESSION['user_id'])); ?>" class="nav-link" parent-li="subject-li">Subjects list</a></li>
-										<li class="nav-item">
-											<a href="#" class="nav-link" parent-li="subject-li">Subjects Complaints</a></li>
+											<a href="<?php echo set_url('teacher/subject/list',array('teacher_id'=>$_SESSION['user_id'])); ?>" class="nav-link" parent-li="subject-li">Subjects list</a></li>
 									</ul>
 								</nav>
 							</li>
+							<?php if(isset($interview_panel_id)){ ?>
 							<li id="interview-li" class="nav-item aside-li">
-								<a href="<?php echo set_url('pages/teacher_interview_panel_view.php',array('interview-panel-id'=>$interview_panel_id));?>" class="nav-link">Interviews</a>
+								<a href="<?php echo set_url('teacher/interview/panel');?>" class="nav-link">Interviews</a>
 								<button class="toggle-button" target="interview-nav">
-									<img src="<?php echo set_url('img/close-menu.png') ?>" width="20px">
+									<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px">
 								</button>
-								<?php if(isset($interview_panel_id)){ ?>
 									<div id="interview-nav" class="no-collapsed nav sub-nav">
 										<ul class="d-flex flex-col">
-											<li class="nav-item"><a href="<?php echo set_url('pages/teacher_interview_panel_view.php',array('interview-panel-id'=>$interview_panel_id));?>" class="nav-link"  parent-li="interview-li">My panels</a></li>
+											<li class="nav-item"><a href="<?php echo set_url('teacher/interview/panel');?>" class="nav-link"  parent-li="interview-li">My panel</a></li>
 											<li class="nav-item">
-												<a href="<?php echo set_url('pages/teacher_interview_list.php',array('interview_panel_id'=>$interview_panel_id)) ?>"  class="nav-link" parent-li="interview-li">Interview List</a>
+												<a href="<?php echo set_url('teacher/interviews'); ?>"  class="nav-link" parent-li="interview-li">Interview List</a>
 											</li>
 										</ul>
 									</div>
-								<?php } ?>
 							</li>
+							<?php } ?>
 						</ul>
 					</nav>
 				</div>
