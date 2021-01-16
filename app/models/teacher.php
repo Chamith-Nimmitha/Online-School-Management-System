@@ -121,9 +121,10 @@
 			return $data;
 		}
 
-		public function insert_data($data){
-			return $result = $this->con->insert("teacher",$data);
-		}
+		public function insert_data($data)
+        {
+            return $result = $this->con->insert("teacher", $data);
+        }
 
         
 

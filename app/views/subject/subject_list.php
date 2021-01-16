@@ -21,10 +21,7 @@
 	    <button type="submit" class="btn btn-default" name="save" value="submit">Upload</button>
     </form>
 
-	<form action="<?php echo URL; ?>hello/verification" method="post" onsubmit="return confirm('Do you really want to submit the form?');">
-	    <button type="submit" class="btn-info" value="submit" name="save">Submit</button>
-	    <button type="submit" class="btn-info" value="submit" name="resend">Resend</button></center>
-    </form>
+	
 
 	<div class="d-flex justify-content-center align-items-center">
 		<form action="<?php echo set_url('subject/list'); ?>" method="post" class="d-flex align-items-center col-12">

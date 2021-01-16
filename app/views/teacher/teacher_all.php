@@ -16,22 +16,6 @@
 			</form>
 		</div>
 
-		<center>
-		    <form enctype="multipart/form-data" method="post" role="form">
-	            <div class="form-group">
-	                <label for="exampleInputFile">File Upload</label>
-	                <input type="file" name="file" id="file" size="150">
-	                <p class="help-block">Only Excel/CSV File Import.</p>
-	            </div>
-	            <button type="submit" class="btn btn-default" name="save" value="submit">Upload</button>
-            </form>
-		</center>
-
-		<form action="<?php echo URL; ?>import/verification" method="post" onsubmit="return confirm('Do you really want to submit the form?');">
-	        <button type="submit" class="btn-info" value="submit" name="save">Submit</button>
-	        <button type="submit" class="btn-info" value="submit" name="resend">Resend</button></center>
-        </form>
-        
 		<div class="col-12 flex-col" style="overflow-x: scroll;overflow-y: hidden;">
 		<div class="col-12 flex-col" style="position:relative;overflow-x: scroll;overflow-y: hidden;">
 			<div class="loader hide-loader">
@@ -96,8 +80,13 @@
         <br>
 		<div>
             <a class="btn btn-blue" onClick="window.print()">Download as a PDF</a>
+			
 		</div>
 
+		<form>
+            <input type="button" value="Click Me" onclick="codespeedy()">
+        </form>
+        
 		<div id="pagination" class="col-12">
 			<span>Number of results found : <span id="row_count"><?php echo $count; ?></span></span>
 			<div id="pagination_data" class="col-12">
