@@ -124,6 +124,12 @@
 			return $data;
 		}
 
+
+		public function insert_data($data)
+        {
+            return $result = $this->con->insert("teacher", $data);
+        }
+
 		// get subjects this teacher teaches
 		public function get_subjects(){
 			$query = "SELECT `s`.*,`ts`.`id` AS `teacher_subject_id` FROM `subject` AS `s` INNER JOIN `teacher_subject` AS `ts` ON `s`.`id`=`ts`.`subject_id` WHERE `ts`.`teacher_id`= ?";

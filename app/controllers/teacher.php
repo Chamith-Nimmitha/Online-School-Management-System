@@ -406,6 +406,173 @@
         	}
             $this->load->view("templates/footer");
 		}
+		
+		//import teacher details using csv files
+		// upload csv files
+        public function teacher_upload()
+        {
+            $field_errors = array();
+            $col_error = array();
+            $error = "";
+            $info = "";
+
+            if(isset($_POST["submit"]))
+            {
+                if($_FILES['file']['name'])
+                {
+                    $filename = explode(".", $_FILES['file']['name']);
+
+                    if($filename[1] == 'csv')
+                    {
+                        $handle = fopen($_FILES['file']['tmp_name'], "r");
+
+                        while($dataset = fgetcsv($handle))
+                        {
+                            //$error = '';
+                            $colcount = count($dataset);
+                            $info = '';
+                            //echo '<tr>';
+
+                            if($colcount != 3)
+                            {
+                                //$error = 'Column count incorrect';
+                                //$field_errors['$colcount'] = "Column count incorrect";
+                                $col_error[0] = "Column count incorrect";
+                            }
+                            else
+                            {
+                                if($colcount == 3)
+                                {
+                                    //checking data types
+                                    if((is_numeric($dataset[0])))
+                                    {
+                                        //$error = 'error';
+                                        $field_errors['dataset[0]'] = "Error";
+                                    }
+
+                                    if(!(is_string($dataset[1])))
+                                    {
+                                        //$error = 'error';
+                                        $field_errors['dataset[1]'] = "Error";
+                                    }
+
+                                    if(!(is_numeric($dataset[2])))
+                                    {
+                                        //$error = 'error';
+                                        $field_errors['dataset[2]'] = "Error";
+									}
+									
+									if(!(is_string($dataset[3])))
+                                    {
+                                        //$error = 'error';
+                                        $field_errors['dataset[3]'] = "Error";
+                                    }
+
+                                    
+                                }
+                                // else
+                                // {
+                                //     if(!(is_numeric($data[0])))
+                                //     {
+                                //         //$error = 'error';
+                                //         $field_errors['error'] = $error;
+                                //     }
+
+                                //     if(!(is_string($data[1])))
+                                //     {
+                                //         //$error = 'error';
+                                //         $field_errors['error'] = $error;
+                                //     }
+
+                                //     if(!(is_string($data[2])))
+                                //     {
+                                //         //$error = 'error';
+                                //         $field_errors['error'] = $error;
+                                //     }
+
+                                //     if(!(is_string($data[3])))
+                                //     {
+                                //         //$error = 'error';
+                                //         $field_errors['error'] = $error;
+                                //     }
+                                // }
+
+                            }
+
+                            $field_errors = array_merge($field_errors, $col_error);
+
+                            if(empty($field_errors))
+                            {
+                                $data = array();
+
+                                $data["name_with_initials"] = $dataset[0];
+                                $data["email"] = $dataset[1];
+								$data["contact_number"] = $dataset[2];
+								$data["nic"] = $dataset[3];
+                            }
+
+                            if(count($field_errors) === 0)
+                            {
+                                $this->load->model("teacher");
+                                $result = $this->load->teacher->insert_data($data);
+
+                                if($result)
+                                {
+                                    $info = "File Uploaded Successfully.";
+                                    //unset($_POST);
+                                }
+                                else
+                                {
+                                    $info = "File Uploading Fail.";
+                                }
+                                // else
+                                // {
+                                //     $this->load->view("teacher/teacher-upload");
+                                // }
+                            }
+                            else
+                            {
+                                $info = "File Uploading Fail.......................";
+                            }
+                            // if(!(empty($field_error)))
+                            // {
+                            //     $this->load->view("teacher/teacher_upload");
+                            // }
+
+
+                            //echo '</tr>';
+
+
+                         /*   if($error)
+                            {
+                                $this->load->view("subject/subject-upload");   
+                            }
+                            else
+                            {
+                                $this->load->view("subject/subject-upload");
+                            }*/
+                        }
+
+                    /*if(!(empty($field_error)))
+                        {
+                            //$this->load->view("subject/subject_upload");
+                            return;
+                            //$this->view_header_and_aside();
+                            //$this->load->view("subject/subject_upload", ["field_error"=>$field_error,"info"=>$info,"error"=>$error]);
+                            //$this->load->view("templates/footer");
+                        }*/
+                    }
+
+                    fclose($handle);
+                }
+            }
+            
+
+            $this->view_header_and_aside();
+            $this->load->view("teacher/teacher_upload", ["field_errors"=>$field_errors,"info"=>$info,"error"=>$error]);
+            $this->load->view("templates/footer");
+        }
+
         
         // teacher specific subject timetable
 

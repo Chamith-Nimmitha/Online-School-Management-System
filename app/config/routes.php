@@ -36,7 +36,7 @@
 
 	// teacher routes
 	$routes['teacher/list'] = "teacher/list";
-	$routes['teacher/import_details'] = "teacher/import";
+	$routes['teacher/csv'] = "teacher/teacher_upload";
 	$routes['teacher/registration'] = "teacher/new_teacher";
 	$routes['teacher/update'] = "teacher/teacher_list_update";
 	$routes['teacher/update/$1'] = "teacher/update_teacher/$1";

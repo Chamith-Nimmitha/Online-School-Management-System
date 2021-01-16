@@ -15,12 +15,6 @@
 			}
 		}
 
-
-		public function submit_details($data)
-	    {
-		        $this->con->insert("teacher", $data);
-	    }
-
 		public function get_teacher_list($start=NULL, $count=NULL, $id=NULL,$name=NULL){
 			$query = "SELECT SQL_CALC_FOUND_ROWS * FROM `teacher` ";
 			$params = [];
@@ -77,6 +71,10 @@
 			}else{
 				return FALSE;
 			}
+		}
+
+		public function insert_data($data){
+			return $result = $this->con->insert("teacher",$data);
 		}
 	}
  ?>
