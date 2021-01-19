@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<title>SMS</title>
 	<link rel="stylesheet" href="<?php echo set_url('public/assets/css/grid-system.css'); ?>">
-	<!-- <link rel="stylesheet" href="../css/vimarsha.css"> -->
+	<link rel="stylesheet" href="<?php echo set_url('public/assets/css/hemakanth.css'); ?>">
 	<link rel="stylesheet" href="<?php echo set_url('public/assets/css/main.css'); ?>">
 	<link rel="stylesheet" href="<?php echo set_url('public/assets/css/themes/default.css'); ?>">
 	<link id="user-theme" rel="stylesheet" href="">
