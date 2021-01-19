@@ -7,8 +7,8 @@
 	<link rel="stylesheet" href="<?php echo set_url('public/assets/css/grid-system.css'); ?>">
 	<!-- <link rel="stylesheet" href="../css/vimarsha.css"> -->
 	<link rel="stylesheet" href="<?php echo set_url('public/assets/css/main.css'); ?>">
-	<link rel="stylesheet" href="<?php echo set_url('public/assets/css/hemakanth.css'); ?>">
-	<link rel="stylesheet" href="<?php echo set_url('public/assets/css/chamith.css'); ?>">
+	<link rel="stylesheet" href="<?php echo set_url('public/assets/css/themes/default.css'); ?>">
+	<link id="user-theme" rel="stylesheet" href="">
 </style>
 	<script src="https://kit.fontawesome.com/970e009013.js" crossorigin="anonymous"></script>
 </head>

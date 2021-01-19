@@ -12,6 +12,7 @@
 	$routes['school/about'] = "home/about";
 	$routes['settings/school'] = "home/settings_school";
 	$routes['settings/notice'] = "home/settings_notice";
+	$routes['settings/website'] = "home/setting_website";
 
 	// login routes
 	$routes['login'] = "user/login";

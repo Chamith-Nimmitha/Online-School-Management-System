@@ -1,0 +1,40 @@
+:root{
+	--body-bg :green;
+	--content-bg : green;
+	--header-bg : #20295b;
+	--header-color: #ffc107;
+	--nav-item-active : orange;
+	--fieldset-border-color : darkblue;
+	--footer-bg:#20295b;
+	--footer-color:white;
+}
+
+table{
+	--table-th-bg : #20295b;
+	--table-th-color : white;
+	--table-th-border : white;
+	--table-th-last-child-border :black;
+	--table-tr-odd-bg : #ffe69b ;
+	--table-border-color:darkblue;
+	--table-padding :2px;
+	--table-border-radius : 10px;
+	--table-th-border-radius : 3px;
+}
+
+.theme-sidebar{
+	--bg : #20295b;
+	--color: white;
+	--sidebar-border-color: white;
+	--sidebar-link-color: white;
+	--sidebar-link-hover: orange;
+	--sidebar-border: 2px solid orange;
+}
+
+.theme-sub-nav{
+	--bg : #20295b;
+	--color: ;
+	--sidebar-border-color: white;
+	--sidebar-link-color: white;
+	--sidebar-link-hover: ;
+	
+}
