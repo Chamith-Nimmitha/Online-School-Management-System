@@ -4,13 +4,12 @@
 	}
 </script>
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
-	<div class="mt-5">
-		<h2 class="fs-30">Admissions Managment</h2>
-	</div>
 
 	<!-- For unread, read, accepted applications -->
-	<div id="useful-all-admission-table"  class="admissions-table">
-		<hr>
+	<div id="useful-all-admission-table"  class=" col-11 admissions-table bg-white d-flex flex-col align-items-center" style="background: linear-gradient(to left top, rgba(255,255,255,0.5), rgba(255,255,255,0.1)); border-radius: 20px; box-shadow: 6px 6px 20px rgba(122,122,122,0.4); ">
+		<div class="mt-5">
+			<h2 class="fs-30" style="color: rgba(0,0,128,0.6);">Student Admissions</h2>
+		</div>
 		<div class="d-flex justify-content-center align-items-center">
 			<form action="<?php echo set_url('admission/list'); ?>" method="post" class="d-flex align-items-center">
 				<input type="reset" value="Reset" class="btn btn-blue mt-5 mr-2">
@@ -30,7 +29,7 @@
 				<button onclick="admission_search()" style="width:100px;" class="btn btn-blue ml-3 mt-5 d-felx"><i class="fas fa-search pr-2"></i>Filter</button>
 			</form>
 		</div>
-		<div class="col-12 mt-5 flex-col" style="position:relative;overflow-x: scroll;overflow-y: hidden;" id="admission_list_useful">
+		<div class="col-11 mt-5 flex-col" style=" position:relative;overflow-x: scroll;overflow-y: hidden;" id="admission_list_useful">
 				<div class="loader hide-loader">
 				 	<div class="col-12">
 						<div id="one"><div></div></div>
@@ -94,11 +93,10 @@
 	</div>
 
 	<!-- For rejected, NotInterviewed, Registered admissions  -->
-	<div class="mt-5">
-		<h2 class="fs-30">Already Viewed Admissions</h2>
-	</div>
-	<div id="unuseful-all-admission-table"  class="admissions-table">
-		<hr>
+	<div id="unuseful-all-admission-table"  class="col-11 d-flex align-items-center admissions-table" style="background: linear-gradient(to left top, rgba(255,255,255,0.5), rgba(255,255,255,0.1)); border-radius: 20px; box-shadow: 6px 6px 20px rgba(122,122,122,0.4); ">
+		<div class="mt-5">
+			<h2 class="fs-30" style="color: rgba(0,0,128,0.6);">Already Viewed Admissions</h2>
+		</div>
 		<div class="d-flex justify-content-center align-items-center">
 			<form action="<?php echo set_url('admission/list'); ?>" method="post" class="d-flex align-items-center">
 				<input type="reset" value="Reset" class="btn btn-blue mt-5 mr-2">
@@ -118,7 +116,7 @@
 				<button onclick="admission_search_unuseful()" style="width:100px;" class="btn btn-blue ml-3 mt-5 d-felx"><i class="fas fa-search pr-2"></i>Filter</button>
 			</form>
 		</div>
-		<div class="col-12 mt-5 flex-col" style="position:relative;overflow-x: scroll;overflow-y: hidden;" id="admission_list_unuseful">
+		<div class="col-11 mt-5 flex-col" style="position:relative;overflow-x: scroll;overflow-y: hidden;" id="admission_list_unuseful">
 				<div class="loader hide-loader">
 				 	<div class="col-12">
 						<div id="one"><div></div></div>

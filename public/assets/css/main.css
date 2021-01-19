@@ -1,3 +1,10 @@
+:root{
+	--default-theme-dot:white;
+	--green-theme-dot:green;
+	--blue-theme-dot:blue;
+	--dark-theme-dot:darkblue;
+}
+
 * {
 	padding: 0;
 	margin: 0;
@@ -8,6 +15,9 @@ body{
 	margin: 0;	
 	width: 100%;
 	overflow-wrap: break-word;
+}
+body *{
+	transition: all 0.3s linear;
 }
 
 #top-header, #school-badge, #header-user-info{
@@ -181,6 +191,35 @@ footer{
 	color: black;
 }
 
+#theme-dots-wrapper>div{
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	align-items: center;
+	width: 100px;
+}
+
+#theme-dots-wrapper>div>div{
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+}
+
+#default-dot >div{
+	background-color: var(--default-theme-dot);
+}
+
+#blue-dot div{
+	background-color: var(--blue-theme-dot);
+}
+
+#green-dot>div{
+	background-color: var(--green-theme-dot);
+}
+
+#dark-dot>div{
+	background-color: var(--dark-theme-dot);
+}
 
 @media  (min-width:0px){
 	

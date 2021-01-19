@@ -379,8 +379,12 @@
 			}
 
 			$this->load->view("templates/footer");
+		}
 
-
+		public function setting_website(){
+			$this->view_header_and_aside();
+			$this->load->view("common/settings_website");
+			$this->load->view("templates/footer");
 		}
 
 
