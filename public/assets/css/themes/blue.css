@@ -36,5 +36,14 @@ table{
 	--sidebar-border-color: white;
 	--sidebar-link-color: white;
 	--sidebar-link-hover: ;
-	
+}
+
+.section-wrapper,section{
+	--bg: linear-gradient(to left top, rgba(255,255,255,0.5), rgba(255,255,255,0.1));
+	--border-radius: 20px;
+	--box-shadow: 6px 6px 20px rgba(122,122,122,0.4);
+}
+
+h2{
+	--color: rgba(0,0,128,0.6);
 }
