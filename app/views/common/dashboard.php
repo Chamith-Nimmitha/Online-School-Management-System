@@ -34,8 +34,7 @@
 		</div>
 	</div> <!-- #school-statistics -->
 
-		<hr class="w-100">
-	<div id="school-attendance" class="col-12 d-flex flex-col align-items-center">
+	<div id="school-attendance" class="col-12 d-flex flex-col align-items-center section-wrapper p-5 mt-5">
 		<h2 class="text-center p-5">School Attendance</h2>
 		<div class="col-12 d-flex justify-content-center">
 			<form id="dashboard_attendance_filter">
@@ -46,7 +45,7 @@
 			</form>
 		</div>
 		<div class="col-12 d-flex align-items-center mt-5 justify-content-around">
-			<div class="bg-white p-5" style="position: relative;width: 45%;">
+			<div class="bg-white p-5 section-item" style="position: relative;width: 45%;">
 				<div class="loader" id="dashboard_student_attendance_doughnut_loader">
 				 	<div class="col-12">
 						<div id="one"><div></div></div>
@@ -58,7 +57,7 @@
 				</div>
 				<canvas id="dashboard_student_attendance_doughnut" width="100" height="100"></canvas>
 			</div>
-			<div class="bg-white p-5" style="position: relative; width: 45%;">
+			<div class="bg-white p-5 section-item" style="position: relative; width: 45%;">
 				<div class="loader" id="dashboard_teacher_attendance_doughnut_loader">
 				 	<div class="col-12">
 						<div id="one"><div></div></div>
@@ -73,31 +72,31 @@
 		</div>
 	</div> <!-- #school-attendance -->
 
-	<div class="col-12 justify-content-around">
+	<div class="d-flex flex-row col-12 justify-content-around  mt-5 pb-5 section-wrapper" style="flex-direction: row !important">
 		<!-- classroom student attendance -->
-		<div class="mt-5" style="width: 45%;">
+		<div class="mt-5 section-item" style="width: 45%;">
 			<div class="bg-white p-5 w-100">
 				<canvas id="dashboard_classroom_student_attendance_bar" width="100" height="100"></canvas>
 			</div>
 		</div>
 
 		<!-- school teacher attendance -->
-		<div class="mt-5" style="width: 45%;">
+		<div class="mt-5  section-item" style="width: 45%;">
 			<div class="bg-white p-5 w-100">
 				<canvas id="dashboard_teacher_attendance_bar" width="100" height="100"></canvas>
 			</div>
 		</div>
 	</div>
-	<div class="col-12 justify-content-around">
+	<div class="col-12 justify-content-around section-wrapper pb-5 mt-5" style="flex-direction: row !important;">
 		<!-- subject grades pie -->
-		<div class="mt-5" style="width: 45%;">
+		<div class="mt-5 section-item" style="width: 45%;">
 			<div class="bg-white p-5 w-100">
 				<canvas id="subject_grades_pie" width="100" height="100"></canvas>
 			</div>
 		</div>
 
 		<!-- classroom student attendance -->
-		<div class="mt-5" style="width: 45%;">
+		<div class="mt-5  section-item" style="width: 45%;">
 			<div class="bg-white p-5 w-100">
 				<canvas id="student_result_overview_bar" width="100" height="100"></canvas>
 			</div>

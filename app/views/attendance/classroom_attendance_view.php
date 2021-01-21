@@ -37,7 +37,7 @@
                             <th rowspan="2">View Attendance</th>
                         </tr>
                         <tr>
-                            <th>Present</td>
+                            <th style="border-top: 1px solid white;">Present</td>
                             <th>Absent</td>
                         </tr>
                     </thead>

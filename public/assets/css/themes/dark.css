@@ -120,3 +120,26 @@ h2{
 
 .pagination-btn3{--bg: gray;--color: white}
 .pagination-btn3:hover{--bg: darkgray;}
+
+.section-wrapper,section{
+	--bg: transparent;
+	--border-radius: ;
+	--box-shadow: ;
+	--display: flex;
+	--flex-direction: column;
+	--align-items: center;
+	--width: 100%;
+	--padding-right: 20px;
+	--padding-left: 20px;
+}
+.section-item{
+	--bg: white;
+	--border-radius: ;
+	--box-shadow: ;
+	--display: flex;
+	--flex-direction: column;
+	--align-items: center;
+	--width: 100%;
+	--padding-right: 20px;
+	--padding-left: 20px;
+}
