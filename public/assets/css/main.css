@@ -12,7 +12,7 @@
 }
 
 body{
-	margin: 0;	
+	margin: 0;	;
 	width: 100%;
 	overflow-wrap: break-word;
 }
@@ -21,7 +21,6 @@ body *{
 }
 
 #top-header, #school-badge, #header-user-info{
-	border-radius: 10px;
 	transition: all 0.5s ease-in;
 	z-index: 3;
 }
@@ -44,13 +43,13 @@ body *{
 }
 .school-name span{
 	-webkit-text-stroke: 0.3px yellow;
-	color : #20295b ;
+	color : var(--color);
 	transition: all 0.8s ease;
 	opacity :0.2;
 }
 
 .school-name span.school-name-fade{
-	color: #ffc107;
+	color : var(--color);
 	opacity: 1;
 }
 
@@ -90,11 +89,12 @@ footer{
 .s-item{
 	min-width: 200px;
 	max-width: 25%;
-	transition: background-color,color 0.4s linear;
+	transition: background-color 0.4s linear;
+	transition: color 0.2s linear;
 }
 
 .s-item:hover{
-	background-color: rgba(100,30,200,0.5);
+	background-color: #11698e;
 	color: white;
 }
 
@@ -219,6 +219,16 @@ footer{
 
 #dark-dot>div{
 	background-color: var(--dark-theme-dot);
+}
+
+.selected_theme_dot{
+	border-right:  3px solid white;
+	border-top : 3px solid white;
+	border-bottom : 3px solid black;
+	border-left: 3px solid black;
+}
+.selected_theme_dot+ span{
+	font-weight: 900;
 }
 
 @media  (min-width:0px){

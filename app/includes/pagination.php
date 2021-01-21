@@ -9,62 +9,64 @@ function display_pagination($count,$current_page,$per_page,$route,$function_name
 	}else{
 		$total = $count->fetch()['count'];
 	}
+	echo "<hr class='col-12'>";
 	$num_pages = ceil($total / $per_page);
-	echo "<div class='pagination_div mt-5 d-flex align-items-center justify-content-start w-100 flex-wrap'>";
+	echo "<div class='pagination_div mt-5 d-flex align-items-center justify-content-end w-100 flex-wrap'>";
 	$actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]"."/".explode("/", $_SERVER['REQUEST_URI'])[1]."/".$route;
+	
+	// ECHO PAGES
 	if($current_page != 1){
-		// echo "<a class='t-d-none btn btn-blue' href='".$actual_link."/".($current_page-1)."/".$per_page."'>Perv</a>";
-		echo "<button type='button' class='t-d-none btn btn-blue' onclick='".$function_name."(".($current_page-1).",".$per_page.")'>Perv</button>";
+		echo "<button type='button' class='t-d-none btn pagination-btn1' onclick='".$function_name."(".($current_page-1).",".$per_page.")'>Perv</button>";
 	}else{
-		echo "<button class=' btn fg-white bg-gray' disabled='disabled'>Prev</button>";
+		echo "<button class=' btn fg-white pagination-btn3' disabled='disabled'>Prev</button>";
 	}
+
 	for ($i=1; $i <= $num_pages; $i++) { 
-		// echo "<a class='t-d-none btn pl-3 pr-3 ";
 		echo "<button type='button' class='t-d-none btn pl-3 pr-3 ";
 		if($current_page == $i){
-			echo "btn-red";
+			echo "pagination-btn2";
 		}else{
-			echo "btn-blue";
+			echo "pagination-btn1";
 		}
-		// echo "' href='".$actual_link."/".$i."/".$per_page."'>".$i."</a>";
 		echo "' onclick='".$function_name."(".($i).",".$per_page.")'>".$i."</button>";
 			
 	}
 	if($current_page == $num_pages || $num_pages==0){
-		echo "<button class='btn fg-white bg-gray' disabled='disabled'>Next</button>";
+		echo "<button class='btn fg-white pagination-btn3' disabled='disabled'>Next</button>";
 	}else{
-		// echo "<a class='t-d-none btn btn-blue' href='".$actual_link."/".($current_page+1)."/".$per_page."'>Next</a>";
-		echo "<button type='button' class='t-d-none btn btn-blue' onclick='".$function_name."(".($current_page+1).",".$per_page.")'>Next</button>";
+		echo "<button type='button' class='t-d-none btn pagination-btn1' onclick='".$function_name."(".($current_page+1).",".$per_page.")'>Next</button>";
 	}
 	echo "</div>";
-	echo "<div class='w-100 d-flex align-items-center justify-content-end'>";
+
+	//  ECHO PER PAGE OPTIONS
+	echo "<div class='w-100 d-flex align-items-center justify-content-start'>";
 		echo "<p class='mr-3'>Per Page : </p>";
 		echo "<button type='button' class='t-d-none btn pl-3 pr-3 ";
 		if($per_page == 1){
-			echo "btn-red";
+			echo "pagination-btn2";
 		}else{
-			echo "btn-blue";
+			echo "pagination-btn1";
 		}
 		echo "' onclick='".$function_name."(1,1)'>1</button>";
 		echo "<button class='t-d-none btn pl-3 pr-3 ";
 		if($per_page == 3){
-			echo "btn-red";
+			echo "pagination-btn2";
 		}else{
-			echo "btn-blue";
+			echo "pagination-btn1";
 		}
 		echo "' onclick='".$function_name."(1,3)'>3</button>";
 		echo "<button class='t-d-none btn pl-3 pr-3 ";
 		if($per_page == 5){
-			echo "btn-red";
+			echo "pagination-btn2";
 		}else{
-			echo "btn-blue";
+			echo "pagination-btn1";
 		}
 		echo "' onclick='".$function_name."(1,5)'>5</button>";
 		echo "<button class='t-d-none btn pl-3 pr-3 ";
 		if($per_page == 10){
-			echo "btn-red";
+			echo "pagination-btn2";
 		}else{
-			echo "btn-blue";
+			echo "pagination-btn1";
 		}
 		echo "' onclick='".$function_name."(1,10)'>10</button>";
 	echo "</div>";

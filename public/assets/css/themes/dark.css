@@ -9,17 +9,69 @@
 	--footer-color:white;
 }
 
-table{
-	--table-th-bg : #20295b;
-	--table-th-color : white;
-	--table-th-border : white;
-	--table-th-last-child-border :black;
-	--table-tr-odd-bg : #ffe69b ;
-	--table-border-color:darkblue;
-	--table-padding :2px;
-	--table-border-radius : 10px;
-	--table-th-border-radius : 3px;
+.school-name span{
+	--color: #20295b;
 }
+.school-name span.school-name-fade{
+	--color: #ffc107;
+}
+
+table{
+	--border-top:10px solid blue ;
+	--border-right: none;
+	--border-bottom: none;
+	--border-left: none;
+	--border:1px solid darkblue;
+	--border-collapse: separate;
+	--bg : none;
+	--border-radius : 10px;
+	--padding :5px;
+}
+
+table th, td{
+	--border-right: 1px solid darkblue;
+	--padding: 5px;
+	--border-radius: 3px;
+}
+.table-strip-dark thead th{
+	--bg: #31326f;
+	--color: white;
+	--border-right: none;
+	--padding: 10px 5px 5px 5px;
+}
+
+.table-strip-dark thead th:last-child{
+	--border: none;
+}
+
+.table-strip-dark th:first-child{
+	--border-top-left-radius: 10px;
+}
+
+.table-strip-dark th:last-child{
+	--border: none;
+	--border-top-right-radius: 10px;
+}
+.table-strip-dark td:last-child{
+	--border: none;
+}
+
+.table-strip-dark tbody tr{
+	--border-bottom: none;
+}
+.table-strip-dark tbody tr:last-child{
+	--border-bottom: none;
+}
+
+.table-strip-dark tbody tr:nth-child(odd){
+	--bg: #ffe69b;
+	--color :black ;
+}
+.table-strip-dark tbody tr:nth-child(even){
+	--bg: ;
+	--color : black;	
+}
+
 
 .theme-sidebar{
 	--bg : #20295b;
@@ -28,6 +80,7 @@ table{
 	--sidebar-link-color: white;
 	--sidebar-link-hover: orange;
 	--sidebar-border: 2px solid orange;
+	--border-radius: none;
 }
 
 .theme-sub-nav{
@@ -38,3 +91,32 @@ table{
 	--sidebar-link-hover: ;
 	
 }
+
+.section-wrapper,section{
+	--bg: none;
+	--border-radius: none;
+	--box-shadow: none;
+}
+
+h2{
+	--color: darkblue;
+}
+
+
+.btn1{--bg: blue;--color: white;}
+.btn1:hover{--bg: darkblue;}
+
+.btn2{--bg: red;--color: white;}
+.btn2:hover{--bg: darkred;}
+
+.btn3{--bg: green;--color: white;}
+.btn3:hover{--bg: darkgreen;}
+
+.pagination-btn1{--bg: blue;--color: white}
+.pagination-btn1:hover{--bg: darkblue;}
+
+.pagination-btn2{--bg: red;--color: white}
+.pagination-btn2:hover{--bg: darkred;}
+
+.pagination-btn3{--bg: gray;--color: white}
+.pagination-btn3:hover{--bg: darkgray;}
