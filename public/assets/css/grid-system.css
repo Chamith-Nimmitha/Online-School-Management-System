@@ -80,16 +80,29 @@ table th, td{
 }
 
 .section-wrapper,section{
-	background: var(--bg) !important;
-	border-radius: var(--border-radius) !important;
-	box-shadow: var(--box-shadow) !important;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 95%;
-	padding-right: 20px;
-	padding-left: 20px;
+	--bg: rgba(255,255,255,0.4);
+	--border-radius: ;
+	--box-shadow: ;
+	--display: flex;
+	--flex-direction: column;
+	--align-items: center;
+	--width: 95%;
+	--padding-right: 20px;
+	--padding-left: 20px;
 }
+
+.section-item{
+	--bg: initial;
+	--border-radius: ;
+	--box-shadow: ;
+	--display: flex;
+	--flex-direction: column;
+	--align-items: center;
+	--width: 95%;
+	--padding-right: 20px;
+	--padding-left: 20px;
+}
+
 
 h2{color: var(--color) !important;}
 
@@ -434,6 +447,30 @@ form code{
 }
 
 
+/*section styles*/
+.section-wrapper,section{
+	background: var(--bg) !important;
+	border-radius:var(--border-radius) !important;
+	box-shadow: var(--box-shadow) !important;
+	display: var(--display) !important;
+	flex-direction: var(--flex-direction) !important;
+	align-items: var(--align-items) !important;
+	width: var(--width) !important;
+	padding-right: var(--padding-right) !important;
+	padding-left: var(--padding-left) !important;
+}
+
+.section-item{
+	background: var(--bg) !important	;
+	border-radius:var(--border-radius) !important	;
+	box-shadow: var(--box-shadow) !important	;
+	display: var(--display);
+	flex-direction: var(--flex-direction);
+	align-items: var(--align-items);
+	width: var(--width);
+	padding-right: var(--padding-right);
+	padding-left: var(--padding-left);
+}
 
 /* Navbar Styles*/
 .navbar{

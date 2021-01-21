@@ -116,3 +116,26 @@ h2{
 
 .pagination-btn3{--bg: gray;--color: white}
 .pagination-btn3:hover{--bg: darkgray;}
+
+.section-wrapper,section{
+	--bg: linear-gradient(to left top, rgba(255,255,255,0.1), rgba(255,255,255,0.6));
+	--border-radius: 20px;
+	--box-shadow: 6px 6px 10px rgba(122,122,122,0.4);
+	--display: flex;
+	--flex-direction: column;
+	--align-items: center;
+	--width: 95%;
+	--padding-right: 20px;
+	--padding-left: 20px;
+}
+.section-item{
+	--bg: linear-gradient(to left top, rgba(255,255,255,0.6), rgba(255,255,255,0.8));
+	--border-radius: 10px;
+	--box-shadow: 6px 6px 6px rgba(122,122,122,0.2);
+	--display: flex;
+	--flex-direction: column;
+	--align-items: center;
+	--width: 100%;
+	--padding-right: 20px;
+	--padding-left: 20px;
+}
