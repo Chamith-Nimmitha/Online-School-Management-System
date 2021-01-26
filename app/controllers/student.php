@@ -2,6 +2,8 @@
 
     class Student extends Controller{
 
+        public $msg;
+        public $err;
         public function __construct() {
             parent::__construct();
         }
@@ -60,9 +62,36 @@
             unset($_POST);
             $data['count'] = $this->load->studentsInfo->get_count()->fetch()['count'];
             $data['result_set'] = $result_set;
+            if(isset($_SESSION['snackbar_msg'])){
+                $data['msg'] = $_SESSION['snackbar_msg'];
+            }
+            unset($_SESSION['snackbar_msg']);
             $this->view_header_and_aside();
             $this->load->view("student/student_list",$data);
             $this->load->view("templates/footer");
+        }
+
+        // admin can delete student
+        public function student_delete($student_id){
+            $this->load->model("student");
+            $result = $this->load->student->set_by_id($student_id);
+            $msg  = "";
+            $err  = "";
+            if(!$result){
+                $err = "Student ${student_id} didn't exist.";
+            }
+            $result = $this->load->student->delete_self();
+            if(!$result){
+                $err = "Deletion failed.";
+            }else{
+                $msg = "Student ${student_id} deleted.";
+            }
+            if(!empty($msg)){
+                $_SESSION['snackbar_msg'] = $msg;
+            }else{
+                $_SESSION['snackbar_msg'] = $err;
+            }
+            header("Location:". set_url("student/list"));
         }
 
         // view student timetable all users can use this

@@ -214,8 +214,10 @@
 
 		// delete self. It perform updating is_deleted field. 
 		public function delete_self(){
-			$this->con->update($this->table, array("is_deleted"=>1), array("id"=>$this->id));
+			$result = $this->con->update($this->table, array("is_deleted"=>1), array("id"=>$this->id));
 			$this->is_deleted = 1;
+			return $result;
+
 		}
 
 		public function __destruct(){

@@ -51,6 +51,7 @@
 					$body .= "<td>".$result['medium']."</td>";
 					$body .= "<td>".$result['name']."</td>";
 					$body .= "<td>".$result['code']."</td>";
+					$body .= "<td>".$result['type']."</td>";
 					$body .= "<td class='text-center'>
 								<div class='login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center'>
 									<a class='btn btn-blue' href='".set_url('subject/update/'.$result['id'])."'>Update</a>

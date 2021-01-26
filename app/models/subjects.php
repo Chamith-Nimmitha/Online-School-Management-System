@@ -117,6 +117,27 @@
 	    {
 		    $this->con->insert("subject", $data);
 	    }
+
+	    // get all general subjects for grade
+	    public function get_general_subjects($grade){
+	    	return $this->con->select("subject",["grade"=>$grade, "type"=>"General"]);
+	    }
+
+	    // get all optional subjects for grade
+	    public function get_optional_subjects($grade){
+	    	return $this->con->select("subject",["grade"=>$grade, "type"=>"Optional"]);
+	    }
+
+	    // get all optional subjects categories for grade
+	    public function get_optional_subjects_distinct_category($grade){
+	    	$query = 'SELECT DISTINCT 	`category` FROM `subject` WHERE `grade`=? AND `type`="Optional" ORDER BY `category`';
+	    	return $this->con->pure_query($query, [$grade]);
+	    }
+
+	    // get other subjects for grade
+	    public function get_other_subjects($grade){
+	    	return $this->con->select("subject",["grade"=>$grade, "type"=>"Other"]);
+	    }
 	}
 
  ?>

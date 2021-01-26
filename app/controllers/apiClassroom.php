@@ -78,6 +78,11 @@
 								</td>";
 						$body .= "<td>
 									<div class='login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center'>
+		                				<a class='btn btn-blue p-1' href='".set_url('classroom/subjects/'.$result['id'])."'>Subjects</a>
+				    				</div>
+								</td>";
+						$body .= "<td>
+									<div class='login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center'>
 										<a class='btn p-1' title='Delete' href='".set_url('classroom/delete/'.$result['id']) ."' onclick=\"show_dialog(this,'Delete message','Are you sure to delete?')\"><i class='fas fa-trash delete-button'></i></a>
 				    				</div>
 								</td>";
