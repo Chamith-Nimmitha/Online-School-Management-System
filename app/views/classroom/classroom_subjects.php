@@ -46,47 +46,41 @@
 			<!-- <span class="mb-3">Insert optional subjects in <span style="color: red;">GENERAL FORMAT.</span></span> -->
 			<span>General Subjects</span>
 			<div class="col-12" id="general-subject-wrapper">
-				<div class="d-flex col-12 align-items-center p-2 mb-3">
-					<label class="col-2"  for="subject-general-1">Subject 1</label>
-					<select class="col-6 mr-2" name="subject-general-1" id="subject-general-1">
-						<option value="">Select Subject</option>
-						<?php if(isset($general_subjects) && !empty($general_subjects)){
-							   foreach ($general_subjects as $subject) { ?>
-								<option value="<?php echo $subject['id']; ?>"><?php echo $subject['name']." - ".$subject['medium'] ; ?></option>
-						<?php }
-						}?>	
-					</select>	
-					<input class="col-3" type="text" name="periods-general-1" id="periods-general-1" placeholder="No of Periods" value="" oninput="validate_user_input(this,0,20,1)">
-					<p class="bg-red fg-white pl-5 p-1 mt-2 d-none w-100 text-center"></p>
-				</div>
-				<!-- sub 2 -->
-				<div class="d-flex col-12 align-items-center p-2 mb-3">
-					<label class="col-2"  for="subject-general-2">Subject 2</label>
-					<select class="col-6 mr-2" name="subject-general-2" id="subject-general-2">
-						<option value="">Select Subject</option>
-						<?php if(isset($general_subjects) && !empty($general_subjects)){
-							   foreach ($general_subjects as $subject) { ?>
-								<option value="<?php echo $subject['id']; ?>"><?php echo $subject['name']." - ".$subject['medium'] ; ?></option>
-						<?php }
-						}?>	
-					</select>	
-					<input class="col-3" type="text" name="periods-general-2" id="periods-general-2" placeholder="No of Periods" value="" oninput="validate_user_input(this,0,20,1)">
-					<p class="bg-red fg-white pl-5 p-1 mt-2 d-none w-100 text-center"></p>
-				</div>
-				<!-- sub 3 -->
-				<div class="d-flex col-12 align-items-center p-2 mb-3">
-					<label class="col-2"  for="subject-general-3">Subject 3</label>
-					<select class="col-6 mr-2" name="subject-general-3" id="subject-general-3">
-						<option value="">Select Subject</option>
-						<?php if(isset($general_subjects) && !empty($general_subjects)){
-							   foreach ($general_subjects as $subject) { ?>
-								<option value="<?php echo $subject['id']; ?>"><?php echo $subject['name']." - ".$subject['medium'] ; ?></option>
-						<?php }
-						}?>	
-					</select>	
-					<input class="col-3" type="text" name="periods-general-3" id="periods-general-3" placeholder="No of Periods" value="" oninput="validate_user_input(this,0,20,1)">
-					<p class="bg-red fg-white pl-5 p-1 mt-2 d-none w-100 text-center"></p>
-				</div>
+
+				<?php 
+					if(isset($classroom_general_subjects) && !empty($classroom_general_subjects)){
+						for($i=0; $i<count($classroom_general_subjects);$i++) { ?>
+							<div class="d-flex col-12 align-items-center p-2 mb-3">
+								<label class="col-2"  for="subject-general-<?php echo ($i+1); ?>">Subject <?php echo ($i+1); ?></label>
+								<select class="col-6 mr-2" name="subject-general-<?php echo ($i+1); ?>" id="subject-general-<?php echo ($i+1); ?>">
+									<option value="">Select Subject</option>
+									<?php if(isset($general_subjects) && !empty($general_subjects)){
+										   foreach ($general_subjects as $subject) { ?>
+											<option value="<?php echo $subject['id']; ?>" <?php if($classroom_general_subjects[$i]['id']==$subject['id']){echo "selected='selected'";} ?>><?php echo $subject['name']." - ".$subject['medium'] ; ?></option>
+									<?php }
+									}?>	
+								</select>	
+								<input class="col-3" type="text" name="periods-general-<?php echo ($i+1);?>" id="periods-general-<?php echo ($i+1);?>" placeholder="No of Periods" value="<?php echo $classroom_general_subjects[$i]['periods'] ?>" oninput="validate_user_input(this,0,20,1)">
+								<p class="bg-red fg-white pl-5 p-1 mt-2 d-none w-100 text-center"></p>
+							</div>					
+				<?php
+						}
+					}else{
+				 ?>
+				 	<div class="d-flex col-12 align-items-center p-2 mb-3">
+						<label class="col-2"  for="subject-general-<?php echo ($i+1); ?>">Subject 1</label>
+						<select class="col-6 mr-2" name="subject-general-1" id="subject-general-1">
+							<option value="">Select Subject</option>
+							<?php if(isset($general_subjects) && !empty($general_subjects)){
+								   foreach ($general_subjects as $subject) { ?>
+									<option value="<?php echo $subject['id']; ?>"><?php echo $subject['name']." - ".$subject['medium'] ; ?></option>
+							<?php }
+							}?>	
+						</select>	
+						<input class="col-3" type="text" name="periods-general-1" id="periods-general-1" placeholder="No of Periods" value="" oninput="validate_user_input(this,0,20,1)">
+						<p class="bg-red fg-white pl-5 p-1 mt-2 d-none w-100 text-center"></p>
+					</div>	
+				<?php } ?>
 
 			</div>
 			<div class="w-100 d-flex justify-content-end" id="general-subject-buttons">
@@ -97,19 +91,41 @@
 		<fieldset class="col-12 p-2 mb-2 justify-content-center">
 			<span>Optional Subjects</span>
 			<div class="col-12" id="optional-subject-wrapper">
-				<div class="d-flex col-12 align-items-center p-2 mb-3">
-					<label class="col-2"  for="subject-optional-1">Subject 1</label>
-					<select class="col-6 mr-2" name="subject-optional-1" id="subject-optional-1">
-						<option value="">Select Subject</option>
-						<?php if(isset($optional_subjects) && !empty($optional_subjects)){
-							   foreach ($optional_subjects as $subject) { ?>
-								<option value="<?php echo $subject['category']; ?>"><?php echo $subject['category']; ?></option>
-						<?php }
-						}?>	
-					</select>	
-					<input class="col-3" type="text" name="periods-optional-1" id="periods-optional-1" placeholder="No of Periods" value="" oninput="validate_user_input(this,0,20,1)">
-					<p class="bg-red fg-white pl-5 p-1 mt-2 d-none w-100 text-center"></p>
-				</div>
+				<?php 
+				if( isset($classroom_optional_subjects) && !empty($classroom_optional_subjects)){
+					for($i=0; $i < count($classroom_optional_subjects
+					); $i++){
+				 ?>
+						<div class="d-flex col-12 align-items-center p-2 mb-3">
+							<label class="col-2"  for="subject-optional-<?php echo ($i+1); ?>">Subject <?php echo ($i+1); ?></label>
+							<select class="col-6 mr-2" name="subject-optional-<?php echo ($i+1); ?>" id="subject-optional-<?php echo ($i+1); ?>">
+								<option value="">Select Subject</option>
+								<?php if(isset($optional_subjects) && !empty($optional_subjects)){
+									   foreach ($optional_subjects as $subject) { ?>
+										<option value="<?php echo $subject['category']; ?>" <?php if($subject['category'] == $classroom_optional_subjects[$i]['category']){echo "selected='selected'";} ?>><?php echo $subject['category']; ?></option>
+								<?php }
+								}?>	
+							</select>	
+							<input class="col-3" type="text" name="periods-optional-<?php echo ($i+1); ?>" id="periods-optional-<?php echo ($i+1); ?>" placeholder="No of Periods" value="<?php echo $classroom_optional_subjects[$i]['periods'] ?>" oninput="validate_user_input(this,0,20,1)">
+							<p class="bg-red fg-white pl-5 p-1 mt-2 d-none w-100 text-center"></p>
+						</div>
+
+				 <?php }
+				 }else{ ?>
+				 	<div class="d-flex col-12 align-items-center p-2 mb-3">
+						<label class="col-2"  for="subject-optional-1">Subject 1</label>
+						<select class="col-6 mr-2" name="subject-optional-1" id="subject-optional-1">
+							<option value="">Select Subject</option>
+							<?php if(isset($optional_subjects) && !empty($optional_subjects)){
+								   foreach ($optional_subjects as $subject) { ?>
+									<option value="<?php echo $subject['category']; ?>"><?php echo $subject['category']; ?></option>
+							<?php }
+							}?>	
+						</select>	
+						<input class="col-3" type="text" name="periods-optional-1" id="periods-optional-1" placeholder="No of Periods" value="" oninput="validate_user_input(this,0,20,1)">
+						<p class="bg-red fg-white pl-5 p-1 mt-2 d-none w-100 text-center"></p>
+					</div>
+				 <?php } ?>
 
 			</div>
 			<div class="w-100 d-flex justify-content-end" id="optional-subject-buttons">
@@ -121,20 +137,40 @@
 		<fieldset class="col-12 p-2 mb-2 justify-content-center">
 			<span>Other Subjects</span>
 			<div class="col-12" id="optional-subject-wrapper">
-				<div class="d-flex col-12 align-items-center p-2 mb-3">
-					<label class="col-2"  for="subject-other-1">Subject 1</label>
-					<select class="col-6 mr-2" name="subject-other-1" id="subject-other-1">
-						<option value="">Select Subject</option>
-						<?php if(isset($other_subjects) && !empty($other_subjects)){
-							   foreach ($other_subjects as $subject) { ?>
-								<option value="<?php echo $subject['id']; ?>"><?php echo $subject['name']; ?></option>
-						<?php }
-						}?>	
-					</select>	
-					<input class="col-3" type="text" name="periods-other-1" id="periods-other-1" placeholder="No of Periods" value="" oninput="validate_user_input(this,0,20,1)">
-					<p class="bg-red fg-white pl-5 p-1 mt-2 d-none w-100 text-center"></p>
-				</div>
-
+				<?php 
+				if(isset($classroom_other_subjects) && !empty($classroom_other_subjects)){
+					for($i=0; $i< count($classroom_other_subjects); $i++){
+				 ?>
+				 	<div class="d-flex col-12 align-items-center p-2 mb-3">
+						<label class="col-2"  for="subject-other-<?php echo ($i+1); ?>">Subject <?php echo ($i+1); ?></label>
+						<select class="col-6 mr-2" name="subject-other-<?php echo ($i+1); ?>" id="subject-other-<?php echo ($i+1); ?>">
+							<option value="">Select Subject</option>
+							<?php if(isset($other_subjects) && !empty($other_subjects)){
+								   foreach ($other_subjects as $subject) { ?>
+									<option value="<?php echo $subject['id']; ?>" <?php if($classroom_other_subjects[$i]['id']==$subject['id']){echo "selected='selected'";} ?>><?php echo $subject['name']; ?></option>
+							<?php }
+							}?>	
+						</select>	
+						<input class="col-3" type="text" name="periods-other-<?php echo ($i+1); ?>" id="periods-other-<?php echo ($i+1); ?>" placeholder="No of Periods" value="<?php echo $classroom_other_subjects[$i]['periods']; ?>" oninput="validate_user_input(this,0,20,1)">
+						<p class="bg-red fg-white pl-5 p-1 mt-2 d-none w-100 text-center"></p>
+					</div>
+				<?php }
+				}else{ ?>
+					<div class="d-flex col-12 align-items-center p-2 mb-3">
+						<label class="col-2"  for="subject-other-1">Subject 1</label>
+						<select class="col-6 mr-2" name="subject-other-1" id="subject-other-1">
+							<option value="">Select Subject</option>
+							<?php if(isset($other_subjects) && !empty($other_subjects)){
+								   foreach ($other_subjects as $subject) { ?>
+									<option value="<?php echo $subject['id']; ?>"><?php echo $subject['name']; ?></option>
+							<?php }
+							}?>	
+						</select>	
+						<input class="col-3" type="text" name="periods-other-1" id="periods-other-1" placeholder="No of Periods" value="" oninput="validate_user_input(this,0,20,1)">
+						<p class="bg-red fg-white pl-5 p-1 mt-2 d-none w-100 text-center"></p>
+					</div>
+				<?php 
+				} ?>
 			</div>
 			<div class="w-100 d-flex justify-content-end" id="other-subject-buttons">
 				<button type="button" id="add_other_subject" class="mr-3 p-2">+ Add Subject</button>

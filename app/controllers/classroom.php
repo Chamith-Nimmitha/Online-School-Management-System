@@ -528,6 +528,9 @@
 			$data["classroom_info"] = $this->load->classroom->get_data();
 			$grade = $data['classroom_info']['grade'];
 			$this->load->model("subjects");
+			$data['classroom_general_subjects'] = $this->load->classroom->get_general_subjects();
+			$data['classroom_optional_subjects'] = $this->load->classroom->get_optional_subjects();
+			$data['classroom_other_subjects'] = $this->load->classroom->get_other_subjects();
 			$data['general_subjects'] = $this->load->subjects->get_general_subjects($grade)->fetchAll();
 			$data['optional_subjects'] = $this->load->subjects->get_optional_subjects_distinct_category($grade)->fetchAll();
 
