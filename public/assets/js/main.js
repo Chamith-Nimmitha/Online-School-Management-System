@@ -521,7 +521,7 @@ function create_subject_code(ele){
 }
 
 // classroom subjects
-var no_of_subjects = 3;
+var no_of_subjects = document.querySelectorAll("#general-subject-wrapper > div").length;
 var classroom_subject_button = document.querySelector("#general-subject-buttons");
 if(classroom_subject_button){
 	classroom_subject_button.querySelector("#add_general_subject").addEventListener("click",add_general_subject);
@@ -532,21 +532,49 @@ function add_general_subject(){
 	var classroom_subject_wrapper = document.querySelector("#general-subject-wrapper");
 	no_of_subjects+=1;
 	var first_select = classroom_subject_wrapper.firstElementChild.getElementsByTagName("select")[0].cloneNode(true).innerHTML;
-	classroom_subject_wrapper.innerHTML += `<div class="d-flex col-12 align-items-center p-2 mb-3">
-					<label class="col-2" for="subject-general-${no_of_subjects}">Subject ${no_of_subjects}</label>
-					<select class="col-6 mr-2" name="subject-general-${no_of_subjects}" id="subject-general-${no_of_subjects}">
-						${first_select}
-					</select>
-					<input class="col-3" type="text" name="periods-general-${no_of_subjects}" id="periods-general-${no_of_subjects}" placeholder="No of Periods" value="" oninput="validate_user_input(this,0,20,1)">
-					<p class="bg-red fg-white pl-5 p-1 mt-2 d-none w-100 text-center"></p>
-				</div>`;
+	// classroom_subject_wrapper.innerHTML += `<div class="d-flex col-12 align-items-center p-2 mb-3">
+	// 				<label class="col-2" for="subject-general-${no_of_subjects}">Subject ${no_of_subjects}</label>
+	// 				<select class="col-6 mr-2" name="subject-general-${no_of_subjects}" id="subject-general-${no_of_subjects}">
+	// 					${first_select}
+	// 				</select>
+	// 				<input class="col-3" type="text" name="periods-general-${no_of_subjects}" id="periods-general-${no_of_subjects}" placeholder="No of Periods" value="" oninput="validate_user_input(this,0,20,1)">
+	// 				<p class="bg-red fg-white pl-5 p-1 mt-2 d-none w-100 text-center"></p>
+	// 			</div>`;
+	let div = document.createElement("DIV");
+	let label = document.createElement("LABEL");
+	let select = document.createElement("SELECT");
+	let input = document.createElement("INPUT");
+	let p = document.createElement("P");
+	div.setAttribute("class","d-flex col-12 align-items-center p-2 mb-3");
+	label.setAttribute("class","col-2");
+	label.setAttribute("for",`subject-general-${no_of_subjects}`);
+	label.innerText = `Subject ${no_of_subjects}`;
+	select.setAttribute("class","col-6 mr-2");
+	select.setAttribute("name",`subject-general-${no_of_subjects}`);
+	select.setAttribute("id",`subject-general-${no_of_subjects}`);
+	select.innerHTML = first_select;
+	input.setAttribute("class","col-3");
+	input.setAttribute("type","text");
+	input.setAttribute("name",`subject-general-${no_of_subjects}`);
+	input.setAttribute("id",`subject-general-${no_of_subjects}`);
+	input.setAttribute("placeholder","No of Periods");
+	input.setAttribute("oninput","validate_user_input(this,0,20,1)");
+	p.setAttribute("class","bg-red fg-white pl-5 p-1 mt-2 d-none w-100 text-center");
+	div.appendChild(label);
+	div.appendChild(select);
+	div.appendChild(input);
+	div.appendChild(p);
+	classroom_subject_wrapper.appendChild(div);
 }
 
 function remove_general_subject(){
 	var classroom_subject_wrapper = document.querySelector("#general-subject-wrapper");
-	if(no_of_subjects > 3){
+	if(no_of_subjects > 1){
 		no_of_subjects-=1;
 		classroom_subject_wrapper.lastElementChild.remove();
+	}else{
+		classroom_subject_wrapper.lastElementChild.getElementsByTagName("select")[0].value="";
+		classroom_subject_wrapper.lastElementChild.getElementsByTagName("input")[0].value="";
 	}
 }
 

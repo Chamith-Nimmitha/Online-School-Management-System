@@ -158,12 +158,32 @@
 			return $data;
 		}
 
-		// get classroom subject list
-		public function get_subjects($get=NULL){
-			if($get != NULL){
-				$this->con->get(["subject_id"]);
+		// get classroom general subject list
+		public function get_general_subjects(){
+			$query = "SELECT `s`.`id`,`s`.`name`,`s`.`medium`,`cs`.`periods` FROM `class_subject` AS `cs` INNER JOIN `subject` AS `s` ON `s`.`id`=`cs`.`subject_id` WHERE `cs`.`classroom_id`=? AND `s`.`type`='General' ;";
+			$result = $this->con->pure_query($query,[$this->id]);
+			if($result){
+				return $result->fetchAll();
+			}else{
+				return FALSE;
 			}
-			$result = $this->con->select("class_subject",['classroom_id'=>$this->id]);
+		}
+
+		// get classroom optional subject list
+		public function get_optional_subjects(){
+			$query = "SELECT  CAST(SUM(`cs`.`periods`)/COUNT(*) AS int) AS `periods`, `s`.`category` FROM `class_subject` AS `cs` INNER JOIN `subject` AS `s` ON `s`.`id`=`cs`.`subject_id` WHERE `cs`.`classroom_id`=? AND `s`.`type`='Optional' GROUP BY(`s`.`category`) ORDER BY(`s`.`category`);";
+			$result = $this->con->pure_query($query,[$this->id]);
+			if($result){
+				return $result->fetchAll();
+			}else{
+				return FALSE;
+			}
+		}
+
+		// get classroom other subject list
+		public function get_other_subjects(){
+			$query = "SELECT `s`.`id`,`s`.`name`,`s`.`medium`,`cs`.`periods` FROM `class_subject` AS `cs` INNER JOIN `subject` AS `s` ON `s`.`id`=`cs`.`subject_id` WHERE `cs`.`classroom_id`=? AND `s`.`type`='Other' ;";
+			$result = $this->con->pure_query($query,[$this->id]);
 			if($result){
 				return $result->fetchAll();
 			}else{
@@ -176,7 +196,7 @@
 			try {
 				$this->con->db->beginTransaction();
 				// get old all classroom subjects
-				$sub = $this->get_subjects("subject_id");
+				$sub = $this->get_general_subjects();
 				if($sub === FALSE){
 					throw new PDOException();
 				}
@@ -195,8 +215,7 @@
 				}
 				if(count($sub) !== 0){
 					foreach ($sub as $id) {
-						print_r($id["subject_id"]);
-						$result = $this->con->delete("class_subject", ["classroom_id"=>$this->id, "subject_id"=>$id['subject_id']]);
+						$result = $this->con->delete("class_subject", ["classroom_id"=>$this->id, "subject_id"=>$id['id']]);
 						if(!$result){
 							throw new PDOException();
 						}
