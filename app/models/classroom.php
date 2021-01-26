@@ -158,6 +158,59 @@
 			return $data;
 		}
 
+		// get classroom subject list
+		public function get_subjects($get=NULL){
+			if($get != NULL){
+				$this->con->get(["subject_id"]);
+			}
+			$result = $this->con->select("class_subject",['classroom_id'=>$this->id]);
+			if($result){
+				return $result->fetchAll();
+			}else{
+				return FALSE;
+			}
+		}
+
+		// update classroom subjects
+		public function update_subjects($subjects){
+			try {
+				$this->con->db->beginTransaction();
+				// get old all classroom subjects
+				$sub = $this->get_subjects("subject_id");
+				if($sub === FALSE){
+					throw new PDOException();
+				}
+				foreach ($subjects['General'] as $subject) {
+					$result = $this->con->insert("class_subject",["classroom_id"=>$this->id,"subject_id"=>$subject['id'], "periods"=>$subject['periods']]);
+					if(!$result){
+						throw new PDOException();
+					}
+					if($result->rowCount() === 0){
+						$result = $this->con->update("class_subject",["periods"=>$subject['periods']], ["classroom_id"=>$this->id,"subject_id"=>$subject['id']]);
+						if(!$result){
+							throw new PDOException();
+						}
+						unset($sub[array_search($subject['id'],$sub)]);
+					}
+				}
+				if(count($sub) !== 0){
+					foreach ($sub as $id) {
+						print_r($id["subject_id"]);
+						$result = $this->con->delete("class_subject", ["classroom_id"=>$this->id, "subject_id"=>$id['subject_id']]);
+						if(!$result){
+							throw new PDOException();
+						}
+					}
+				}
+
+				$this->con->db->commit();
+				return TRUE;
+			} catch (Exception $e) {
+				$this->con->db->rollBack();
+				return FALSE;
+			}
+		}
+
 		// register new classroom
 		public function register($data){
 			$result = $this->con->select("classroom",["section_id"=>$data['section_id'],"class"=>$data['class']]);

@@ -10,6 +10,9 @@
             echo $error;
             echo "</p>";
         }
+		if(isset($msg) && !empty($msg)){
+			echo "<script>show_snackbar('${msg}')</script>";
+		}
     ?>
 
     <form enctype="multipart/form-data" method="post" role="form">
@@ -84,6 +87,7 @@
 					<th>MEDIUM</th>
 					<th>SUBJECT NAME</th>
 				    <th>SUBJECT CODE</th>
+				    <th>SUBJECT TYPE</th>
 				    <th>UPDATE</th>
 				    <th>DELETE</th>
 			    </tr>
@@ -101,6 +105,7 @@
 					<td><?php echo $result['medium']; ?></td>
 					<td><?php echo $result['name']; ?></td>
 					<td><?php echo $result['code']; ?></td>
+					<td><?php echo $result['type']; ?></td>
 					
 					
 					<td>

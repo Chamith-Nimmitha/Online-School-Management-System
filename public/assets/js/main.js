@@ -522,25 +522,40 @@ function create_subject_code(ele){
 
 // classroom subjects
 var no_of_subjects = 3;
-var classroom_subject_button = document.querySelector("#classroom-subject-buttons");
+var classroom_subject_button = document.querySelector("#general-subject-buttons");
 if(classroom_subject_button){
-	classroom_subject_button.querySelector("#add_classroom_subject").addEventListener("click",add_classroom_subject);
-	classroom_subject_button.querySelector("#remove_classroom_subject").addEventListener("click",remove_classroom_subject);
+	classroom_subject_button.querySelector("#add_general_subject").addEventListener("click",add_general_subject);
+	classroom_subject_button.querySelector("#remove_general_subject").addEventListener("click",remove_general_subject);
 }
 
-function add_classroom_subject(){
-	var classroom_subject_wrapper = document.querySelector("#classroom-subject-wrapper");
+function add_general_subject(){
+	var classroom_subject_wrapper = document.querySelector("#general-subject-wrapper");
 	no_of_subjects+=1;
+	var first_select = classroom_subject_wrapper.firstElementChild.getElementsByTagName("select")[0].cloneNode(true).innerHTML;
 	classroom_subject_wrapper.innerHTML += `<div class="d-flex col-12 align-items-center p-2 mb-3">
-					<label class="col-2" for="subject-${no_of_subjects}">Subject ${no_of_subjects}</label>
-					<input class="col-6 mr-2" type="text" name="subject-${no_of_subjects}" id="subject-${no_of_subjects}" placeholder="Subject Name" value="" oninput="validate_user_input(this,0,20,1)">
-					<input class="col-3" type="text" name="periods-${no_of_subjects}" id="periods-${no_of_subjects}" placeholder="No of Periods" value="" oninput="validate_user_input(this,0,20,1)">
+					<label class="col-2" for="subject-general-${no_of_subjects}">Subject ${no_of_subjects}</label>
+					<select class="col-6 mr-2" name="subject-general-${no_of_subjects}" id="subject-general-${no_of_subjects}">
+						${first_select}
+					</select>
+					<input class="col-3" type="text" name="periods-general-${no_of_subjects}" id="periods-general-${no_of_subjects}" placeholder="No of Periods" value="" oninput="validate_user_input(this,0,20,1)">
 					<p class="bg-red fg-white pl-5 p-1 mt-2 d-none w-100 text-center"></p>
 				</div>`;
 }
 
-function remove_classroom_subject(){
-	var classroom_subject_wrapper = document.querySelector("#classroom-subject-wrapper");
-	no_of_subjects-=1;
-	classroom_subject_wrapper.lastElementChild.remove();
+function remove_general_subject(){
+	var classroom_subject_wrapper = document.querySelector("#general-subject-wrapper");
+	if(no_of_subjects > 3){
+		no_of_subjects-=1;
+		classroom_subject_wrapper.lastElementChild.remove();
+	}
+}
+
+function subject_category(select){
+	var div = document.getElementById('div-category');
+	if(select.value == "Optional"){
+		div.classList.remove('d-none');
+	}else{
+		div.classList.add('d-none');
+	}
+
 }

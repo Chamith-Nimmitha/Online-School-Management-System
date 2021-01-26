@@ -28,10 +28,9 @@
         <div class="ml-5 align-items-center">
             <label for="medium" class="mr-3 d-normal">Medium:</label>
             <select name="medium" id="medium">
-                <option value="" <?php if(!isset($medium)){echo 'selected="selected"';} ?> >Select</option>
-                <option value="sinhala" <?php if(isset($medium) && ($medium == "sinhala")){echo 'selected="selected"';} ?> >Sinhala</option>
-                <option value="english" <?php if(isset($medium) && ($medium == "english")){echo 'selected="selected"';} ?> >English</option>
-                <option value="tamil" <?php if(isset($medium) && ($medium == "tamil")){echo 'selected="selected"';} ?> >Tamil</option>
+                <option value="Sinhala" <?php if(isset($medium) && ($medium == "Sinhala")){echo 'selected="selected"';} ?> >Sinhala</option>
+                <option value="English" <?php if(isset($medium) && ($medium == "English")){echo 'selected="selected"';} ?> >English</option>
+                <option value="Tamil" <?php if(isset($medium) && ($medium == "Tamil")){echo 'selected="selected"';} ?> >Tamil</option>
             </select>               
         </div>
 
@@ -56,9 +55,20 @@
         </div>
         <div>
             <label for="name">SUBJECT NAME</label>
-            <input type="text" id="name" name="name" oninput="create_subject_code(this)"  value="<?php if(isset($name)){echo $name;} ?>" required>
+            <input type="text" id="name" name="name" onchange="create_subject_code(this)"  value="<?php if(isset($name)){echo $name;} ?>" required>
         </div>
-
+         <div class="ml-5 align-items-center">
+            <label for="type" class="mr-3 d-normal">Type:</label>
+            <select name="type" id="type" onchange="subject_category(this)">
+                <option value="General" <?php if(isset($type) && ($type == "General")){echo 'selected="selected"';} ?> >General</option>
+                <option value="Optional" <?php if(isset($type) && ($type == "Optional")){echo 'selected="selected"';} ?> >Optional</option>
+                <option value="Other" <?php if(isset($type) && ($type == "Other")){echo 'selected="selected"';} ?> >Other</option>
+            </select>               
+        </div>
+        <div id="div-category" class="d-none">
+            <label>Category : </label>
+            <input type="text" id="category" name="category" placeholder="Ex :- OP1 OP2 OP3">
+        </div>
         <div>
             <label>SUBJECT CODE</label>
             <input type="text" id="dis_code" value="<?php if(isset($code)){echo $code;} ?>" disabled="disabled">

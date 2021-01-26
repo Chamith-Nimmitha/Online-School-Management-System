@@ -82,6 +82,7 @@
                         <?php 
 	                        if($_SESSION['role']==='admin'){
                          ?>
+					    <th>SUBJECTS</th>
 					    <th>UPDATE</th>
 					    <th>DELETE</th>
 						<?php } ?>
@@ -97,7 +98,7 @@
                 ?>
                 	<?php 
                 		if($grade !== 0 && $grade != $result['grade']){
-                			echo "<tr><td colspan=8 class='text-center bg-gray'></td></tr>";
+                			echo "<tr><td colspan=9 class='text-center bg-gray'></td></tr>";
                 		}
                 	 ?>
 					<tr>
@@ -127,6 +128,11 @@
 						<?php 
 	                        if($_SESSION['role']==='admin'){
                          ?>
+                         	<td>
+								<div class="login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center">
+	                				<a class="btn btn-blue p-1" href="<?php echo set_url('classroom/subjects/'.$result['id']); ?> ">Subjects</a>
+			    				</div>
+							</td>
 							<td>
 								<div class="login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center">
 	                				<a class="btn btn-blue p-1" href="<?php echo set_url('classroom/update/'.$result['id']); ?> ">Update</a>

@@ -24,6 +24,8 @@
                 $name = addslashes(trim($_POST['name']));
                 $description = addslashes(trim($_POST['description']));
                 $code = $_POST['code'];
+                $type = $_POST['type'];
+                $category = $_POST['category'];
 
                 // check required fields
                 $resquire_fields['name'] = [3,50,1,"Subject Name"];
@@ -33,17 +35,21 @@
                 $insert['grade'] = $grade;
                 $insert['name'] = $name;
                 $insert['code'] = $code;
+                $insert['type'] = $type;
+                $insert['category'] = $category;
                 $insert['description'] = $description;
                 $this->load->model("subjects");
                 $result = $this->load->subjects->register($insert);
                 if($result){
                     $data['info'] = "Subject registration success.";
                 }else{
-                    $errors['registration'] = "Registration failed.";
+                    $errors['registration'] = "Already Registered.";
                     $data['medium'] = $medium;
                     $data['grade'] = $grade;
                     $data['name'] = $name;
                     $data['code'] = $code;
+                    $data['type'] = $type;
+                    $data['category'] = $category;
                     $data['description'] = $description;
                 }
                 unset($_POST);
@@ -162,10 +168,18 @@
                 $result_set = $this->load->subjects->get_subject_list($start,$per_page);
             }
             unset($_POST);
+            if(isset($_SESSION['snackbar_msg'])){
+                $data['msg'] = $_SESSION['snackbar_msg'];
+                unset($_SESSION['snackbar_msg']);
+            }
+            if(isset($_SESSION['info'])){
+                $data['info'] = $_SESSION['info'];
+                $data['error'] = $_SESSION['error'];
+                unset($_SESSION['info']);
+                unset($_SESSION['error']);
+            }
             $data['result_set'] = $result_set;
             $data['count'] = $this->load->subjects->get_count()->fetch()['count'];
-            $data['info'] = $info;
-            $data['error'] = $error;
             $this->view_header_and_aside();
             $this->load->view("subject/subject_list",$data);
             $this->load->view("templates/footer");
@@ -184,11 +198,18 @@
             $error = "";
             $info = "";
             if($result){
-                $info = "Deletion successful.";
+                $info = "Subject ${id} deleted.";
             }else{
                 $error = "Deletion failed.";
             }
-            $this->list($info,$error);
+            if(!empty($info)){
+                $_SESSION['snackbar_msg'] = $info;
+            }else{
+                $_SESSION['snackbar_msg'] = $error;
+            }
+            $_SESSION['info'] = $info;
+            $_SESSION['error'] = $error;
+            header("Location:". set_url("subject/list"));
         }
 
         // upload csv files

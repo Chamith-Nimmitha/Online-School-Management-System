@@ -489,9 +489,51 @@
 				$this->load->view("templates/footer");
 				return;
 			}
+			$error = "";
+			$msg = "";
+			$this->load->model("classroom");
+			$result = $this->load->classroom->set_by_id($classroom_id);
+			if(!$result){
+				echo "Classroom not found.";
+				exit();
+			}
 
+			// when update the classroom subjects
+			if(isset($_POST['submit'])){
+				$subjects = ["General"=>[],"Optional"=>[],"Other"=>[]];
+				foreach ($_POST as $key => $value) {
+					if(empty($value)){
+						continue;
+					}
+					if( strpos($key, "subject") !== FALSE){
+						$exp = explode("-", $key);
+						if($exp[1] == "general"){
+							array_push($subjects['General'], ["id"=>$value,"periods"=>$_POST["periods-".$exp[1]."-".$exp[2]]]);
+						}else if($exp[1] == "optional"){
+							array_push($subjects['Optional'], ["id"=>$value,"periods"=>$_POST["periods-".$exp[1]."-".$exp[2]]]);
+						}else if($exp[1] == "other"){
+							array_push($subjects['Other'], ["id"=>$value,"periods"=>$_POST["periods-".$exp[1]."-".$exp[2]]]);
+						}
+					}
+				}
+				$result = $this->load->classroom->update_subjects($subjects);
+				if(!$result){
+					$error = "Update Failed.";
+				}else{
+					$msg = "Update Success.";
+				}
+			}
+			$data['msg'] = $msg;
+			$data['error'] = $error;
+			$data["classroom_info"] = $this->load->classroom->get_data();
+			$grade = $data['classroom_info']['grade'];
+			$this->load->model("subjects");
+			$data['general_subjects'] = $this->load->subjects->get_general_subjects($grade)->fetchAll();
+			$data['optional_subjects'] = $this->load->subjects->get_optional_subjects_distinct_category($grade)->fetchAll();
+
+			$data['other_subjects'] = $this->load->subjects->get_other_subjects($grade)->fetchAll();
 			$this->view_header_and_aside();
-			$this->load->view("classroom/classroom_subjects");
+			$this->load->view("classroom/classroom_subjects",$data);
 			$this->load->view("templates/footer");
 		}
 	}

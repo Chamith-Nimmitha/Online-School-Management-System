@@ -3,6 +3,11 @@
 	  window.history.replaceState( null, null, window.location.href );
 	}
 </script>
+<?php 
+	if(isset($msg) && !empty($msg)){
+		echo "<script>show_snackbar('${msg}')</script>";
+	}
+ ?>
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start pt-5">
 	<div class="section-wrapper mt-5">
 		<div class="student-header mt-5 ">
