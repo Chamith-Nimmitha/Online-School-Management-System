@@ -136,7 +136,7 @@
 
 		<fieldset class="col-12 p-2 mb-2 justify-content-center">
 			<span>Other Subjects</span>
-			<div class="col-12" id="optional-subject-wrapper">
+			<div class="col-12" id="other-subject-wrapper">
 				<?php 
 				if(isset($classroom_other_subjects) && !empty($classroom_other_subjects)){
 					for($i=0; $i< count($classroom_other_subjects); $i++){
