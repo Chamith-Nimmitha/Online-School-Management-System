@@ -510,12 +510,13 @@
 						if($exp[1] == "general"){
 							array_push($subjects['General'], ["id"=>$value,"periods"=>$_POST["periods-".$exp[1]."-".$exp[2]]]);
 						}else if($exp[1] == "optional"){
-							array_push($subjects['Optional'], ["id"=>$value,"periods"=>$_POST["periods-".$exp[1]."-".$exp[2]]]);
+							array_push($subjects['Optional'], ["category"=>$value,"periods"=>$_POST["periods-".$exp[1]."-".$exp[2]]]);
 						}else if($exp[1] == "other"){
 							array_push($subjects['Other'], ["id"=>$value,"periods"=>$_POST["periods-".$exp[1]."-".$exp[2]]]);
 						}
 					}
 				}
+				// print_r($subjects);
 				$result = $this->load->classroom->update_subjects($subjects);
 				if(!$result){
 					$error = "Update Failed.";

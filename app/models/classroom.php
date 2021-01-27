@@ -195,11 +195,12 @@
 		public function update_subjects($subjects){
 			try {
 				$this->con->db->beginTransaction();
-				// get old all classroom subjects
-				$sub = $this->get_general_subjects();
-				if($sub === FALSE){
+				// get old all classroom general subjects
+				$gen_sub = $this->get_general_subjects();
+				if($gen_sub === FALSE){
 					throw new PDOException();
 				}
+				// update general subjects
 				foreach ($subjects['General'] as $subject) {
 					$result = $this->con->insert("class_subject",["classroom_id"=>$this->id,"subject_id"=>$subject['id'], "periods"=>$subject['periods']]);
 					if(!$result){
@@ -210,11 +211,99 @@
 						if(!$result){
 							throw new PDOException();
 						}
-						unset($sub[array_search($subject['id'],$sub)]);
+						$tmp = [];
+						for ($i=0; $i < count($gen_sub) ; $i++) { 
+							if($subject['id']!=$gen_sub[$i]['id']){
+								array_push($tmp, $gen_sub[$i]);
+							}
+						}
+						$gen_sub = $tmp;
 					}
 				}
-				if(count($sub) !== 0){
-					foreach ($sub as $id) {
+				if(count($gen_sub) !== 0){
+					foreach ($gen_sub as $id) {
+						$result = $this->con->delete("class_subject", ["classroom_id"=>$this->id, "subject_id"=>$id['id']]);
+						if(!$result){
+							throw new PDOException();
+						}
+					}
+				}
+
+				// get old all classroom optional categories
+				$op_sub = $this->get_optional_subjects();
+				if($op_sub === FALSE){
+					throw new PDOException();
+				}
+				// update Optional subjects
+				foreach ($subjects['Optional'] as $subject) {
+					$this->con->get(['id']);
+					$result = $this->con->select("subject",["category"=>$subject['category'],"grade"=>$this->grade]);
+					if(!$result){
+						throw new PDOException();
+					}
+					foreach ($result->fetchAll() as $sub) {
+						$result = $this->con->insert("class_subject",["classroom_id"=>$this->id,"subject_id"=>$sub['id'], "periods"=>$subject['periods']]);
+						if(!$result){
+							throw new PDOException();
+						}
+						if($result->rowCount() === 0){
+							$result = $this->con->update("class_subject",["periods"=>$subject['periods']], ["classroom_id"=>$this->id,"subject_id"=>$sub['id']]);
+							if(!$result){
+								throw new PDOException();
+							}
+							$tmp = [];
+							for ($i=0; $i < count($op_sub) ; $i++) { 
+								if($subject['category']!=$op_sub[$i]['category']){
+									array_push($tmp, $op_sub[$i]);
+								}
+							}
+							$op_sub = $tmp;
+						}
+					}
+				}
+				if(count($op_sub) !== 0){
+					foreach ($op_sub as $id) {
+						$this->con->get(['id']);
+						$result = $this->con->select("subject",["category"=>$id['category'],"grade"=>$this->grade]);
+						if(!$result){
+							throw new PDOException();
+						}
+						foreach ($result->fetchAll() as $sub) {
+							$result = $this->con->delete("class_subject", ["classroom_id"=>$this->id, "subject_id"=>$sub['id']]);
+							if(!$result){
+								throw new PDOException();
+							}
+						}
+					}
+				}
+
+				// get old all classroom other subjects
+				$ot_sub = $this->get_other_subjects();
+				if($ot_sub === FALSE){
+					throw new PDOException();
+				}
+				// update general subjects
+				foreach ($subjects['Other'] as $subject) {
+					$result = $this->con->insert("class_subject",["classroom_id"=>$this->id,"subject_id"=>$subject['id'], "periods"=>$subject['periods']]);
+					if(!$result){
+						throw new PDOException();
+					}
+					if($result->rowCount() === 0){
+						$result = $this->con->update("class_subject",["periods"=>$subject['periods']], ["classroom_id"=>$this->id,"subject_id"=>$subject['id']]);
+						if(!$result){
+							throw new PDOException();
+						}
+						$tmp = [];
+						for ($i=0; $i < count($ot_sub) ; $i++) { 
+							if($subject['id']!=$ot_sub[$i]['id']){
+								array_push($tmp, $ot_sub[$i]);
+							}
+						}
+						$ot_sub = $tmp;
+					}
+				}
+				if(count($ot_sub) !== 0){
+					foreach ($ot_sub as $id) {
 						$result = $this->con->delete("class_subject", ["classroom_id"=>$this->id, "subject_id"=>$id['id']]);
 						if(!$result){
 							throw new PDOException();
