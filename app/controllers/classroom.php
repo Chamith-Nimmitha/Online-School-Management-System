@@ -342,12 +342,12 @@
 			}
 			
 			//get all subjects related to the section
-			$grade = $this->load->classroom->get_grade();
-			$con->get(array("code","name"));
-			$subjects = $con->select("subject",array("grade"=>$grade));
-			if($subjects && $subjects->rowCount() !==0){
-				$subjects = $subjects->fetchAll();
-			}
+			// $grade = $this->load->classroom->get_grade();
+			// $con->get(array("code","name"));
+			// $subjects = $con->select("subject",array("grade"=>$grade));
+			// if($subjects && $subjects->rowCount() !==0){
+			// 	$subjects = $subjects->fetchAll();
+			// }
 			// get classroom timetable
 			$this->load->model("classroom");
 			$this->load->classroom->set_by_id($classroom_id);
@@ -357,9 +357,30 @@
 			}else{
 				$timetable_data = FALSE;
 			}
+			// get classroom subjects
+			$subjects["general"] = $this->load->classroom->get_general_subjects();
+			$subjects["optional"] = $this->load->classroom->get_optional_subjects();
+			$subjects["other"] = $this->load->classroom->get_other_subjects();
+
+			$this->load->model("subjects");
+			$result = $this->load->subjects->get_teachers($subjects['general']);
+			if(!$result){
+				echo "ERROR";
+			}else{
+				$data['subject_teachers'] = $result;
+			}
+
 			$data['subjects'] = $subjects;
 			$data['classroom_id'] = $classroom_id;
 			$data['timetable_data'] = $timetable_data;
+			if(isset($_SESSION["info_teacher_update"])){
+				$data['info'] = $_SESSION["info_teacher_update"];
+				unset($_SESSION["info_teacher_update"]);
+			}
+			if(isset($_SESSION["error_teacher_update"])){
+				$data['error'] = $_SESSION["error_teacher_update"];
+				unset($_SESSION["error_teacher_update"]);
+			}
 
 			$this->view_header_and_aside();
 			$this->load->view("classroom/classroom_timetable_create",$data);
@@ -482,6 +503,7 @@
 			$this->load->view("templates/footer");
 		}
 
+		// assign, update and assign classroom subjects
 		public function subjects($classroom_id){
 			if(!$this->checkPermission->check_permission("classroom","create")){
 				$this->view_header_and_aside();
@@ -539,6 +561,31 @@
 			$this->view_header_and_aside();
 			$this->load->view("classroom/classroom_subjects",$data);
 			$this->load->view("templates/footer");
+		}
+
+		// update classroom subjects
+		public function update_subjects($classroom_id){
+			$subjects = ['General'=>[], 'Optional'=>[], 'Other'=>[]];
+			foreach ($_POST as $key => $value) {
+				$exp = explode("-", $key);
+				if(count($exp)==3){
+					array_push($subjects['General'], ["id"=>$exp[2],"teacher_id"=>$value]);
+				}
+			}
+			$this->load->model("classroom");
+			$result = $this->load->classroom->set_by_id($classroom_id);
+			if(!$result){
+				$_SESSION["error_teacher_update"] = "Classroom Not Found.";
+				header("Location: ". set_url("classroom/timetable/".$classroom_id));
+				return;
+			}
+			$result = $this->load->classroom->update_subject_teachers($subjects);
+			if($result){
+				$_SESSION["info_teacher_update"] = "Update successful.";
+			}else{
+				$_SESSION["error_teacher_update"] = "Update Failed.";
+			}
+			header("Location: ". set_url("classroom/timetable/".$classroom_id));
 		}
 	}
 

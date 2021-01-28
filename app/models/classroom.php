@@ -160,7 +160,7 @@
 
 		// get classroom general subject list
 		public function get_general_subjects(){
-			$query = "SELECT `s`.`id`,`s`.`name`,`s`.`medium`,`cs`.`periods` FROM `class_subject` AS `cs` INNER JOIN `subject` AS `s` ON `s`.`id`=`cs`.`subject_id` WHERE `cs`.`classroom_id`=? AND `s`.`type`='General' ;";
+			$query = "SELECT `s`.`id`,`s`.`name`,`s`.`medium`,`s`.`code`,`cs`.`periods`,`cs`.`teacher_id` FROM `class_subject` AS `cs` INNER JOIN `subject` AS `s` ON `s`.`id`=`cs`.`subject_id` LEFT JOIN `teacher` AS `t` ON `cs`.`teacher_id`=`t`.`id` WHERE `cs`.`classroom_id`=? AND `s`.`type`='General' ;";
 			$result = $this->con->pure_query($query,[$this->id]);
 			if($result){
 				return $result->fetchAll();
@@ -182,7 +182,7 @@
 
 		// get classroom other subject list
 		public function get_other_subjects(){
-			$query = "SELECT `s`.`id`,`s`.`name`,`s`.`medium`,`cs`.`periods` FROM `class_subject` AS `cs` INNER JOIN `subject` AS `s` ON `s`.`id`=`cs`.`subject_id` WHERE `cs`.`classroom_id`=? AND `s`.`type`='Other' ;";
+			$query = "SELECT `s`.`id`,`s`.`name`,`s`.`medium`,`s`.`code`,`cs`.`periods` FROM `class_subject` AS `cs` INNER JOIN `subject` AS `s` ON `s`.`id`=`cs`.`subject_id` WHERE `cs`.`classroom_id`=? AND `s`.`type`='Other' ;";
 			$result = $this->con->pure_query($query,[$this->id]);
 			if($result){
 				return $result->fetchAll();
@@ -201,33 +201,36 @@
 					throw new PDOException();
 				}
 				// update general subjects
-				foreach ($subjects['General'] as $subject) {
-					$result = $this->con->insert("class_subject",["classroom_id"=>$this->id,"subject_id"=>$subject['id'], "periods"=>$subject['periods']]);
-					if(!$result){
-						throw new PDOException();
-					}
-					if($result->rowCount() === 0){
-						$result = $this->con->update("class_subject",["periods"=>$subject['periods']], ["classroom_id"=>$this->id,"subject_id"=>$subject['id']]);
+				if(!empty($subjects['General'])){
+					foreach ($subjects['General'] as $subject) {
+						$result = $this->con->insert("class_subject",["classroom_id"=>$this->id,"subject_id"=>$subject['id'], "periods"=>$subject['periods']]);
 						if(!$result){
 							throw new PDOException();
 						}
-						$tmp = [];
-						for ($i=0; $i < count($gen_sub) ; $i++) { 
-							if($subject['id']!=$gen_sub[$i]['id']){
-								array_push($tmp, $gen_sub[$i]);
+						if($result->rowCount() === 0){
+							$result = $this->con->update("class_subject",["periods"=>$subject['periods']], ["classroom_id"=>$this->id,"subject_id"=>$subject['id']]);
+							if(!$result){
+								throw new PDOException();
+							}
+							$tmp = [];
+							for ($i=0; $i < count($gen_sub) ; $i++) { 
+								if($subject['id']!=$gen_sub[$i]['id']){
+									array_push($tmp, $gen_sub[$i]);
+								}
+							}
+							$gen_sub = $tmp;
+						}
+					}
+					if(count($gen_sub) !== 0){
+						foreach ($gen_sub as $id) {
+							$result = $this->con->delete("class_subject", ["classroom_id"=>$this->id, "subject_id"=>$id['id']]);
+							if(!$result){
+								throw new PDOException();
 							}
 						}
-						$gen_sub = $tmp;
 					}
 				}
-				if(count($gen_sub) !== 0){
-					foreach ($gen_sub as $id) {
-						$result = $this->con->delete("class_subject", ["classroom_id"=>$this->id, "subject_id"=>$id['id']]);
-						if(!$result){
-							throw new PDOException();
-						}
-					}
-				}
+				
 
 				// get old all classroom optional categories
 				$op_sub = $this->get_optional_subjects();
@@ -235,43 +238,45 @@
 					throw new PDOException();
 				}
 				// update Optional subjects
-				foreach ($subjects['Optional'] as $subject) {
-					$this->con->get(['id']);
-					$result = $this->con->select("subject",["category"=>$subject['category'],"grade"=>$this->grade]);
-					if(!$result){
-						throw new PDOException();
-					}
-					foreach ($result->fetchAll() as $sub) {
-						$result = $this->con->insert("class_subject",["classroom_id"=>$this->id,"subject_id"=>$sub['id'], "periods"=>$subject['periods']]);
-						if(!$result){
-							throw new PDOException();
-						}
-						if($result->rowCount() === 0){
-							$result = $this->con->update("class_subject",["periods"=>$subject['periods']], ["classroom_id"=>$this->id,"subject_id"=>$sub['id']]);
-							if(!$result){
-								throw new PDOException();
-							}
-							$tmp = [];
-							for ($i=0; $i < count($op_sub) ; $i++) { 
-								if($subject['category']!=$op_sub[$i]['category']){
-									array_push($tmp, $op_sub[$i]);
-								}
-							}
-							$op_sub = $tmp;
-						}
-					}
-				}
-				if(count($op_sub) !== 0){
-					foreach ($op_sub as $id) {
+				if(!empty($subjects['Optional'])){
+					foreach ($subjects['Optional'] as $subject) {
 						$this->con->get(['id']);
-						$result = $this->con->select("subject",["category"=>$id['category'],"grade"=>$this->grade]);
+						$result = $this->con->select("subject",["category"=>$subject['category'],"grade"=>$this->grade]);
 						if(!$result){
 							throw new PDOException();
 						}
 						foreach ($result->fetchAll() as $sub) {
-							$result = $this->con->delete("class_subject", ["classroom_id"=>$this->id, "subject_id"=>$sub['id']]);
+							$result = $this->con->insert("class_subject",["classroom_id"=>$this->id,"subject_id"=>$sub['id'], "periods"=>$subject['periods']]);
 							if(!$result){
 								throw new PDOException();
+							}
+							if($result->rowCount() === 0){
+								$result = $this->con->update("class_subject",["periods"=>$subject['periods']], ["classroom_id"=>$this->id,"subject_id"=>$sub['id']]);
+								if(!$result){
+									throw new PDOException();
+								}
+								$tmp = [];
+								for ($i=0; $i < count($op_sub) ; $i++) { 
+									if($subject['category']!=$op_sub[$i]['category']){
+										array_push($tmp, $op_sub[$i]);
+									}
+								}
+								$op_sub = $tmp;
+							}
+						}
+					}
+					if(count($op_sub) !== 0){
+						foreach ($op_sub as $id) {
+							$this->con->get(['id']);
+							$result = $this->con->select("subject",["category"=>$id['category'],"grade"=>$this->grade]);
+							if(!$result){
+								throw new PDOException();
+							}
+							foreach ($result->fetchAll() as $sub) {
+								$result = $this->con->delete("class_subject", ["classroom_id"=>$this->id, "subject_id"=>$sub['id']]);
+								if(!$result){
+									throw new PDOException();
+								}
 							}
 						}
 					}
@@ -283,28 +288,57 @@
 					throw new PDOException();
 				}
 				// update general subjects
-				foreach ($subjects['Other'] as $subject) {
-					$result = $this->con->insert("class_subject",["classroom_id"=>$this->id,"subject_id"=>$subject['id'], "periods"=>$subject['periods']]);
-					if(!$result){
-						throw new PDOException();
-					}
-					if($result->rowCount() === 0){
-						$result = $this->con->update("class_subject",["periods"=>$subject['periods']], ["classroom_id"=>$this->id,"subject_id"=>$subject['id']]);
+				if(!empty($subjects['Other'])){
+					foreach ($subjects['Other'] as $subject) {
+						$result = $this->con->insert("class_subject",["classroom_id"=>$this->id,"subject_id"=>$subject['id'], "periods"=>$subject['periods']]);
 						if(!$result){
 							throw new PDOException();
 						}
-						$tmp = [];
-						for ($i=0; $i < count($ot_sub) ; $i++) { 
-							if($subject['id']!=$ot_sub[$i]['id']){
-								array_push($tmp, $ot_sub[$i]);
+						if($result->rowCount() === 0){
+							$result = $this->con->update("class_subject",["periods"=>$subject['periods']], ["classroom_id"=>$this->id,"subject_id"=>$subject['id']]);
+							if(!$result){
+								throw new PDOException();
+							}
+							$tmp = [];
+							for ($i=0; $i < count($ot_sub) ; $i++) { 
+								if($subject['id']!=$ot_sub[$i]['id']){
+									array_push($tmp, $ot_sub[$i]);
+								}
+							}
+							$ot_sub = $tmp;
+						}
+					}
+					if(count($ot_sub) !== 0){
+						foreach ($ot_sub as $id) {
+							$result = $this->con->delete("class_subject", ["classroom_id"=>$this->id, "subject_id"=>$id['id']]);
+							if(!$result){
+								throw new PDOException();
 							}
 						}
-						$ot_sub = $tmp;
 					}
 				}
-				if(count($ot_sub) !== 0){
-					foreach ($ot_sub as $id) {
-						$result = $this->con->delete("class_subject", ["classroom_id"=>$this->id, "subject_id"=>$id['id']]);
+
+				$this->con->db->commit();
+				return TRUE;
+			} catch (Exception $e) {
+				$this->con->db->rollBack();
+				return FALSE;
+			}
+		}
+
+		// update classroom subject teacher
+		public function update_subject_teachers($subjects){
+			try {
+				$this->con->db->beginTransaction();
+				// update general subjects
+				if(!empty($subjects['General'])){
+					foreach ($subjects['General'] as $subject) {
+						if($subject['teacher_id'] == "None"){
+							$query = "UPDATE `class_subject` SET `teacher_id`= NULL WHERE `classroom_id`=? && `subject_id`=?";
+							$result = $this->con->pure_query($query,[$this->id,$subject['id']]);
+						}else{
+							$result = $this->con->update("class_subject",["teacher_id"=>$subject['teacher_id']], ["classroom_id"=>$this->id,"subject_id"=>$subject['id']]);
+						}
 						if(!$result){
 							throw new PDOException();
 						}
