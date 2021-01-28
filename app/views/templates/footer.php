@@ -15,5 +15,6 @@
 	<script type="text/javascript" src="<?php echo set_url('public/assets/js/ajax.js');?>"></script>
 	<script src="<?php echo set_url('public/assets/js/chartJs.js');?>"></script>
 	<script src="<?php echo set_url('public/assets/js/draw_chart.js');?>"></script>
+	<script src="<?php echo set_url('public/assets/js/timetable.js');?>"></script>
 </body>
 </html>

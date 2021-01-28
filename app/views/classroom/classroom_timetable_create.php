@@ -26,7 +26,7 @@
 		<hr class="w-100">
 		<div class="p-5">
 			<form action="<?php echo set_url('classroom/timetable/'.$classroom_id); ?>" method="post">
-				<table class="w-100 table-strip-dark">
+				<table class="w-100 table-strip-dark" id="classroom_timetable">
 					<thead>
 						<tr>
 							<th style="width: 20%;">Time\Day</th>
@@ -101,82 +101,83 @@
 				</div>
 			</form>
 
-				<!-- teachers for subjects is automatically choose by our system -->
-				<div class="d-flex flex-col align-items-center justify-content-center col-12 mb-5">
-					<div>
-						<h3 style="font-size: 25px;">Classroom Subjects</h3>
-					</div>
-					<div class="col-8">
-						<form action="<?php echo set_url('classroom/subject/teacher/'.$classroom_id); ?>" class="col-12" method="POST">
-							<table class="table-strip-dark col-12">
-								<thead class="col-12">
-									<tr class="text-center col-12">
-										<th class="col-1 justify-content-center">No.</th>
-										<th class="col-3 justify-content-center">Subject Name</th>
-										<th class="col-3 justify-content-center">No of Periods</th>
-										<th class="col-5 justify-content-center">Teacher</th>
-									</tr>
-								</thead>
-								<tbody class="col-12">
-								<!-- for general subjects -->
-								<?php if((!isset($subjects['general']) || empty($subjects['general'])) && (!isset($subjects['optional']) || empty($subjects['optional'])) && (!isset($subjects['other']) || empty($subjects['other']))){
-									echo "<tr class='col-12'><td colspan=4 class='bg-red w-100 text-center'>Subject Not Found...</td></tr>";
-								}  ?>
-								<?php if(isset($subjects['general']) && !empty($subjects['general'])){
-										for($i=0; $i < count($subjects['general']); $i++) { ?>
-											<tr class="col-12 justify-content-center align-items-center">
-												<td class="text-center justify-content-center col-1"><?php echo ($i+1);?></td>
-												<td class=" col-3"><?php echo ucfirst($subjects['general'][$i]['name']); ?></td>
-												<td class="text-center col-3 justify-content-center"><?php echo $subjects['general'][$i]['periods'];?></td>
-												<td class=" col-5">
-													<select name="subject-teacher-<?php echo $subjects['general'][$i]['id']; ?>" id="subject-teacher-<?php echo $subjects['general'][$i]['id']; ?>">
-														<option value="None">None</option>
-														<?php foreach ($subject_teachers[$subjects['general'][$i]['id']] as $teacher): ?>
-															<option value="<?php echo $teacher['id']; ?>" <?php if($subjects['general'][$i]['teacher_id']== $teacher['id']){echo "selected='selected'";} ?>><?php echo $teacher['name_with_initials']." - ".$teacher['id']; ?></option>
-														<?php endforeach ?>
-													</select>
-												</td>
-											</tr>
-								<?php }
-								} ?>
-								<!-- for optional subjects -->
-								<?php if(isset($subjects['optional']) && !empty($subjects['optional'])){
-										for($i=0; $i < count($subjects['optional']); $i++) { ?>
-											<tr class="col-12 justify-content-center align-items-center">
-												<td class="text-center justify-content-center col-1"><?php echo ($i+1);?></td>
-												<td class=" col-3"><?php echo ucfirst($subjects['optional'][$i]['category']); ?></td>
-												<td class="text-center col-3 justify-content-center"><?php echo $subjects['optional'][$i]['periods'];?></td>
-												<td class=" col-5">
-												</td>
-											</tr>
-								<?php }
-								} ?>
-								<!-- for other subjects -->
-								<?php if(isset($subjects['other']) && !empty($subjects['other'])){
-										for($i=0; $i < count($subjects['other']); $i++) { ?>
-											<tr class="col-12 justify-content-center align-items-center">
-												<td class="text-center justify-content-center col-1"><?php echo ($i+1);?></td>
-												<td class=" col-3"><?php echo ucfirst($subjects['other'][$i]['name']); ?></td>
-												<td class="text-center col-3 justify-content-center"><?php echo $subjects['other'][$i]['periods'];?></td>
-												<td class=" col-5">
-												</td>
-											</tr>
-								<?php }
-								} ?>
-								</tbody>
-							</table>
-							<div class="d-flex justify-content-end col-12">
-								<input type="submit" name="submit" value="Update" class="btn btn-blue">
-							</div>
-						</form>
-					</div>
+			<!-- teachers for subjects is automatically choose by our system -->
+			<div class="d-flex flex-col align-items-center justify-content-center col-12 mb-5">
+				<div>
+					<h3 style="font-size: 25px;">Classroom Subjects</h3>
 				</div>
+				<div class="col-8">
+					<form action="<?php echo set_url('classroom/subject/teacher/'.$classroom_id); ?>" class="col-12" method="POST">
+						<table class="table-strip-dark col-12" id="subject_table">
+							<thead class="col-12">
+								<tr class="text-center col-12">
+									<th class="col-1 justify-content-center">No.</th>
+									<th class="col-3 justify-content-center">Subject Name</th>
+									<th class="col-3 justify-content-center">No of Periods</th>
+									<th class="col-5 justify-content-center">Teacher</th>
+								</tr>
+							</thead>
+							<tbody class="col-12">
+							<!-- for general subjects -->
+							<?php if((!isset($subjects['general']) || empty($subjects['general'])) && (!isset($subjects['optional']) || empty($subjects['optional'])) && (!isset($subjects['other']) || empty($subjects['other']))){
+								echo "<tr class='col-12'><td colspan=4 class='bg-red w-100 text-center'>Subject Not Found...</td></tr>";
+							}  ?>
+							<?php if(isset($subjects['general']) && !empty($subjects['general'])){
+									for($i=0; $i < count($subjects['general']); $i++) { ?>
+										<tr class="col-12 justify-content-center align-items-center">
+											<input type="hidden" name="<?php echo $subjects['general'][$i]['code']."--".$subjects['general'][$i]['periods']; ?>" id="<?php echo $subjects['general'][$i]['code']."--".$subjects['general'][$i]['periods']; ?>" value="<?php echo $subjects['general'][$i]['code']."--".$subjects['general'][$i]['periods']; ?>">
+											<td class="text-center justify-content-center col-1"><?php echo ($i+1);?></td>
+											<td class=" col-3"><?php echo ucfirst($subjects['general'][$i]['name']); ?></td>
+											<td class="text-center col-3 justify-content-center"><?php echo $subjects['general'][$i]['periods'];?></td>
+											<td class=" col-5">
+												<select name="subject-teacher-<?php echo $subjects['general'][$i]['id']; ?>" id="subject-teacher-<?php echo $subjects['general'][$i]['id']; ?>">
+													<option value="None">None</option>
+													<?php foreach ($subject_teachers[$subjects['general'][$i]['id']] as $teacher): ?>
+														<option value="<?php echo $teacher['id']; ?>" <?php if($subjects['general'][$i]['teacher_id']== $teacher['id']){echo "selected='selected'";} ?>><?php echo $teacher['name_with_initials']." - ".$teacher['id']; ?></option>
+													<?php endforeach ?>
+												</select>
+											</td>
+										</tr>
+							<?php }
+							} ?>
+							<!-- for optional subjects -->
+							<?php if(isset($subjects['optional']) && !empty($subjects['optional'])){
+									for($i=0; $i < count($subjects['optional']); $i++) { ?>
+										<tr class="col-12 justify-content-center align-items-center">
+											<td class="text-center justify-content-center col-1"><?php echo ($i+1);?></td>
+											<td class=" col-3"><?php echo ucfirst($subjects['optional'][$i]['category']); ?></td>
+											<td class="text-center col-3 justify-content-center"><?php echo $subjects['optional'][$i]['periods'];?></td>
+											<td class=" col-5">
+											</td>
+										</tr>
+							<?php }
+							} ?>
+							<!-- for other subjects -->
+							<?php if(isset($subjects['other']) && !empty($subjects['other'])){
+									for($i=0; $i < count($subjects['other']); $i++) { ?>
+										<tr class="col-12 justify-content-center align-items-center">
+											<td class="text-center justify-content-center col-1"><?php echo ($i+1);?></td>
+											<td class=" col-3"><?php echo ucfirst($subjects['other'][$i]['name']); ?></td>
+											<td class="text-center col-3 justify-content-center"><?php echo $subjects['other'][$i]['periods'];?></td>
+											<td class=" col-5">
+											</td>
+										</tr>
+							<?php }
+							} ?>
+							</tbody>
+						</table>
+						<div class="d-flex justify-content-end col-12">
+							<input type="submit" name="submit" value="Update" class="btn btn-blue">
+						</div>
+					</form>
+				</div>
+			</div>
 
-                <center>
-				    <div>
-                        <a class="btn btn-blue" onClick="window.print()">Download as a PDF</a>
-		            </div>
-				</center>
+            <center>
+			    <div>
+                    <a class="btn btn-blue" onClick="window.print()">Download as a PDF</a>
+	            </div>
+			</center>
 		</div>
 		
 	</div>
