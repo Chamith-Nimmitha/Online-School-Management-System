@@ -138,6 +138,25 @@
 	    public function get_other_subjects($grade){
 	    	return $this->con->select("subject",["grade"=>$grade, "type"=>"Other"]);
 	    }
+
+	    // get teacher list acording to subjects
+	    public function get_teachers($subject_list){
+	    	require_once(MODELS."subject.php");
+	    	$teacher_list = [];
+	    	foreach ($subject_list as $sub) {
+	    		$s = new SubjectModel();
+	    		$result = $s->set_by_id($sub['id']);
+	    		if(!$result){
+	    			return FALSE;
+	    		}
+	    		$t_list = $s->get_teachers();
+	    		if($t_list === FALSE){
+	    			return FALSE;
+	    		}
+	    		$teacher_list[$sub['id']] = $t_list;
+	    	}
+	    	return $teacher_list;
+	    }
 	}
 
  ?>

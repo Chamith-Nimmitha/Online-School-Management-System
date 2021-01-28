@@ -23,7 +23,6 @@ table{
 	--border-left: none;
 	--border:none;
 	--border-collapse: collapse;
-
 	--bg : rgba(0,0,255,0.3);
 	--border-radius : 10px;
 	--padding :2px;
@@ -538,17 +537,17 @@ form code{
 
 /* tables*/
 table{
-	background: var(--bg);
-	/*border-top: var(--border-top);*/
-	border-right: var(--border-right);
+	background: var(--bg) !important;
+	border-top: var(--border-top) !important;
+	border-right: var(--border-right) !important;
 	border-bottom: : var(--border-bottom) !important;
-	border-left: var(--border-left);
-	border: var(--border);
+	border-left: var(--border-left) !important;
+	border: var(--border) !important;
 
-	border-collapse: var(--border-collapse);
+	border-collapse: var(--border-collapse) !important;
 
 	border-radius: var(--border-radius) !important;
-	padding: var(--padding);
+	padding: var(--padding) !important;
 }
 
 table th, td{

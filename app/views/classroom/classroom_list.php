@@ -151,7 +151,7 @@
 				$grade = $result['grade'];
 					}
 				}else{
-					echo "<tr><td colspan=8 class='text-center bg-red'>Classroom not found...</td></tr>";
+					echo "<tr><td colspan=8 class='text-center bg-red'>Classroom Not Found...</td></tr>";
 				}
                 ?>
                  

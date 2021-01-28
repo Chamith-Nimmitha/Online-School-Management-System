@@ -19,7 +19,7 @@
 table{
 	--border-top:10px solid blue ;
 	--border-right: none;
-	--border-bottom: none;
+	--border-bottom: 1px solid red;
 	--border-left: none;
 	--border:1px solid darkblue;
 	--border-collapse: separate;

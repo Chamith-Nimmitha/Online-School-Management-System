@@ -78,7 +78,6 @@
 			}	
 		}
 
-
 		//get all classroom data as assosiative array
 		public function get_data(){
 			$data['id'] = $this->id;
@@ -88,6 +87,18 @@
 			$data['code'] = $this->code;
 			$data['description'] = $this->description;
 			return $data;
+		}
+
+		// get teachers who teaches this subject
+		public function get_teachers(){
+			$query = "SELECT `t`.`id`,`t`.`name_with_initials` FROM `teacher` AS `t` INNER JOIN `teacher_subject` AS `ts` ON `t`.`id`=`ts`.`teacher_id` WHERE `ts`.`subject_id`=? ;";
+			$result = $this->con->pure_query($query,[$this->id]);
+			if($result !== FALSE){
+				return $result->fetchAll();
+			}else{
+				return FALSE;
+			}
+			
 		}
 
 		public function __destruct(){
