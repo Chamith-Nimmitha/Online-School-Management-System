@@ -1,6 +1,6 @@
 <?php 
 	$time_map = ["1"=>"7.50a.m - 8.30a.m", "2"=>"8.30a.m - 9.10a.m", "3"=>"9.10a.m - 9.50a.m", "4"=> "9.50a.m - 10.30a.m", "5"=> "10.50a.m - 11.30a.m", "6"=>"11.30a.m - 12.10p.m", "7"=> "12.10p.m - 12.50p.m", "8"=>"12.50p.m - 1.30p.m"];
-			$day_map = ["1"=>"mon","2"=>"tue","3"=>"wed","4"=>"thu","5"=>"fri"];
+	$day_map = ["1"=>"mon","2"=>"tue","3"=>"wed","4"=>"thu","5"=>"fri"];
  ?>
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
@@ -55,28 +55,28 @@
 							$row .= "<th>".$time_map[$period]."</th>";
 							for ($j=1; $j <=5 ; $j++) { 
 								$row .= "<td>";
-								$row .= '<select name="'.$day_map[$j].'-'.$period.'" id="">';
+								$row .= '<select name="'.$day_map[$j].'-'.$period.'" id="'.$day_map[$j].'-'.$period.'">';
 									$row .= '<option value="FREE">FREE</option>';
 								// for general sunjects
 								foreach ($subjects['general'] as $sub) {
-									$row .= '<option value="'.$sub['code'].'"';
-									if(!empty($timetable_data) && $timetable_data[$day_map[$j]][$period] == $sub['code']){
+									$row .= '<option value="G--'.$sub['id'].'"';
+									if(!empty($timetable_data) && $timetable_data[$day_map[$j]][$period] == "G--".$sub['id']){
 										$row .= " selected='selected'";
 									}
 									$row .= '>'.ucfirst($sub['name']).'</option>';
 								}
 								// for optional subjects
 								foreach ($subjects['optional'] as $sub) {
-									$row .= '<option value="'.$sub['category'].'"';
-									if(!empty($timetable_data) && $timetable_data[$day_map[$j]][$period] == $sub['category']){
+									$row .= '<option value="OP--'.$sub['category'].'"';
+									if(!empty($timetable_data) && $timetable_data[$day_map[$j]][$period] == "OP--".$sub['category']){
 										$row .= " selected='selected'";
 									}
 									$row .= '>'.ucfirst($sub['category']).'</option>';
 								}
 								// for other subjects
 								foreach ($subjects['other'] as $sub) {
-									$row .= '<option value="'.$sub['code'].'"';
-									if(!empty($timetable_data) && $timetable_data[$day_map[$j]][$period] == $sub['code']){
+									$row .= '<option value="OT--'.$sub['id'].'"';
+									if(!empty($timetable_data) && $timetable_data[$day_map[$j]][$period] == "OT".$sub['id']){
 										$row .= " selected='selected'";
 									}
 									$row .= '>'.ucfirst($sub['name']).'</option>';
@@ -125,7 +125,7 @@
 							<?php if(isset($subjects['general']) && !empty($subjects['general'])){
 									for($i=0; $i < count($subjects['general']); $i++) { ?>
 										<tr class="col-12 justify-content-center align-items-center">
-											<input type="hidden" name="<?php echo $subjects['general'][$i]['code']."--".$subjects['general'][$i]['periods']; ?>" id="<?php echo $subjects['general'][$i]['code']."--".$subjects['general'][$i]['periods']; ?>" value="<?php echo $subjects['general'][$i]['code']."--".$subjects['general'][$i]['periods']; ?>">
+											<input type="hidden" name="<?php echo "G--".$subjects['general'][$i]['id']."--".$subjects['general'][$i]['periods']; ?>" id="<?php echo "G--".$subjects['general'][$i]['id']."--".$subjects['general'][$i]['periods']; ?>" value="<?php echo "G--".$subjects['general'][$i]['id']."--".$subjects['general'][$i]['periods']; ?>">
 											<td class="text-center justify-content-center col-1"><?php echo ($i+1);?></td>
 											<td class=" col-3"><?php echo ucfirst($subjects['general'][$i]['name']); ?></td>
 											<td class="text-center col-3 justify-content-center"><?php echo $subjects['general'][$i]['periods'];?></td>
@@ -144,6 +144,7 @@
 							<?php if(isset($subjects['optional']) && !empty($subjects['optional'])){
 									for($i=0; $i < count($subjects['optional']); $i++) { ?>
 										<tr class="col-12 justify-content-center align-items-center">
+											<input type="hidden" name="<?php echo "OP--".$subjects['optional'][$i]['category']."--".$subjects['optional'][$i]['periods']; ?>" id="<?php echo "OP--".$subjects['optional'][$i]['category']."--".$subjects['optional'][$i]['periods']; ?>" value="<?php echo "OP--".$subjects['optional'][$i]['category']."--".$subjects['optional'][$i]['periods']; ?>">
 											<td class="text-center justify-content-center col-1"><?php echo ($i+1);?></td>
 											<td class=" col-3"><?php echo ucfirst($subjects['optional'][$i]['category']); ?></td>
 											<td class="text-center col-3 justify-content-center"><?php echo $subjects['optional'][$i]['periods'];?></td>
@@ -156,6 +157,7 @@
 							<?php if(isset($subjects['other']) && !empty($subjects['other'])){
 									for($i=0; $i < count($subjects['other']); $i++) { ?>
 										<tr class="col-12 justify-content-center align-items-center">
+											<input type="hidden" name="<?php echo "OT--".$subjects['other'][$i]['id']."--".$subjects['other'][$i]['periods']; ?>" id="<?php echo "OT--".$subjects['other'][$i]['id']."--".$subjects['other'][$i]['periods']; ?>" value="<?php echo "OT--".$subjects['other'][$i]['id']."--".$subjects['other'][$i]['periods']; ?>">
 											<td class="text-center justify-content-center col-1"><?php echo ($i+1);?></td>
 											<td class=" col-3"><?php echo ucfirst($subjects['other'][$i]['name']); ?></td>
 											<td class="text-center col-3 justify-content-center"><?php echo $subjects['other'][$i]['periods'];?></td>

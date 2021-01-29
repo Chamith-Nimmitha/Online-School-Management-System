@@ -78,7 +78,7 @@
 		}
 
 		// create new timetable
-		public function create($user_id,$type){
+		public function create($user_id,$type,$task=0){
 			$days = ['mon', "tue" , "wed", "thu", "fri"];	
 			try{
 				$this->con->db->beginTransaction();
@@ -100,7 +100,7 @@
 					for($i=1; $i <9; $i++){
 						$data['day'] = $day;
 						$data['period'] = $i;
-						$data['task'] = 0;
+						$data['task'] = $task;
 						$result = $this->con->insert("normal_day",$data);
 						if(!$result && $result->rowCount() !== 1){
 							throw new PDOException("Timetable data store failed.",1);
