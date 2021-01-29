@@ -134,10 +134,44 @@
 		// public function 
 
 		public function insert_data($data){
-			return $result = $this->con->insert("teacher",$data);
+			try {
+				$this->con->db->beginTransaction();
+				$result = $this->con->insert("teacher",$data);
+				if(!$result){
+					throw new PDOException();
+				}
+				$result = $this->con->select("teacher",$data);
+				if(!$result){
+					throw new PDOException();
+				}
+				$teacher_id = $result->fetch()['id'];
+				require_once(MODELS."timetable.php");
+				$t = new TimetableModel();
+				$result = $t->create($teacher_id,"teacher","FREE");
+				if(!$result){
+					throw new PDOException();
+				}
+				$this->con->db->commit();
+				return TRUE;
+			} catch (Exception $e) {
+				$this->con->db->rollBack();
+				return FALSE;
+			}
 		}
 
-        
+        // get teacher specific timetable data
+        public function get_timetable_data($teacher_id,$day,$period){
+
+        	require_once(MODELS."timetable.php");
+        	$t = new TimetableModel();
+        	$result = $t->set_by_user_id($teacher_id,"teacher");
+        	if(!$result){
+        		$t->create($teacher_id,"teacher","FREE");
+        	}
+
+        	$query = "SELECT `nd`.`task` FROM `normal_day` AS `nd` INNER JOIN `normal_timetable` AS `nt` ON `nt`.`id`=`nd`.`timetable_id` WHERE `nt`.`user_id`=? AND `nt`.`type`='teacher' AND `nd`.`day`=? AND `nd`.`period`=? ";
+        	return $this->con->pure_query($query,[$teacher_id,$day,$period]);
+        }
 
 
 	}

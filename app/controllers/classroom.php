@@ -361,7 +361,6 @@
 			$subjects["general"] = $this->load->classroom->get_general_subjects();
 			$subjects["optional"] = $this->load->classroom->get_optional_subjects();
 			$subjects["other"] = $this->load->classroom->get_other_subjects();
-
 			$this->load->model("subjects");
 			$result = $this->load->subjects->get_teachers($subjects['general']);
 			if(!$result){

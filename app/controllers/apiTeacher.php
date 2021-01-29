@@ -110,11 +110,41 @@ class ApiTeacher extends Controller{
 
 	}
 
-		public function delete_teacher_subject($subject_id,$teacher_id){
-			$con=new Database();
-			return $con->delete("teacher_subject",["subject_id"=>$subject_id,"teacher_id"=>$teacher_id]);
+	public function delete_teacher_subject($subject_id,$teacher_id){
+		$con=new Database();
+		return $con->delete("teacher_subject",["subject_id"=>$subject_id,"teacher_id"=>$teacher_id]);
 
+	}
+
+	// check teacher timetable conflits when defin classroom timetable
+	public function timetable_conflit(){
+		// header("Content-type: application/json");
+		$teacher_id = $_POST['teacher_id'];
+		$day = $_POST['day'];
+		$period = $_POST['period'];
+		$subject_id = $_POST['subject_id'];
+		$task = "G--".$subject_id;
+
+		$this->load->model("teacher");
+		$result = $this->load->teacher->get_timetable_data($teacher_id,$day,$period);
+		if(!$result){
+			echo json_encode(["result"=>"FALSE"]);
+			return;
 		}
+		$result_task = $result->fetch();
+		if(empty($result_task)){
+			echo json_encode(["result"=>"FALSE"]);
+			return;
+		}
+		$result_task = $result_task['task'];
+		if($result_task != "FREE" && $result_task != "0" && $result_task!= $task){
+			echo json_encode(["result"=>"FALSE"]);
+			return;
+		}
+		echo json_encode(["result"=>"TRUE"]);
+		return;
+
+	}
 
 
 }

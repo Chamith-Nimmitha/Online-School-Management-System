@@ -133,6 +133,7 @@
 	$routes['api/teacher/subject/$1'] = "apiTeacher/subject/$1";
 	$routes['api/teacher/subject/delete/$1/$2'] = "apiTeacher/delete_teacher_subject/$1/$2";
 	$routes['api/teacher/subject'] = "apiTeacher/subject";
+	$routes['api/timetable/teacher/conflit'] = "apiTeacher/timetable_conflit";
 
 	$routes['api/attendance/classroom/student/search'] = "apiAttendance/classroom_attendance_search";
 	$routes['api/attendance/teacher/search'] = "apiAttendance/teacher_attendance_search";

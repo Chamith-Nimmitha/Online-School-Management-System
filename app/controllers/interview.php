@@ -271,12 +271,13 @@
 				$field_errors = array_merge($field_errors,check_input_fields($required_fields));
 
 				if($already_have_account == true){
-					$this->model("parent");
-					$result = $this->parent->set_by_id($parent_account_id);
+					$this->load->model("parent");
+					$result = $this->load->parent->set_by_id($parent_account_id);
 					if(!$result){
 						$field_errors['parent_account_id'] = "Parent id is not valid.";
 					}
 				}
+				$this->load->model("timetable");
 				if(empty($field_errors)){
 					$data = array();
 					// $data["index_number"]= $index_number;
@@ -398,7 +399,8 @@
 									throw new PDOException('Faild to get student id', 1 );
 								}
 								$student_id = $result->fetch()['id'];
-								
+
+
 								$res1 = $this->load->admission->change_state($admission_id,"Registered");
 								$res2 = $this->load->interview->change_state($admission_id,"Interviewed");
 								if(!$res1 || !$res2){
