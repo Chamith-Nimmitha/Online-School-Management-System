@@ -276,7 +276,7 @@
 			}
 
 			// when update classroom timetable
-			if(isset($_POST['submit'])){
+			if(isset($_POST['timetable_submit'])){
 				if(!$this->checkPermission->check_permission("classroom","update")){
 					$this->view_header_and_aside();
 					$this->load->view("common/error");
@@ -520,7 +520,7 @@
 			}
 
 			// when update the classroom subjects
-			if(isset($_POST['submit'])){
+			if(isset($_POST['teacher_submit'])){
 				$subjects = ["General"=>[],"Optional"=>[],"Other"=>[]];
 				foreach ($_POST as $key => $value) {
 					if(empty($value)){
