@@ -97,7 +97,7 @@
 					</tbody>
 				</table>
 				<div class="d-flex justify-content-end p-5">
-					<button type="submit" name="submit" class="btn btn-blue p-3" >Submit</button>
+					<button type="submit" name="timetable_submit" id="timetable_submit" class="btn btn-blue p-3" >Submit</button>
 				</div>
 			</form>
 
@@ -169,7 +169,7 @@
 							</tbody>
 						</table>
 						<div class="d-flex justify-content-end col-12">
-							<input type="submit" name="submit" value="Update" class="btn btn-blue">
+							<input type="submit" name="teacher_submit" id="teacher_submit" value="Update" class="btn btn-blue">
 						</div>
 					</form>
 				</div>

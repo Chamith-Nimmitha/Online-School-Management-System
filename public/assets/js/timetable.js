@@ -1,7 +1,10 @@
 var timetable = document.getElementById("classroom_timetable");
 var subjects_tbl = document.getElementById("subject_table");
+var timetable_submit = document.getElementById("timetable_submit");
+var teacher_submit = document.getElementById("teacher_submit");
 var subjects = {"G":{},"OP":{},"OT":{}};
 var timetable_selects;
+var error_flag = 0;
 
 // set subject array, It contains subject,teacher,periods info
 function set_subjects(){
@@ -49,6 +52,7 @@ function calc_free_periods(){
 					if(subjects[ext[0]][ext[1]].no_of_periods < 0){
 						timetable_selects.forEach((sel)=>{
 							if(sel.value == val){
+								error_flag+=1;
 								sel.style.cssText = "border:2px solid red; background: #EE9090;"
 							}
 						});
@@ -81,6 +85,12 @@ function check_teacher_in_database(teacher_id,day_p,subject_id){
 	.then( (data)=>{
 		data = JSON.parse(data);
 		if(data.result !="TRUE"){
+			timetable_submit.setAttribute("disabled","disabled");
+			timetable_submit.classList.add("btn-gray");
+			timetable_submit.classList.remove("btn-blue");
+			teacher_submit.setAttribute("disabled","disabled");
+			teacher_submit.classList.add("btn-gray");
+			teacher_submit.classList.remove("btn-blue");
 			document.getElementById(day_p[0]+"-"+day_p[1]).style.cssText = "border:2px solid darkgreen; background:lightgreen;"
 		}
 	})
@@ -107,6 +117,7 @@ function check_teacher_availbility(tar){
 
 // call the check functions
 function constraint_checker(e){
+	error_flag = 0;
 	let tar = e.target;
 	if(tar.value == "FREE"){
 	}
@@ -114,5 +125,20 @@ function constraint_checker(e){
 	set_subjects(); // reset subjects
 	calc_free_periods(); // calculate free available periods
 	check_teacher_availbility(tar);
+	if(error_flag !== 0){
+		timetable_submit.setAttribute("disabled","disabled");
+		timetable_submit.classList.add("btn-gray");
+		timetable_submit.classList.remove("btn-blue");
+		teacher_submit.setAttribute("disabled","disabled");
+		teacher_submit.classList.add("btn-gray");
+		teacher_submit.classList.remove("btn-blue");
+	}else{
+		timetable_submit.removeAttribute("disabled");
+		timetable_submit.classList.remove("btn-gray");
+		timetable_submit.classList.add("btn-blue");
+		teacher_submit.removeAttribute("disabled");
+		teacher_submit.classList.remove("btn-gray");
+		teacher_submit.classList.add("btn-blue");
+	}
 }
 
