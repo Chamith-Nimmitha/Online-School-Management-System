@@ -254,7 +254,7 @@
 			$this->load->view("templates/footer");
 		}
 
-		// get classroom timetable
+		// get update classroom timetable
 		public function timetable($classroom_id){
 			if(!$this->checkPermission->check_permission("classroom","create")){
 				$this->view_header_and_aside();
@@ -283,71 +283,43 @@
 					$this->load->view("templates/footer");
 					return;
 				}
-				try {
-					$con->db->beginTransaction();
-					$where_data['type'] = "classroom";
-					$where_data['user_id'] = $classroom_id;
 
-					$found_timetable = $this->load->classroom->get_timetabel_object();
+				$found_timetable = $this->load->classroom->get_timetabel_object();
+				$all_data = [];
+				foreach ($_POST as $key => $value) {
+					$tmp = explode("-", $key);
+					if(count($tmp) == 2){
+						$td = [];
+						$td['day'] = $tmp[0];
+						$td['period'] = $tmp[1];
+						$td['task'] = $value;
+						array_push($all_data, $td);
+					}
+				}
+
+				try {
 					if($found_timetable){
-						$timetable_id = $found_timetable->get_id();;
-						foreach ($_POST as $key => $value) {
-							$tmp = explode("-", $key);
-							if(count($tmp) == 2){
-								$data = [];
-								$data['day'] =  $tmp[0];
-								$data['period'] =  $tmp[1];
-								$data['timetable_id'] = $timetable_id;
-								$result = $con->update("normal_day",array("task"=>$value),$data);
-								if(!$result){
-									throw new PDOException("Timetable create failed.",1);
-								}
-							}
+						$result = $found_timetable->update_timetable($all_data);
+						if(!$result){
+							throw new PDOException();
 						}
 					}else{
-						$result = $con->insert("normal_timetable",$where_data);
+						$result = $found_timetable->create();
 						if(!$result){
-							throw new PDOException("Timetable create failed.",1);
+							throw new PDOException();
 						}
-						$con->get(array("id"));
-						$result = $con->select("normal_timetable",$where_data);
-
-						if(!$result && $result->rowCount() != 1){
-							throw new PDOException("Timetable create failed.",1);
-						}
-						$timetable_id = $result->fetch()['id'];
-						foreach ($_POST as $key => $value) {
-							$tmp = explode("-", $key);
-							if(count($tmp) == 2){
-								$data = [];
-								$data['day'] =  $tmp[0];
-								$data['period'] =  $tmp[1];
-								$data['task'] = $value;
-								$data['timetable_id'] = $timetable_id;
-								$result = $con->insert("normal_day",$data);
-								if(!$result){
-									throw new PDOException("Timetable create failed.",1);
-								}
-							}
+						$result = $found_timetable->update_timetable($all_data);
+						if(!$result){
+							throw new PDOException();
 						}
 					}
+
 					$info = "Update successful..";
-					$con->db->commit();
 				} catch (Exception $e) {
-					echo "catch";
-					exit();
-					$error = $e->getMessage();
-					$con->db->rollback();
+					$error = "Update Failed.";
 				}
 			}
 			
-			//get all subjects related to the section
-			// $grade = $this->load->classroom->get_grade();
-			// $con->get(array("code","name"));
-			// $subjects = $con->select("subject",array("grade"=>$grade));
-			// if($subjects && $subjects->rowCount() !==0){
-			// 	$subjects = $subjects->fetchAll();
-			// }
 			// get classroom timetable
 			$this->load->model("classroom");
 			$this->load->classroom->set_by_id($classroom_id);
@@ -370,6 +342,9 @@
 			}
 
 			$data['subjects'] = $subjects;
+			$data['classroom_id'] = $classroom_id;
+			$data['grade'] = $this->load->classroom->get_grade();
+			$data['class'] = $this->load->classroom->get_class();
 			$data['classroom_id'] = $classroom_id;
 			$data['timetable_data'] = $timetable_data;
 			if(isset($_SESSION["info_teacher_update"])){
@@ -520,24 +495,27 @@
 			}
 
 			// when update the classroom subjects
-			if(isset($_POST['teacher_submit'])){
+			if(isset($_POST['submit'])){
 				$subjects = ["General"=>[],"Optional"=>[],"Other"=>[]];
 				foreach ($_POST as $key => $value) {
-					if(empty($value)){
+					if($value=="None"){
 						continue;
 					}
 					if( strpos($key, "subject") !== FALSE){
 						$exp = explode("-", $key);
+						$periods =  $_POST["periods-".$exp[1]."-".$exp[2]];
+						if(empty($periods)){
+							$periods = 0;
+						}
 						if($exp[1] == "general"){
-							array_push($subjects['General'], ["id"=>$value,"periods"=>$_POST["periods-".$exp[1]."-".$exp[2]]]);
+							array_push($subjects['General'], ["id"=>$value,"periods"=>$periods]);
 						}else if($exp[1] == "optional"){
-							array_push($subjects['Optional'], ["category"=>$value,"periods"=>$_POST["periods-".$exp[1]."-".$exp[2]]]);
+							array_push($subjects['Optional'], ["category"=>$value,"periods"=>$periods]);
 						}else if($exp[1] == "other"){
-							array_push($subjects['Other'], ["id"=>$value,"periods"=>$_POST["periods-".$exp[1]."-".$exp[2]]]);
+							array_push($subjects['Other'], ["id"=>$value,"periods"=>$periods]);
 						}
 					}
 				}
-				// print_r($subjects);
 				$result = $this->load->classroom->update_subjects($subjects);
 				if(!$result){
 					$error = "Update Failed.";
@@ -563,29 +541,29 @@
 		}
 
 		// update classroom subjects
-		public function update_subjects($classroom_id){
-			$subjects = ['General'=>[], 'Optional'=>[], 'Other'=>[]];
-			foreach ($_POST as $key => $value) {
-				$exp = explode("-", $key);
-				if(count($exp)==3){
-					array_push($subjects['General'], ["id"=>$exp[2],"teacher_id"=>$value]);
-				}
-			}
-			$this->load->model("classroom");
-			$result = $this->load->classroom->set_by_id($classroom_id);
-			if(!$result){
-				$_SESSION["error_teacher_update"] = "Classroom Not Found.";
-				header("Location: ". set_url("classroom/timetable/".$classroom_id));
-				return;
-			}
-			$result = $this->load->classroom->update_subject_teachers($subjects);
-			if($result){
-				$_SESSION["info_teacher_update"] = "Update successful.";
-			}else{
-				$_SESSION["error_teacher_update"] = "Update Failed.";
-			}
-			header("Location: ". set_url("classroom/timetable/".$classroom_id));
-		}
+	// 	public function update_subjects($classroom_id){
+	// 		$subjects = ['General'=>[], 'Optional'=>[], 'Other'=>[]];
+	// 		foreach ($_POST as $key => $value) {
+	// 			$exp = explode("-", $key);
+	// 			if(count($exp)==3){
+	// 				array_push($subjects['General'], ["id"=>$exp[2],"teacher_id"=>$value]);
+	// 			}
+	// 		}
+	// 		$this->load->model("classroom");
+	// 		$result = $this->load->classroom->set_by_id($classroom_id);
+	// 		if(!$result){
+	// 			$_SESSION["error_teacher_update"] = "Classroom Not Found.";
+	// 			header("Location: ". set_url("classroom/timetable/".$classroom_id));
+	// 			return;
+	// 		}
+	// 		$result = $this->load->classroom->update_subject_teachers($subjects);
+	// 		if($result){
+	// 			$_SESSION["info_teacher_update"] = "Update successful.";
+	// 		}else{
+	// 			$_SESSION["error_teacher_update"] = "Update Failed.";
+	// 		}
+	// 		header("Location: ". set_url("classroom/timetable/".$classroom_id));
+	// 	}
 	}
 
 ?>

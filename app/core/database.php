@@ -196,9 +196,10 @@
 			}
 			$this->pre_query = $this->query;
 			$stmt = $this->db->prepare($this->query);
+			// echo $this->query;
+			// print_r($this->parameters);
 			$stmt->execute($this->parameters);
 			// $this->db->closeCursor();
-			// echo $this->query;
 			$this->reset_values();
 			return $stmt;
 		}

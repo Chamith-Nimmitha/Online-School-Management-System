@@ -1,0 +1,38 @@
+#classroom_timetable select{
+	border: 2px solid transparent;
+}
+#subject_table select{
+	border: 2px solid transparent;
+}
+
+.subject-select{
+	animation: transition-subject 2s linear forwards;
+	border:2px solid red !important;
+}
+
+@keyframes transition-subject{
+	0%{background: initial;}
+	30%{background: #EE9090;}
+	60%{background: initial;}
+	90%{background: #EE9090;}
+	100%{background: #EE9090;}
+}
+
+.teacher-select{
+	animation: transition-teacher 3s linear forwards;
+	border:2px solid red !important;
+}
+
+@keyframes transition-teacher{
+	0%{background: initial;}
+	20%{background: #EE9090;}
+	40%{background: initial;}
+	60%{background: #EE9090;}
+	80%{background: initial;}
+	100%{background: #EE9090;}
+}
+
+.teacher-conflit{
+	background: lightgreen;
+	border: 2px solid darkgreen !important;
+}
