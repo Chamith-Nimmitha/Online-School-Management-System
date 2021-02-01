@@ -99,6 +99,64 @@
 				echo json_encode($data);
 			}
 		}
+
+		// update classroom timetable 
+		function update_timetable(){
+			$_POST = json_decode( file_get_contents("php://input"),true);
+			// print_r(json_decode(json_encode( $_POST)),true);
+			$classroom_id = $_POST['classroom_id'];
+			// return;
+			$time_map = ["1"=>"7.50a.m - 8.30a.m", "2"=>"8.30a.m - 9.10a.m", "3"=>"9.10a.m - 9.50a.m", "4"=> "9.50a.m - 10.30a.m", "5"=> "10.50a.m - 11.30a.m", "6"=>"11.30a.m - 12.10p.m", "7"=> "12.10p.m - 12.50p.m", "8"=>"12.50p.m - 1.30p.m"];
+			$day_map = ["1"=>"mon","2"=>"tue","3"=>"wed","4"=>"thu","5"=>"fri"];
+
+			$timetable = $_POST['timetable'];
+			// update teacher timetable
+			$subjects = ['General'=>[], 'Optional'=>[], 'Other'=>[]];
+			foreach ($_POST['subjects']["G"] as $key => $value) {
+				array_push($subjects['General'], ["id"=>$key,"teacher_id"=>$value['teacher_id'],"periods"=>$value['periods']]);
+			}
+
+			// load classroom model
+			$this->load->model("classroom");
+			$found_classroom = $this->load->classroom->set_by_id($classroom_id);
+			if(!$found_classroom){
+				echo "Classroom Not Found.";
+				exit();
+			}
+
+			// when update classroom timetable
+			$found_timetable = $this->load->classroom->get_timetabel_object();
+			$all_data = [];
+			foreach ($timetable as $value) {
+				$value = json_decode($value,true);
+				$td = [];
+				$td['day'] = $value['day'];
+				$td['period'] = $value["period"];
+				$td['task'] = $value['task'];
+				array_push($all_data, $td);
+			}
+			try {
+				if($found_timetable){
+					$result = $found_timetable->update_timetable($all_data,$classroom_id,$subjects);
+					if(!$result){
+						throw new PDOException();
+					}
+				}else{
+					$result = $found_timetable->create();
+					if(!$result){
+						throw new PDOException();
+					}
+					$result = $found_timetable->update_timetable($all_data,$classroom_id,$subjects);
+					if(!$result){
+						throw new PDOException();
+					}
+				}
+				$success = 1;
+			} catch (Exception $e) {
+				$success = 0;
+			}
+			echo json_encode( ["success"=>$success ] );
+		}
 	}
 
  ?>

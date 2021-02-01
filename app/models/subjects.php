@@ -157,6 +157,77 @@
 	    	}
 	    	return $teacher_list;
 	    }
+
+	    // update timetable 
+	    public function update_timetable($subjects,$classroom_id){
+	    	require_once(MODELS."classroom.php");
+	    	require_once(MODELS."timetable.php");
+	    	foreach ($subjects as $subject) {
+	    		try {
+					$this->con->db->beginTransaction();
+					// update general subjects
+					if(!empty($subjects['General'])){
+						foreach ($subjects['General'] as $subject) {
+							
+							//NULL Previous timetable for this classroom
+							$cls = new ClassroomModel();
+							$cls->set_by_id($classroom_id);
+							$grade = $cls->get_grade();
+							$class = $cls->get_class();
+							unset($cls);
+							
+							$result = $this->con->select("class_subject",["classroom_id"=>$classroom_id,"subject_id"=>$subject['id']]);
+							if(!$result && $result->rowCount() != 1){
+								throw new PDOException();
+							}
+							$tt_task = $grade."-".$class."-".$subject['id'];
+							$old_teacher_id = $result->fetch()['teacher_id'];
+							if($old_teacher_id != NULL && !empty($old_teacher_id) ){
+								$tt = new TimetableModel();
+								$tt->set_by_user_id($old_teacher_id,"teacher");
+								$old_timetable_id = $tt->get_id();
+								$query = "UPDATE `normal_day` SET `task`='FREE' WHERE `task`='${tt_task}' && `timetable_id`='${old_timetable_id}'";
+								$result = $this->con->pure_query($query);
+								if(!$result){
+									throw new PDOException();
+									
+								}
+							}
+
+							unset($tt);
+							// add new subjects to teacher
+							$tt = new TimetableModel();
+							if($subject['teacher_id'] != "None"){
+								$tt->set_by_user_id($subject['teacher_id'],"teacher");
+								$timetable_id = $tt->get_id();
+								foreach ($subject["periods"] as $period) {
+									$result = $this->con->update("normal_day",["task"=>"${tt_task}"],['timetable_id'=>$timetable_id,"day"=>$period['day'],"period"=>$period['period']]);
+									if(!$result){
+										throw new PDOException();
+									}
+								}
+							}
+
+							if($subject['teacher_id'] == "None"){
+								$query = "UPDATE `class_subject` SET `teacher_id`= NULL WHERE `classroom_id`=? && `subject_id`=?";
+								$result = $this->con->pure_query($query,[$classroom_id,$subject['id']]);
+							}else{
+								$result = $this->con->update("class_subject",["teacher_id"=>$subject['teacher_id']], ["classroom_id"=>$classroom_id,"subject_id"=>$subject['id']]);
+							}
+							if(!$result){
+								throw new PDOException();
+							}
+
+						}
+					}
+					$this->con->db->commit();
+					return TRUE;
+				} catch (Exception $e) {
+					$this->con->db->rollBack();
+					return FALSE;
+				}
+	    	}
+	    }
 	}
 
  ?>

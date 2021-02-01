@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="<?php echo set_url('public/assets/css/hemakanth.css'); ?>">
 	<link rel="stylesheet" href="<?php echo set_url('public/assets/css/main.css'); ?>">
 	<link rel="stylesheet" href="<?php echo set_url('public/assets/css/themes/default.css'); ?>">
+	<link rel="stylesheet" href="<?php echo set_url('public/assets/css/timetable.css'); ?>">
 	<link id="user-theme" rel="stylesheet" href="">
 </style>
 	<script src="https://kit.fontawesome.com/970e009013.js" crossorigin="anonymous"></script>

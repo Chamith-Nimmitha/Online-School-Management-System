@@ -21,11 +21,15 @@
 
 	<div class="mt-5">
 		<h2 style="font-size: 30px;">Classroom Timetable Create/Update</h2>
+		<span><?php echo $grade."-".$class; ?></span>
+		<input type="hidden" id="classroom_id" value="<?php echo $classroom_id; ?>">
+		<input type="hidden" id="classroom_grade" value="<?php echo $grade; ?>">
+		<input type="hidden" id="classroom_class" value="<?php echo $class; ?>">
 	</div>
 	<div class="col-12 d-flex flex-col mt-5">
 		<hr class="w-100">
 		<div class="p-5">
-			<form action="<?php echo set_url('classroom/timetable/'.$classroom_id); ?>" method="post">
+			<form action="<?php echo set_url('classroom/timetable/'.$classroom_id); ?>" method="post" id="timetable_form">
 				<table class="w-100 table-strip-dark" id="classroom_timetable">
 					<thead>
 						<tr>
@@ -107,7 +111,7 @@
 					<h3 style="font-size: 25px;">Classroom Subjects</h3>
 				</div>
 				<div class="col-8">
-					<form action="<?php echo set_url('classroom/subject/teacher/'.$classroom_id); ?>" class="col-12" method="POST">
+					<form action="<?php echo set_url('classroom/subject/teacher/'.$classroom_id); ?>" class="col-12" method="POST" id="subject_form">
 						<table class="table-strip-dark col-12" id="subject_table">
 							<thead class="col-12">
 								<tr class="text-center col-12">
@@ -169,7 +173,7 @@
 							</tbody>
 						</table>
 						<div class="d-flex justify-content-end col-12">
-							<input type="submit" name="teacher_submit" id="teacher_submit" value="Update" class="btn btn-blue">
+							<input type="submit" name="submit" id="submit" value="Update" class="btn btn-blue">
 						</div>
 					</form>
 				</div>

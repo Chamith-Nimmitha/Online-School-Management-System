@@ -47,16 +47,25 @@
 			<span>General Subjects</span>
 			<div class="col-12" id="general-subject-wrapper">
 
+				<!-- dummy select input for javascript -->
+				<select  class="d-none col-6 mr-2" name="dummy-subject-general" id="dummy-subject-general" disabled="disabled">
+					<option value="None">Select Subject</option>
+					<?php if(isset($general_subjects) && !empty($general_subjects)){
+						   foreach ($general_subjects as $subject) { ?>
+							<option value="<?php echo $subject['id']; ?>"><?php echo $subject['name']." ( ".$subject['medium']. " Medium )" ; ?></option>
+					<?php }
+					}?>	
+				</select>
 				<?php 
 					if(isset($classroom_general_subjects) && !empty($classroom_general_subjects)){
 						for($i=0; $i<count($classroom_general_subjects);$i++) { ?>
 							<div class="d-flex col-12 align-items-center p-2 mb-3">
 								<label class="col-2"  for="subject-general-<?php echo ($i+1); ?>">Subject <?php echo ($i+1); ?></label>
-								<select class="col-6 mr-2" name="subject-general-<?php echo ($i+1); ?>" id="subject-general-<?php echo ($i+1); ?>">
-									<option value="">Select Subject</option>
+								<select class="col-6 mr-2" name="subject-general-<?php echo ($i+1); ?>" id="subject-general-<?php echo ($i+1); ?>" onchange="change_option('general-subject-wrapper')">
+									<option value="None">Select Subject</option>
 									<?php if(isset($general_subjects) && !empty($general_subjects)){
 										   foreach ($general_subjects as $subject) { ?>
-											<option value="<?php echo $subject['id']; ?>" <?php if($classroom_general_subjects[$i]['id']==$subject['id']){echo "selected='selected'";} ?>><?php echo $subject['name']." - ".$subject['medium'] ; ?></option>
+											<option value="<?php echo $subject['id']; ?>" <?php if($classroom_general_subjects[$i]['id']==$subject['id']){echo "selected='selected'";} ?>><?php echo $subject['name']." ( ".$subject['medium'] ." Medium)"; ?></option>
 									<?php }
 									}?>	
 								</select>	
@@ -69,8 +78,8 @@
 				 ?>
 				 	<div class="d-flex col-12 align-items-center p-2 mb-3">
 						<label class="col-2"  for="subject-general-<?php echo ($i+1); ?>">Subject 1</label>
-						<select class="col-6 mr-2" name="subject-general-1" id="subject-general-1">
-							<option value="">Select Subject</option>
+						<select class="col-6 mr-2" name="subject-general-1" id="subject-general-1"  onchange="change_option('general-subject-wrapper')">
+							<option value="None">Select Subject</option>
 							<?php if(isset($general_subjects) && !empty($general_subjects)){
 								   foreach ($general_subjects as $subject) { ?>
 									<option value="<?php echo $subject['id']; ?>"><?php echo $subject['name']." - ".$subject['medium'] ; ?></option>
@@ -91,6 +100,16 @@
 		<fieldset class="col-12 p-2 mb-2 justify-content-center">
 			<span>Optional Subjects</span>
 			<div class="col-12" id="optional-subject-wrapper">
+				<!-- dummy select for optional-->
+				<select class="col-6 d-none mr-2" name="dummy-subject-optional" id="dummy-subject-optional" disabled="disabled">
+					<option value="None">Select Subject</option>
+					<?php if(isset($optional_subjects) && !empty($optional_subjects)){
+						   foreach ($optional_subjects as $subject) { ?>
+							<option value="<?php echo $subject['category']; ?>"><?php echo $subject['category']; ?></option>
+					<?php }
+					}?>	
+				</select>	
+
 				<?php 
 				if( isset($classroom_optional_subjects) && !empty($classroom_optional_subjects)){
 					for($i=0; $i < count($classroom_optional_subjects
@@ -98,8 +117,8 @@
 				 ?>
 						<div class="d-flex col-12 align-items-center p-2 mb-3">
 							<label class="col-2"  for="subject-optional-<?php echo ($i+1); ?>">Subject <?php echo ($i+1); ?></label>
-							<select class="col-6 mr-2" name="subject-optional-<?php echo ($i+1); ?>" id="subject-optional-<?php echo ($i+1); ?>">
-								<option value="">Select Subject</option>
+							<select class="col-6 mr-2" name="subject-optional-<?php echo ($i+1); ?>" id="subject-optional-<?php echo ($i+1); ?>"  onchange="change_option('optional-subject-wrapper')">
+								<option value="None">Select Subject</option>
 								<?php if(isset($optional_subjects) && !empty($optional_subjects)){
 									   foreach ($optional_subjects as $subject) { ?>
 										<option value="<?php echo $subject['category']; ?>" <?php if($subject['category'] == $classroom_optional_subjects[$i]['category']){echo "selected='selected'";} ?>><?php echo $subject['category']; ?></option>
@@ -114,8 +133,8 @@
 				 }else{ ?>
 				 	<div class="d-flex col-12 align-items-center p-2 mb-3">
 						<label class="col-2"  for="subject-optional-1">Subject 1</label>
-						<select class="col-6 mr-2" name="subject-optional-1" id="subject-optional-1">
-							<option value="">Select Subject</option>
+						<select class="col-6 mr-2" name="subject-optional-1" id="subject-optional-1"  onchange="change_option('optional-subject-wrapper')">
+							<option value="None">Select Subject</option>
 							<?php if(isset($optional_subjects) && !empty($optional_subjects)){
 								   foreach ($optional_subjects as $subject) { ?>
 									<option value="<?php echo $subject['category']; ?>"><?php echo $subject['category']; ?></option>
@@ -137,14 +156,24 @@
 		<fieldset class="col-12 p-2 mb-2 justify-content-center">
 			<span>Other Subjects</span>
 			<div class="col-12" id="other-subject-wrapper">
+				<!-- dummy select for other -->
+				<select class="col-6 d-none mr-2" name="dummy-subject-other" id="dummy-subject-other" disabled="disabled">
+					<option value="">Select Subject</option>
+					<?php if(isset($other_subjects) && !empty($other_subjects)){
+						   foreach ($other_subjects as $subject) { ?>
+							<option value="<?php echo $subject['id']; ?>"><?php echo $subject['name']; ?></option>
+					<?php }
+					}?>	
+				</select>	
+
 				<?php 
 				if(isset($classroom_other_subjects) && !empty($classroom_other_subjects)){
 					for($i=0; $i< count($classroom_other_subjects); $i++){
 				 ?>
 				 	<div class="d-flex col-12 align-items-center p-2 mb-3">
 						<label class="col-2"  for="subject-other-<?php echo ($i+1); ?>">Subject <?php echo ($i+1); ?></label>
-						<select class="col-6 mr-2" name="subject-other-<?php echo ($i+1); ?>" id="subject-other-<?php echo ($i+1); ?>">
-							<option value="">Select Subject</option>
+						<select class="col-6 mr-2" name="subject-other-<?php echo ($i+1); ?>" id="subject-other-<?php echo ($i+1); ?>"  onchange="change_option('other-subject-wrapper')">
+							<option value="None">Select Subject</option>
 							<?php if(isset($other_subjects) && !empty($other_subjects)){
 								   foreach ($other_subjects as $subject) { ?>
 									<option value="<?php echo $subject['id']; ?>" <?php if($classroom_other_subjects[$i]['id']==$subject['id']){echo "selected='selected'";} ?>><?php echo $subject['name']; ?></option>
@@ -158,8 +187,8 @@
 				}else{ ?>
 					<div class="d-flex col-12 align-items-center p-2 mb-3">
 						<label class="col-2"  for="subject-other-1">Subject 1</label>
-						<select class="col-6 mr-2" name="subject-other-1" id="subject-other-1">
-							<option value="">Select Subject</option>
+						<select class="col-6 mr-2" name="subject-other-1" id="subject-other-1"   onchange="change_option('other-subject-wrapper')">
+							<option value="None">Select Subject</option>
 							<?php if(isset($other_subjects) && !empty($other_subjects)){
 								   foreach ($other_subjects as $subject) { ?>
 									<option value="<?php echo $subject['id']; ?>"><?php echo $subject['name']; ?></option>

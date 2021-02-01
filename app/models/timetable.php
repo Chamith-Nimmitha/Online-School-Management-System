@@ -117,23 +117,33 @@
 		}
 
 		// update timetable
-		public function update_timetable(){
-			$days = ['mon', "tue" , "wed", "thu", "fri"];
+		public function update_timetable($timetable=NULL,$classroom_id=NULL,$subjects=NULL){
+			require_once(MODELS."classroom.php");
+			if($timetable == NULL){
+				$timetable = $_POST;
+			}
+
 			try{
 				$this->con->db->beginTransaction();
-
-				foreach ($days as $day) {
-					for($i=1; $i <9; $i++){
-						$data = [];
-						if($_POST[$day."-".$i] == 0){
-							$data['task'] = 0;
-						}else{
-							$data['task'] = 1;
-						}
-						$result = $this->con->update("normal_day",$data,array("timetable_id"=>$this->id,"day"=>$day,"period"=>$i));
-						if(!$result && $result->rowCount() != 1){
-							throw new PDOException("Timetable Update failed.",1);
-						}
+				$cr = new ClassroomModel();
+				$result = $cr->set_by_id($classroom_id);
+				if(!$result){
+					throw new PDOException();
+				}
+				$grade = $cr->get_grade();
+				$class = $cr->get_class();
+				foreach ($timetable as $cell) {
+					$result = $this->con->update("normal_day",["task"=>$cell['task']],array("timetable_id"=>$this->id,"day"=>$cell['day'],"period"=>$cell['period']));
+					if(!$result && $result->rowCount() != 1){
+						throw new PDOException();
+					}
+				}
+				if($subjects != NULL){
+					require_once(MODELS."subjects.php");
+					$sub_obj  = new SubjectsModel();				
+					$result = $sub_obj->update_timetable($subjects,$classroom_id);
+					if(!$result){
+						throw new PDOException();	
 					}
 				}
 				$this->con->db->commit();
