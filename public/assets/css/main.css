@@ -231,6 +231,120 @@ footer{
 	font-weight: 900;
 }
 
+/*NOTICE BOARD STYLE*/
+#classroom_notice_board{
+	background: #eee;
+	position: relative;
+	max-height: 500px;
+	border-radius: 10px;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+#classroom_notice_board .notice{
+	flex: 1;
+	padding: 0;
+	margin: 0;
+}
+
+#noticeboard_title h3{
+	flex: 1;	
+}
+
+#noticeboard_title{
+	display: flex;
+	text-align: center;
+	padding: 10px 0px;
+	background: darkblue;
+	color: white;
+	height: 50px;
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+	justify-content: center;
+	align-items: center;
+}
+
+.noticeboard_content_wrapper{
+	overflow-y: scroll;
+	max-height: 350px;
+}
+
+#noticeboard_content{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 20px 0px;
+}
+#noticeboard_content img{
+	width: 250px;
+	height: 250px;
+	overflow: hidden;
+	min-width: 250px;
+	min-height: 250px;
+}
+
+#noticeboard_content .content{
+	flex: :1;
+}
+
+#noticeboard_controls{
+	height: 50px;
+	max-height: 50px;
+	background: blue;
+	flex: 0;
+}
+
+#noticeboard_controls .controls button{
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background: red;
+	margin: 0 10px;
+	border: none;
+	outline: none;
+	cursor: pointer;
+}
+#noticeboard_controls .controls button:hover{
+	background: orange;
+}
+
+#noticeboard_controls #pre_btn button, #noticeboard_controls #next_btn button{
+	cursor: pointer;
+	background: rgba(90,90,230,0.3);
+	border: none;
+	outline: none;
+	padding: 5px;
+}
+.notice_active{
+	background: pink !important;
+}
+
+#add_new_classroom_notice{
+	background: #aaa;
+	padding: 0;
+	margin: 0;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	max-height: 500px;
+}
+
+#update_classroom_notice{
+	background: #aaa;
+	padding: 0;
+	margin: 0;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	max-height: 500px;
+}
+
+/*END OF NOTICE BOARD STYLE*/
+
 @media  (min-width:0px){
 	
 }
