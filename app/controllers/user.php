@@ -86,6 +86,7 @@
 			$counts = $this->load->user->get_staticstic_count();
 			$data['count'] = $counts;
 			$data['msg'] = $msg;
+			$is_classroom_teacher = 0;
 
 			if($_SESSION['role'] == "teacher"){
 				$this->load->model("teacher");
@@ -96,12 +97,23 @@
 					$result = $cls->get_notices();
 					if($result){
 						$data['classroom_notices'] = $result->fetchAll();
+						$is_classroom_teacher = 1;
 					}
 				}
-				
+			}else if($_SESSION['role'] == "student"){
+				$this->load->model("student");
+				$this->load->student->set_by_id($_SESSION['user_id']);
+				$cls = $this->load->student->get_classroom_object();
+				if($cls){
+					$data['notice_classroom_id'] = $cls->get_id();
+					$result = $cls->get_notices();
+					if($result){
+						$data['classroom_notices'] = $result->fetchAll();
+					}
+				}
 			}
+			$data['is_classroom_teacher'] = $is_classroom_teacher;
 			$this->view_header_and_aside();
-			$data['header'] = $this->header;
 			$this->load->view("common/dashboard", $data);
 			$this->load->view("templates/footer");
 		}
