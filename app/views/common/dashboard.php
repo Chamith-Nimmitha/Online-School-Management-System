@@ -34,7 +34,7 @@
 				
 			</div>
 		</div> <!-- #school-statistics -->
-		<div class="<?php if(!isset($header['classroom_id']) || empty($header['classroom_id'])){echo 'd-none';} ?>">
+		<div class="<?php if(!isset($notice_classroom_id) || empty($notice_classroom_id)){echo 'd-none';} ?>">
 			<!-- ADD A NEW NOTICE -->
 			<div id="add_new_classroom_notice" class="d-none">
 				<div id="noticeboard_title" class="w-100">
@@ -116,8 +116,10 @@
 							?>
 								<div id="noticeboard_title" class="w-100">
 									<h3><?php echo $classroom_notices[$i]['title']; ?></h3>
-									<button type="button" class="btn btn-blue p-1 mr-2" onclick="add_new_form('classroom_notice_board','add_new_classroom_notice')">Add</button>
-									<button type="button" class="btn btn-blue p-1 mr-2" onclick="update_form('classroom_notice_board','update_classroom_notice')">View</button>
+									<?php if($is_classroom_teacher===1){ ?>
+										<button type="button" class="btn btn-blue p-1 mr-2" onclick="add_new_form('classroom_notice_board','add_new_classroom_notice')">Add</button>
+										<button type="button" class="btn btn-blue p-1 mr-2" onclick="update_form('classroom_notice_board','update_classroom_notice')">View</button>
+									<?php } ?>
 								</div>
 								<div class="noticeboard_content_wrapper">
 									<div id="noticeboard_content" class="col-12">
