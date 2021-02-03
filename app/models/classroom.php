@@ -396,6 +396,100 @@
 			}
 		}
 
+		// get classroom notices
+		public function get_notices(){
+			$query = "SELECT * FROM `classroom_notice` WHERE `classroom_id`={$this->id} && (`expire` = NULL OR `expire` > '".date("Y-m-d")."')";
+			return $this->con->pure_query($query);
+		}
+
+		// add new notice
+		public function add_notice($data,$file=NULL){
+
+			try {
+				$this->con->db->beginTransaction();
+
+				$result = $this->con->insert("classroom_notice",$data);
+
+				if(!$result || $result->rowCount() != 1){
+					throw new Exception();
+				}
+				$this->con->get(['id']);
+				$result = $this->con->select("classroom_notice",$data);
+				$notice_id = $result->fetch()['id'];
+
+				if(!$result || $result->rowCount() != 1){
+					throw new Exception();
+				}
+
+				if($file !== NULL){
+					$target = BASEPATH."public/assets/img/classroom_notice/";
+					$rename = $notice_id;
+					$data['image'] = $rename . "." .strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+					$res = upload_file($file,$target, 2000000, $rename);
+					if($res !== 1){
+						throw new Exception();
+					}
+					$result = $this->con->update("classroom_notice",["image"=>$data['image']],["id"=>$notice_id]);
+					if(!$result || $result->rowCount() != 1){
+						throw new Exception();
+					}
+				}
+				$this->con->db->commit();
+				return TRUE;
+			} catch (Exception $e) {
+				$this->con->db->rollBack();
+				return FALSE;
+			}
+
+		}
+
+		// get a ntice
+		public function get_notice($notice_id){
+			return $this->con->select("classroom_notice",["id"=>$notice_id]);
+		}
+
+		// update new notice
+		public function update_notice($notice_id,$data,$file=NULL){
+
+			try {
+				$this->con->db->beginTransaction();
+				$query = "UPDATE `classroom_notice` SET `title`=?, `description`=?, `expire`=? ";
+				$params= [$data['title'],$data['description'],$data['expire']];
+				if($data['image']!=NULL){
+					$query .= ",`image`=? ";
+					array_push($params,$data['image']);
+				}else{
+					$query .= ",`image`= NULL ";
+				}
+				$query .= "WHERE `id`=?";
+				array_push($params,$notice_id);
+				$result = $this->con->pure_query($query,$params);
+
+				if(!$result){
+					throw new Exception();
+				}
+
+				if($file !== NULL){
+					$target = BASEPATH."public/assets/img/classroom_notice/";
+					$rename = $notice_id;
+					$data['image'] = $rename . "." .strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+					$res = upload_file($file,$target, 2000000, $rename);
+					if($res !== 1){
+						throw new Exception();
+					}
+					$result = $this->con->update("classroom_notice",["image"=>$data['image']],["id"=>$notice_id]);
+					if(!$result || $result->rowCount() != 1){
+						throw new Exception();
+					}
+				}
+				$this->con->db->commit();
+				return TRUE;
+			} catch (Exception $e) {
+				$this->con->db->rollBack();
+				return FALSE;
+			}
+
+		}
 		// delete a classroom
 		public function delete_classroom($id){
 			return $this->con->delete("classroom",["id"=>$id]);

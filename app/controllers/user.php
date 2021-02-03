@@ -82,14 +82,27 @@
 				$this->load->view("templates/footer");
 				return;
 			}
-			$this->view_header_and_aside();
 			$this->load->model("user");
 			$counts = $this->load->user->get_staticstic_count();
-			if( strlen($msg) > 0){
-				$this->load->view("common/dashboard", ["count"=>$counts,"msg"=>$msg]);
-			}else{
-				$this->load->view("common/dashboard", ["count"=>$counts]);
+			$data['count'] = $counts;
+			$data['msg'] = $msg;
+
+			if($_SESSION['role'] == "teacher"){
+				$this->load->model("teacher");
+				$this->load->teacher->set_by_id($_SESSION['user_id']);
+				$cls = $this->load->teacher->get_classroom_object();
+				if($cls){
+					$data['notice_classroom_id'] = $cls->get_id();
+					$result = $cls->get_notices();
+					if($result){
+						$data['classroom_notices'] = $result->fetchAll();
+					}
+				}
+				
 			}
+			$this->view_header_and_aside();
+			$data['header'] = $this->header;
+			$this->load->view("common/dashboard", $data);
 			$this->load->view("templates/footer");
 		}
 
