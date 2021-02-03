@@ -2,6 +2,7 @@
 
 	class Controller extends Load{
 		protected $load;
+		protected $header;
 		protected $header_data =[];
 		protected $view_header_flag = 0;
 		protected $view_aside_flag = 0;
@@ -12,6 +13,7 @@
 			$this->load->model("home");
 			// create permission check object
 			$this->checkPermission = new checkPermission();
+			$this->header= [];
 			// if user not logged in, then redirect to the login page
 			$curPageName = $_SERVER['QUERY_STRING'];
 			$alloed_pages = ["homepage","login","forget_password","verification_code","change_password","student/registration","school/contact","school/about","api/admission/parent/validation"];
@@ -61,6 +63,7 @@
 					$this->load->model('student');
 					$this->load->student->set_by_id($_SESSION['user_id']);
 					$parent_id = $this->load->student->get_parent_id();
+					$this->header['classroom_id'] = $this->load->student->get_classroom_id();
 					unset($this->load->student);
 					$this->load->view("templates/aside_student",["parent_id"=>$parent_id]);
 				}else if($_SESSION['role'] == "teacher"){
@@ -68,6 +71,7 @@
 					$this->load->teacher->set_by_id($_SESSION['user_id']);
 					$header['interview_panel_id'] = $this->load->teacher->get_interview_panel_id();
 					$header['classroom_id'] = $this->load->teacher->get_classroom_id();
+					$this->header['classroom_id'] = $header['classroom_id'];
 					unset($this->load->teacher);
 					$this->load->view("templates/aside_teacher",$header);
 				}else if($_SESSION['role'] == "admin"){

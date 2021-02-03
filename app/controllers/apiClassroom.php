@@ -157,6 +157,66 @@
 			}
 			echo json_encode( ["success"=>$success ] );
 		}
+
+
+		// add a new notice
+		public function add_notice(){
+
+			$classroom_id = $_POST['classroom_id'];
+			$notice['title'] = trim($_POST['title']);
+			$notice['classroom_id'] = $_POST['classroom_id'];
+			$file = NULL;
+			if(!empty($_FILES['img']['name'])){
+				$notice['image'] = $_FILES['img']['name'];
+				$file = $_FILES['img'];
+			}
+			$notice['description'] = $_POST['description'];
+			$notice['expire'] = $_POST['expire_date'];
+
+			$this->load->model("classroom");
+			$this->load->classroom->set_by_id($classroom_id);
+			$result = $this->load->classroom->add_notice($notice,$file);
+			if($result){
+				echo json_encode( ['success'=>"1"]);
+			}else{
+				echo json_encode( ['success'=>"0"]);
+			}
+			return;
+		}
+
+		// get a ntice
+		public function get_notice($notice_id){
+
+			$this->load->model("classroom");
+			$result = $this->load->classroom->get_notice($notice_id);
+			if($result){
+				echo json_encode(["success"=>1,"data"=>$result->fetch()]);
+			}else{
+				echo json_encode(["success"=>0, "error"=>"Notice Not Found."]);
+			}
+			return;
+		}
+		// update a notice
+		public function update_notice($notice_id){
+			$this->load->model("classroom");
+
+			$notice['title'] = trim($_POST['title']);
+			$file = NULL;
+			$notice['image'] = NULL;
+			if(!empty($_FILES['img']['name'])){
+				$notice['image'] = $_FILES['img']['name'];
+				$file = $_FILES['img'];
+			}
+			$notice['description'] = $_POST['description'];
+			$notice['expire'] = $_POST['expire_date'];
+
+			$result = $this->load->classroom->update_notice($notice_id,$notice,$file);
+			if($result){
+				echo json_encode(["success"=>1]);
+			}else{
+				echo json_encode(["success"=>0,"error"=>"Update Failed."]);
+			}
+		}
 	}
 
  ?>

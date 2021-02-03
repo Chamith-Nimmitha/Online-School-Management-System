@@ -50,7 +50,9 @@
 						<th>Email</th>
 						<th>Contact Number</th>
 						<th>Profile</th>
-						<th>Delete</th>
+						<?php if($_SESSION['role'] =='admin'){ 
+							echo "<th>Delete</th>";
+						}?>
 					</tr>
 				</thead>
 				<tbody id="tbody">
@@ -68,9 +70,11 @@
 									<a href="<?php echo set_url('profile/parent/'.$result['id']); ?>" class="btn btn-blue t-d-none">profile</a>
 								</div>
 							</td>
-							<td class='text-center'>
-								<a title='Delete' href="<?php echo set_url('parent/delete/'.$result['id']); ?>" class="btn t-d-none" onclick="show_dialog(this,'Delete message','Are you sure to delete?')"><i class='fas fa-trash delete-button'></i></a>
-							</td>
+							<?php if($_SESSION['role'] =='admin'){ ?>
+								<td class='text-center'>
+									<a title='Delete' href="<?php echo set_url('parent/delete/'.$result['id']); ?>" class="btn t-d-none" onclick="show_dialog(this,'Delete message','Are you sure to delete?')"><i class='fas fa-trash delete-button'></i></a>
+								</td>
+							<?php 	} ?>
 						</tr>		
 
 				<?php }

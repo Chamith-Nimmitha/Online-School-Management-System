@@ -127,6 +127,9 @@
 	$routes['api/admission/parent/validation'] = "apiAdmission/parent_validation";
 	$routes['api/classroom/search'] = "apiClassroom/search";
 	$routes['api/classroom/timetable/update'] = "apiClassroom/update_timetable";
+	$routes['api/classroom/notice/add'] = "apiClassroom/add_notice";
+	$routes['api/classroom/notice/$1'] = "apiClassroom/get_notice/$1";
+	$routes['api/classroom/notice/update/$1'] = "apiClassroom/update_notice/$1";
 	$routes['api/student/search'] = "apiStudent/search";
 	$routes['api/subject/search'] = "apiSubject/search";
 	$routes['api/parent/search'] = "apiParent/search";

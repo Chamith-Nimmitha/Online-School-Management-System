@@ -318,6 +318,13 @@ div{
 .list-style-none{list-style: none;}
 .t-d-none{text-decoration: none;}
 
+.flex-1{
+	flex:1;
+}
+.flex-0{
+	flex:0;
+}
+
 /*Buttons*/
 
 button{
