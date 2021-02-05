@@ -49,7 +49,7 @@
 					</div>
 					<div class="form-group col-md-5 ml-5">
 						<label for="last-name">Last Name (<code title="required"> * </code>)</label>
-						<input type="text" value="<?php if(isset($_POST['last-name'])){echo $_POST['last-name'];} ?>" name="last-name" placeholder="Last Name" id="last-name"  oninput="validate_user_input(this,0,20,1)">
+						<input type="text" value="<?php if(isset($_POST['last-name'])){echo $_POST['last-name'];} ?>" name="last-name" placeholder="Last Name" id="last-name" oninput="validate_user_input(this,0,20,1)">
 						<?php 
 							if(isset($field_errors['last-name'])){
 								echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["last-name"].'</p>';
@@ -61,7 +61,7 @@
 
 					<div class="form-group col-12">
 						<label for="middle-name">Middle Name (<code title="required"> * </code>)</label>
-						<input type="text" value="<?php if(isset($_POST['middle-name'])){echo $_POST['middle-name'];} ?>" name="middle-name" placeholder="Middle Name" id="middle-name"  oninput="validate_user_input(this,0,50,0)">
+						<input type="text" value="<?php if(isset($_POST['middle-name'])){echo $_POST['middle-name'];} ?>" name="middle-name" placeholder="Middle Name" id="middle-name" oninput="validate_user_input(this,0,50,0)">
 						<?php 
 							if(isset($field_errors['middle-name'])){
 								echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["middle-name"].'</p>';
@@ -188,98 +188,98 @@
 								<label for="father-name">Father Name (<code title="required"> * </code>)</label>
 								<input type="text" value="<?php if(isset($_POST['father-name'])){echo $_POST['father-name'];} ?>" name="father-name" placeholder="Father Name" id="father-name" oninput="validate_user_input(this,0,50,1)">
 								<?php 
-							if(isset($field_errors['father-name'])){
-								echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["father-name"].'</p>';
-							}else{
-								echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
-							}
-						 ?>
+									if(isset($field_errors['father-name'])){
+										echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["father-name"].'</p>';
+									}else{
+										echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
+									}
+								 ?>
 							</div>
 
 							<div class="form-group">
 								<label for="father-occupation">Father Occupation (<code title="required"> * </code>)</label>
 								<input type="text" value="<?php if(isset($_POST['father-occupation'])){echo $_POST['father-occupation'];} ?>" name="father-occupation" placeholder="Father Occupation" id="father-occupation" oninput="validate_user_input(this,0,50,1)">
 								<?php 
-							if(isset($field_errors['father-occupation'])){
-								echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["father-occupation"].'</p>';
-							}else{
-								echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
-							}
-						 ?>
+									if(isset($field_errors['father-occupation'])){
+										echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["father-occupation"].'</p>';
+									}else{
+										echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
+									}
+								 ?>
 							</div>
 
 							<div class="form-group">
 								<label for="father-contact-number">Father Contact Number (<code title="required"> * </code>)</label>
 								<input type="text" value="<?php if(isset($_POST['father-contact-number'])){echo $_POST['father-contact-number'];} ?>" name="father-contact-number" placeholder="Father Contact Number" id="father-contact-number"  oninput="validate_contact_number(this)">
 								<?php 
-							if(isset($field_errors['father-contact-number'])){
-								echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">Father '.$field_errors["father-contact-number"].'</p>';
-							}else{
-								echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
-							}
-						 ?>
+									if(isset($field_errors['father-contact-number'])){
+										echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">Father '.$field_errors["father-contact-number"].'</p>';
+									}else{
+										echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
+									}
+								 ?>
 							</div>
 
 							<div class="form-group">
 								<label for="father-email">Father Email (<code title="required"> * </code>)</label>
-								<input type="text" value="<?php if(isset($_POST['father-email'])){echo $_POST['father-email'];} ?>" name="father-email" placeholder="Father Email" id="father-email"  oninput="validate_email(this,0,100,1)">
+								<input type="text" value="<?php if(isset($_POST['father-email'])){echo $_POST['father-email'];} ?>" name="father-email" placeholder="Father Email" id="father-email" oninput="validate_email(this,0,100,1)">
 								<?php 
-							if(isset($field_errors['father-email'])){
-								echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["father-email"].'</p>';
-							}else{
-								echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
-							}
-						 ?>
+									if(isset($field_errors['father-email'])){
+										echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["father-email"].'</p>';
+									}else{
+										echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
+									}
+								 ?>
 							</div>
 						</div>
 
 						<div id="mother" class="no-collapsed">
 							<div class="form-group">
 								<label for="mother-name">Mother Name (<code title="required"> * </code>)</label>
-								<input type="text" value="<?php if(isset($_POST['mother-name'])){echo $_POST['mother-name'];} ?>" name="mother-name" placeholder="Mother Name" id="mother-name"  oninput="validate_user_input(this,0,50,1)">
+								<input type="text" value="<?php if(isset($_POST['mother-name'])){echo $_POST['mother-name'];} ?>" name="mother-name" placeholder="Mother Name" id="mother-name" oninput="validate_user_input(this,0,50,1)">
 								<?php 
-							if(isset($field_errors['mother-name'])){
-								echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["mother-name"].'</p>';
-							}else{
-								echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
-							}
-						 ?>
+									if(isset($field_errors['mother-name'])){
+										echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["mother-name"].'</p>';
+									}else{
+										echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
+									}
+								 ?>
 							</div>
 
 							<div class="form-group">
 								<label for="mother-occupation">Mother Occupation (<code title="required"> * </code>)</label>
-								<input type="text" value="<?php if(isset($_POST['mother-occupation'])){echo $_POST['mother-occupation'];} ?>" name="mother-occupation" placeholder="Mother Occupation" id="mother-occupation"  oninput="validate_user_input(this,0,50,1)">
+								<input type="text" value="<?php if(isset($_POST['mother-occupation'])){echo $_POST['mother-occupation'];} ?>" name="mother-occupation" placeholder="Mother Occupation" id="mother-occupation" oninput="validate_user_input(this,0,50,1)">
 								<?php 
-							if(isset($field_errors['mother-occupation'])){
-								echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["mother-occupation"].'</p>';
-							}else{
-								echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
-							}
-						 ?>
+									if(isset($field_errors['mother-occupation'])){
+										echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["mother-occupation"].'</p>';
+									}else{
+										echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
+									}
+								 ?>
 							</div>
 
 							<div class="form-group">
 								<label for="mother-contact-number">Mother Contact Number (<code title="required"> * </code>)</label>
 								<input type="text" value="<?php if(isset($_POST['mother-contact-number'])){echo $_POST['mother-contact-number'];} ?>" name="mother-contact-number" placeholder="Mother Contact Number" id="mother-contact-number" oninput="validate_contact_number(this)">
 								<?php 
-							if(isset($field_errors['mother-contact-number'])){
-								echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">Mother '.$field_errors["mother-contact-number"].'</p>';
-							}else{
-								echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
-							}
-						 ?>
+									if(isset($field_errors['mother-contact-number'])){
+										echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">Mother '.$field_errors["mother-contact-number"].'</p>';
+									}else{
+										echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
+									}
+								 ?>
 							</div>
 
 							<div class="form-group">
 								<label for="mother-email">Mother Email (<code title="required"> * </code>)</label>
-								<input type="text" value="<?php if(isset($_POST['mother-email'])){echo $_POST['mother-email'];} ?>" name="mother-email" placeholder="Mother Email" id="mother-email"  oninput="validate_email(this,0,100,1)">
+								<input type="text" value="<?php if(isset($_POST['mother-email'])){echo $_POST['mother-email'];} ?>" name="mother-email" placeholder="Mother Email" id="mother-email" oninput="validate_email(this,0,100,1)">
 								<?php 
-							if(isset($field_errors['mother-email'])){
-								echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["mother-email"].'</p>';
-							}else{
-								echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
-							}
-						 ?>
+									if(isset($field_errors['mother-email'])){
+										echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["mother-email"].'</p>';
+									}else{
+										echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
+									}
+								 ?>
 							</div>						
 						</div>
 
@@ -288,48 +288,48 @@
 								<label for="guardian-name">Guardian Name (<code title="required"> * </code>)</label>
 								<input type="text" value="<?php if(isset($_POST['guardian-name'])){echo $_POST['guardian-name'];} ?>" name="guardian-name" placeholder="Guardian Name" id="guardian-name" oninput="validate_user_input(this,0,50,1)">
 								<?php 
-							if(isset($field_errors['guardian-name'])){
-								echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["guardian-name"].'</p>';
-							}else{
-								echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
-							}
-						 ?>
+									if(isset($field_errors['guardian-name'])){
+										echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["guardian-name"].'</p>';
+									}else{
+										echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
+									}
+								 ?>
 							</div>
 
 							<div class="form-group">
 								<label for="guardian-occupation">Guardian Occupation (<code title="required"> * </code>)</label>
 								<input type="text" value="<?php if(isset($_POST['guardian-occupation'])){echo $_POST['guardian-occupation'];} ?>" name="guardian-occupation" placeholder="Guardian Occupation" id="guardian-occupation" oninput="validate_user_input(this,0,50,1)">
 								<?php 
-							if(isset($field_errors['guardian-occupation'])){
-								echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["guardian-occupation"].'</p>';
-							}else{
-								echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
-							}
-						 ?>
+									if(isset($field_errors['guardian-occupation'])){
+										echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["guardian-occupation"].'</p>';
+									}else{
+										echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
+									}
+								 ?>
 							</div>
 
 							<div class="form-group">
 								<label for="guardian-contact-number">Guardian Contact Number (<code title="required"> * </code>)</label>
 								<input type="text" value="<?php if(isset($_POST['guardian-contact-number'])){echo $_POST['guardian-contact-number'];} ?>" name="guardian-contact-number" placeholder="Guardian Contact Number" id="guardian-contact-number" oninput="validate_contact_number(this)">
 								<?php 
-							if(isset($field_errors['guardian-contact-number'])){
-								echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">Guardian '.$field_errors["guardian-contact-number"].'</p>';
-							}else{
-								echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
-							}
-						 ?>
+									if(isset($field_errors['guardian-contact-number'])){
+										echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">Guardian '.$field_errors["guardian-contact-number"].'</p>';
+									}else{
+										echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
+									}
+								 ?>
 							</div>
 
 							<div class="form-group">
 								<label for="guardian-email">Guardian Email (<code title="required"> * </code>)</label>
 								<input type="text" value="<?php if(isset($_POST['guardian-email">'])){echo $_POST['					</div>	'];} ?>" name="guardian-email" placeholder="Guardian Email" id="guardian-email"  oninput="validate_email(this,0,100,1)">
 								<?php 
-							if(isset($field_errors['guardian-email'])){
-								echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["guardian-email"].'</p>';
-							}else{
-								echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
-							}
-						 ?>
+									if(isset($field_errors['guardian-email'])){
+										echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["guardian-email"].'</p>';
+									}else{
+										echo '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
+									}
+								 ?>
 							</div>	
 						</div>
 					

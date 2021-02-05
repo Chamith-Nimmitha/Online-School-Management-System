@@ -73,18 +73,18 @@
 		    <table class="table-strip-dark text-center">
 			    <thead>
 				    <tr>
-                        <th>CLASS ID</th>
-                        <th>GRADE</th>
-                        <th>CLASS</th>
-                        <th>CLASS TEACHER</th>
-                        <th>STUDENTS</th>
-                        <th>TIMETABLE</th>
+                        <th>Class ID</th>
+                        <th>Grade</th>
+                        <th>Class</th>
+                        <th>Class Teacher</th>
+                        <th>Students</th>
+                        <th>Timetable</th>
                         <?php 
 	                        if($_SESSION['role']==='admin'){
                          ?>
-					    <th>SUBJECTS</th>
-					    <th>UPDATE</th>
-					    <th>DELETE</th>
+					    <th>Subjects</th>
+					    <th>Update</th>
+					    <th>Delete</th>
 						<?php } ?>
 				    </tr>
 			    </thead> 
@@ -105,7 +105,7 @@
                         <td><?php echo $result['id']; ?></td>
                         <td class="text-center"><?php echo $result['grade']; ?></td>
                         <td class="text-center"><?php echo $result['class']; ?></td>
-                        <td><?php echo $result['class_teacher_id']; ?></td>
+                        <td><?php if(isset($result['class_teacher_id']) && !empty($result['class_teacher_id'])) {echo $result['class_teacher_id'];}else{echo 'Not Asign';} ?></td>
                         <td>
 							<div class="login_buttons col-12 col-md-12 justify-content-center d-flex align-items-center">
                 				<a class="btn btn-blue p-1" href="<?php  echo set_url('classroom/student/list/'.$result['id']); ?> ">List</a>

@@ -170,16 +170,20 @@
 							</div>	
 						</div>
 						<div class="w-100 p-1"></div>
-						<div class="form-group d-flex flex-row w-auto float-right">
+						<div class="form-group d-flex flex-row align-items-center w-auto float-right">
 							<?php 
-								if($result['state'] != "registered"){
-									echo '<button type="submit" name="Reject" class="btn btn-blue w-auto m-1">Reject</button>';
+							if($_SESSION['role'] == 'admin'){
+								if($result['state'] == "Unread" || $result['state'] == "Read" || $result['state'] == "Rejected" || $result['state'] == "Accepted"){
+									if($result['state'] != "Rejected"){
+										echo '<button type="submit" name="Reject" class="btn btn-blue w-auto p-2 m-1">Reject</button>';
+									}
 									if($result['state'] == "Accepted"){
 										echo "<a href='".set_url("interview/set/").$result['id']."' class='btn btn-blue w-auto m-1'>Set Interview Info</a>";
 									}else{
-										echo "<button type='submit' name='Accept' class='btn btn-blue np-3'>Accept</button>";			
+										echo "<button type='submit' name='Accept' class='btn btn-blue p-2'>Accept</button>";			
 									}
 								}
+							}
 							 ?>
 							
 						</div>						

@@ -409,8 +409,14 @@
 			$this->load->model("classroom");
 			$this->load->model("classrooms");
 
+
 			//when user sumbit the updates
 			if(isset($_POST['update'])){
+				$result = $this->load->classroom->set_by_id($classroom_id);
+				if(!$result){
+					echo "classroom not found.";
+					exit();
+				}
 				$section = $_POST['section'];
 				$grade = $_POST['grade'];
 				$class = addslashes(trim($_POST['class']));
@@ -421,9 +427,11 @@
 				$details['class'] = $class;
 				if(!empty($class_teacher_id)){
 					$details['class_teacher_id'] = $class_teacher_id;
+				}else{
+					$details['class_teacher_id'] = NULL;
 				}
 				$details['description'] = $description;
-				$result = $this->load->classroom->update_classroom($classroom_id,$details);
+				$result = $this->load->classroom->update_classroom($details);
 				if($result){
 					$data['info'] = "Classroom Update successful";
 				}else{

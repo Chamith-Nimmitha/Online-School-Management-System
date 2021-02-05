@@ -126,7 +126,7 @@
 			<?php
 				}
 			}else{
-				echo "<tr><td colspan=8 class='text-center bg-red'>Subjects not found...</td></tr>";
+				echo "<tr><td colspan=8 class='text-center bg-red'>Subjects Not Found...</td></tr>";
 			}
             ?>
              
