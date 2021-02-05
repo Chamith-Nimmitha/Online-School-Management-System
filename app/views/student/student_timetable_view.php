@@ -8,7 +8,7 @@
 		}
 	 ?>
 	<div class="mt-5">
-		<h2>Timetable Create</h2>
+		<h2><?php if(isset($grade) && !empty($grade)){echo "{$grade}-{$class}";} ?> Student Timetable</h2>
 	</div>
 	<div class="col-12 d-flex flex-col mt-5">
 		<hr class="w-100">
@@ -43,18 +43,14 @@
 							$row .= "<th>".$time_map[$period]."</th>";
 							for ($j=1; $j <=5 ; $j++) { 
 								$row .= "<td class='text-center'>";
-								if( $timetable_data[$day_map[$j]][$period] != "FREE"){
-									$row .=  substr($timetable_data[$day_map[$j]][$period], strlen($student_grade)+3);
-								}else{
-									$row .= $timetable_data[$day_map[$j]][$period];
-								}
+								$row .= $timetable_data[$day_map[$j]][$period];
 								$row .= "</td>";
 							}
 						$row .= "</tr>";
 						echo $row;
 						}
 					}else{
-						echo "<tr><td colspan=7 class='text-center bg-red'>Timetable not found...</td></tr>";
+						echo "<tr><td colspan=7 class='text-center bg-red'>Timetable Not Found...</td></tr>";
 						echo "</tbody>";
 						echo "</table>";
 					}
@@ -64,11 +60,9 @@
 	
 			</form>
 			<br>
-			<center>
-			    <div>
-                    <a class="btn btn-blue" onClick="window.print()">Download as a PDF</a>
-		        </div>
-			</center>	
+		    <div class="float-right">
+                <a class="btn btn-blue" onClick="window.print()">Download as a PDF</a>
+	        </div>
 		</div>
 	</div>
 </div>

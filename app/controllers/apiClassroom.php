@@ -47,13 +47,20 @@
 				$grade = 0;
 				foreach ($result_set as $result) {
 					if($grade !== 0 && $grade != $result['grade']){
-	        			$body .= "<tr><td colspan=8 class='text-center bg-gray'></td></tr>";
+	        			$body .= "<tr><td colspan=9 class='text-center p-0 bg-gray'></td></tr>";
+	        			$body .= "<tr><td colspan=9 class='text-center bg-gray'></td></tr>";
 	        		}
 					$body .="<tr>";
 					$body .= "<td>".$result['id']."</td>";
 					$body .= "<td>".$result['grade']."</td>";
 					$body .= "<td>".$result['class']."</td>";
-					$body .= "<td>".$result['class_teacher_id']."</td>";
+					$body .= "<td>";
+					if(!empty($result['class_teacher_id'])){
+						$body .= $result['class_teacher_id'];
+					}else{
+						$body .= 'Not Asign';
+					}
+					$body .="</td>";
 					$body .= "<td>
 								<div class='login_buttons col-12 col-md-12 d-flex justify-content-center align-items-center'>
 	                				<a class='btn btn-blue p-1' href='".set_url('classroom/student/list/'.$result['id'])."'>List</a>";
@@ -73,12 +80,12 @@
                     if($_SESSION['role']==='admin'){							
 						$body .= "<td>
 									<div class='login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center'>
-		                				<a class='btn btn-blue p-1' href='".set_url('classroom/update/'.$result['id'])."'>Update</a>
+		                				<a class='btn btn-blue p-1' href='".set_url('classroom/subjects/'.$result['id'])."'>Subjects</a>
 				    				</div>
 								</td>";
 						$body .= "<td>
 									<div class='login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center'>
-		                				<a class='btn btn-blue p-1' href='".set_url('classroom/subjects/'.$result['id'])."'>Subjects</a>
+		                				<a class='btn btn-blue p-1' href='".set_url('classroom/update/'.$result['id'])."'>Update</a>
 				    				</div>
 								</td>";
 						$body .= "<td>

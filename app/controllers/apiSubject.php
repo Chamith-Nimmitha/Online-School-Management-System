@@ -67,7 +67,7 @@
 				$data['body'] = $body;
 				echo json_encode($data);
 			}else{
-				$body =  "<tr><td colspan=7 class='text-center bg-red'>Subjects not found...</td></tr>";
+				$body =  "<tr><td colspan=8 class='text-center bg-red'>Subjects Not Found...</td></tr>";
 				$data['body'] = $body;
 				$data['count'] = 0;
 				echo json_encode($data);

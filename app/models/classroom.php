@@ -134,6 +134,42 @@
 				return FALSE;
 			}	
 		}
+		//get converted timetable
+		public function get_converted_timetable(){
+			require_once(MODELS."timetable.php");
+			$tt = new TimetableModel();
+			$result = $tt->set_by_id($this->timetable_id);
+			if($result){
+				$timetable = $tt->get_timetable();
+				try {
+					$this->con->db->beginTransaction();
+					foreach ($timetable as $day => $periods) {
+						foreach ($periods as $period => $task) {
+							if($task != "FREE"){
+								$exp = explode("--", $task);
+								if($exp[0] == "OP"){
+									$timetable["{$day}"]["{$period}"] = $exp[1];
+								}else{
+									$this->con->get(["name"]);
+									$result = $this->con->select("subject",["id"=>$exp[1]]);
+									if(!$result || $result->rowCount() !== 1){
+										throw new PDOException();
+									}
+									$timetable["{$day}"]["{$period}"] = $result->fetch()['name'];
+								}
+							}
+						}
+					}
+					$this->con->db->commit();
+					return $timetable;
+				} catch (Exception $e) {
+					$this->con->db->rollBack();
+					return FALSE;
+				}
+			}else{
+				return FALSE;
+			}		
+		}
 
 		// get student count
 		public function get_student_count(){
@@ -393,13 +429,8 @@
 		}
 
 		// update existing classroom
-		public function update_classroom($classroom_id,$data){
-			$result = $this->con->select("classroom",["id"=>$classroom_id]);
-			if(!$result || $result->rowCount() !== 1){
-				return FALSE;
-			}
-			// $query = "UPDATE `classroom` SET `section_id`=$data['section_id'],$"
-			$result = $this->con->update("classroom",$data,['id'=>$classroom_id]);
+		public function update_classroom($data){
+			$result = $this->con->update("classroom",$data,['id'=>$this->id]);
 			if($result){
 				return TRUE;
 			}else{
