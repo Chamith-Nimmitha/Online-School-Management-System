@@ -45,9 +45,9 @@
 									<tr>
 										<th>Adm. ID</th>
 										<th>Name</th>
-										<th>grade</th>
+										<th>Grade</th>
 										<th>Address</th>
-										<th>state</th>
+										<th>State</th>
 										<th>View</th>
 									</tr>
 								</thead>
@@ -84,10 +84,10 @@
 				 ?>
 		</div>
 		<div id="pagination" class="col-12">
-			<span>Number of Results Found : <span id="row_count"><?php echo $count; ?></span></span>
+			<span>Number of Results Found : <span id="row_count"><?php echo $recent_count; ?></span></span>
 			<div id="pagination_data" class="col-12">
 				<?php require_once(INCLUDES."pagination.php"); ?>
-				<?php display_pagination($count,$page,$per_page, "admission/list","admission_search"); ?>
+				<?php display_pagination($recent_count,$page,$per_page, "admission/list","admission_search"); ?>
 			</div>
 		</div>
 	</div>
@@ -132,9 +132,9 @@
 									<tr>
 										<th>Adm. ID</th>
 										<th>Name</th>
-										<th>grade</th>
+										<th>Grade</th>
 										<th>Address</th>
-										<th>state</th>
+										<th>State</th>
 										<th>View</th>
 									</tr>
 								</thead>
@@ -171,10 +171,10 @@
 				 ?>
 		</div>
 		<div id="u_pagination" class="col-12">
-			<span>Number of results found : <span id="u_row_count"><?php echo $count; ?></span></span>
+			<span>Number of results found : <span id="u_row_count"><?php echo $viewed_count; ?></span></span>
 			<div id="u_pagination_data" class="col-12">
 				<?php require_once(INCLUDES."pagination.php"); ?>
-				<?php display_pagination($count,$page,$per_page, "admission/list","admission_search_unuseful"); ?>
+				<?php display_pagination($viewed_count,$page,$per_page, "admission/list","admission_search_unuseful"); ?>
 			</div>
 		</div>
 	</div>

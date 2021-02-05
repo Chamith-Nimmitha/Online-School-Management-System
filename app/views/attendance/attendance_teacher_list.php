@@ -32,7 +32,6 @@
     				    <tr>
                             <th>No.</th>
                             <th>ID</th>
-                            <th>DATE</th>
                             <th>NAME</th>
                             <th>ATTENDANCE</th>
                             <th>NOTE</th>
@@ -48,7 +47,6 @@
                             <td class="text-center"><?php echo $i+1; ?></td>
                             <td><?php echo $teacher_list[$i]['id']; ?></td>
                             <td><?php echo $teacher_list[$i]['name_with_initials']; ?></td>
-                            <td><?php if(isset($teacher_list[$i]['date'])){echo $teacher_list[$i]['date'];}else{echo date("Y-m-d");} ?></td>
                             <td class="d-flex flex-col">
                                  <label for="present-<?php echo $teacher_list[$i]['id']; ?>">
                                     <input type="radio" id="present-<?php echo $teacher_list[$i]['id']; ?>" name="attendance-<?php echo $teacher_list[$i]['id']; ?>" value="1" <?php if(isset($teacher_list[$i]['attendance']) && $teacher_list[$i]['attendance'] == 1){echo " checked='checked'";} ?> > Present

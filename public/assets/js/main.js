@@ -529,3 +529,57 @@ function subject_category(select){
 	}
 
 }
+
+// classroom attendance comparission
+function show_classroom_filter_option_class(ele_id){
+	let ele = document.getElementById(ele_id);
+	let class_select_div = document.getElementById('classroom_filter_option_class');
+	let first_option = class_select_div.querySelector("option");
+	let sel = class_select_div.querySelector("select");
+	sel.innerHTML = "";
+	sel.appendChild(first_option);
+	show_classroom_filter_option_date('compare_class');
+
+	if(ele.value == "None" ){
+		class_select_div.classList.remove("d-flex");
+		class_select_div.classList.add("d-none");
+	}else{
+		fetch(base_url+"api/attendance/classroom/get/class/"+ele.value,{
+			method: "GET"
+		}).then( (res)=> {return res.text();})
+		.then( (d)=>{
+			let data = JSON.parse(d);
+			let new_sel = document.createElement("SELECT");
+			if(data.success == 1){
+				data.data.forEach( (class_data)=>{
+					let op = document.createElement("OPTION");
+					op.setAttribute("value", class_data.class);
+					op.innerText = class_data.class;
+					sel.appendChild(op);
+				})
+			}
+		}).catch( (err)=> {
+			console.log(err);
+		})
+
+		class_select_div.classList.remove("d-none");
+		class_select_div.classList.add("d-flex");
+	}
+}
+
+function show_classroom_filter_option_date(ele_id){
+	let date_select_div = document.getElementById('classroom_filter_option_date');
+	let full_date = document.getElementById('full_date');
+	let ele = document.getElementById(ele_id);
+	if(ele.value == "None"){
+		date_select_div.classList.remove("d-flex");
+		date_select_div.classList.add("d-none");
+		full_date.classList.remove("d-none");
+		full_date.classList.add("d-flex");	
+	}else{
+		date_select_div.classList.remove("d-none");
+		date_select_div.classList.add("d-flex");	
+		full_date.classList.remove("d-flex");
+		full_date.classList.add("d-none");
+	}
+}

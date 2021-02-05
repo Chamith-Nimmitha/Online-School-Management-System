@@ -24,7 +24,7 @@
 
 	// common routes
 	$routes['dashboard'] = "user/dashboard";
-	$routes['dashboard/$1'] = "user/dashboard/$1";
+	// $routes['dashboard/$1'] = "user/dashboard/$1";
 	$routes['profile'] = "user/profile";
 	$routes['profile/$1/$2'] = "user/profile/$1/$2";
 
@@ -146,14 +146,18 @@
 	$routes['api/attendance/student/filter'] = "apiAttendance/student_attendance_filter";
 	$routes['api/attendance/teacher/filter'] = "apiAttendance/teacher_attendance_filter";
 	$routes['api/attendance/classroom/search'] = "apiAttendance/classroom_search";
+	$routes['api/attendance/classroom/get/class/$1'] = "apiAttendance/get_classroom_list/$1";
 
 	// draw charts
 	$routes['api/draw_charts/attendance/student'] = "apiDrawChart/student_attendance_overview_bar";
 	$routes['api/draw_charts/attendance/teacher'] = "apiDrawChart/teacher_attendance_overview_bar";
 	$routes['api/draw_charts/dashboard/attendance/student'] = "apiDrawChart/dashboard_student_attendance_overview_doughnut";
 	$routes['api/draw_charts/dashboard/attendance/teacher'] = "apiDrawChart/dashboard_teacher_attendance_overview_doughnut";
+	
+	$routes['api/draw_charts/attendance/classroom/comparission'] = "apiDrawChart/classroom_attendance_comparission";
 
 	$routes['api/classroom/grade/$1'] = "apiClassroom/get_grades/$1";
+
 	$routes['api/pagination'] = "apiPagination/pagination";
 
 

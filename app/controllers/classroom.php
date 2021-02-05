@@ -118,7 +118,7 @@
 					}
 					$this->load->model("classroom");
 					$this->load->classroom->set_by_id($classroom_id);
-					$data["student_list"] = $this->load->classroom->get_studets_data();
+					$data["student_list"] = $this->load->classroom->get_students_data();
 					$data["classroom_info"] = $this->load->classroom->get_data();
 				}else{
 					$data["student_list"]= [];

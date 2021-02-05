@@ -196,7 +196,9 @@
 
 			$this->load->model("admission");
 			$result_set = $this->load->admission->get_list($start,$per_page,NULL,NULL,NULL,["Read","Unread","Accepted"]);
+			$data['recent_count'] = $this->load->admission->get_count()->fetch()['count'];
 			$u_result_set = $this->load->admission->get_list($start,$per_page,NULL,NULL,NULL,["Not Interviewed","Registered","Rejected"]);
+			$data['viewed_count'] = $this->load->admission->get_count()->fetch()['count'];
 			if($result_set && $u_result_set){
 				$result_set = $result_set->fetchAll();
 				$u_result_set = $u_result_set->fetchAll();
@@ -204,7 +206,6 @@
 			unset($_POST);
 			$data['result_set'] = $result_set;
 			$data['u_result_set'] = $u_result_set;
-			$data['count'] = $this->load->admission->get_count()->fetch()['count'];
 			$data['msg'] = $msg;
 			$this->view_header_and_aside();
 			$this->load->view("admission/admission_list",$data);

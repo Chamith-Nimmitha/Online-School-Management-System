@@ -51,7 +51,7 @@
 						$user_info .= '" alt="" style="width:50px; height:50px; border: 2px solid orange;">
 						</div>
 						<div class="mr-3 d-lg-flex flex-col justify-content-center d-md-none">
-							<span>'.$_SESSION['username'].'</span>
+							<span >'.$_SESSION['username'].'</span>
 						</div>
 					</div>
 					<button class="toggle-button" target="user-nav">

@@ -15,6 +15,9 @@ document.addEventListener("DOMContentLoaded",() => {
 	if( document.getElementById('teacher_attendance_overview_bar')){
 		teacher_attendance_overview_bar();
 	}
+	if( document.getElementById('classroom_attendance_comparission_bar')){
+		classroom_attendance_comparission_bar();
+	}
 })
 
 function get_color_array(len,opacity,position = 0){
@@ -206,6 +209,16 @@ function dashboard_teacher_attendance_bar(){
 	    data: {
 	        labels: ['mon','tue','wed','thu','fri'],
 	        datasets: [{
+	            label: '# ',
+	            data: [25,42,32,12,54],
+	          	backgroundColor: get_color_array(5,0.5),
+	            borderColor: get_color_array(5,0.8),
+	            borderWidth: 1,
+	            hoverBackgroundColor:get_color_array(5,1),
+	            hoverboderwidth:3,
+	            hoverbodercolor: get_color_array(5,1)
+	        },
+	        {
 	            label: '# of teachers',
 	            data: [25,42,32,12,54],
 	          	backgroundColor: get_color_array(5,0.5),
@@ -218,14 +231,15 @@ function dashboard_teacher_attendance_bar(){
 	    },
 	    options: {
 	        scales: {
+	        	xAxes:[{
+	        		stacked: true,
+	        	}],
 	            yAxes: [{
-	            	ticks: {
-	            		beginAtZero : true,
-	            	}
+	            	stacked: true,
 	            }]
 	        },
 	        legend: {
-	        	display : false
+	        	display : true,
 	        },
 	        title: {
 		        display: true,
@@ -454,6 +468,102 @@ function teacher_attendance_overview_bar(){
 		    }
 		});
 		teacher_attendance_overview_bar_chart = myChart;
+		loader.classList.add('hide-loader');
+	});	
+}
+
+var student_attendance_overview_bar_chart = undefined;
+// view classroom overral attendance
+function classroom_attendance_comparission_bar(){
+	var form = new FormData(document.getElementById('classroom_attendance_comparission'));
+	let form_array = Array.from(form);
+	// for loader
+	var loader = document.querySelector("#classroom_attendance_bar");
+	loader.classList.remove('hide-loader');
+
+
+	fetch( base_url+'api/draw_charts/attendance/classroom/comparission',{
+		method : 'post',
+		body : form
+	}).then( (res) => {
+		return res.text();
+	}).then( (text) => {
+		console.log(text);
+		var response = JSON.parse(text)
+		var canvas = document.getElementById('classroom_attendance_comparission_bar')
+		var ctx = canvas.getContext('2d');
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		if(student_attendance_overview_bar_chart != undefined){
+			student_attendance_overview_bar_chart.destroy();
+		}
+		if(response.success==1){
+			let present_data = [];
+			let absent_data = [];
+	        let flag = false;
+	        let title = "";
+	        let data = JSON.parse(JSON.stringify(response.data));
+	        if(response.type == "section"){
+	        	flag = true;
+	        	title = `Grade ${form_array[0][1]} ( ${form_array[2][1]} )`;
+		        for( i in data){
+		        	present_data.push(data[i].present);
+		        	absent_data.push(data[i].absent);
+		        }
+	        }else if(response.type == "school"){
+	        	flag = false;
+	        	title = `School Attendance ( ${form_array[2][1]} )`;
+	        	present_data.push(data.present[0]);
+	        	absent_data.push(data.absent[0]);
+	        }else if(response.type == "classroom"){
+	        	flag = true;
+	        	title = `Classroom Attendance ( ${form_array[0][1]}-${form_array[1][1]} )`;
+	        	present_data = data.present;
+	        	absent_data =data.absent;
+	        }
+
+			var myChart = new Chart(ctx, {
+			    type: 'bar',
+			    data: {
+			        labels: response.labels,
+			        datasets: [
+			        	{
+			            	label: 'Present ',
+			            	data : present_data,
+			            	backgroundColor : get_color_array(1,0.5,0)[0],
+			            	hoverBackgroundColor : get_color_array(1,1,0)[0]
+			            },
+			            {
+			            	label: 'Absent ',
+			            	data : absent_data,
+			            	backgroundColor : get_color_array(1,0.5,1)[0],
+			            	hoverBackgroundColor : get_color_array(1,1,1)[0]
+			            },
+			        ]
+			    },
+			    options: {
+			        scales: {
+			        	xAxes: [{
+			        		stacked: flag,
+			        	}],
+			            yAxes: [{
+			        		ticks:{
+			        			beginAtZero:true,
+			        		},
+			            	stacked: flag,
+			            }]
+			        },
+			        legend: {
+			        	display : true
+			        },
+			        title: {
+				        display: true,
+				        text: title,
+				        fontSize : 20
+				    },
+			    }
+			});
+		}
+		student_attendance_overview_bar_chart = myChart;
 		loader.classList.add('hide-loader');
 	});	
 }

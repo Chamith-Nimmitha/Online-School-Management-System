@@ -43,13 +43,20 @@
 				$grade = 0;
 				foreach ($result_set as $result) {
 					if($grade !== 0 && $grade != $result['grade']){
+	        			$body .= "<tr><td colspan=8 class='text-center p-0 bg-gray'></td></tr>";
 	        			$body .= "<tr><td colspan=8 class='text-center bg-gray'></td></tr>";
 	        		}
 					$body .="<tr>";
 					$body .= "<td class='text-center'>".$result['id']."</td>";
 					$body .= "<td class='text-center'>".$result['grade']."</td>";
 					$body .= "<td class='text-center'>".$result['class']."</td>";
-					$body .= "<td class='text-center'>".$result['class_teacher_id']."</td>";
+					$body .= "<td class='text-center'>";
+					if(!empty($result['class_teacher_id'])){
+						$body .= $result['class_teacher_id'];
+					}else{
+						$body .= "Not Asign";
+					}
+					$body .= "</td>";
 					$body .= "<td class='text-center'>
 								<div>
 	                				<a class='btn btn-blue' href='". set_url('attendance/classroom/view/'.$result['id'])."'>View</a>
@@ -61,7 +68,7 @@
 				$data['body'] = $body;
 				echo json_encode($data);
 			}else{
-				$body =  "<tr><td colspan=7 class='text-center bg-red'>Classrooms not found...</td></tr>";
+				$body =  "<tr><td colspan=7 class='text-center bg-red'>Classrooms Not Found...</td></tr>";
 				$data['body'] = $body;
 				$data['count'] = 0;
 				echo json_encode($data);
@@ -81,8 +88,7 @@
 
 			if(empty($date)){
 				$date =  date("Y-m-d");
-			}
-
+			};
 			$this->load->model("attendance");
 			$result_set = $this->load->attendance->classroom_attendance_search($classroom_id,$student_id,$date);
 			if($result_set && $result_set->rowCount() !== 0){
@@ -92,7 +98,6 @@
 					$body .= "<tr>";
 					$body .= "<td>{$result['id']}</td>";
 					$body .= "<td>{$result['name_with_initials']}</td>";
-					$body .= "<td>{$result['date']}</td>";
 					$body .= "<td>
                                 <label class='p-2 pr-4 pl-4' for='present-".$result['id']."'>
                                     <input type='radio' id='present-".$result['id']."' name='attendance-".$result['id']."' value='1'";
@@ -111,7 +116,11 @@
                                     $body .= ">
                                 </label>
                             </td>";
-					$body .= "<td><input type='text' name='note-".$result['id']."' value='".$result['note']."'></td>";
+					$body .= "<td><input type='text' name='note-".$result['id']."' value='";
+					if(isset($result['note'])){
+						$body .= $result['note'];
+					}
+					$body .= "'></td>";
                     $body .= "<td> <a href='".set_url('student/attendance/'.$result['id'])."' class='btn btn-blue'>View Report</a></td>";
 					$body .= "</tr>";
 				}
@@ -312,6 +321,19 @@
 				echo json_encode($result_set->fetchAll());
 			}else{
 				echo "FALSE";
+			}
+		}
+
+		// get all classrooms according to grade
+		public function get_classroom_list($grade){
+
+			$this->load->model("classrooms");
+			$result = $this->load->classrooms->get_classroom_list(0,15,NULL,$grade);
+
+			if(!empty($result)){
+				echo json_encode( ["success"=>1, "data"=>$result]);
+			}else{
+				echo json_encode( ["success"=>0, "error"=>$result]);
 			}
 		}
 	}

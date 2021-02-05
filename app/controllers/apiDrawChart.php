@@ -251,6 +251,93 @@
 				echo 'FALSE';
 			}
 		}
+
+		// for classroom attendance comparission
+		public function classroom_attendance_comparission(){
+
+			$grade = $_POST['grade'];
+			$class = $_POST['class'];
+			$date = $_POST['date'];
+			$year = $_POST['year'];
+			$month = $_POST['month'];
+
+			if($grade == "None"){
+				$grade = NULL;
+			}
+			if($class == "None"){
+				$class = NULL;
+			}
+			if(empty($date)){
+				$date = date('Y-m-d');
+			}
+
+			$this->load->model('attendance');
+			$this->load->model('classrooms');
+			$labels = [];
+			$attendance_result = [];
+
+			if($grade == NULL){
+				$present_result = $this->load->attendance->dashboard_student_attendance_overview_bar($date,1);
+				$absent_result = $this->load->attendance->dashboard_student_attendance_overview_bar($date,0);
+				$labels = ["School Attendance"];
+				if($present_result !== FALSE && $absent_result !== FALSE){
+					echo json_encode(["success"=>1,"type"=>"school","labels"=>$labels, "data"=>['present'=>[$present_result],'absent'=>[$absent_result]]]);
+					return;
+				}else{
+					echo json_encode(["success"=>0, "error"=>"Attendance Not Found."]);
+					return;
+				}
+			}else if($class == NULL){
+				$result = $this->load->classrooms->get_classroom_list(0,15,NULL,$grade);
+				if(!$result){
+					echo json_encode(["success"=>0,"error"=>"Classroom List Not Found."]);
+					return;
+				}
+				foreach ($result as $cls) {
+					array_push($labels,$cls['grade']."-".$cls['class']);
+					$data = [];
+					$result = $this->load->attendance->get_classroom_total($cls['id'],$date,1);
+					if($result === FALSE){
+						echo json_encode(["success"=>0,"error"=>"Attendance Not Found."]);
+						return;
+					}
+					$data["present"] = $result;
+					$result = $this->load->attendance->get_classroom_total($cls['id'],$date,0);
+					if($result === FALSE){
+						echo json_encode(["success"=>0,"error"=>"Attendance Not Found."]);
+						return;
+					}
+					$data["absent"] = $result;
+					$attendance_result[$cls['grade']."-".$cls['class']] = $data;
+				}
+				echo json_encode(["success"=>1, "type"=>"section","labels"=>$labels, "data"=>$attendance_result]);
+				return;
+			}else{
+				$this->load->model("classroom");
+				$result = $this->load->classroom->set_by_grade_class($grade,$class);
+				if(!$result){
+					echo json_encode(["success"=>0,"error"=>"Classroom Not Found."]);
+						return;	
+				}
+				$class = $this->load->classroom->get_id();
+				$no_of_days = date("t", strtotime("{$year}-{$month}-01"));
+				$attendance_data = ["present"=>[],"absent"=>[]];
+				for($i=1; $i<=$no_of_days; $i++){
+					array_push($labels, $i);
+					$date = "{$year}-{$month}-{$i}";
+					$present = $this->load->attendance->get_classroom_total($class,$date,1);
+					$absent = $this->load->attendance->get_classroom_total($class,$date,1);
+					if($present === FALSE || $absent ===FALSE){
+						echo json_encode(["success"=>0,"error"=>"Attendance Not Found."]);
+						return;	
+					}
+					array_push($attendance_data["present"], $present);
+					array_push($attendance_data["absent"], $absent);
+				}
+				echo json_encode(["success"=>1, "type"=>"classroom","labels"=>$labels, "data"=>$attendance_data]);
+				return;
+			};
+		}
 	}
 
  ?>

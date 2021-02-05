@@ -130,6 +130,9 @@ h2{color: var(--color) !important;}
 	margin: 0;
 	box-sizing: border-box !important;
 }
+html{
+	scroll-behavior: smooth;
+}
 
 body{
 	font-family:"Segoe UI", Arial, Helvetica, sans-serif;
