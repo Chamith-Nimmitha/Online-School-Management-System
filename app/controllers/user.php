@@ -60,7 +60,8 @@
 							$_SESSION["username"]=$user['username'];
 							$_SESSION["profile_photo"]=$user['profile_photo'];
 						}
-						header('Location:'.set_url("dashboard/Login Successful"));
+						$_SESSION['login_msg'] = "Login Successful";
+						header('Location:'.set_url("dashboard"));
 					}
 				}else{
 					$message ="Invalid email or password";
@@ -75,7 +76,7 @@
 		}
 
 		//view dashboard for all users
-		public function dashboard($msg=""){
+		public function dashboard(){
 			if(!$this->checkPermission->check_permission("dashboard","view")){
 				$this->view_header_and_aside();
 				$this->load->view("common/error");
@@ -85,7 +86,12 @@
 			$this->load->model("user");
 			$counts = $this->load->user->get_staticstic_count();
 			$data['count'] = $counts;
-			$data['msg'] = $msg;
+
+			if(isset($_SESSION['login_msg'])){
+				$data['msg'] = $_SESSION['login_msg'];
+				unset($_SESSION['login_msg']);
+			}
+
 			$is_classroom_teacher = 0;
 
 			if($_SESSION['role'] == "teacher"){

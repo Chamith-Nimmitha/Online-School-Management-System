@@ -725,6 +725,7 @@ function classroom_attendance_search(){
 // mark clasroom attendance
 function mark_classroom_attendance(){
 	window.event.preventDefault();
+	window.scrollTo(0,0);
 	var form = new FormData(document.getElementById("mark_attendance"));
 	var notification = document.getElementById("attendance_notification");
 	notification.classList.remove("d-none");
@@ -736,7 +737,6 @@ function mark_classroom_attendance(){
 	}).then( (res) => {
 		return res.text();
 	}).then( (text) => {
-		console.log(text)
 		if( text.indexOf('TRUE') !== -1){
 			notification.querySelector("p").innerHTML = "Attendance marked successfully.";
 		}else{;
@@ -792,6 +792,7 @@ function student_attendance_filter(){
 // mark teacher attendance
 function mark_teacher_attendance(){
 	window.event.preventDefault();
+	window.scrollTo(0,0);
 	var form = new FormData(document.getElementById("mark_teacher_attendance"));
 	var notification = document.getElementById("attendance_notification");
 	notification.classList.remove("d-none");
@@ -831,7 +832,6 @@ function teacher_attendance_search(){
 				var body = `<tr>
 						<td>${parseInt(i)+1}</td>
 						<td>${response[i]['id']}</td>
-						<td>${response[i]['date']}</td>
 						<td>${response[i]['name_with_initials']}</td>
 						<td class='d-flex flex-col'>
 	                        <label for='present-${response[i]['id']}'>
@@ -849,7 +849,11 @@ function teacher_attendance_search(){
                     body += `> Absent
 	                        </label>
 	                    </td>
-						<td><input type='text' name='note-${response[i]['id']}' value='${response[i]['note']}'></td>
+						<td><input type='text' name='note-${response[i]['id']}' value='`;
+						if(response[i]['note'] != undefined){
+							body += response[i]['note'];
+						}
+					body += `'></td>
 	            		<td> <a href='`+base_url+`teacher/attendance/${response[i]['id']}' class='btn btn-blue'>View Report</a></td>
 					</tr>`;
 				document.getElementById('tbody').innerHTML += body;

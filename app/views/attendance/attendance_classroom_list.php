@@ -81,6 +81,7 @@
 						$grade = 0;
 						foreach ($result_set as $result) {
 							if($grade !== 0 && $grade != $result['grade']){
+	                			echo "<tr><td colspan=8 class='text-center p-0 bg-gray'></td></tr>";
 	                			echo "<tr><td colspan=8 class='text-center bg-gray'></td></tr>";
 	                		}
 		                ?>
@@ -89,7 +90,7 @@
 		                        <td class='text-center'><?php echo $result['id']; ?></td>
 		                        <td class="text-center"><?php echo $result['grade']; ?></td>
 		                        <td class="text-center"><?php echo $result['class']; ?></td>
-		                        <td><?php echo $result['class_teacher_id']; ?></td>
+		                        <td class="text-center"><?php if(!empty($result['class_teacher_id'])){echo $result['class_teacher_id'];}else{echo 'Not Asign';} ?></td>
 								<td class="text-center">
 									<div>
 		                				<a class="btn btn-blue" href="<?php echo set_url('attendance/classroom/view/'.$result['id']); ?>">View</a>
@@ -116,5 +117,76 @@
 					<?php display_pagination($count,$page,$per_page, "attendance/classroom/list","attendance_classroom_search"); ?>
 				</div>
 			</div>  
+		</div>
+
+		<div class="col-12 justify-content-center" >
+			<h2 class="text-center p-5">Classroom Attendance</h2>
+			<div class="col-12 d-flex justify-content-center">
+				<form id="classroom_attendance_comparission" class="col-11 d-flex mb-3 align-items-center justify-content-start">
+					<button type="reset" class="btn btn-blue mr-2 mt-5 p-2" onclick="setTimeout( ()=>{show_classroom_filter_option_class('compare_grade');show_classroom_filter_option_date('compare_class');},100);">Reset</button>
+					<div class="mr-2">
+						<label for="grade">Grade</label>
+						<select name="grade" id="compare_grade" onchange="show_classroom_filter_option_class('compare_grade')">
+							<option value="None">Select Grade</option>
+							<?php if(isset($sections) && !empty($sections)){
+								foreach ($sections as $section) { ?>
+									<option value="<?php echo $section['grade']; ?>"> <?php echo $section['grade']; ?></option>
+								<?php }
+								} ?>
+						</select>
+					</div>
+					<div id="classroom_filter_option_class" class="mr-2 d-none flex-col align-items-start">
+						<label for="class">Classroom</label>
+						<select name="class" id="compare_class" onchange="show_classroom_filter_option_date('compare_class')">
+							<option value="None">Select Class</option>
+						</select>
+					</div>
+					<div class="d-flex flex-col align-items-start" id="full_date">
+						<label for="date">Date</label>
+						<input type="date" name="date" value="<?php if(isset($date)){ echo $date;}else{echo date('Y-m-d');} ?>" id="date" class="p-1">
+					</div>
+					<div id="classroom_filter_option_date" class="d-none">
+						<div id="classroom_filter_option_year" class="mr-2 d-flex flex-col align-items-start">
+							<label for="year">Year</label>
+							<select name="year" id="year">
+								<option value="<?php echo date('Y'); ?>">This Year</option>
+								<option value="2021">2021</option>
+								<option value="2020">2020</option>
+							</select>
+						</div>
+						<div  class="mr-2 d-flex flex-col align-items-start">
+							<label for="month">Month</label>
+							<select name="month" id="month">
+								<option value="<?php echo date('m'); ?>">This Month</option>
+								<option value="1">January</option>
+								<option value="2">February</option>
+								<option value="3">March</option>
+								<option value="4">April</option>
+								<option value="5">May</option>
+								<option value="6">June</option>
+								<option value="7">July</option>
+								<option value="8">August</option>
+								<option value="9">September</option>
+								<option value="10">October</option>
+								<option value="11">November</option>
+								<option value="12">December</option>
+							</select>
+						</div>
+					</div>
+					<button type="button" onclick="classroom_attendance_comparission_bar()" class="btn btn-blue ml-2 mt-5 p-2">Filter</button>
+				</form>
+			</div>
+			<div class="col-8 bg-white" style="position: relative;">
+				<div class="loader" id="classroom_attendance_bar">
+				 	<div class="col-12">
+						<div id="one"><div></div></div>
+						<div id="two"><div></div></div>
+						<div id="three"><div></div></div>
+						<div id="four"><div></div></div>
+						<div id="five"></div>
+				 	</div>
+				</div>
+				<canvas id="classroom_attendance_comparission_bar" width="100" height="80"></canvas>
+			</div>
 		</div>
 </div>

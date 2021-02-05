@@ -30,6 +30,17 @@
 			}
 		}
 
+		// set dat using grade and class
+		public function set_by_grade_class($grade,$class){
+			$query = "SELECT `c`.`id` AS `id` FROM `classroom` AS `c` INNER JOIN `section` AS `s` ON `s`.`id`=`c`.`section_id` WHERE `s`.`grade`= ? && `c`.`class`=? ";
+			$result = $this->con->pure_query($query, [$grade, "{$class}"]);
+			if($result){
+				return $this->set_by_id($result->fetch()['id']);
+			}else{
+				return FALSE;
+			}
+		}
+
 		// set data using classroom id
 		public function set_by_id($id){
 			$data = $this->con->select($this->table, array("id"=>$id));

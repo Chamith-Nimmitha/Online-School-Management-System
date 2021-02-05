@@ -32,6 +32,7 @@
 			$this->load->model("classrooms");
 			$data['result_set'] = $this->load->classrooms->get_classroom_list($start,$per_page);
 			$data['count'] = $this->load->classrooms->get_count()->fetch()['count'];
+			$data['sections'] = $this->load->classrooms->get_section_list_by_category();
 			$this->view_header_and_aside();
 			$this->load->view("attendance/attendance_classroom_list",$data);
 			$this->load->view("templates/footer");

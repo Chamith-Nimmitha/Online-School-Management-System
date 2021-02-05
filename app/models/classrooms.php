@@ -49,6 +49,8 @@
 			if($result){
 				$result_set = $stmt->fetchAll();
 				return $this->get_all_data($result_set);
+			}else{
+				return [];
 			}
 		}
 
@@ -69,8 +71,12 @@
 		}
 
 		// get all section/ grades
-		public function get_section_list_by_category($category){
-			$result_set = $this->con->select("section",["category"=>$category]);
+		public function get_section_list_by_category($category=NULL){
+			if($category == NULL){
+				$result_set = $this->con->select("section");
+			}else{
+				$result_set = $this->con->select("section",["category"=>$category]);
+			}
 			if($result_set){
 				return $result_set->fetchAll();
 			}else{

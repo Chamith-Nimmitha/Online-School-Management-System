@@ -11,11 +11,11 @@
                 </div>
                 <div class="ml-5">
                     <label for="studebt-id">Student ID</label>
-                    <input type="text" name="student-id" id="student-id" placeholder="Student ID" value="<?php if(isset($_GET['student-id'])){echo $_GET['student-id'];} ?>" oninput="classroom_attendance_search()">
+                    <input type="text" name="student-id" id="student-id" placeholder="Student ID" value="" oninput="classroom_attendance_search()">
                 </div>
                 <div class="ml-5 d-flex flex-col">
                     <label for="date">Date</label>
-                    <input type="date" name="date" id="date" placeholder="Student ID" value="<?php if(isset($_GET['date'])){echo $_GET['date'];} ?>">
+                    <input type="date" name="date" id="date" placeholder="Student ID" value="<?php echo date('Y-m-d'); ?>">
                 </div>
                 <button  class="btn btn-blue ml-3 mt-5" name="filter" onclick="classroom_attendance_search()" value="Show">Filter</button>
             </div>
@@ -31,7 +31,6 @@
                         <tr>
                             <th rowspan="2">ID</th>
                             <th rowspan="2">Student Name</th>
-                            <th rowspan="2">Date</th>
                             <th colspan="2">Attendance</th>
                             <th rowspan="2">Note</th>
                             <th rowspan="2">View Attendance</th>
@@ -49,7 +48,6 @@
                          <tr>
                             <td><?php echo $student['id']; ?></td>
                             <td><?php echo $student['name_with_initials']; ?></td>
-                            <td><?php if(isset($student['date'])){echo $student['date'];}else{echo date("Y-m-d");}; ?></td>
                             <td>
                                 <label class="p-2 pr-4 pl-4" for="present-<?php echo $student['id']; ?>">
                                     <input type="radio" id="present-<?php echo $student['id']; ?>" name="attendance-<?php echo $student['id']; ?>" value="1" <?php if(isset($student['attendance']) && $student['attendance'] === 1){echo "checked='checked'";} ?> >

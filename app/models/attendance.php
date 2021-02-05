@@ -19,8 +19,9 @@
 				$this->con->db->beginTransaction();
 				for ($i=0; $i < count($students_list); $i++) { 
 					$result = $this->con->select("stu_att", ["student_id"=>$students_list[$i]['id'], "classroom_id"=>$classroom_id]);
-					if(!$result){
-						throw new PDOException();
+					if($result && $result->rowCount() != 1){
+						$result = $this->con->insert("stu_att", ["student_id"=>$students_list[$i]['id'], "classroom_id"=>$classroom_id]);
+						$result = $this->con->select("stu_att", ["student_id"=>$students_list[$i]['id'], "classroom_id"=>$classroom_id]);
 					}
 					$stu_att_id = $result->fetch()['id'];
 					$result = $this->con->select("student_attendance", ["id"=>$stu_att_id, "date"=>date("Y-m-d")]);
@@ -95,16 +96,30 @@
 				$query .= " && `sa`.`student_id` LIKE ? ";
 				array_push($params, "%{$student_id}%");
 			}
-
 			if($date !== NULL){
 				$query .= " && `st_at`.`date`= ? ";
-				array_push($params, $date);
+				array_push($params, "{$date}");
 			}
 
 			$stmt = $this->con->db->prepare($query);
 			$result = $stmt->execute($params);
-			if($result){
+			if($result && $stmt->rowCount()>0){
 				return $stmt;
+			}else if($date == date("Y-m-d")){
+				$params = [];
+				$query = "SELECT SQL_CALC_FOUND_ROWS `s`.`id`,`s`.`name_with_initials` FROM `stu_att` AS `sa` INNER JOIN `student` AS `s` ON `sa`.`student_id`=`s`.`id`   WHERE `sa`.`classroom_id`=? ";
+					array_push($params, $classroom_id);
+				if($student_id !== NULL ){
+					$query .= " && `sa`.`student_id` LIKE ? ";
+					array_push($params, "%{$student_id}%");
+				}
+				$stmt = $this->con->db->prepare($query);
+				$result = $stmt->execute($params);
+				if($result){
+					return $stmt;
+				}else{
+					return FALSE;
+				}
 			}else{
 				return FALSE;
 			}
@@ -320,8 +335,38 @@
 			// print_r($params);
 			$stmt = $this->con->db->prepare($query);
 			$result = $stmt->execute($params);
-			if($result){
+			if($result && $stmt->rowCount()>0){
 				return $stmt;
+			}else if($date == date("Y-m-d")){
+				$params = [];
+				$query = "SELECT SQL_CALC_FOUND_ROWS `t`.`id`,`t`.`name_with_initials` FROM `teacher` AS `t` ";
+
+				$flag = 0;
+				$name_flag = 0;
+				if($teacher_id !== NULL ){
+					$query .= " WHERE (`t`.`id` LIKE ? ";
+					array_push($params, "%{$teacher_id}%");
+					$flag = 1;
+				}
+
+				if($teacher_name !== NULL ){
+					if( $flag === 0){
+						$query .= " WHERE `t`.`name_with_initials` LIKE ? ";
+					}else{
+						$query .= " OR `t`.`name_with_initials` LIKE ? ) ";
+					}
+					array_push($params, "%{$teacher_name}%");
+					$flag = 1;
+					$name_flag = 1;
+				}
+				$stmt = $this->con->db->prepare($query);
+				$result = $stmt->execute($params);
+				if($result && $stmt->rowCount()>0){
+					return $stmt;
+				}else{
+					return FALSE;
+				}
+
 			}else{
 				return FALSE;
 			}
@@ -410,5 +455,17 @@
 				return FALSE;
 			}
 		}
+
+		// get classroom total attendance for day
+		public function get_classroom_total($classroom_id,$date,$attendance){
+			$query = "SELECT COUNT(*) AS `count` FROM `stu_att` AS `st` INNER JOIN `student_attendance` AS `st_at` ON `st`.`id`=`st_at`.`id` WHERE `st`.`classroom_id`=? && `st_at`.`date`=? && `attendance`=?";
+			$result = $this->con->pure_query($query, [$classroom_id,$date,$attendance]);
+			if($result){
+				return $result->fetch()['count'];
+			}else{
+				return FALSE;
+			}
+		}
+
 	}
  ?>
