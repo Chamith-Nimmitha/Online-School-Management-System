@@ -1,10 +1,23 @@
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 
+	<?php 
+		if(isset($msg) && !empty($msg)){
+			echo "<p class='w-75 text-center p-2 bg-green'>";
+			echo $msg;
+			echo "</p>";
+		}
+		if(isset($error) && !empty($error)){
+			echo "<p class='w-75 text-center p-2 bg-lightred'>";
+			echo $error;
+			echo "</p>";
+		}
+	 ?>
+
 	<div class="p-5  w-100 d-flex align-items-center flex-col">
 		<h1>Teacher-Subject Students</h1>
 		<div class="w-75 d-flex justify-content-end">
-			<a class="t-d-none btn btn-blue-outline" href="<?php echo set_url('pages/teacher_subject_student_add.php?id='.$_GET['id']); ?>">+add Students</a>
+			<a class="t-d-none btn btn-blue-outline" href="<?php echo set_url('teacher/subject/student/add/').$teacher_subject_id; ?>">+add Students</a>
 		</div>
 	</div>
 	<hr class="w-100 mb-5">
@@ -77,13 +90,14 @@
 			</table>
 
 		</fieldset>
+	</form>
 	<hr class="w-100 mt-5 mb-3">
 	<div class="d-flex flex-col col-10 align-items-center border">
 		<div>
 			<h2>Selected Students for Remove</h2>
 		</div>
 		<hr class="w-100 mb-5">
-		<form action="classroom_student.php?classroom_id=<?php echo $_GET['id'] ;?>" method="post" class="col-12 d-flex flex-col align-items-center">
+		<form action="<?php echo set_url("teacher/subject/student/list/").$teacher_subject_id; ?>" method="post" class="col-12 d-flex flex-col align-items-center">
 			<input type="hidden" name="classroom_id" value="<?php echo $teacher_subject_info['id']; ?>" >
 			<div class="col-10 mb-5 d-flex flex-wrap" id="removed-set">
 				<!-- add student here -->
@@ -94,5 +108,4 @@
 			</div>
 		</form>
 	</div>
-	</form>
 </div>

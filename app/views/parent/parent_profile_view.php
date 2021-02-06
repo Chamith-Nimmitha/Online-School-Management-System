@@ -1,31 +1,4 @@
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
-	<?php 
-		if(isset($all_errors) && (!empty($all_errors[0]) || !empty($all_errors[1]) || count($all_errors) > 2)){
-			echo "<p class='bg-red col-8 p-3'>";
-			foreach ($all_errors[0] as $error) {
-				echo $error." is required.<br>";
-			}
-			if(isset($all_errors[1]) && !empty($all_errors[1])){
-				foreach ($all_errors[1] as $error) {
-					echo $error." length must less than ".$required_fields[$error].".<br/>";
-				}
-			}
-			if(isset($all_errors[2])){
-				echo $all_errors[2]."<br/>";
-			}
-			if(isset($errors) && !empty($errors[1])){
-				foreach ($errors[1] as $error) {
-					echo $error. "<br/>";
-				}
-			}
-			echo "</p>";
-		}
-		if(isset($info)){
-			echo "<p class='bg-green col-8 p-3'>";
-			echo $info;
-			echo "</p>";
-		}
-	 ?>
 	<div class="mt-5">
 		<h2>Parent Profile</h2>
 	</div>
@@ -35,12 +8,12 @@
 				<div class="col-4 bg-red flex-col d-none d-md-flex align-items-center"  style=" padding-top: 100px;background: #ccf;">
 					<div  class="col-8">
 						<div  style="position: relative;">
-							<img src="<?php echo set_url('/public/assets/uploads/parent_profile_photo/'.$result['profile_photo']); ?>" alt="profile photo"  onclick="upload_profile_photo('profile-photo')" class="col-12">
-							<label for="profile-photo" class="" style="position: absolute; bottom: 0px; right: 0px;">
-								<img src="<?php echo set_url("public/assets/img/camera.png"); ?>" alt="upload photo" style="width: 50px; height: 50px; cursor: pointer;">
-							</label>
+							<img src="<?php echo set_url('/public/assets/uploads/parent_profile_photo/'.$result['profile_photo']); ?>" alt="profile photo" class="col-12">
+							<!-- <label for="profile-photo" class="" style="position: absolute; bottom: 0px; right: 0px;"> -->
+								<!-- <img src="<?php echo set_url("public/assets/img/camera.png"); ?>" alt="upload photo" style="width: 50px; height: 50px; cursor: pointer;"> -->
+							<!-- </label> -->
 						</div>
-						<input type="file" name="profile-photo" id="profile-photo" accept="image/jpg,image/jpeg,image/png" onchange="check_input_image(this)" class="d-none" disabled="disabled">
+						<!-- <input type="file" name="profile-photo" id="profile-photo" accept="image/jpg,image/jpeg,image/png" onchange="check_input_image(this)" class="d-none" disabled="disabled"> -->
 						<p class="bg-red fg-white p-2 d-none"></p>
 					</div>
 					<p id="profile-photo-error" class="d-none"></p>

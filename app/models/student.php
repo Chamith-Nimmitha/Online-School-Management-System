@@ -212,6 +212,12 @@
 
 		}
 
+		public function get_subjects(){
+			$query = "SELECT `su`.`name`,`su`.`code`,`t`.`name_with_initials` AS `teacher_name` FROM `tea_sub_student` AS `tss` INNER JOIN `student` AS `s` ON `s`.`id`=`tss`.`student_id` INNER JOIN `teacher_subject` AS `ts` ON `ts`.`id`=`tss`.`teacher_subject_id` INNER JOIN `teacher` AS `t` ON `t`.`id`=`ts`.`teacher_id` INNER JOIN `subject` AS `su` ON `su`.`id`=`ts`.`id` WHERE `s`.`id`=? ";
+			return $this->con->pure_query($query, [ $this->id]);
+
+		}
+
 		// delete self. It perform updating is_deleted field. 
 		public function delete_self(){
 			$result = $this->con->update($this->table, array("is_deleted"=>1), array("id"=>$this->id));

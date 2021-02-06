@@ -109,6 +109,8 @@ function add_new_notice(form){
 	window.event.preventDefault();
 	let fd = new FormData(form);
 	fd.append("classroom_id",form.dataset.classroom);
+	let form_state = form.querySelector("#form_state");
+	form_state.innerText = "Proccesing...";
 
 	fetch(base_url+"api/classroom/notice/add",{
 		method:"POST",
@@ -116,6 +118,16 @@ function add_new_notice(form){
 	}).then( (res)=> {return res.text()} )
 	.then( (data)=>{
 		console.log(data);
+		data = JSON.parse(data);
+		if(data.success == 1){
+			form_state.classList.remove("bg-red");
+			form_state.classList.add("bg-green");
+			form_state.innerText = "Notice Added.";
+		}else{
+			form_state.classList.add("bg-red");
+			form_state.classList.add("bg-green");
+			form_state.innerText = "Add Notice Failed.";
+		}
 	})
 	.catch( (err)=>{
 		console.log(err);
