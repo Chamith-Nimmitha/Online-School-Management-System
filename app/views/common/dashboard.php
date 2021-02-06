@@ -41,11 +41,13 @@
 			<!-- ADD A NEW NOTICE -->
 			<div id="add_new_classroom_notice" class="d-none">
 				<div id="noticeboard_title" class="w-100">
-					<button type="button" class="btn btn-blue p-1 ml-5" onclick="show_available_notice('add_new_classroom_notice','classroom_notice_board')">Back</button>
+					<!-- <button type="button" class="btn btn-blue p-1 ml-5" onclick="show_available_notice('add_new_classroom_notice','classroom_notice_board')">Back</button> -->
+					<button type="button" class="btn btn-blue p-1 ml-5" onclick="location.reload()">Back</button>
 					<h3>ADD NEW NOTICE</h3>
 				</div>
 				<div class="form-wrapper">
 					<form method="POST" onSubmit="add_new_notice(this)" data-classroom="">
+						<p class="text-center" id="form_state"></p>
 						<div class="form-group">
 							<label for="title">Title</label>
 							<input type="text" name="title" id="title" placeholder="title">
@@ -73,7 +75,8 @@
 			<!-- UPDATE NOTICE -->
 			<div id="update_classroom_notice" class="d-none">
 				<div id="noticeboard_title" class="w-100">
-					<button type="button" class="btn btn-blue p-1 ml-5" onclick="show_available_notice('update_classroom_notice','classroom_notice_board')">Back</button>
+					<!-- <button type="button" class="btn btn-blue p-1 ml-5" onclick="show_available_notice('update_classroom_notice','classroom_notice_board')">Back</button> -->
+					<button type="button" class="btn btn-blue p-1 ml-5" onclick="location.reload()">Back</button>
 					<h3>UPDATE NOTICE</h3>
 					<a href="" class="btn btn-blue p-0 pr-2 pl-2 mr-2 mr-2" onclick="delete_notice(this,'Delete Message','Are you sure?')">Del</a>
 				</div>

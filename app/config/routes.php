@@ -45,6 +45,7 @@
 	$routes['teacher/subject/list'] = "teacher/subject_list";
 	$routes['teacher/subject/list/$1'] = "teacher/subject_list/$1";
 	$routes['teacher/subject/student/list/$1'] = "teacher/student_list/$1";
+	$routes['teacher/subject/student/add/$1'] = "teacher/student_add/$1";
 	$routes['teacher/subject/timetable/$1'] = "teacher/subject_timetable/$1";
 	$routes['teacher/attendance'] = "teacher/attendance";
 	$routes['teacher/attendance/$1'] = "teacher/attendance/$1";

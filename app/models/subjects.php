@@ -81,6 +81,59 @@
 			return $this->con->pure_query($query,[$teacher_subject_id]);
 		}
 
+		// get student list without teacher_subject
+		public function get_student_list_not_subject($teacher_subject_id){
+			$query = "SELECT COUNT(*) AS `count` FROM `tea_sub_student` AS `tss` INNER JOIN `teacher_subject` AS `ts` ON `tss`.`teacher_subject_id`=`ts`.`id` WHERE `tss`.`teacher_subject_id` = ? ";
+			$result = $this->con->pure_query($query, [$teacher_subject_id]);
+			if($result->fetch()['count'] > 0){
+				$query = "SELECT `s`.`id`,`s`.`name_with_initials`,`s`.`contact_number`,`s`.`grade`,`s`.`email` FROM `teacher_subject` AS `ts` INNER JOIN `subject` AS `su` ON `su`.`id`=`ts`.`subject_id` INNER JOIN `student` AS `s` ON `s`.`grade`=`su`.`grade` LEFT JOIN `tea_sub_student` AS `tss` ON `tss`.`teacher_subject_id`=`ts`.`id`   WHERE `ts`.`id`= ?  && `s`.`id`!=`tss`.`student_id` ";
+			}else{
+				$query = "SELECT `s`.`id`,`s`.`name_with_initials`,`s`.`contact_number`,`s`.`grade`,`s`.`email` FROM `teacher_subject` AS `ts` INNER JOIN `subject` AS `su` ON `su`.`id`=`ts`.`subject_id` INNER JOIN `student` AS `s` ON `s`.`grade`=`su`.`grade` LEFT JOIN `tea_sub_student` AS `tss` ON `tss`.`teacher_subject_id`=`ts`.`id`   WHERE `ts`.`id`= ?";
+			}
+
+			return $this->con->pure_query($query, [$teacher_subject_id]);
+		}
+
+		// assign new students to the subject
+		public function assign_student_to_subject($teacher_subject_id,$student_ids){
+			try {
+				$this->con->db->beginTransaction();
+
+				foreach ($student_ids as $id) {
+					$result = $this->con->insert("tea_sub_student", ["teacher_subject_id"=>$teacher_subject_id, "student_id"=>$id]);
+					if(!$result){
+						throw new Exception();
+					}
+				}
+
+				$this->con->db->commit();
+				return TRUE;
+			} catch (Exception $e) {
+				$this->con->db->rollBack();
+				return FALSE;
+			}
+		}
+
+		// remove students from the subject
+		public function remove_student_from_subject($teacher_subject_id,$student_ids){
+			try {
+				$this->con->db->beginTransaction();
+
+				foreach ($student_ids as $id) {
+					$result = $this->con->delete("tea_sub_student", ["teacher_subject_id"=>$teacher_subject_id, "student_id"=>$id]);
+					if(!$result){
+						throw new Exception();
+					}
+				}
+
+				$this->con->db->commit();
+				return TRUE;
+			} catch (Exception $e) {
+				$this->con->db->rollBack();
+				return FALSE;
+			}
+		}
+
 		// get teacher and subject data using teacher_subject_id
 		public function get_teacher_subject_info($teacher_subject_id){
 			$query = "SELECT `s`.*,`ts`.`teacher_id` AS `teacher_id` FROM `subject` AS `s` INNER JOIN `teacher_subject` AS `ts` ON `s`.`id`=`ts`.`subject_id` WHERE `ts`.`id`=? ";

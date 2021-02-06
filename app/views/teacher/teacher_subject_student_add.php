@@ -1,36 +1,21 @@
-<?php require_once("../php/common.php"); ?>
-<?php require_once("../php/database.php"); ?> 
-
-<?php 
-	$teacher_subject_info['id'] = $_GET['id'];
-	$teacher_subject_info['grade'] = 12;
-	$teacher_subject_info['code'] = "12MAT";
-	$teacher_subject_info['name'] = "Maths";
-
-	$student_list = array();
-	$student['id'] = "5";
-	$student['name_with_initials'] = "Amal Priyamantha";
-	$student['email'] = "amal@gmail.com";
-	$student['contact_number'] = "0771234567";
-	$student['classroom_id'] = "20";
-	array_push($student_list, $student);
-	$student['id'] = "32";
-	$student['name_with_initials'] = "Pathum Danushka";
-	$student['email'] = "pathum@gmail.com";
-	$student['contact_number'] = "0716363622";
-	$student['classroom_id'] = "21";
-	array_push($student_list, $student);
- ?>
-
-<?php require_once("../templates/header.php"); ?>
-<?php require_once("../templates/aside.php"); ?>
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
-
+	<?php 
+		if(isset($msg) && !empty($msg)){
+			echo "<p class='w-75 text-center p-2 bg-green'>";
+			echo $msg;
+			echo "</p>";
+		}
+		if(isset($error) && !empty($error)){
+			echo "<p class='w-75 text-center p-2 bg-lightred'>";
+			echo $error;
+			echo "</p>";
+		}
+	 ?>
 	<div class="p-5  w-100 d-flex align-items-center flex-col">
 		<h1>Add students</h1>
 		<div class="w-75 d-flex justify-content-end">
-			<a class="t-d-none btn btn-blue-outline" href="<?php echo set_url('pages/teacher_subject_student_list.php?id='.$_GET['id']); ?>">+show students</a>
+			<a class="t-d-none btn btn-blue-outline" href="<?php echo set_url('teacher/subject/student/list/').$teacher_subject_id; ?>">+show students</a>
 		</div>
 	</div>
 	<hr class="w-100 mb-5">
@@ -112,7 +97,7 @@
 			<h2>Selected Students for Add</h2>
 		</div>
 		<hr class="w-100 mb-5">
-		<form action="teacher_subject_student_add.php?id=<?php echo $_GET['id'] ;?>" method="post" class="col-12 d-flex flex-col align-items-center">
+		<form action="<?php echo set_url("teacher/subject/student/add/").$teacher_subject_id; ?>" method="post" class="col-12 d-flex flex-col align-items-center">
 			<input type="hidden" name="classroom_id" value="<?php echo $teacher_subject_info['id']; ?>" >
 			<div class="col-10 mb-5 d-flex flex-wrap" id="selected-set">
 				<!-- add student here -->
@@ -124,5 +109,3 @@
 		</form>
 	</div>
 </div>
-
-<?php require_once("../templates/footer.php"); ?>

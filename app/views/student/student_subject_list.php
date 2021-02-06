@@ -39,7 +39,7 @@
 					}
 					$_SESSION['back'] = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 				}else{
-					echo "<tr><td colspan=9 class='text-center bg-red'>Students not found...</td></tr>";
+					echo "<tr><td colspan=9 class='text-center bg-red'>Subjects Not Found...</td></tr>";
 				}
 				echo "</tbody>";
 				echo "</table>";

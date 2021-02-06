@@ -383,6 +383,22 @@
 			}
 
 			$this->load->model("subjects");
+			if(isset($_POST['submit'])){
+				$student_ids = [];
+				foreach ($_POST as $key => $value) {
+					if( strpos($key, "student-") === 0){
+						array_push($student_ids, $value);
+					}
+				}
+				if(!empty($student_ids)){
+					$result = $this->load->subjects->remove_student_from_subject($teacher_subject_id,$student_ids);
+					if($result){
+						$data['msg'] = "Students Remove Successful.";
+					}else{
+						$data['error'] = "Students Remove Failed";
+					}
+				}
+			}
 			$result_set = $this->load->subjects->get_student_list($teacher_subject_id);
 			if($result_set){
 				$data['student_list'] = $result_set->fetchAll();
@@ -396,7 +412,7 @@
 			}else{
 				$data['teacher_subject_info'] = [];
 			}
-
+			$data['teacher_subject_id'] = $teacher_subject_id;
 			$this->view_header_and_aside();
 			if(isset($_SESSION['role']) && $_SESSION['role']=='teacher'){
 	            $this->load->view("teacher/teacher_subject_student_list_view",$data);
@@ -407,6 +423,49 @@
             $this->load->view("templates/footer");
 		}
 		
+		// add new student to clasroom
+		public function student_add($teacher_subject_id){
+
+
+			$this->load->model("subjects");
+			if(isset($_POST['submit'])){
+				$student_ids = [];
+				foreach ($_POST as $key => $value) {
+					if( strpos($key, "student-") === 0){
+						array_push($student_ids, $value);
+					}
+				}
+				if(!empty($student_ids)){
+					$result = $this->load->subjects->assign_student_to_subject($teacher_subject_id,$student_ids);
+					if($result){
+						$data['msg'] = "Student Assign Successful.";
+					}else{
+						$data['error'] = "Student Asign Failed";
+					}
+				}
+			}
+
+			$result_set = $this->load->subjects->get_student_list_not_subject($teacher_subject_id);
+			if($result_set){
+				$data['student_list'] = $result_set->fetchAll();
+			}else{
+				$data['student_list'] = [];
+			}
+
+			$result_set = $this->load->subjects->get_teacher_subject_info($teacher_subject_id);
+			if($result_set){
+				$data['teacher_subject_info'] = $result_set->fetch();
+			}else{
+				$data['teacher_subject_info'] = [];
+			}
+
+			$data['teacher_subject_id'] = $teacher_subject_id;
+			$this->view_header_and_aside();
+            $this->load->view("teacher/teacher_subject_student_add",$data);
+            $this->load->view("templates/footer");
+
+		}
+
 		//import teacher details using csv files
 		// upload csv files
         public function teacher_upload()

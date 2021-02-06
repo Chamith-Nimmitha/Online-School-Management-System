@@ -650,6 +650,7 @@ table th, td{
 	box-shadow: 5px 0px 5px rgba(122,122,122,0.4);
 	z-index: 2;
 	border-radius: var(--border-radius);
+	padding-top: 30px;
 }
 
 .theme-sub-nav{
