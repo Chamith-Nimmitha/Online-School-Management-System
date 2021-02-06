@@ -4,7 +4,10 @@
 			echo "<p class='d-flex justify-content-center bg-lightgreen fb-green col-8 p-3'>";
 			echo $msg;
 			echo "</p>";
-		}  
+		} 
+		if(isset($del_msg) && !empty($del_msg)){
+			echo "<script>show_snackbar('{$del_msg}')</script>";
+		}
 	?>
 
 	<div class="col-12 d-flex">

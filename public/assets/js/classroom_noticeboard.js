@@ -83,6 +83,7 @@ function update_form(this_id,id){
 	update_form.querySelector("form").dataset.classroom= notice_classroom_id.value;
 	let notice_id = document.querySelector(".notice.d-block").dataset.notice;
 	update_form.querySelector("form").dataset.notice= notice_id;
+	update_form.querySelector("a").href = base_url+"classroom/notice/delete/"+notice_id;
 
 	fetch(`${base_url}api/classroom/notice/${notice_id}`,{
 		method:"GET",
