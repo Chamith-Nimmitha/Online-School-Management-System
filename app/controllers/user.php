@@ -91,6 +91,10 @@
 				$data['msg'] = $_SESSION['login_msg'];
 				unset($_SESSION['login_msg']);
 			}
+			if(isset($_SESSION['del_msg'])){
+				$data['del_msg'] = $_SESSION['del_msg'];
+				unset($_SESSION['del_msg']);
+			}
 
 			$is_classroom_teacher = 0;
 

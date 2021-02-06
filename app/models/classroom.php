@@ -373,41 +373,6 @@
 			}
 		}
 
-		//update classroom subject teacher
-		public function update_subject_teachers($subjects,$teacher_data){
-			require_once(MODELS."timetable.php");
-			// try {
-			// 	$this->con->db->beginTransaction();
-			// 	// update general subjects
-			// 	if(!empty($subjects['General'])){
-			// 		foreach ($subjects['General'] as $subject) {
-			// 			if($subject['teacher_id'] == "None"){
-			// 				$query = "UPDATE `class_subject` SET `teacher_id`= NULL WHERE `classroom_id`=? && `subject_id`=?";
-			// 				$result = $this->con->pure_query($query,[$this->id,$subject['id']]);
-			// 			}else{
-			// 				$result = $this->con->update("class_subject",["teacher_id"=>$subject['teacher_id']], ["classroom_id"=>$this->id,"subject_id"=>$subject['id']]);
-			// 			}
-			// 			if(!$result){
-			// 				throw new PDOException();
-			// 			}
-
-			// 			$t = new TimetableModel();
-			// 			$result = $t->set_by_user_id($subject['tacher_id']);
-			// 			if(!$result){
-			// 				throw new PDOException();
-			// 			}
-			// 			$t->update_timetable($teacher_data);
-			// 		}
-			// 	}
-
-			// 	$this->con->db->commit();
-			// 	return TRUE;
-			// } catch (Exception $e) {
-			// 	$this->con->db->rollBack();
-			// 	return FALSE;
-			// }
-		}
-
 		// register new classroom
 		public function register($data){
 			$result = $this->con->select("classroom",["section_id"=>$data['section_id'],"class"=>$data['class']]);
@@ -531,6 +496,16 @@
 				return FALSE;
 			}
 
+		}
+
+		// delete a existing notice
+		public function delete_notice($notice_id){
+			$result = $this->con->delete("classroom_notice",["id"=>$notice_id]);
+			if($result && $result->rowCount()==1){
+				return TRUE;
+			}else{
+				return FALSE;
+			}
 		}
 		// delete a classroom
 		public function delete_classroom($id){

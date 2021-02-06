@@ -548,30 +548,17 @@
 			$this->load->view("templates/footer");
 		}
 
-		// update classroom subjects
-	// 	public function update_subjects($classroom_id){
-	// 		$subjects = ['General'=>[], 'Optional'=>[], 'Other'=>[]];
-	// 		foreach ($_POST as $key => $value) {
-	// 			$exp = explode("-", $key);
-	// 			if(count($exp)==3){
-	// 				array_push($subjects['General'], ["id"=>$exp[2],"teacher_id"=>$value]);
-	// 			}
-	// 		}
-	// 		$this->load->model("classroom");
-	// 		$result = $this->load->classroom->set_by_id($classroom_id);
-	// 		if(!$result){
-	// 			$_SESSION["error_teacher_update"] = "Classroom Not Found.";
-	// 			header("Location: ". set_url("classroom/timetable/".$classroom_id));
-	// 			return;
-	// 		}
-	// 		$result = $this->load->classroom->update_subject_teachers($subjects);
-	// 		if($result){
-	// 			$_SESSION["info_teacher_update"] = "Update successful.";
-	// 		}else{
-	// 			$_SESSION["error_teacher_update"] = "Update Failed.";
-	// 		}
-	// 		header("Location: ". set_url("classroom/timetable/".$classroom_id));
-	// 	}
+
+		public function delete_notice($notice_id){
+			$this->load->model("classroom");
+			$result = $this->load->classroom->delete_notice($notice_id);
+			if($result){
+				$_SESSION['del_msg'] = "Notice {$notice_id} deleted.";
+			}else{
+				$_SESSION['del_msg'] = "Deletion failed.";
+			}
+			header("Location: ".set_url("dashboard") );
+		}
 	}
 
 ?>
