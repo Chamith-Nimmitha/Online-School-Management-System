@@ -86,6 +86,11 @@
 						</ul>
 					</nav>
 				</li>
+				<li class="nav-item aside-li" id="timetable-li">
+					<a href="<?php echo set_url('teacher/timetable') ?>" class="nav-link">
+						<i class="fas fa-user-clock"></i>Timetable
+					</a>
+				</li>
 				<?php if(isset($interview_panel_id)){ ?>
 				<li id="interview-li" class="nav-item aside-li">
 					<a href="<?php echo set_url('teacher/interview/panel');?>" class="nav-link">

@@ -1,12 +1,12 @@
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 	<?php 
-		if(isset($error)){
+		if(isset($error) && !empty($error)){
 			echo "<p class='bg-red p-3 w-75 text-center fg-white'>";
 			echo $error;
 			echo "</p>";
 		}
-		if(isset($info)){
+		if(isset($info) && !empty($info)){
 			echo "<p class='bg-green p-3 w-75 text-center fg-white'>";
 			echo $info;
 			echo "</p>";	
@@ -15,8 +15,7 @@
 	 ?>
 
 	<div class="mt-5 d-flex flex-col align-items-center">
-		<h2>Subject Timetable</h2>
-		<span>Grade <?php if(isset($teacher_subject_info)){echo $teacher_subject_info['grade']." - ".$teacher_subject_info['name']; } ?></span>
+		<h2>Teacher Timetable</h2>
 	</div>
 
 	<form action="#" method="POST" class="col-12 d-flex flex-col align-items-center">
@@ -24,22 +23,13 @@
 			<legend>Timetable Info</legend>
 			<div class="d-flex w-100">
 				<label class="col-4" for="id">Teacher ID</label>
-				<input class="" type="text" name="id" placeholder="Teacher ID" value="<?php if(isset($teacher_subject_info)){echo $teacher_subject_info['teacher_id'];} ?>" disabled="disabled">
+				<input class="" type="text" name="id" placeholder="Teacher ID" value="<?php if(isset($teacher_info)){echo $teacher_info['id'];} ?>" disabled="disabled">
 			</div>
 			<div class="d-flex w-100">
-				<label class="col-4" for="grade">Grade</label>
-				<input type="text" placeholder="Grade" value="<?php if(isset($teacher_subject_info)){echo $teacher_subject_info['grade'];} ?>" disabled="disabled">
+				<label class="col-4" for="id">Teacher Name</label>
+				<input class="" type="text" name="name" placeholder="Teacher Name" value="<?php if(isset($teacher_info)){echo $teacher_info['name_with_initials'];} ?>" disabled="disabled">
 			</div>
-			<div class="d-flex w-100">
-				<label class="col-4" for="class">Subject Code</label>
-				<input type="text" placeholder="Subject Code" value="<?php if(isset($teacher_subject_info)){echo $teacher_subject_info['code'];} ?>" disabled="disabled">
-				
-			</div>
-			<div class="d-flex w-100">
-				<label class="col-4" for="class">Subject Name</label>
-				<input type="text" placeholder="Subject Name" value="<?php if(isset($teacher_subject_info)){echo $teacher_subject_info['name'];} ?>" disabled="disabled">
-				
-			</div>
+			
 		</fieldset>
 	</form>
 	<div class="col-12 d-flex flex-col mt-5">
@@ -76,11 +66,7 @@
 								$row .= "FREE";
 								$row .= "</td>";
 							}else{
-								if($td[1] == $teacher_subject_info['id']){
-									$row .= "<td class='bg-green'>";
-								}else{
-									$row .= "<td>";
-								}
+								$row .= "<td>";
 								$row .= "{$td[0]}({$td[2]})";
 								$row .= "</td>";
 							}

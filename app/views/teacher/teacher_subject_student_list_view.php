@@ -54,15 +54,15 @@
 									$row = '<tr word-break">';
 									$row .= '<td class=" d-flex justify-content-center">'.$student['id'].'</td>';
 									$row .= '<td class=" word-break">'.$student['name_with_initials'].'</td>';
-									$row .= '<td class=" word-break">'.$student['class'].'</td>';
+									$row .= '<td class=" word-break">'.$student['grade']."-".$student['class'].'</td>';
 									$row .= '<td class=" word-break">'.$student['email'].'</td>';
 									$row .= '<td class="  word-break">'.$student['contact_number'].'</td>';
-									$row .= '<td class="  word-break d-flex justify-content-center align-items-center"><input type="checkbox" name="" id="" value="'.$student['id'].'" ';
+									$row .= '<td class="text-center"><input type="checkbox" name="" id="" value="'.$student['id'].'" ';
 									if($student['classroom_id'] != null){
-										$row .= "checked";
+										$row .= " checked";
 									}
 									$row .= ' disabled="disabled"></td>';
-									$row .= '<td class="d-flex justify-content-center  text-center word-break"><a class="t-d-none p-1 btn btn-blue" href="'.set_url("teacher/subject/timetable").'">profile</a></td>';
+									$row .= '<td class="d-flex align-items-center justify-content-center  text-center word-break"><a class="t-d-none p-1 btn btn-blue" href="'.set_url("profile/student/".$student['id']).'">profile</a></td>';
 									$row .= '</tr>';
 									echo $row;
 								}

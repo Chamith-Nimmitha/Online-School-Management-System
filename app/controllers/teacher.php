@@ -261,6 +261,35 @@
 			header("Location:". set_url("teacher/list"));
 		}
 
+		public function teacher_timetable($teacher_id=NULL){
+			if($teacher_id == NULL){
+				$teacher_id = $_SESSION['user_id'];
+			}
+			$error = "";
+			$this->load->model("teacher");
+			$result = $this->load->teacher->set_by_id($teacher_id);
+
+			if(!$result){
+				$error = "Teacher Not Found.";
+			}else{
+				$data['teacher_info'] = $this->load->teacher->get_data();
+			}
+			$result = $this->load->teacher->get_timetable();
+			if($result){
+				$data['timetable'] = $result;
+			}
+
+			$time_map = ["1"=>"7.50a.m - 8.30a.m", "2"=>"8.30a.m - 9.10a.m", "3"=>"9.10a.m - 9.50a.m", "4"=> "9.50a.m - 10.30a.m", "5"=> "10.50a.m - 11.30a.m", "6"=>"11.30a.m - 12.10p.m", "7"=> "12.10p.m - 12.50p.m", "8"=>"12.50p.m - 1.30p.m"];
+			$day_map = ["1"=>"mon","2"=>"tue","3"=>"wed","4"=>"thu","5"=>"fri"];
+			$data['time_map'] = $time_map;
+			$data['day_map'] = $day_map;
+
+
+			$data['error'] = $error;
+			$this->view_header_and_aside();
+			$this->load->view("teacher/teacher_timetable",$data);
+			$this->load->view("templates/footer");
+		}
 		// teacher subject list
 		public function subject_list($teacher_id=NULL){
 			if(!$this->checkPermission->check_permission("subject","view")){
@@ -450,6 +479,13 @@
 				$data['student_list'] = $result_set->fetchAll();
 			}else{
 				$data['student_list'] = [];
+			}
+
+			$result_set = $this->load->subjects->get_tea_sub_class_list($teacher_subject_id);
+			if($result_set){
+				$data['class_list'] = $result_set->fetchAll();
+			}else{
+				$data['class_list'] = [];
 			}
 
 			$result_set = $this->load->subjects->get_teacher_subject_info($teacher_subject_id);
@@ -648,25 +684,21 @@
 			$data['time_map'] = $time_map;
 			$data['day_map'] = $day_map;
 
-			// get timetable 
-			$this->load->model("timetable");
-			$result = $this->load->timetable->set_by_user_id($teacher_subject_id,"subject");
-			if(!$result){
-				$this->view_header_and_aside();
-				echo "Timetable not found";
-				$this->load->view("templates/footer");
-				return;
-			}
+			$this->load->model("subjects");
+			$result = $this->load->subjects->get_teacher_subject_info($teacher_subject_id);
+			$teacher_id = $result->fetch()['teacher_id'];
+
 
 			// get subject and grade info
-			$this->load->model("subjects");
 			$result = $this->load->subjects->get_teacher_subject_info($teacher_subject_id);
 			if($result){
 				$data['teacher_subject_info'] = $result->fetch();
 			}
-
-			$data['timetable'] = $this->load->timetable->get_timetable();
+			$this->load->model("teacher");
+			$this->load->teacher->set_by_id($teacher_id);
+			$data['timetable'] = $this->load->teacher->get_timetable();
 			$this->view_header_and_aside();
+
 			$this->load->view("teacher/teacher_subject_timetable",$data);
 			$this->load->view("templates/footer");
 

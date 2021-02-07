@@ -90,24 +90,6 @@ class ApiTeacher extends Controller{
 			echo "error";
 		}
 
-		//}
-		/* if(isset($_GET['code'])){
-			$code = $_GET['code'];
-			$this->load->model("subject");
-			$this->load->subject->set_by_code($code);
-			$sub_data=$this->load->subject->get_data();
-			$data1['data'] = $sub_data;
-			echo json_encode($sub_data);
-		}
-		else{
-			echo 'error1';
-		}*/
-
-		/*if(isset($_GET['name'])){
-			$name = $_GET['name'];
-		}*/
-
-
 	}
 
 	public function delete_teacher_subject($subject_id,$teacher_id){
@@ -146,6 +128,34 @@ class ApiTeacher extends Controller{
 
 	}
 
+	public function tea_sub_student(){
+		
+		$student_id = trim($_POST['student_id']);
+		$student_name = trim($_POST['student_name']);
+		$class_id = trim($_POST['class_id']);
+		$teacher_subject_id = trim($_POST['teacher_subject_id']);
+
+		if(empty($student_id)){
+			$student_id = NULL;
+		}
+
+		if(empty($student_name)){
+			$student_id = NULL;
+		}
+		if($class_id == "None"){
+			$class_id = NULL;
+		}
+
+		$this->load->model("subjects");
+		$result = $this->load->subjects->get_student_list_not_subject($teacher_subject_id,$student_id,$student_name,$class_id);
+
+		if($result){
+			echo json_encode( ["success"=>1, "data"=>$result->fetchAll()]);
+		}else{
+			echo json_encode( ["success"=>0, "error"=>"Student Search Failed."]);
+		}
+
+	}
 
 }
 ?>

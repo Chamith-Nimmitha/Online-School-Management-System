@@ -6,6 +6,9 @@
 	  */
 
 	// homepage routes
+
+	$routes['test'] = "home/test";
+
 	$routes[''] = "home/index";
 	$routes['homepage'] = "home/index";
 	$routes['school/contact'] = "home/contact";
@@ -52,6 +55,8 @@
 	$routes['teacher/classroom/attendance'] = "teacher/classroom_attendance";
 	$routes['teacher/interview/panel'] = "teacher/interview_panel_view";
 	$routes['teacher/interviews'] = "teacher/interview_list";
+	$routes['teacher/timetable'] = "teacher/teacher_timetable";
+	$routes['teacher/timetable/$1'] = "teacher/teacher_timetable/$1";
 
 	//classroom routes
 	$routes['classroom/list'] = "classroom/classroom_list";
@@ -140,6 +145,7 @@
 	$routes['api/teacher/subject/delete/$1/$2'] = "apiTeacher/delete_teacher_subject/$1/$2";
 	$routes['api/teacher/subject'] = "apiTeacher/subject";
 	$routes['api/timetable/teacher/conflit'] = "apiTeacher/timetable_conflit";
+	$routes['api/teacher/subject/student/list'] = "apiTeacher/tea_sub_student";
 
 	$routes['api/attendance/classroom/student/search'] = "apiAttendance/classroom_attendance_search";
 	$routes['api/attendance/teacher/search'] = "apiAttendance/teacher_attendance_search";
