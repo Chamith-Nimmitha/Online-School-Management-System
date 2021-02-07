@@ -229,5 +229,9 @@
 		public function __destruct(){
 			unset($this->con);
 		}
+
+		public function insert_data($data){
+			return $result = $this->con->insert("student",$data);
+		}
 	}
  ?>

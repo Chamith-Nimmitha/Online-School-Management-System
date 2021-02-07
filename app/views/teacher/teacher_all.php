@@ -85,6 +85,13 @@
 			
 		</div>
 
+		<center>
+		<div>
+            <a class="btn btn-blue" href = "teacher/csv">Upload Teachers' Details</a>
+			
+		</div>
+		</center>
+
 		<form>
             <input type="button" value="Click Me" onclick="codespeedy()">
         </form>
