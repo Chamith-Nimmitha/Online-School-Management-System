@@ -5,6 +5,19 @@
 		public function __construct() {
 			parent::__construct();
 		}
+
+		// for test
+		public function test(){
+			$teacher_id = 1200001;
+			$this->load->model("teacher");
+			$this->load->teacher->set_by_id($teacher_id);
+			$timetable_data = $this->load->teacher->get_timetable();
+			
+			echo "<pre>";
+			print_r($timetable_data);
+			echo "</pre>";
+		}
+
 		//homepage
 		public function index(){
 			$this->view_header_and_aside();

@@ -77,21 +77,53 @@
 
 		// get student list for teacher_subject
 		public function get_student_list($teacher_subject_id){
-			$query = "SELECT `s`.* FROM `student` AS `s` INNER JOIN `tea_sub_student` AS `tss` ON `s`.`id`=`tss`.`student_id` WHERE `tss`.`teacher_subject_id`=?";
+			$query = "SELECT `s`.*, `c`.`class` FROM `student` AS `s` INNER JOIN `tea_sub_student` AS `tss` ON `s`.`id`=`tss`.`student_id` INNER JOIN `classroom` AS `c` ON `c`.`id`=`s`.`classroom_id` WHERE `tss`.`teacher_subject_id`=?";
 			return $this->con->pure_query($query,[$teacher_subject_id]);
 		}
 
 		// get student list without teacher_subject
-		public function get_student_list_not_subject($teacher_subject_id){
+		public function get_student_list_not_subject($teacher_subject_id, $student_id=NULL, $student_name=NULL,$classroom_id=NULL){
 			$query = "SELECT COUNT(*) AS `count` FROM `tea_sub_student` AS `tss` INNER JOIN `teacher_subject` AS `ts` ON `tss`.`teacher_subject_id`=`ts`.`id` WHERE `tss`.`teacher_subject_id` = ? ";
 			$result = $this->con->pure_query($query, [$teacher_subject_id]);
 			if($result->fetch()['count'] > 0){
 				$query = "SELECT `s`.`id`,`s`.`name_with_initials`,`s`.`contact_number`,`s`.`grade`,`s`.`email` FROM `teacher_subject` AS `ts` INNER JOIN `subject` AS `su` ON `su`.`id`=`ts`.`subject_id` INNER JOIN `student` AS `s` ON `s`.`grade`=`su`.`grade` LEFT JOIN `tea_sub_student` AS `tss` ON `tss`.`teacher_subject_id`=`ts`.`id`   WHERE `ts`.`id`= ?  && `s`.`id`!=`tss`.`student_id` ";
 			}else{
-				$query = "SELECT `s`.`id`,`s`.`name_with_initials`,`s`.`contact_number`,`s`.`grade`,`s`.`email` FROM `teacher_subject` AS `ts` INNER JOIN `subject` AS `su` ON `su`.`id`=`ts`.`subject_id` INNER JOIN `student` AS `s` ON `s`.`grade`=`su`.`grade` LEFT JOIN `tea_sub_student` AS `tss` ON `tss`.`teacher_subject_id`=`ts`.`id`   WHERE `ts`.`id`= ?";
+				$query = "SELECT `s`.`id`,`s`.`name_with_initials`,`s`.`contact_number`,`s`.`grade`,`s`.`email` FROM `teacher_subject` AS `ts` INNER JOIN `subject` AS `su` ON `su`.`id`=`ts`.`subject_id` INNER JOIN `student` AS `s` ON `s`.`grade`=`su`.`grade` LEFT JOIN `tea_sub_student` AS `tss` ON `tss`.`teacher_subject_id`=`ts`.`id`   WHERE `ts`.`id`= ? ";
+			}
+			$params = [$teacher_subject_id];
+			$flag = 0;
+			if($student_id!==NULL){
+				$query .= "&& (`s`.`id` LIKE ? ";
+				array_push($params, "%{$student_id}%");
+				$flag = 1;
+			}
+			if($student_id!==NULL){
+				if($flag === 1){
+					$query .= "|| `s`.`name_with_initials` LIKE ? ) ";
+				}else{
+					$query .= "&& `s`.`name_with_initials` LIKE ? ";
+				}
+				array_push($params, "%{$student_name}%");
+				$flag = 2;
 			}
 
-			return $this->con->pure_query($query, [$teacher_subject_id]);
+			if($classroom_id!==NULL){
+				if($flag === 1){
+					$query .= ") && `s`.`classroom_id`= ? ";
+				}else{
+					$query .= " && `s`.`classroom_id`= ? ";
+				}
+				array_push($params, $classroom_id);
+			}
+
+
+			return $this->con->pure_query($query, $params);
+		}
+
+		// get teacher subject class list
+		public function get_tea_sub_class_list($teacher_subject_id){
+			$query = "SELECT `c`.* FROM `teacher_subject` AS `ts` INNER JOIN `subject` AS `su` ON `ts`.`subject_id`=`su`.`id` INNER JOIN `section` AS `s` ON `su`.`grade`=`s`.`grade` INNER JOIN `classroom` AS `c` ON `s`.`id`=`c`.`section_id` WHERE `ts`.`id`= ? ";
+			return $this->con->pure_query($query,[$teacher_subject_id]);
 		}
 
 		// assign new students to the subject

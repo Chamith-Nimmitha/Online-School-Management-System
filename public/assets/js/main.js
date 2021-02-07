@@ -583,3 +583,61 @@ function show_classroom_filter_option_date(ele_id){
 		full_date.classList.add("d-none");
 	}
 }
+
+if(document.getElementById("subject_student_list")){
+	let student_list = document.getElementById("subject_student_list");
+	student_list.querySelector("#id_search").addEventListener("input",get_student_for_add_subject);
+	student_list.querySelector("#class_search").addEventListener("change",get_student_for_add_subject);
+	student_list.querySelector("#select_all").addEventListener("click",select_all);
+}
+
+function select_all(){
+	let tbody = document.getElementById("tbody");
+	tbody.querySelectorAll("input").forEach((chk)=>{
+		chk.click();
+	})
+
+}
+
+function get_student_for_add_subject(){
+	let student_list = document.getElementById("subject_student_list");
+	let search_id = student_list.querySelector("#id_search").value;
+	let class_id = student_list.querySelector("#class_search").value;
+	let teacher_subject_id_hidden = student_list.querySelector("#teacher_subject_id_hidden").value;
+
+	let fd = new FormData();
+	fd.append("student_id",search_id);
+	fd.append("student_name",search_id);
+	fd.append("class_id",class_id);
+	fd.append("teacher_subject_id",teacher_subject_id_hidden);
+
+	fetch(base_url+"api/teacher/subject/student/list",{
+		method: "POST",
+		body: fd
+	}).then( (res)=> {return res.json();})
+	.then((data)=>{
+		if(data.success == 1){
+			let tbody = document.getElementById("tbody");
+			tbody.innerHTML = "";
+			if(data.data.length >0){
+				for(i in data.data){
+					let student = data.data[i];
+					let row = `<tr class="col-12 word-break">
+						<td class="col-2 d-flex justify-content-center">${student['id']}</td>
+						<td class="col-2 word-break">${student['name_with_initials']}</td>
+						<td class="col-2 word-break">${student['email']}</td>
+						<td class="col-2  word-break">${student['contact_number']}</td>
+						<td class="col-2  word-break d-flex justify-content-center align-items-center"><input type="checkbox" name="assign-${student['id']}" value="${student['id']}" onchange="update_student_selected_set(this)"></td>
+						<td class="d-flex align-items-center justify-content-center col-2 text-center word-break"><a class="t-d-none p-1 btn btn-blue" href="set_url("profile/student/${student['id']})">profile</a></td>
+						</tr>`;
+					tbody.innerHTML += row;
+				}
+			}else{
+				tbody.innerHTML = `<tr class='col-12'>
+							<td colspan=6 class='col-12 bg-red'><p class='text-center w-100'>Students Not found...</p></td>
+							</tr>`;
+			}
+		}
+	})
+	.catch((err)=> {console.log(err)});
+}

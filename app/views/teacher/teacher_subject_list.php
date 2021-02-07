@@ -68,7 +68,7 @@
 							$row .= "<td>".$subjects[$i]['code']."</td>";
 							$row .= "<td class='text-center'>".$subjects[$i]['grade']."</td>";
 							$row .= "<td class='text-center'><a href='/mymvc/teacher/subject/student/list/".$subjects[$i]['teacher_subject_id']."' class='btn btn-blue t-d-none p-1'>List</a></td>";
-							$row .= "<td class='text-center'><a href='teacher_subject_timetable.php' class='btn btn-blue t-d-none p-1'>timetable</a></td>";
+							$row .= "<td class='text-center'><a href='".set_url("teacher/subject/timetable/".$subjects[$i]['teacher_subject_id'])."' class='btn btn-blue t-d-none p-1'>timetable</a></td>";
 							$row .="</tr>";
 							echo $row;
 						}

@@ -45,27 +45,44 @@
 	</form>
 
 
-	<form action="<?php echo set_url('pages/teacher_subject_student_list.php',array('id'=>$_GET['id'])) ?>" method="POST" class="col-12 d-flex flex-col align-items-center">
+	<form method="POST" class="col-11 d-flex flex-col align-items-center" id="subject_student_list">
 		<fieldset class="col-12 p-3">
 			<legend>Student Info</legend>
-			<div class="d-flex  mb-5" id="search_student">
-				<div class="align-items-center d-flex pl-5 ml-5">
-					<label style="width: 150px;" class="pr-3" for="id_search">Student ID/Name</label>
+			<input class="" type="hidden" name="teacher_subject_id_hidden" id="teacher_subject_id_hidden" value="<?php echo $teacher_subject_id; ?>" disabled="disabled">
+			<div class="d-flex  mb-5 col-12" id="search_student">
+				<div class="pl-5 ml-2">
+					<label  class="pb-2" for="id_search">Student ID/Name</label>
 					<input type="text" name="id_search" id="id_search" placeholder="Student ID/Name">
+				</div>
+				<div class="pl-5 ml-2">
+					<label  class="pb-2" for="id_search">Class</label>
+					<select name="class_search" id="class_search">
+						<option value="None">Select A Class</option>
+						<?php 
+							if(isset($class_list) && !empty($class_list)){
+								foreach ($class_list as $class) {
+									echo "<option value='{$class['id']}'>{$class['class']}</option>";
+								}
+							}
+						 ?>
+					</select>
+				</div>
+				<div class="flex-1 d-flex justify-content-end align-items-end">
+					<button type="button" class="btn btn-green" id="select_all">Select All</button>
 				</div>
 			</div>
 			<table class="table-strip-dark col-12">
 				<thead class="col-12">
 					<tr class="col-12">
-						<th class="col-2">ID</th>
-						<th class="col-2">Name</th>
-						<th class="col-2">Email</th>
-						<th class="col-2">Contact Number</th>
-						<th class="col-2">Assign</th>
-						<th class="col-2">Profile</th>
+						<th class="col-2 text-center">ID</th>
+						<th class="col-2 text-center">Name</th>
+						<th class="col-2 text-center">Email</th>
+						<th class="col-2 text-center">Contact Number</th>
+						<th class="col-2 text-center">Assign</th>
+						<th class="col-2 text-center">Profile</th>
 					</tr>
 				</thead>
-				<tbody class="col-12">
+				<tbody class="col-12" id="tbody">
 					<?php 
 						if(isset($student_list) && !empty($student_list)){
 							foreach ($student_list as $student) {
@@ -75,7 +92,7 @@
 								$row .= '<td class="col-2 word-break">'.$student['email'].'</td>';
 								$row .= '<td class="col-2  word-break">'.$student['contact_number'].'</td>';
 								$row .= '<td class="col-2  word-break d-flex justify-content-center align-items-center"><input type="checkbox" name="assign-'.$student['id'].'" value="'.$student['id'].'" onchange="update_student_selected_set(this)"></td>';
-								$row .= '<td class="d-flex justify-content-center col-2 text-center word-break"><a class="t-d-none p-1 btn btn-blue" href="'.set_url("pages/student_profile_view?student_id=".$student['id']).'">profile</a></td>';
+								$row .= '<td class="d-flex justify-content-center align-items-center col-2 text-center word-break"><a class="t-d-none p-1 btn btn-blue" href="'.set_url("profile/student/".$student['id']).'">profile</a></td>';
 								$row .= '</tr>';
 								echo $row;
 							}

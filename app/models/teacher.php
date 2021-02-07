@@ -159,6 +159,37 @@
 			}
 		}
 
+		// get full timetable
+		public function get_timetable(){
+			require_once(MODELS."timetable.php");
+        	$t = new TimetableModel();
+        	$result = $t->set_by_user_id($this->id,"teacher");			
+        	if(!$result){
+        		$t->create($teacher_id,"teacher","FREE");
+        	}
+        	$timetable = $t->get_timetable();
+        	try {
+	        	foreach ($timetable as $day => $periods) {
+	        		foreach ($periods as $period => $task) {
+	        			if($task == "FREE"){
+	        				continue;
+	        			}
+	        			$ext = explode("-", $task);
+	        			$this->con->get(['name']);
+	        			$result = $this->con->select("subject",['id'=>$ext[2]]);
+	        			if(!$result){
+	        				throw new PDOException();
+	        			}
+	        			$timetable[$day][$period] = ["{$ext[0]}-{$ext[1]}",$ext[2],$result->fetch()['name']];
+
+	        		}
+	        	}
+        		return $timetable;
+        	} catch (Exception $e) {
+        		return FALSE;
+        	}
+		}
+
         // get teacher specific timetable data
         public function get_timetable_data($teacher_id,$day,$period){
 
