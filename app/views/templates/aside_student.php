@@ -12,57 +12,22 @@
 								<a href="<?php echo set_url('student/attendance'); ?>" class="nav-link">
 									<i class="far fa-calendar-check"></i>Student Attendance
 								</a>
-								<button class="toggle-button" target="attendance-nav">
-									<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px" alt="">
-								</button>
-
-								<nav class="nav sub-nav no-collapsed" id="attendance-nav">
-									<ul class="d-flex flex-col">
-										<li class="nav-item"><a href="<?php echo set_url('student/attendance/'.$_SESSION['user_id']); ?>" parent-li="attendance-li" class="nav-link">Students Attendance</a></li>
-									</ul>
-								</nav>
+								
 							</li>
 							<li class="nav-item aside-li" id="timetable-li">
 								<a href="<?php echo set_url('student/timetable/view');?>" class="nav-link">
 									<i class="fas fa-user-clock"></i>Student Timetable
 								</a>
-								<button class="toggle-button" target="timetable-nav">
-									<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px" alt="">
-								</button>
-								<nav class="nav sub-nav no-collapsed" id="timetable-nav">
-									<ul class="d-flex flex-col">
-										<li class="nav-item"><a href="<?php echo set_url('student/timetable/view');?>" parent-li="timetable-li" class="nav-link">Students Timetable</a></li>
-									</ul>
-								</nav>
 							</li>
 							<li class="nav-item aside-li" id="classroom-li">
 								<a href="<?php echo set_url('classroom/student/list') ?>" class="nav-link">
 									<i class="fas fa-store-alt"></i>My Classroom
 								</a>
-								<button class="toggle-button" target="classroom-nav">
-									<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px" alt="">
-								</button>
-
-								<nav  id="classroom-nav" class="nav sub-nav no-collapsed">
-									<ul class="d-flex flex-col">
-										<li class="nav-item"><a href="<?php echo set_url('classroom/student/list') ?>" class="nav-link" parent-li="classroom-li">Student list</a></li>
-									</ul>
-								</nav>
 							</li>
 							<li class="nav-item aside-li" id="subject-li">
 								<a href="<?php echo set_url('student/subject/list') ?>" class="nav-link">
 									<i class="fas fa-book"></i>My Subjects
 								</a>
-								<button class="toggle-button" target="subject-nav">
-									<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px" alt="">
-								</button>
-
-								<nav class="nav sub-nav no-collapsed" id="subject-nav">
-									<ul class="d-flex flex-col">
-										<li class="nav-item">
-											<a href="<?php echo set_url('student/subject/list') ?>" class="nav-link" parent-li="subject-li">Subjects list</a></li>
-									</ul>
-								</nav>
 							</li>
 							
 							<li class="nav-item aside-li">
@@ -75,16 +40,6 @@
 									<i class="fas fa-poll"></i>Exam Result
 									<!-- <i class="fas fa-book-dead"></i>Exam Result -->
 								</a>
-								<button class="toggle-button" target="exam-result-nav">
-									<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px" alt="">
-								</button>
-
-								<nav class="nav sub-nav no-collapsed" id="exam-result-nav">
-									<ul class="d-flex flex-col">
-										<li class="nav-item"><a href="<?php echo set_url('student/exam'); ?>" class="nav-link" parent-li="exam-result-li">Results</a></li>
-										<li class="nav-item"><a href="<?php echo set_url('pages/TComplaints.php') ?>" class="nav-link"  parent-li="exam-result-li">Result Complaints</a></li>
-									</ul>
-								</nav>
 							</li>
 						</ul>
 					</nav>

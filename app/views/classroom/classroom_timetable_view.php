@@ -30,7 +30,6 @@
 						
 
 				<?php 
-
 					if(isset($timetable_data) && !empty($timetable_data)){
 						for ($i=1; $i <= 9; $i++) { 
 
@@ -44,11 +43,7 @@
 							$row .= "<th>".$time_map[$period]."</th>";
 							for ($j=1; $j <=5 ; $j++) { 
 								$row .= "<td class='text-center'>";
-								if( $timetable_data[$day_map[$j]][$period] != "FREE"){
-									$row .=  substr($timetable_data[$day_map[$j]][$period], strlen($grade)+3);
-								}else{
-									$row .= $timetable_data[$day_map[$j]][$period];
-								}
+								$row .= $timetable_data[$day_map[$j]][$period];
 								$row .= "</td>";
 							}
 						$row .= "</tr>";
@@ -65,11 +60,9 @@
 	
 			</form>
 			<br>
-			<center>
-			    <div>
-                    <a class="btn btn-blue" onClick="window.print()">Download as a PDF</a>
-		        </div>
-			</center>	
+		    <div class="float-right">
+                <a class="btn btn-blue" onClick="window.print()">Download as a PDF</a>
+	        </div>
 		</div>
 	</div>
 </div>

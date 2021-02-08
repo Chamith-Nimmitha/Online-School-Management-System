@@ -66,8 +66,10 @@
 				$this->load->view("templates/footer");
 				return;
 			}
-			$con = new Database();
-			$result = $con->select("student",array("parent_id"=>$_SESSION['user_id']));
+			
+			$this->load->model("parent");
+			$result = $this->load->parent->set_by_id($_SESSION['user_id']);
+			$result = $this->load->parent->get_student_list();
 			if($result){
 				$data['students'] = $result->fetchAll();
 			}else{

@@ -378,13 +378,8 @@
             if(!$result){
             	$timetable_data = FALSE;
             }
-            $timetable = $this->load->classroom->get_timetabel_object();
-            if(!$timetable){
-            	$timetable_data = FALSE;
-
-            }else{
-	            $timetable_data =$timetable->get_timetable();
-            }
+            $timetable = $this->load->classroom->get_converted_timetable();
+            $timetable_data =$timetable;
 
             $data = [
                 'timetable_data'=>$timetable_data,
