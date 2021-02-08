@@ -17,5 +17,6 @@
 	<script src="<?php echo set_url('public/assets/js/draw_chart.js');?>"></script>
 	<script src="<?php echo set_url('public/assets/js/timetable.js');?>"></script>
 	<script src="<?php echo set_url('public/assets/js/classroom_noticeboard.js');?>"></script>
+	<script src="<?php echo set_url('public/assets/js/image_viewer.js');?>"></script>
 </body>
 </html>

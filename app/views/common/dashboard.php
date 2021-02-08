@@ -128,9 +128,9 @@
 						foreach ($classroom_notices as $notice) {
 							for($i=0; $i<count($notice['notices']);$i++,$j++) {
 								if($j === 0){
-									echo '<div data-index="'.($i+$j).'" data-notice="'.$notice['notices'][$i]["id"].'" class="notice d-block col-12">';
+									echo '<div data-index="'.($j).'" data-notice="'.$notice['notices'][$i]["id"].'" class="notice d-block col-12">';
 								}else{
-									echo '<div data-index="'.($i+$j).'" data-notice="'.$notice['notices'][$i]["id"].'" class="notice col-12 d-none">';
+									echo '<div data-index="'.($j).'" data-notice="'.$notice['notices'][$i]["id"].'" class="notice col-12 d-none">';
 								}
 								$flag=1;
 								?>
@@ -145,7 +145,7 @@
 									<div class="noticeboard_content_wrapper">
 										<div id="noticeboard_content" class="col-12">
 											<?php if(!empty($notice['notices'][$i]['image'])){ ?>
-											<img src="<?php echo set_url("public/assets/img/classroom_notice/".$notice['notice'][$i]['image']); ?>"  alt="">
+											<img src="<?php echo set_url("public/assets/img/classroom_notice/".$notice['notices'][$i]['image']); ?>" onClick="open_image_viewer(this);" alt="">
 											<?php } ?>
 											<div class="content">
 												<?php echo $notice['notices'][$i]['description']; ?>
@@ -188,9 +188,9 @@
 							foreach ($classroom_notices as $notice) {
 								for($i=0; $i< count($notice['notices']); $i++,$j++) {
 									if($j==0){
-										echo '<button data-index="'.($i+$j).'" class="notice_active"></button>';
+										echo '<button data-index="'.($j).'"  class="notice_active"></button>';
 									}else{
-										echo '<button data-index="'.($i+$j).'"></button>';
+										echo '<button data-index="'.($j).'"></button>';
 									}
 								}
 						}
