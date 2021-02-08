@@ -93,6 +93,7 @@
 	$routes['student/attendance/report'] = "student/attendance_report";
 	$routes['student/subject/list'] = "student/subject_list";
 	$routes['student/view/parent/$2'] = "user/profile_view/$1/$2";
+	$routes['student/csv'] = "student/student_upload";
 
 	//admin route --> only admin can access
 	$routes['userrole'] = "userrole/permission";
