@@ -36,6 +36,7 @@
 						<th>CONTACT NUMBER</th>
 					    <th>NIC</th>
 					    <th>Subjects</th>
+					    <th>Profile</th>
 					   <?php
 					   	if($_SESSION['role']==='admin'){
 					   		echo '
@@ -62,6 +63,7 @@
 				$row .= "<td>".$result['nic']."</td>";
 
 				$row .= "<td class='text-center'><a href=". set_url('teacher/subject/list/').$result['id']." class='btn btn-blue t-d-none p-1'>List</a>";
+				$row .= "<td class='text-center'><a href=". set_url('profile/teacher/').$result['id']." class='btn btn-blue t-d-none p-1'>Profile</a>";
 				if($_SESSION['role']==='admin'){
 					$row .= "<td class='text-center'><a href=". set_url('teacher/update/').$result['id']." class='btn btn-blue t-d-none p-1'>Update</a>";
 					$row .= "<td class='text-center'><a title='Delete' href=". set_url('teacher/delete/').$result['id']." onclick=\"show_dialog(this,'Delete message','Are you sure to delete?')\"><i class='fas fa-trash delete-button'></i></a>";

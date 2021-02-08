@@ -41,6 +41,7 @@ class ApiTeacher extends Controller{
 				$row .= "<td>".$result['nic']."</td>";
 
 				$row .= "<td class='text-center'><a class='btn btn-blue t-d-none p-1' href=". set_url('teacher/subject/list/').$result['id'].">List</a>";
+				$row .= "<td class='text-center'><a class='btn btn-blue t-d-none p-1' href=". set_url('profile/teacher/').$result['id'].">Profile</a>";
 				if($_SESSION['role']==='admin'){
 					$row .= "<td class='text-center'><a class='btn btn-blue t-d-none p-1' href=". set_url('teacher/update/').$result['id'].">Update</a>";
 					$row .= "<td class='text-center'><a title='Delete' href=". set_url('teacher/delete/').$result['id']." onclick=\"show_dialog(this,'Delete message','Are you sure to delete?')\"><i class='fas fa-trash delete-button'></i></a>";
