@@ -21,7 +21,7 @@
 				<div class="col-4 flex-col  d-none d-md-flex align-items-center"  style=" padding-top: 100px;background: #ccf;">
 					<div  class="col-12">
 						<div  style="position: relative;">
-							<img src="<?php echo set_url('public/uploads/admin_profile_photo/'.$_SESSION['profile_photo']); ?>" alt="profile photo" onclick="upload_profile_photo('profile-photo')"  class="w-100">
+							<img src="<?php echo set_url('public/uploads/admin_profile_photo/'.$_SESSION['profile_photo']); ?>" alt="profile photo" onClick="open_image_viewer(this);" class="w-100">
 							<label for="profile-photo" class="p-2" style="position: absolute; bottom: 0px; right: 0px;">
 								<img src="<?php echo set_url("public/assets/img/camera.png"); ?>" alt="upload photo" style="width: 50px; height: 50px; cursor: pointer;">
 							</label>

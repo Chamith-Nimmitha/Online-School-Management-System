@@ -1,0 +1,102 @@
+ <style>   
+        #image-viewer{
+            position: fixed;
+            width: 100%;
+            min-height: 100vh;
+            max-height: 100vh;
+            top: 0;
+            left: 0;
+            background: rgba(0,0,0,1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            z-index: -10001;
+            overflow-x: scroll;
+        }
+        
+        #image-close-button-wrapper{
+            width: 100%;
+            text-align: right;
+            position: relative;
+        }
+        
+        #image-close-button-circle{
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 150px;
+            height: 150px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translateX(50%) translateY(-50%);
+            outline: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        #image-close-button-circle:hover{
+            background: red;
+            color: white;
+        }
+
+        #image-close-button-wrapper span{
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            pointer-events: none;
+            color: white;
+            font-weight: 900;
+            font-size: 20px;
+        }
+        
+        
+        #image-viewer-image{
+            display: flex;
+            flex-direction: column;
+            margin: auto;
+            align-items: center;
+            width: 80%;
+            overflow-y: scroll;
+            padding-top: 50px;
+            flex: 1;
+        }
+        #image-viewer-image img{
+            max-width: 100%;
+            height: 100%;
+        }
+        
+        .close-image-viewer{
+            animation: close_iv 0.8s forwards;
+        }
+        
+        .open-image-viewer{
+            animation: open_iv 0.8s forwards;
+        }
+        
+        @keyframes close_iv{
+            0%{ opacity: 1;z-index: 10001;}
+            80%{ opacity: 0;z-index: 10001;}
+            100%{ opacity: 0; z-index: -10001;}
+        }
+        @keyframes open_iv{
+            0%{ opacity: 0;z-index: -10001;}
+            20%{ opacity: 0;z-index: 10001;}
+            100%{ opacity: 1; z-index: 10001;}
+        }
+    </style>
+
+
+    <div id="image-viewer">
+       <div id="image-close-button-wrapper">
+            <button id="image-close-button-circle"></button>
+           <span>X</span>
+       </div>
+        <div id="image-viewer-image">
+            <img src="./Ws3.jpg" alt="">
+        </div>
+    </div>
+
+    <script>
+        
+    </script>

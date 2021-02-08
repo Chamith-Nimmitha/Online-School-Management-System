@@ -52,7 +52,7 @@
       </div>
       
       <div class="justify-content-center align-items-center">
-        <img src="<?php if(!empty($header)){echo set_url('public/assets/img/').$header['image'];} ?>" alt="school1" width=430px height=200px>
+        <img src="<?php if(!empty($header)){echo set_url('public/assets/img/').$header['image'];} ?>" alt="school1" width=430px height=200px onClick="open_image_viewer(this)">
       </div>
 
       <div class="text-justify fs-14">
@@ -72,21 +72,21 @@
         <div class="col-5 border b-rad p-3 m-2">
 
           <div class="row justify-content-center align-items-center bg-navyblue1 fs-white">
-            <p>Our badge</p>
+            <p>School Badge</p>
           </div>
 
           <div class="row justify-content-center align-items-center mt-1">
-            <img src="<?php if(!empty($header)){echo set_url('public/assets/img/').$header['badge'];} ?>" alt="scl" width=100px height=100px>
+            <img src="<?php if(!empty($header)){echo set_url('public/assets/img/').$header['badge'];} ?>" alt="scl" width=100px height=100px onClick="open_image_viewer(this)">
           </div>
         </div>
 
         <div class="col-5 border b-rad p-3 m-2">
           <div class="row justify-content-center align-items-center bg-navyblue1 fs-white">
-            <p>Our Flag</p>
+            <p>School Flag</p>
           </div>
 
           <div class=" row justify-content-center align-items-center mt-1 ">
-            <img src="<?php if(!empty($header)){echo set_url('public/assets/img/').$header['flag'];} ?>" alt="flag" width=100px height=100px>
+            <img src="<?php if(!empty($header)){echo set_url('public/assets/img/').$header['flag'];} ?>" alt="flag" width=100px height=100px onClick="open_image_viewer(this)">
           </div>
         </div>
 
@@ -108,7 +108,7 @@
       <div class="notice-board col-12 h-40 border b-rad bg-navyblue1 ">
 
         <div class="row justify-content-center align-items-start fs-white">
-          <h3>Notice Board</h3>
+          <h3>School Notice Board</h3>
         </div>
 
           <?php
@@ -136,7 +136,7 @@
                   </div>
 
                   <div class="col-6 h-30 fs-12 border b-rad bg-white  ">
-                    <img src="'.set_url('public/assets/img/notice_images/'); if(!empty($notice[$x."_image"])){echo $notice[$x."_image"];}  echo '" alt="imgg" width=200px height=285px>
+                    <img src="'.set_url('public/assets/img/notice_images/'); if(!empty($notice[$x."_image"])){echo $notice[$x."_image"];}  echo '" alt="imgg" width=200px height=285px onClick="open_image_viewer(this)">
 
                   </div>
 

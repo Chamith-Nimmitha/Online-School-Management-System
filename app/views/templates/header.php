@@ -20,6 +20,7 @@
 	<?php require_once(ASSETS."gadgets/dialog_box.html"); ?>
 	<?php require_once(ASSETS."gadgets/snackbar.html"); ?>
 	<?php require_once(ASSETS."gadgets/input.html"); ?>
+	<?php require_once(ASSETS."gadgets/image_viewer.html"); ?>
 	<div class="container bg-lightgray">
 		<div class="row theme-header sticky-top" id="top-header">
 			<div class="school-badge col-4 col-md-3 justify-content-center pt-2">
