@@ -54,6 +54,7 @@
 	$routes['teacher/attendance/$1'] = "teacher/attendance/$1";
 	$routes['teacher/classroom/attendance'] = "teacher/classroom_attendance";
 	$routes['teacher/interview/panel'] = "teacher/interview_panel_view";
+	$routes['teacher/interview/panel/$1'] = "teacher/interview_panel_view/$1";
 	$routes['teacher/interviews'] = "teacher/interview_list";
 	$routes['teacher/timetable'] = "teacher/teacher_timetable";
 	$routes['teacher/timetable/$1'] = "teacher/teacher_timetable/$1";

@@ -768,7 +768,7 @@
 		}
 
 		// interview panel view
-		public function interview_panel_view(){
+		public function interview_panel_view($teacher_id=NULL){
 			if(!$this->checkPermission->check_permission("interview_panel","view")){
 				$this->view_header_and_aside();
 				$this->load->view("common/error");
@@ -776,8 +776,12 @@
 				return;
 			}
 
+			if($teacher_id == NULL){
+				$teacher_id = $_SESSION['user_id'];
+			}
+
 			$this->load->model("teacher");
-			$this->load->teacher->set_by_id($_SESSION['user_id']);
+			$this->load->teacher->set_by_id($teacher_id);
 			$interview_panel_id = $this->load->teacher->get_interview_panel_id();
 
 			$this->load->model("interviewPanel");
