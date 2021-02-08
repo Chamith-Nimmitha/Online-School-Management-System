@@ -86,25 +86,67 @@ footer{
 	width: 100%;
 }
 
-.s-item{
+.s-item-wrapper{
 	min-width: 200px;
 	max-width: 25%;
-	transition: background-color 0.4s linear;
-	transition: color 0.2s linear;
+	background: linear-gradient(to right, rgba(100,100,200,0.1), rgba(100,100,200,0.5));
+	position: relative;
+	perspective: 1000px;
+	margin: 5px;
+	border-radius: 10px;
 }
 
-.s-item:hover{
-	background-color: #11698e;
-	color: white;
+.s-item{
+	transition: background-color 0.2s linear !important	;
+	transition: color 0.1s linear !important;
+	transition: border-color 2s linear !important;
+	border-radius: 10px;
+	margin: 0;	
+	padding-top: 50px;
+	font-size: 16px;
+	border: 1px solid transparent;
+}
+
+.s-item i{
+	top: 20px;	
+	position: absolute;
+	transform-style: preserve-3d;
+	font-size: 30px;
+}
+
+.s-item-wrapper:hover > .s-item i{
+	transform: translateZ(100px);
+	font-size: 35px;
+}
+.s-item-wrapper:hover > .s-item{
+	animation: border_animation 4s infinite;
+	color: darkblue;
+}
+
+@keyframes border_animation{
+	0%{
+		border-bottom-color: darkblue;
+		border-right-color: darkblue;
+		border-top-color: white;
+		border-left-color: white;
+	}
+	50%{
+		border-top-color: darkblue;
+		border-left-color: darkblue;
+		border-bottom-color: white;
+		border-right-color: white;
+	}
+	100%{
+		border-bottom-color: darkblue;
+		border-right-color: darkblue;
+		border-top-color: white;
+		border-left-color: white;
+	}
 }
 
 .l-item{
 	min-width: 300px;
 	max-width: 25%;
-}
-
-.statistics-flex > div{
-	border-radius: 10px;
 }
 
 #user-nav{
@@ -357,6 +399,25 @@ footer{
 }
 
 /*END OF NOTICE BOARD STYLE*/
+
+/* PROFILE PAGE STYLES*/
+.profile-links{
+	padding: 10px;
+	margin-bottom: 5px;	
+	background: transparent;
+	color: darkblue;
+	border-radius: 5px;
+	text-decoration: none;
+	text-align: center;
+	border: 2px solid darkblue;
+
+}
+.profile-links:hover{
+	background: darkblue;
+	color: white;
+}
+/* END OF PROFILE PAGE STYLES*/
+
 
 @media  (min-width:0px){
 	

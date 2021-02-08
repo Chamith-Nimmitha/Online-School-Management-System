@@ -37,28 +37,28 @@
 
 				</div>
 				<div style="background: #88f;" class="col-12 col-md-8 d-flex flex-col align-items-center">
-						<div class="form-group ">
-							<label for="name-with-initials">Name With Initials</label>
+						<div class="d-flex w-100">
+							<label class="col-4" for="name-with-initials">Name With Initials</label>
 							<input type="text" id="name-with-initials" name="name-with-initials" placeholder="Name With Initials" value="<?php if(isset($result)){echo htmlspecialchars(stripslashes($result['name_with_initials']));} ?>" oninput="validate_user_input(this,1,50,1)" <?php if(!$is_admin){echo "disabled='disabled'";}?>>
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>
-						<div class="form-group ">
-							<label for="first-name">First Name</label>
+						<div class="d-flex w-100">
+							<label class="col-4" for="first-name">First Name</label>
 							<input type="text" id="first-name" name="first-name" placeholder="First Name" value="<?php if(isset($result)){ echo htmlspecialchars(stripslashes($result['first_name']));} ?>" oninput="validate_user_input(this,1,20,1)"  <?php if(!$is_admin){echo "disabled='disabled'";}?>>
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>
-						<div class="form-group ">
-							<label for="middle-name">Middle Name</label>
+						<div class="d-flex w-100">
+							<label class="col-4" for="middle-name">Middle Name</label>
 							<input type="text" id="middle-name" name="middle-name" placeholder="Middle Name" value="<?php if(isset($result)){ echo htmlspecialchars(stripslashes($result['middle_name']));} ?>" oninput="validate_user_input(this,0,50,0)"  <?php if(!$is_admin){echo "disabled='disabled'";}?>>
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>
-						<div class="form-group ">
-							<label for="last-name">Last Name</label>
+						<div class="d-flex w-100">
+							<label class="col-4" for="last-name">Last Name</label>
 							<input type="text" id="last-name" name="last-name" placeholder="Last Name" value="<?php if(isset($result)){echo  htmlspecialchars(stripslashes($result['last_name']));} ?>" oninput="validate_user_input(this,1,20,1)"  <?php if(!$is_admin){echo "disabled='disabled'";}?>>
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>
-						<div class="form-group ">
-							<label for="grade">Grade</label>
+						<div class="d-flex w-100">
+							<label class="col-4" for="grade">Grade</label>
 							<select name="grade" id="grade"  <?php if(!$is_admin){echo "disabled='disabled'";}?>>
 								<option value="1" <?php if(isset($result) && $result['grade']== '1'){ "selected='selected'";} ?>>1</option>
 								<option value="2" <?php if(isset($result) && $result['grade']== '2'){echo "selected='selected'";} ?>>2</option>
@@ -75,25 +75,25 @@
 								<option value="13" <?php if(isset($result) && $result['grade']== '13'){echo "selected='selected'";} ?>>13</option>
 							</select>
 						</div>
-						<div class="form-group ">
-							<label for="gender">Gender</label>
-							<div class="d-flex">
-								<label for="male" class="w-25"><input type="radio" id="male" name="gender" value="M" <?php if(isset($result) && $result['gender'] == "M"){echo "checked='checked'";} ?>  <?php if(!$is_admin){echo "disabled='disabled'";}?>>Male</label>
-								<label for="female" class="w-25"><input type="radio" id="female" name="gender" value="F" <?php if(isset($result) && $result['gender'] == "F"){echo "checked='checked'";} ?>  <?php if(!$is_admin){echo "disabled='disabled'";}?>>Female</label>
+						<div class="d-flex w-100">
+							<label class="col-4" for="gender">Gender</label>
+							<div class="d-flex col-8 align-items-center">
+								<label class="col-4 d-flex align-items-center" for="male" ><input type="radio" class="mr-2" id="male" name="gender" value="M" <?php if(isset($result) && $result['gender'] == "M"){echo "checked='checked'";} ?>  <?php if(!$is_admin){echo "disabled='disabled'";}?>>Male</label>
+								<label class="col-4  d-flex align-items-center" for="female" ><input type="radio" id="female" class="mr-2" name="gender" value="F" <?php if(isset($result) && $result['gender'] == "F"){echo "checked='checked'";} ?>  <?php if(!$is_admin){echo "disabled='disabled'";}?>>Female</label>
 							</div>
 						</div>
-						<div class="form-group ">
-							<label for="address">Address</label>
+						<div class="d-flex w-100">
+							<label class="col-4" for="address">Address</label>
 							<input type="text" name="address" id="address" placeholder="Address" value="<?php if(isset($result)){echo htmlspecialchars(stripslashes($result['address']));} ?>"required="required" oninput="validate_user_input(this,0,100,1)" <?php if(!$editable){ echo "disabled='disabled'";} ?>>
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>
-						<div class="form-group ">
-							<label for="email">Email</label>
+						<div class="d-flex w-100">
+							<label class="col-4" for="email">Email</label>
 							<input type="text" name="email" id="email" placeholder="Email" value="<?php if(isset($result)){echo  htmlspecialchars(stripslashes($result['email']));} ?>" oninput="validate_email(this,0,100,1)" <?php if(!$editable){ echo "disabled='disabled'";} ?>>
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>
-						<div class="form-group ">
-							<label for="contact-number">Contact Number</label>
+						<div class="d-flex w-100">
+							<label class="col-4" for="contact-number">Contact Number</label>
 							<input type="text" name="contact-number" id="contact-number" placeholder="Contact Number" value="<?php if(isset($result)){echo $result['contact_number'];} ?>" oninput="validate_contact_number(this)" <?php if(!$editable){ echo "disabled='disabled'";} ?>>
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>
@@ -104,5 +104,27 @@
 						<?php } ?>
 				</div>
 			</form>
+	</div>
+
+	<div class="col-12 mt-5 d-flex flex-col align-items-center">
+		<h2 class="mb-5">Links</h2>
+
+		<div class="col-8 d-flex flex-col">
+			<a href="<?php echo set_url("student/attendance/".$result['id']); ?>" class="profile-links">
+				<p>Attendance</p>
+			</a>
+			<a href="<?php echo set_url("classroom/student/list/".$result['classroom_id']); ?>" class="profile-links">
+				<p>Classroom</p>
+			</a>
+			<a href="<?php echo set_url("student/exam/".$result['id']); ?>" class="profile-links">
+				<p>Exam Report</p>
+			</a>
+			<a href="<?php echo set_url("profile/parent/".$result['parent_id']); ?>" class="profile-links">
+				<p>Parent Profile</p>
+			</a>
+			<a href="<?php echo set_url("student/timetable/view/".$result['id']); ?>" class="profile-links">
+				<p>Timetable</p>
+			</a>
+		</div>
 	</div>
 </div>

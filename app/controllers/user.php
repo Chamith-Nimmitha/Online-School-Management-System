@@ -97,6 +97,9 @@
 			}
 
 			$is_classroom_teacher = 0;
+			$show_notice_board = 0;
+			$statics_link_show = 0;
+			$statics_link_show = 1;
 
 			if($_SESSION['role'] == "teacher"){
 				$this->load->model("teacher");
@@ -104,11 +107,14 @@
 				$cls = $this->load->teacher->get_classroom_object();
 				if($cls){
 					$data['notice_classroom_id'] = $cls->get_id();
+					$data['grade'] = $cls->get_grade();
+					$data['class'] = $cls->get_class();
 					$result = $cls->get_notices();
-					if($result){
-						$data['classroom_notices'] = $result->fetchAll();
-						$is_classroom_teacher = 1;
+					if($result  && $result->rowCount() >0){
+						$data['classroom_notices'][0] = ["notices"=>$result->fetchAll(),"grade"=>$cls->get_grade(),"class"=>$cls->get_class()];
 					}
+					$is_classroom_teacher = 1;
+					$show_notice_board = 1;
 				}
 			}else if($_SESSION['role'] == "student"){
 				$this->load->model("student");
@@ -116,13 +122,45 @@
 				$cls = $this->load->student->get_classroom_object();
 				if($cls){
 					$data['notice_classroom_id'] = $cls->get_id();
+					$data['grade'] = $cls->get_grade();
+					$data['class'] = $cls->get_class();
 					$result = $cls->get_notices();
-					if($result){
-						$data['classroom_notices'] = $result->fetchAll();
+					if($result && $result->rowCount() >0){
+						$data['classroom_notices'][0] = ["notices"=>$result->fetchAll(),"grade"=>$cls->get_grade(),"class"=>$cls->get_class()];
 					}
 				}
+				$show_notice_board = 1;
+				$statics_link_show = 0;
+			}else if($_SESSION['role'] == "parent"){
+				$this->load->model("parent");
+				$this->load->model("student");
+				$result = $this->load->parent->set_by_id($_SESSION['user_id']);
+				$result = $this->load->parent->get_student_list();
+				if($result){
+					$students = $result->fetchAll();
+					$classroom_notices = [];
+					foreach ($students as $student) {
+						$cls = $this->load->student->set_by_id($student['id']);
+						$cls = $this->load->student->get_classroom_object();
+						if($cls){
+							$data['grade'] = $cls->get_grade();
+							$data['class'] = $cls->get_class();
+							$result = $cls->get_notices();
+							if($result  && $result->rowCount() >0){
+								array_push($classroom_notices,["notices"=>$result->fetchAll(),"grade"=>$cls->get_grade(),"class"=>$cls->get_class()]);
+							}
+						}
+					}
+					$data['classroom_notices'] = $classroom_notices;
+				}
+				$show_notice_board = 1;
+				$statics_link_show = 0;
 			}
+
+
 			$data['is_classroom_teacher'] = $is_classroom_teacher;
+			$data['show_notice_board'] = $show_notice_board;
+			$data['statics_link_show'] = $statics_link_show;
 			$this->view_header_and_aside();
 			$this->load->view("common/dashboard", $data);
 			$this->load->view("templates/footer");
@@ -130,15 +168,15 @@
 
 		// user can  edit,view own profile
 		// admin can edit,view all profiles
-		public function profile($role="",$teacher_id=""){
+		public function profile($role="",$user_id=""){
 			if(!$this->checkPermission->check_permission("profile","view")){
 				$this->view_header_and_aside();
 				$this->load->view("common/error");
 				$this->load->view("templates/footer");
 				return;
 			}
-			if( empty($teacher_id)){
-				$teacher_id = $_SESSION['user_id'];
+			if( empty($user_id)){
+				$user_id = $_SESSION['user_id'];
 				$role = $_SESSION['role'];
 			}
 			if($_SESSION['role'] === "admin"){
@@ -152,7 +190,7 @@
 				$editable = FALSE;
 			}
 			$this->load->model($role);
-			$result = $this->load->{$role}->set_by_id($teacher_id);
+			$result = $this->load->{$role}->set_by_id($user_id);
 			if(!$result){
 				$this->view_header_and_aside();
 				$this->load->view("common/error");
@@ -163,7 +201,7 @@
 
 			// if user update profile
 			if(isset($_POST['submit'])){
-				if(!$this->checkPermission->check_permission("profile","update") || ( !$is_admin &&  ($_SESSION['user_id'] != $teacher_id))){
+				if(!$this->checkPermission->check_permission("profile","update") || ( !$is_admin &&  ($_SESSION['user_id'] != $user_id))){
 					$this->view_header_and_aside();
 					$this->load->view("common/error");
 					$this->load->view("templates/footer");
@@ -278,7 +316,7 @@
 				if(empty($field_errors)){
 					if(isset($_FILES['profile-photo']['tmp_name']) && !empty($_FILES['profile-photo']['tmp_name'])){
 						$target = BASEPATH."public/uploads/{$role}_profile_photo/";
-						$rename = $teacher_id;
+						$rename = $user_id;
 						$data['profile_photo'] = $rename . "." .strtolower(pathinfo($_FILES['profile-photo']['name'], PATHINFO_EXTENSION));
 						$res = upload_file($_FILES['profile-photo'],$target, 2000000, $rename);
 						if($res !== 1){
@@ -288,7 +326,7 @@
 
 					if(empty($field_errors)){
 						$this->load->model("user");
-						$result = $this->load->user->update_user_data("{$role}",$data,$teacher_id);
+						$result = $this->load->user->update_user_data("{$role}",$data,$user_id);
 						if($result === 1){
 							if(isset($_FILES['profile-photo']['tmp_name'])&& !empty($_FILES['profile-photo']['tmp_name'])){
 								if($_SESSION['role'] === $role){
@@ -301,17 +339,17 @@
 				}
 			}
 
-			$this->load->{$role}->set_by_id($teacher_id);
+			$this->load->{$role}->set_by_id($user_id);
 			$result = $this->load->{$role}->get_data();
 			// load header and navbar
 			$this->view_header_and_aside();
 			// load profile page
 			if(!empty($field_errors)){
-				$this->load->view("{$role}/{$role}_profile",["result"=>$result,"field_errors"=>$field_errors,"id"=>$teacher_id,"is_admin"=>$is_admin,"editable"=>$editable]);
+				$this->load->view("{$role}/{$role}_profile",["result"=>$result,"field_errors"=>$field_errors,"id"=>$user_id,"is_admin"=>$is_admin,"editable"=>$editable]);
 			}else if(isset($info) && !empty($info)){
-				$this->load->view("{$role}/{$role}_profile",["result"=>$result,"info"=>$info,"id"=>$teacher_id,"is_admin"=>$is_admin,"editable"=>$editable]);
+				$this->load->view("{$role}/{$role}_profile",["result"=>$result,"info"=>$info,"id"=>$user_id,"is_admin"=>$is_admin,"editable"=>$editable]);
 			}else{
-				$this->load->view("{$role}/{$role}_profile",["result"=>$result,"id"=>$teacher_id,"is_admin"=>$is_admin,"editable"=>$editable]);
+				$this->load->view("{$role}/{$role}_profile",["result"=>$result,"id"=>$user_id,"is_admin"=>$is_admin,"editable"=>$editable]);
 			}
 			$this->load->view("templates/footer");
 		}

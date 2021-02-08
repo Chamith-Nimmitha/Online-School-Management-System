@@ -84,6 +84,10 @@
 			$data["state"] = $this->state;
 			return $data;
 		}
+		// get student list
+		public function get_student_list(){
+			return $this->con->select("student",array("parent_id"=>$this->id));
+		}
 
 		// unset database connection and reduce parent count
 		public function __destruct(){
@@ -92,6 +96,7 @@
 				self::$num_of_parents -=1;
 			}
 		}
+
 	}
 	function create_self(){
 		return new ParentModel();
