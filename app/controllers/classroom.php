@@ -335,9 +335,7 @@
 			$subjects["other"] = $this->load->classroom->get_other_subjects();
 			$this->load->model("subjects");
 			$result = $this->load->subjects->get_teachers($subjects['general']);
-			if(!$result){
-				echo "ERROR";
-			}else{
+			if($result){
 				$data['subject_teachers'] = $result;
 			}
 
@@ -553,6 +551,43 @@
 				$_SESSION['del_msg'] = "Deletion failed.";
 			}
 			header("Location: ".set_url("dashboard") );
+		}
+
+		// view and provide links for all classroom related staff
+		public function classroom_view($classroom_id=NULL){
+
+			$this->load->model("classroom");
+
+			// set classroom object
+
+			if($classroom_id == NULL && $_SESSION['role'] == 'student'){
+				$this->load->model("student");
+				$this->load->student->set_by_id($_SESSION['user_id']);
+				$classroom_id = $this->load->student->get_classroom_id();
+			}
+
+			$error = "";
+			$result = $this->load->classroom->set_by_id($classroom_id);
+			if(!$result){
+				$error = "classroom not found.";
+			}
+			
+			//get classroom information
+			$data['result'] = $this->load->classroom->get_data();
+			if($data['result'] && !empty($data['result']['class_teacher_id'])){
+				$t_data = $this->load->classroom->get_class_teacher_data();
+				if($t_data){
+					$data['result']['class_teacher_name'] =$t_data['name_with_initials'];
+				}
+			}
+			// print_r($data);
+			// exit();
+
+			$data['error'] = $error;
+
+			$this->view_header_and_aside();
+			$this->load->view("classroom/classroom_view",$data);
+			$this->load->view("templates/footer");	
 		}
 	}
 

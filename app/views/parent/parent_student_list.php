@@ -22,7 +22,7 @@
                 			<td><?php echo $student['name_with_initials']; ?></td>
                 			<td><?php echo $student['grade']; ?></td>
                 			<td class="text-center">
-                				<a href="<?php echo set_url('classroom/student/list/'.$student['classroom_id']); ?>" class="btn btn-blue p-1">Info</a>
+                				<a href="<?php echo set_url('classroom/view/'.$student['classroom_id']); ?>" class="btn btn-blue p-1">Info</a>
                 			</td>
                 			<td class="text-center">
                 				<a href="<?php echo set_url('student/timetable/view/'.$student

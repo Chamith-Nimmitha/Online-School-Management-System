@@ -72,6 +72,8 @@
 	$routes['classroom/subjects/$1'] = "classroom/subjects/$1";
 	$routes['classroom/subject/teacher/$1'] = "classroom/update_subjects/$1";
 	$routes['classroom/notice/delete/$1'] = "classroom/delete_notice/$1";
+	$routes['classroom/view'] = "classroom/classroom_view";
+	$routes['classroom/view/$1'] = "classroom/classroom_view/$1";
 
 	// subject routes
 	$routes['subject/list'] = "subject/list";
@@ -105,6 +107,7 @@
 	// parent routes
 	$routes['parent/list'] = "parents/list";
 	$routes['parent/student/list'] = "parents/student_list";
+	$routes['parent/student/list/$1'] = "parents/student_list/$1";
 	$routes['parent/delete/$1'] = "parents/delete/$1";
 
 	// interview routes
