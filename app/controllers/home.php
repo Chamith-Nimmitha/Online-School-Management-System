@@ -47,6 +47,12 @@
 
 		//homepage-setting page
 		public function settings_school(){
+			if(!$this->checkPermission->check_permission("website","update")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
 			$con = new Database();
 				$row = $this->load->home->get_header_data();
 				foreach ($row as $data) {

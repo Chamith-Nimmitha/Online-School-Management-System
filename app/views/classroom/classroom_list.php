@@ -79,6 +79,7 @@
                         <th>Class Teacher</th>
                         <th>Students</th>
                         <th>Timetable</th>
+                        <th>View</th>
                         <?php 
 	                        if($_SESSION['role']==='admin'){
                          ?>
@@ -120,10 +121,14 @@
 							<?php 
 								 if($_SESSION['role']==='admin'){
 							 ?>
-            				<a class="btn btn-blue p-1" href="<?php  echo set_url('classroom/timetable/'.$result['id']); ?>">View</a>
+            				<a class="btn btn-blue p-1" href="<?php  echo set_url('classroom/timetable/'.$result['id']); ?>">Timetable</a>
 	            			<?php }else{ ?>
-            				<a class="btn btn-blue p-1" href="<?php  echo set_url('classroom/timetable/view/'.$result['id']); ?>">View</a>
+            				<a class="btn btn-blue p-1" href="<?php  echo set_url('classroom/timetable/view/'.$result['id']); ?>">Timetable</a>
 	        				<?php } ?>
+						</td>
+
+						<td class="text-center">
+							<a class="btn btn-blue p-1" href="<?php  echo set_url('classroom/view/'.$result['id']); ?>">View</a>
 						</td>
 						<?php 
 	                        if($_SESSION['role']==='admin'){

@@ -52,16 +52,18 @@
 					$body .= "<td>".$result['name']."</td>";
 					$body .= "<td>".$result['code']."</td>";
 					$body .= "<td>".$result['type']."</td>";
-					$body .= "<td class='text-center'>
-								<div class='login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center'>
-									<a class='btn btn-blue' href='".set_url('subject/update/'.$result['id'])."'>Update</a>
-			    				</div>
-							</td>";
-					$body .= "<td class='text-center'>
-								<div class='login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center'>
-									<a class='btn' title='Delete' href='".set_url('subject/delete/'.$result['id'])."' onclick=\"show_dialog(this,'Delete message','Are you sure to delete?')\"><i class='fas fa-trash delete-button'></i></a>
-			    				</div>
-							</td>";
+					if($_SESSION['role'] == "admin"){
+						$body .= "<td class='text-center'>
+									<div class='login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center'>
+										<a class='btn btn-blue' href='".set_url('subject/update/'.$result['id'])."'>Update</a>
+				    				</div>
+								</td>";
+						$body .= "<td class='text-center'>
+									<div class='login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center'>
+										<a class='btn' title='Delete' href='".set_url('subject/delete/'.$result['id'])."' onclick=\"show_dialog(this,'Delete message','Are you sure to delete?')\"><i class='fas fa-trash delete-button'></i></a>
+				    				</div>
+								</td>";
+					}
 					$body .= "</tr>";
 				}
 				$data['body'] = $body;

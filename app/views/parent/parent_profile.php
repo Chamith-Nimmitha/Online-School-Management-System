@@ -22,7 +22,7 @@
 					<div  class="col-8">
 						<div  style="position: relative;">
 							<img src="<?php echo set_url('public/uploads/parent_profile_photo/'.$result['profile_photo']); ?>" alt="profile photo"  onClick="open_image_viewer(this);" class="col-12">
-							<label for="profile-photo" class="" style="position: absolute; bottom: 0px; right: 0px;">
+							<label class="col-4" for="profile-photo" class="" style="position: absolute; bottom: 0px; right: 0px;">
 								<img src="<?php echo set_url("public/assets/img/camera.png"); ?>" alt="upload photo" style="width: 50px; height: 50px; cursor: pointer;">
 							</label>
 						</div>
@@ -37,28 +37,28 @@
 
 				</div>
 				<div style="background: #88f;" class="col-12 col-md-8 d-flex flex-col align-items-center">
-						<div class="form-group ">
-							<label for="name-with-initials">Name With Initials</label>
+						<div class="d-flex w-100">
+							<label class="col-4" for="name-with-initials">Name With Initials</label>
 							<input type="text" id="name-with-initials" name="name-with-initials"  placeholder="Name With Initials" value="<?php if(isset($result)){echo htmlspecialchars(stripslashes($result['name']));} ?>" oninput="validate_user_input(this,1,50,1)" <?php if(!$is_admin){echo "disabled='disabled'";}?>>
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>
-						<div class="form-group ">
-							<label for="occupation">Occupation</label>
+						<div class="d-flex w-100">
+							<label class="col-4" for="occupation">Occupation</label>
 							<input type="text" name="occupation" id="occupation" placeholder="Occupation" value="<?php if(isset($result)){echo htmlspecialchars(stripslashes($result['occupation']));} ?>"required="required" oninput="validate_user_input(this,0,50,1)" <?php if(!$editable){echo "disabled='disabled'";} ?>>
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>
-						<div class="form-group ">
-							<label for="address">Address</label>
+						<div class="d-flex w-100">
+							<label class="col-4" for="address">Address</label>
 							<input type="text" name="address" id="address" placeholder="Address" value="<?php if(isset($result)){echo htmlspecialchars(stripslashes($result['address']));} ?>"required="required" oninput="validate_user_input(this,0,100,1)" <?php if(!$editable){echo "disabled='disabled'";} ?>>
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>
-						<div class="form-group ">
-							<label for="email">Email</label>
+						<div class="d-flex w-100">
+							<label class="col-4" for="email">Email</label>
 							<input type="text" name="email" id="email" placeholder="Email" value="<?php if(isset($result)){echo  htmlspecialchars(stripslashes($result['email']));} ?>" oninput="validate_email(this,0,100,1)" <?php if(!$editable){echo "disabled='disabled'";} ?>>
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>
-						<div class="form-group ">
-							<label for="contact-number">Contact Number</label>
+						<div class="d-flex w-100">
+							<label class="col-4" for="contact-number">Contact Number</label>
 							<input type="text" name="contact-number" id="contact-number" placeholder="Contact Number" value="<?php if(isset($result)){echo $result['contact_number'];} ?>" oninput="validate_contact_number(this)" <?php if(!$editable){echo "disabled='disabled'";} ?>>
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>
@@ -69,5 +69,14 @@
 						<?php } ?>
 				</div>
 			</form>
+	</div>
+	<div class="col-12 mt-5 d-flex flex-col align-items-center">
+		<h2 class="mb-5">Links</h2>
+
+		<div class="col-8 d-flex flex-col">
+			<a href="<?php echo set_url("parent/student/list/".$result['id']); ?>" class="profile-links">
+				<p>Student List</p>
+			</a>
+		</div>
 	</div>
 </div>

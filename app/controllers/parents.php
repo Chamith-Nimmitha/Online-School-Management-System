@@ -59,7 +59,7 @@
 			$this->load->view("templates/footer");
 		}
 
-		public function student_list($msg=""){
+		public function student_list($parent_id=NULL,$msg=""){
 			if(!$this->checkPermission->check_permission("student","view")){
 				$this->view_header_and_aside();
 				$this->load->view("common/error");
@@ -67,8 +67,12 @@
 				return;
 			}
 			
+			if($parent_id == NULL){
+				$parent_id = $_SESSION['user_id'];
+			}
+
 			$this->load->model("parent");
-			$result = $this->load->parent->set_by_id($_SESSION['user_id']);
+			$result = $this->load->parent->set_by_id($parent_id);
 			$result = $this->load->parent->get_student_list();
 			if($result){
 				$data['students'] = $result->fetchAll();

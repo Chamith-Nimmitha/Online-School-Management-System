@@ -1,11 +1,11 @@
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 	<?php 
-		if(isset($info)){
+		if(isset($info) && !empty($info)){
 			echo "<p class='bg-green d-flex justify-content-center col-8 p-3'>";
 			echo $info;
 			echo "</p>";
 		}
-		if(isset($field_errors)){
+		if(isset($field_errors) && !empty($field_errors)){
 			echo "<p class='bg-red d-flex justify-content-center col-8 p-3'>";
 			echo "Update Failed.";
 			echo "</p>";
@@ -113,7 +113,7 @@
 			<a href="<?php echo set_url("student/attendance/".$result['id']); ?>" class="profile-links">
 				<p>Attendance</p>
 			</a>
-			<a href="<?php echo set_url("classroom/student/list/".$result['classroom_id']); ?>" class="profile-links">
+			<a href="<?php echo set_url("classroom/view/".$result['classroom_id']); ?>" class="profile-links">
 				<p>Classroom</p>
 			</a>
 			<a href="<?php echo set_url("student/exam/".$result['id']); ?>" class="profile-links">

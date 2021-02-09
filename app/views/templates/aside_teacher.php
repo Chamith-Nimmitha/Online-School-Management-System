@@ -82,7 +82,11 @@
 					<nav class="nav sub-nav no-collapsed" id="subject-nav">
 						<ul class="d-flex flex-col">
 							<li class="nav-item">
-								<a href="<?php echo set_url('teacher/subject/list',array('teacher_id'=>$_SESSION['user_id'])); ?>" class="nav-link" parent-li="subject-li">Subjects list</a></li>
+								<a href="<?php echo set_url('teacher/subject/list',array('teacher_id'=>$_SESSION['user_id'])); ?>" class="nav-link" parent-li="subject-li">My Subjects</a>
+							</li>
+							<li class="nav-item">
+								<a href="<?php echo set_url('subject/list',array('teacher_id'=>$_SESSION['user_id'])); ?>" class="nav-link" parent-li="subject-li">Subject List</a>
+							</li>
 						</ul>
 					</nav>
 				</li>
@@ -110,7 +114,7 @@
 				</li>
 				<?php } ?>
 				<li id="settings-li" class="nav-item aside-li">
-					<a href="<?php echo set_url('settings/school') ?>" class="nav-link">
+					<a href="<?php echo set_url('settings/website') ?>" class="nav-link">
 						<i class="fas fa-sliders-h"></i>All Settings</a>
 					<button class="toggle-button" target="settings-nav">
 						<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px">

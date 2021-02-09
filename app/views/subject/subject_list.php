@@ -88,8 +88,8 @@
 					<th>SUBJECT NAME</th>
 				    <th>SUBJECT CODE</th>
 				    <th>SUBJECT TYPE</th>
-				    <th>UPDATE</th>
 				    <?php if($_SESSION['role'] =='admin'){ 
+					    echo "<th>UPDATE</th>";
 					    echo "<th>DELETE</th>";
 				    }?>
 			    </tr>
@@ -110,12 +110,12 @@
 					<td><?php echo $result['type']; ?></td>
 					
 					
-					<td>
-						<div class="login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center">
-							<a class="btn btn-blue" href="<?php echo set_url('subject/update/').$result['id']; ?>">Update</a>
-	    				</div>
-					</td>
 					<?php if($_SESSION['role'] =='admin'){ ?>
+						<td>
+							<div class="login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center">
+								<a class="btn btn-blue" href="<?php echo set_url('subject/update/').$result['id']; ?>">Update</a>
+		    				</div>
+						</td>
 						<td>
 							<div class="login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center">
 								<a class="btn" href="<?php echo set_url('subject/delete/').$result['id']; ?>" onclick="show_dialog(this,'Delete message','Are you sure to delete?')"><i class='fas fa-trash delete-button'></i></a>
