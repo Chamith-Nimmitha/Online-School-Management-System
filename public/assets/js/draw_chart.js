@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded",() => {
 		dashboard_teacher_attendance_bar();
 		subject_grades_pie();
 		student_result_overview_bar();
+		subject_average_overview_bar();
 	}
 	if( document.getElementById('student_attendance_overview_bar')){
 		student_attendance_overview_bar();
@@ -17,6 +18,15 @@ document.addEventListener("DOMContentLoaded",() => {
 	}
 	if( document.getElementById('classroom_attendance_comparission_bar')){
 		classroom_attendance_comparission_bar();
+	}
+	if( document.getElementById('subject_grades_pie')){
+		subject_grades_pie();
+	}
+	if( document.getElementById('student_result_overview_bar')){
+		student_result_overview_bar();
+	}
+	if(document.getElementById('subject_average_overview_bar')){
+		subject_average_overview_bar();
 	}
 })
 
@@ -250,61 +260,93 @@ function dashboard_teacher_attendance_bar(){
 	});
 }
 
+var subject_grades_pie_chart = undefined;
 function subject_grades_pie(){
-	var ctx = document.getElementById('subject_grades_pie').getContext('2d');
-	var myChart = new Chart(ctx, {
-	    type: 'pie',
-	    data: {
-	        labels: ['75-100 (A) ','65-74 (B) ','50-64 (C) ','35-49 (S) ','0-34 (F) '],
-	        datasets: [{
-	            label: '# of students',
-	            data: [25,42,32,12,54],
-	          	backgroundColor: get_color_array(5,0.5),
-	            borderColor: get_color_array(5,0.8),
-	            borderWidth: 1,
-	            hoverBackgroundColor:get_color_array(5,1),
-	            hoverboderwidth:3,
-	            hoverbodercolor: get_color_array(5,1)
-	        }]
-	    },
-	    options: {
-	        scales: {
-	            display : false
-	        },
-	        legend: {
-	        	display : true
-	        },
-	        title: {
-		        display: true,
-		        text: "Subject result overview",
-		        fontSize : 20
-		    },
-	    }
-	});
+	var form = new FormData( document.getElementById('dashboard_marks_filter') );
+
+
+	fetch(base_url+"api/draw_charts/dashboard/marks/student",{
+		method : 'post',
+		body : form
+	}).then( (res) => {
+		return res.text();
+	}).then( (text) => {
+		if( text.indexOf("FALSE") === -1){
+			var response = JSON.parse(text);
+
+			var canvas = document.getElementById('subject_grades_pie')
+			var ctx = canvas.getContext('2d');
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			if(subject_grades_pie_chart != undefined){
+				subject_grades_pie_chart.destroy();
+			}
+
+			var myChart = new Chart(ctx, {
+			    type: 'pie',
+			    data: {
+			        labels: ['75-100 (A) ','65-74 (B) ','50-64 (C) ','35-49 (S) ','0-34 (F) '],
+			        datasets: [{
+			            label: '# of students',
+			            data: [response.A,response.B,response.C,response.S,response.F],
+			          	backgroundColor: get_color_array(5,0.5),
+			            borderColor: get_color_array(5,0.8),
+			            borderWidth: 1,
+			            hoverBackgroundColor:get_color_array(5,1),
+			            hoverboderwidth:3,
+			            hoverbodercolor: get_color_array(5,1)
+			        }]
+			    },
+			    options: {
+			        scales: {
+			            display : false
+			        },
+			        legend: {
+			        	display : true
+			        },
+			        title: {
+				        display: true,
+				        text: "Subject Result Overview",
+				        fontSize : 20
+				    },
+			    }
+			});
+			subject_grades_pie_chart = myChart;
+}
+})
 }
 
 function student_result_overview_bar(){
+
+var classroom_id = document.getElementById('marks_classroom_id').value;
+var grade = document.getElementById('marks_classroom_grade').value;
+	fetch(base_url+"api/draw_charts/dashboard/marks/barchart/"+classroom_id+"/"+grade,{
+		//method : 'post',
+		//body : form
+	}).then( (res) => {
+		return res.text();
+	}).then( (text) => {
 	var ctx = document.getElementById('student_result_overview_bar').getContext('2d');
+	var response = JSON.parse(text)
 	var myChart = new Chart(ctx, {
 	    type: 'bar',
 	    data: {
-	        labels: ['Sinhala','Buddhism','History','Maths','Science','English'],
+	        labels: response.label,
 	        datasets: [
 	        	{
-	            	label: '1st ',
-	            	data : [12,13,14,15,16,17],
+	            	label: '1st Term ',
+	            	data : response.first_term_data,
 	            	backgroundColor : get_color_array(1,0.5,0)[0],
 	            	hoverBackgroundColor : get_color_array(1,1,0)[0]
 	            },
 	            {
-	            	label: '2nd ',
-	            	data : [12,13,14,15,16,17],
+	            	label: '2nd Term ',
+	            	data : response.second_term_data,
 	            	backgroundColor : get_color_array(1,0.5,1)[0],
 	            	hoverBackgroundColor : get_color_array(1,1,1)[0]
 	            },
 	            {
-	            	label: '3rd ',
-	            	data : [12,13,14,15,16,17],
+	            	label: '3rd Term',
+	            	data : response.third_term_data,
 	            	backgroundColor : get_color_array(1,0.5,2)[0],
 	            	hoverBackgroundColor : get_color_array(1,1,2)[0]
 	            }
@@ -323,11 +365,70 @@ function student_result_overview_bar(){
 	        },
 	        title: {
 		        display: true,
-		        text: "Subject result overview",
+		        text: "Number of Passed Students",
 		        fontSize : 20
 		    },
 	    }
 	});
+})
+}
+
+function subject_average_overview_bar(){
+
+var classroom_id = document.getElementById('marks_classroom_id').value;
+var grade = document.getElementById('marks_classroom_grade').value;
+	fetch(base_url+"api/draw_charts/dashboard/marks/subject-avg/"+classroom_id+"/"+grade,{
+		//method : 'post',
+		//body : form
+	}).then( (res) => {
+		return res.text();
+	}).then( (text) => {
+	var ctx = document.getElementById('subject_average_overview_bar').getContext('2d');
+	var response = JSON.parse(text)
+	var myChart = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels: response.label,
+	        datasets: [
+	        	{
+	            	label: '1st Term ',
+	            	data : response.first_term_data,
+	            	backgroundColor : get_color_array(1,0.5,0)[0],
+	            	hoverBackgroundColor : get_color_array(1,1,0)[0]
+	            },
+	            {
+	            	label: '2nd Term ',
+	            	data : response.second_term_data,
+	            	backgroundColor : get_color_array(1,0.5,1)[0],
+	            	hoverBackgroundColor : get_color_array(1,1,1)[0]
+	            },
+	            {
+	            	label: '3rd Term',
+	            	data : response.third_term_data,
+	            	backgroundColor : get_color_array(1,0.5,2)[0],
+	            	hoverBackgroundColor : get_color_array(1,1,2)[0]
+	            }
+	        ]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	            	ticks: {
+	            		beginAtZero : true,
+	            	}
+	            }]
+	        },
+	        legend: {
+	        	display : true
+	        },
+	        title: {
+		        display: true,
+		        text: "Subject Average",
+		        fontSize : 20
+		    },
+	    }
+	});
+})
 }
 
 // before redraw destroy the existing charts, otherwise charts are overlaped

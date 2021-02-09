@@ -35,12 +35,9 @@
 						<i class="fas fa-user-shield"></i>Parent Info
 					</a>
 				</li>
-				<li class="nav-item aside-li" id="exam-result-li">
-					<a href="<?php echo set_url('student/exam'); ?>" class="nav-link">
-						<i class="fas fa-poll"></i>Exam Result
-						<!-- <i class="fas fa-book-dead"></i>Exam Result -->
-					</a>
-				</li>
+							<li class="nav-item aside-li" id="exam-result-li">
+								<a href="<?php echo set_url('marks/classroom/result/view/'.$_SESSION['user_id'].'/1'); ?>" class="nav-link"><i class="far fa-file"></i>Exam Result</a>
+							</li>
 				<li id="settings-li" class="nav-item aside-li">
 					<a href="<?php echo set_url('settings/website') ?>" class="nav-link">
 						<i class="fas fa-sliders-h"></i>All Settings</a>

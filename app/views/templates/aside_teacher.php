@@ -29,6 +29,20 @@
 						</ul>
 					</nav>
 				</li>
+							<li class="nav-item aside-li" id="exam-li">
+								<a href="<?php echo set_url('marks/classroom/list'); ?>" class="nav-link">
+									<i class="far fa-file"></i>Examination
+								</a>
+								<button class="toggle-button" target="exam-nav">
+									<img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" width="20px" alt="">
+								</button>
+
+								<nav class="nav sub-nav no-collapsed" id="exam-nav">
+									<ul class="d-flex flex-col">
+										<li class="nav-item"><a href="<?php echo set_url('marks/classroom/list'); ?>" class="nav-link" parent-li="exam-li">Classroom Results</a></li>
+									</ul>
+								</nav>
+							</li>
 				<li class="nav-item aside-li" id="student-li">
 					<a href="<?php echo set_url('student/list'); ?>" class="nav-link">
 						<i class="fas fa-user-graduate"></i>Students
