@@ -116,7 +116,7 @@
 			<a href="<?php echo set_url("classroom/view/".$result['classroom_id']); ?>" class="profile-links">
 				<p>Classroom</p>
 			</a>
-			<a href="<?php echo set_url("student/exam/".$result['id']); ?>" class="profile-links">
+			<a href="<?php echo set_url("student/marks/report/".$result['id']); ?>" class="profile-links">
 				<p>Exam Report</p>
 			</a>
 			<a href="<?php echo set_url("profile/parent/".$result['parent_id']); ?>" class="profile-links">

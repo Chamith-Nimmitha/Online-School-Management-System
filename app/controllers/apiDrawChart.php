@@ -387,7 +387,13 @@
 			}
 
 			foreach ($result as $res) {
-				if($res['marks']>=40){
+				$fl = 0;
+				foreach ($subject_list as $subject) {
+					if($subject['id'] == $res['subject_id']){
+						$fl =1;
+					}
+				}
+				if($res['marks']>=40 && $fl ==1){
 					$no_of_passed_students[$res['subject_id'].'-'.$res['term']]++;
 				}
 			}
@@ -437,18 +443,36 @@
 			}
 
 			foreach ($result as $res) {
-				if(isset($res['marks'])){
+
+				$fl = 0;
+				foreach ($subject_list as $subject) {
+					if($subject['id'] == $res['subject_id']){
+						$fl =1;
+					}
+				}
+
+				if(isset($res['marks']) && $fl==1){
 					$no_of_students_subjects[$res['subject_id'].'-'.$res['term']]++;
+					$subject_total[$res['subject_id'].'-'.$res['term']] = $subject_total[$res['subject_id'].'-'.$res['term']] + $res['marks'] ;
 				}
 				
-					$subject_total[$res['subject_id'].'-'.$res['term']] = $subject_total[$res['subject_id'].'-'.$res['term']] + $res['marks'] ;
+
 				
 			}
 			$data['$no_of_students_subjects'] = $no_of_students_subjects;
 			$data['subject_list'] = $subject_name;
 
 			foreach ($result as $res) {
-				$subject_avg[$res['subject_id'].'-'.$res['term']] = $subject_total[$res['subject_id'].'-'.$res['term']] / $no_of_students_subjects[$res['subject_id'].'-'.$res['term']]; 
+
+				$fl = 0;
+				foreach ($subject_list as $subject) {
+					if($subject['id'] == $res['subject_id']){
+						$fl =1;
+					}
+				}
+				if($fl==1){
+				$subject_avg[$res['subject_id'].'-'.$res['term']] = $subject_total[$res['subject_id'].'-'.$res['term']] / $no_of_students_subjects[$res['subject_id'].'-'.$res['term']];
+				} 
 			}
 
 			//print_r($subject_avg);
