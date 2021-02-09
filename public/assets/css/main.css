@@ -104,7 +104,7 @@ footer{
 	margin: 0;	
 	padding-top: 50px;
 	font-size: 16px;
-	border: 1px solid transparent;
+	border: 2px solid transparent;
 }
 
 .s-item i{
@@ -119,29 +119,29 @@ footer{
 	font-size: 35px;
 }
 .s-item-wrapper:hover > .s-item{
-	animation: border_animation 4s infinite;
+	animation: border_animation 1s forwards;
 	color: darkblue;
 }
 
 @keyframes border_animation{
-	0%{
+	from{
 		border-bottom-color: darkblue;
 		border-right-color: darkblue;
 		border-top-color: white;
 		border-left-color: white;
 	}
-	50%{
+	to{
 		border-top-color: darkblue;
 		border-left-color: darkblue;
 		border-bottom-color: white;
 		border-right-color: white;
 	}
-	100%{
+	/*100%{
 		border-bottom-color: darkblue;
 		border-right-color: darkblue;
 		border-top-color: white;
 		border-left-color: white;
-	}
+	}*/
 }
 
 .l-item{
