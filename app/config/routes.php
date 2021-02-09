@@ -96,6 +96,7 @@
 	$routes['student/subject/list'] = "student/subject_list";
 	$routes['student/view/parent/$2'] = "user/profile_view/$1/$2";
 	$routes['student/csv'] = "student/student_upload";
+	$routes['student/marks/report/$1'] = "marks/marks_report/$1";
 
 	//admin route --> only admin can access
 	$routes['userrole'] = "userrole/permission";
@@ -131,6 +132,14 @@
 	$routes['attendance/teacher/list'] = "attendance/teacher_list";
 	$routes['attendance/teacher/view/$1'] = "attendance/teacher_view/$1";
 
+	// exam result routes
+	$routes['exam/result'] = "marks/result_view";
+	$routes['marks/classroom/list'] = "marks/classroom_list";
+	$routes['marks/classroom/result/view/$1/$2'] = "marks/classroom_marks_result_view/$1/$2";
+	$routes['marks/classroom/view/$1/$2'] = "marks/classroom_view/$1/$2";
+	$routes['marks/classroom/view/$1/$2/$3'] = "marks/classroom_view/$1/$2/$3";
+	$routes['marks/upload'] = "marks/marksheet_preview";
+
 
 
 	// FOR APIS
@@ -161,6 +170,9 @@
 	$routes['api/attendance/classroom/search'] = "apiAttendance/classroom_search";
 	$routes['api/attendance/classroom/get/class/$1'] = "apiAttendance/get_classroom_list/$1";
 
+	$routes['api/marks/classroom/search'] = "apiMarks/classroom_search";
+	$routes['api/marks/classroom/student/search'] = "apiMarks/classroom_marks_search";
+
 	// draw charts
 	$routes['api/draw_charts/attendance/student'] = "apiDrawChart/student_attendance_overview_bar";
 	$routes['api/draw_charts/attendance/teacher'] = "apiDrawChart/teacher_attendance_overview_bar";
@@ -168,6 +180,10 @@
 	$routes['api/draw_charts/dashboard/attendance/teacher'] = "apiDrawChart/dashboard_teacher_attendance_overview_doughnut";
 	
 	$routes['api/draw_charts/attendance/classroom/comparission'] = "apiDrawChart/classroom_attendance_comparission";
+
+	$routes['api/draw_charts/dashboard/marks/student'] = "apiDrawChart/dashboard_students_marks_overview_doughnut";
+	$routes['api/draw_charts/dashboard/marks/barchart/$1/$2'] = "apiDrawChart/students_marks_bar_chart/$1/$2";
+	$routes['api/draw_charts/dashboard/marks/subject-avg/$1/$2'] = "apiDrawChart/subject_average_bar_chart/$1/$2";
 
 	$routes['api/classroom/grade/$1'] = "apiClassroom/get_grades/$1";
 

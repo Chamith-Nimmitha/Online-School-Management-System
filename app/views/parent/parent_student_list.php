@@ -32,9 +32,9 @@
                 				<a href="<?php echo set_url('student/attendance/'.$student
                                 ['id']) ?>" class="btn btn-blue p-1">Report</a>
                 			</td>
-                			<td class="text-center">
-                				<a href="<?php echo set_url('student/exam/'.$student['id']); ?>" class="btn btn-blue p-1">Report</a>
-                			</td>
+                            <td class="text-center">
+                                <a href="<?php echo set_url('student/marks/report/'.$student['id']); ?>" class="btn btn-blue p-1">Report</a>
+                            </td>
                 		</tr>	
                 <?php 
             		}

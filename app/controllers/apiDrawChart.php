@@ -338,6 +338,137 @@
 				return;
 			};
 		}
+
+// for subject report
+		public function dashboard_students_marks_overview_doughnut(){
+			$term = $_POST['term'];
+			$subject_id = $_POST['subject'];
+
+			if(empty($term)){
+				$term =1;
+			}
+			if(empty($year)){
+				$year=2020;
+			}
+			if(empty($subject_id)){
+				$subject_id = 1500007;
+			}
+
+			$this->load->model('marks');
+			$result = $this->load->marks->dashboard_student_marks_overview_bar($subject_id,$term);
+
+
+			if($result !== FALSE ){
+				echo json_encode(['A'=>$result['A'],'B'=>$result['B'],'C'=>$result['C'],'S'=>$result['S'],'F'=>$result['F']]);
+			}else{
+				echo 'FALSE';
+			}
+		}
+
+		//for classroom marks report
+		public function students_marks_bar_chart($classroom_id,$grade){
+
+			$this->load->model('marks');
+			$subject_list = $this->load->marks->student_subject_lists($grade);
+			$result = $this->load->marks->dashboard_student_marks_bar_bar($classroom_id);
+
+			$subject_list = $subject_list->fetchAll();
+
+			$subject_names = array();
+			$first_term_data =array();
+			$second_term_data =array();
+			$third_term_data =array();
+			foreach ($subject_list as $subject) {
+				$subject_name[$subject['id']] = $subject['name'];
+				array_push($subject_names, $subject['name']);
+				for ($i=1; $i <=3 ; $i++) { 
+					$no_of_passed_students[$subject['id'].'-'.$i]=0;
+				}
+			}
+
+			foreach ($result as $res) {
+				if($res['marks']>=40){
+					$no_of_passed_students[$res['subject_id'].'-'.$res['term']]++;
+				}
+			}
+			$data['no_of_passed_students'] = $no_of_passed_students;
+			$data['subject_list'] = $subject_name;
+
+			
+			foreach ($no_of_passed_students as $key => $value) {
+				$exp = explode('-', $key);
+				if($exp[1]==1){
+					array_push($first_term_data, $value);
+				}
+				elseif($exp[1]==2){
+					array_push($second_term_data, $value);
+				}
+				elseif($exp[1]==3){
+					array_push($third_term_data, $value);
+				}
+			}
+			
+			echo json_encode(['label'=>$subject_names,'first_term_data'=>$first_term_data,'second_term_data'=>$second_term_data,'third_term_data'=>$third_term_data]);
+
+		}
+
+		//for subject average report
+		public function subject_average_bar_chart($classroom_id,$grade){
+
+			$this->load->model('marks');
+			$subject_list = $this->load->marks->student_subject_lists($grade);
+			$result = $this->load->marks->dashboard_student_marks_bar_bar($classroom_id);
+
+			$subject_list = $subject_list->fetchAll();
+
+			$subject_names = array();
+			$first_term_data =array();
+			$second_term_data =array();
+			$third_term_data =array();
+
+			foreach ($subject_list as $subject) {
+				$subject_name[$subject['id']] = $subject['name'];
+				array_push($subject_names, $subject['name']);
+				for ($i=1; $i <=3 ; $i++) { 
+					$subject_total[$subject['id'].'-'.$i]=0;
+					$subject_avg[$subject['id'].'-'.$i]=0;
+					$no_of_students_subjects[$subject['id'].'-'.$i]=0;
+				}
+			}
+
+			foreach ($result as $res) {
+				if(isset($res['marks'])){
+					$no_of_students_subjects[$res['subject_id'].'-'.$res['term']]++;
+				}
+				
+					$subject_total[$res['subject_id'].'-'.$res['term']] = $subject_total[$res['subject_id'].'-'.$res['term']] + $res['marks'] ;
+				
+			}
+			$data['$no_of_students_subjects'] = $no_of_students_subjects;
+			$data['subject_list'] = $subject_name;
+
+			foreach ($result as $res) {
+				$subject_avg[$res['subject_id'].'-'.$res['term']] = $subject_total[$res['subject_id'].'-'.$res['term']] / $no_of_students_subjects[$res['subject_id'].'-'.$res['term']]; 
+			}
+
+			//print_r($subject_avg);
+			foreach ($subject_avg as $key => $value) {
+				$exp = explode('-', $key);
+				if($exp[1]==1){
+					array_push($first_term_data, $value);
+				}
+				elseif($exp[1]==2){
+					array_push($second_term_data, $value);
+				}
+				elseif($exp[1]==3){
+					array_push($third_term_data, $value);
+				}
+			}
+			
+			echo json_encode(['label'=>$subject_names,'first_term_data'=>$first_term_data,'second_term_data'=>$second_term_data,'third_term_data'=>$third_term_data]);
+
+		}
+		
 	}
 
  ?>
