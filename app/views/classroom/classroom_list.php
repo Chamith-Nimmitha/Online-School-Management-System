@@ -99,7 +99,8 @@
                 ?>
                 	<?php 
                 		if($grade !== 0 && $grade != $result['grade']){
-                			echo "<tr><td colspan=9 class='text-center bg-gray'></td></tr>";
+                			echo "<tr><td colspan=10 class='text-center bg-gray p-0'></td></tr>";
+                			echo "<tr><td colspan=10 class='text-center bg-gray'></td></tr>";
                 		}
                 	 ?>
 					<tr>
@@ -156,7 +157,7 @@
 				$grade = $result['grade'];
 					}
 				}else{
-					echo "<tr><td colspan=8 class='text-center bg-red'>Classroom Not Found...</td></tr>";
+					echo "<tr><td colspan=10 class='text-center bg-red'>Classroom Not Found...</td></tr>";
 				}
                 ?>
                  

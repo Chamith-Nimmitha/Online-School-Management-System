@@ -22,6 +22,9 @@
 					if(!$result){
 						throw new PDOException();
 					}
+					if($result->rowCount() ==0){
+						continue;
+					}
 					$stu_marks_id = $result->fetch()['id'];
 					$result = $this->con->select("student_marks", array("id"=>$stu_marks_id));
 					if($result){

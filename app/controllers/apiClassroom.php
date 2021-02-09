@@ -47,8 +47,8 @@
 				$grade = 0;
 				foreach ($result_set as $result) {
 					if($grade !== 0 && $grade != $result['grade']){
-	        			$body .= "<tr><td colspan=9 class='text-center p-0 bg-gray'></td></tr>";
-	        			$body .= "<tr><td colspan=9 class='text-center bg-gray'></td></tr>";
+	        			$body .= "<tr><td colspan=10 class='text-center p-0 bg-gray'></td></tr>";
+	        			$body .= "<tr><td colspan=10 class='text-center bg-gray'></td></tr>";
 	        		}
 					$body .="<tr>";
 					$body .= "<td>".$result['id']."</td>";
@@ -105,7 +105,7 @@
 				$data['body'] = $body;
 				echo json_encode($data);
 			}else{
-				$body =  "<tr><td colspan=8 class='text-center bg-red'>Classrooms not found...</td></tr>";
+				$body =  "<tr><td colspan=10 class='text-center bg-red'>Classrooms not found...</td></tr>";
 				$data['body'] = $body;
 				$data['count'] = 0;
 				echo json_encode($data);
