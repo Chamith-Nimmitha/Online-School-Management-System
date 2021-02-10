@@ -57,8 +57,11 @@
 						$marks_total[$y.'-'.$i] = $marks_total[$y.'-'.$i] + $student_marks[$y.'-'.$i.'-'.$abc['subject_id']] ;
 						}
 					}
-					
-					$marks_average[$y.'-'.$i] = $marks_total[$y.'-'.$i] / count($subject_list) ;
+					if(count($subject_list)!== 0){
+						$marks_average[$y.'-'.$i] = $marks_total[$y.'-'.$i] / count($subject_list) ;
+					}else{
+						$marks_average[$y.'-'.$i] = 0;
+					}
 					
 				}
 
