@@ -16,7 +16,7 @@
 			//$student_id = 1100021;
 			$y=2020;
 			$this->load->model('marks');
-			$subject_list = $this->load->marks->student_subject_lists(10);
+			$subject_list = $this->load->marks->student_subject_lists($r['grade']);
 			$subject_list =$subject_list->fetchAll();
 			$data['subject_list'] = $subject_list;
 
@@ -47,9 +47,19 @@
 								$student_grades[$y.'-'.$i.'-'.$abc['subject_id']] = 'F';
 							}
 						}
+						$fl = 0;
+						foreach ($subject_list as $subject) {
+							if($subject['id'] == $abc['subject_id']){
+								$fl =1;
+							}
+						}
+						if($fl == 1){
 						$marks_total[$y.'-'.$i] = $marks_total[$y.'-'.$i] + $student_marks[$y.'-'.$i.'-'.$abc['subject_id']] ;
+						}
 					}
+					
 					$marks_average[$y.'-'.$i] = $marks_total[$y.'-'.$i] / count($subject_list) ;
+					
 				}
 
 			$data['marks_total'] =$marks_total;
@@ -235,6 +245,9 @@
 			$data["y"] = $y;
 			$data['msg']=$msg;
 
+			//$te = $con->insert("student_marks",["id"=>8, "marks"=> 23,"note"=>"","subject_id"=>1500009,"term"=>1,"year"=>2020]);
+			//$te = $con->insert("stu-marks",["id"=>2,"classroom_id"=>1400040,"student_id"=>1100022,"first_term_total"=>0,"second_term_total"=>0,"third_term_total"=>0]);
+
 			if(isset($_POST['filter'])){
 				$term= $_POST['term'];
 				$y = 2020;
@@ -254,11 +267,22 @@
 				$rls = $this->load->marks->get_marks_by_student_id($student['id'],$t,$y);
 				$rls = $rls->fetchAll();
 				foreach ($rls as $abc) {
+				
+				$fl = 0;
+				foreach ($data['subject_list'] as $subject) {
+					if($subject['id'] == $abc['subject_id']){
+						$fl =1;
+					}
+				}
+
+				//if($fl == 1){
 					$student_marks[$student['id'].'-'.$abc['subject_id']] = $abc['marks'];
 
 					$marks_total[$student['id'].'-'.$t] = $marks_total[$student['id'].'-'.$t] + $student_marks[$student['id'].'-'.$abc['subject_id']] ;
+				//}
 				}
 			}
+
 			if(isset($student_marks)){
 				$data['std_marks'] = $student_marks;
 			}			
@@ -339,9 +363,13 @@
 				}
 			}
 
+		//$resul = $con->insert("student_marks",["id"=>5, "marks"=> 100,"note"=>"","subject_id"=>1500037,"term"=>1,"year"=>2020]);
+
+
 			$this->view_header_and_aside();
 			$this->load->view("exam/classroom_marks_upload",$data);
 			$this->load->view("templates/footer");}
+		//print_r($resul);
 
 	}
 

@@ -166,11 +166,11 @@
 					}
 
 					if($result->rowCount() === 0){
-						$result = $this->con->insert("stu-marks",["student_id"=>$st_id, "classroom_id"=>$classroom_id,"first_term_total"=>""]);
+						$result = $this->con->insert("stu-marks",["student_id"=>$st_id, "classroom_id"=>$classroom_id,"first_term_total"=>0,"second_term_total"=>0,"third_term_total"=>0]);
 						if(!$result){
 							throw new PDOException();
 						}
-						$con->get(["id"]);
+						$this->con->get(["id"]);
 						$result = $this->con->select("stu-marks",["student_id"=>$st_id, "classroom_id"=>$classroom_id]);
 						$stu_marks_id = $result->fetch()['id'];
 
