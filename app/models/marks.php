@@ -204,10 +204,10 @@
 
 
 
-		public function dashboard_student_marks_overview_bar($subject_id,$term){
-			$query = "SELECT * FROM `student_marks` WHERE `subject_id` = ? AND `term`= ? ";
+		public function dashboard_student_marks_overview_bar($subject_id,$term,$classroom_id){
+			$query = "SELECT * FROM `student_marks` AS `sm` INNER JOIN `stu-marks` AS `stu_ma` ON `sm`.`id`=`stu_ma`.`id` WHERE `stu_ma`.`classroom_id`=? AND `subject_id` = ? AND `term`= ?;  ";
 			$stmt = $this->con->db->prepare($query);
-			$result = $stmt->execute([$subject_id,$term]);
+			$result = $stmt->execute([$classroom_id,$subject_id,$term]);
 			if($result){
 				$result = $stmt->fetchAll();
 
@@ -282,7 +282,7 @@
 		}
 
 
-		public function get_rank($term){
+		public function get_rank($term,$classroom_id){
 			if($term ==1){
 				$t = 'first_term_total';
 			}
@@ -293,7 +293,7 @@
 				$t = 'third_term_total';
 			}
 
-			$query = "SELECT *, @curRank := @curRank + 1 AS rank FROM `stu-marks` p, (SELECT @curRank := 0) r ORDER BY {$t} DESC ";
+			$query = "SELECT *, @curRank := @curRank + 1 AS rank FROM `stu-marks` p, (SELECT @curRank := 0) r WHERE `classroom_id`={$classroom_id} ORDER BY {$t} DESC ";
 			$stmt = $this->con->db->prepare($query);
 			$result = $stmt->execute();
 			if($result){

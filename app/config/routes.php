@@ -181,7 +181,7 @@
 	
 	$routes['api/draw_charts/attendance/classroom/comparission'] = "apiDrawChart/classroom_attendance_comparission";
 
-	$routes['api/draw_charts/dashboard/marks/student'] = "apiDrawChart/dashboard_students_marks_overview_doughnut";
+	$routes['api/draw_charts/dashboard/marks/student/$1'] = "apiDrawChart/dashboard_students_marks_overview_doughnut/$1";
 	$routes['api/draw_charts/dashboard/marks/barchart/$1/$2'] = "apiDrawChart/students_marks_bar_chart/$1/$2";
 	$routes['api/draw_charts/dashboard/marks/subject-avg/$1/$2'] = "apiDrawChart/subject_average_bar_chart/$1/$2";
 
