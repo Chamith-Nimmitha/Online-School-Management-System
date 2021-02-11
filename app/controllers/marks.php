@@ -314,7 +314,7 @@
 				if(isset($_FILES['filename']['tmp_name']) && !empty($_FILES['filename']['tmp_name'])){
 					if($filetype[1] == 'csv'){
 					move_uploaded_file($_FILES['filename']['tmp_name'], $target.$filename);
-					$file = fopen("C:\wamp64\www\mymvc\public\uploads\marksheet\\".$_FILES["filename"]['name'],'r');
+					$file = fopen(BASEPATH.$target.$_FILES["filename"]['name'],'r');
 					while (($line = fgetcsv($file)) !== FALSE) {
 						//print_r($line);echo "<br>";
 						$cur_student_id = null;
