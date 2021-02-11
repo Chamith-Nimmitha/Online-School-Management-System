@@ -353,6 +353,7 @@ function get_classroom_grades(category_ele,target_id){
 		if( this.status == 200 ){
 			var response = xhr.responseText;
 			if( response.search("FALSE") === -1 ){
+				console.log(response);
 				grades = JSON.parse(response);
 				grade_sel.innerHTML = `<option value="">select</option>`;
 				for( var i in grades ){
