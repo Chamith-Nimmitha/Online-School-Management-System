@@ -6,8 +6,13 @@
 		}
 
 		public function get_grades($category){
-			$data['category'] = $category;
-			$this->load->view("../../public/assets/api/classrooms",$data);
+			$this->load->model("classrooms");
+			$result = $this->load->classrooms->get_section_list_by_category($category);
+			if(!$result){
+				echo "FALSE";
+			}else{
+				echo json_encode($result);
+			}
 		}
 
 		public function search(){
