@@ -263,9 +263,9 @@ function dashboard_teacher_attendance_bar(){
 var subject_grades_pie_chart = undefined;
 function subject_grades_pie(){
 	var form = new FormData( document.getElementById('dashboard_marks_filter') );
+	var classroom_id = document.getElementById('marks_classroom_id').value;
 
-
-	fetch(base_url+"api/draw_charts/dashboard/marks/student",{
+	fetch(base_url+"api/draw_charts/dashboard/marks/student/"+classroom_id,{
 		method : 'post',
 		body : form
 	}).then( (res) => {

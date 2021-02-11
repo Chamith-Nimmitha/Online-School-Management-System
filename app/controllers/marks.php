@@ -96,7 +96,7 @@
 
 			for ($i=1; $i <=3 ; $i++) { 
 				
-					$rank = $this->load->marks-> get_rank($i);
+					$rank = $this->load->marks-> get_rank($i,$r['classroom_id']);
 					$rank = $rank->fetchAll();
 					foreach ($rank as $r) {
 						if($r['student_id']==$student_id){

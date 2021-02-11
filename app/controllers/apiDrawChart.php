@@ -340,7 +340,7 @@
 		}
 
 // for subject report
-		public function dashboard_students_marks_overview_doughnut(){
+		public function dashboard_students_marks_overview_doughnut($classroom_id){
 			$term = $_POST['term'];
 			$subject_id = $_POST['subject'];
 
@@ -355,7 +355,7 @@
 			}
 
 			$this->load->model('marks');
-			$result = $this->load->marks->dashboard_student_marks_overview_bar($subject_id,$term);
+			$result = $this->load->marks->dashboard_student_marks_overview_bar($subject_id,$term,$classroom_id);
 
 
 			if($result !== FALSE ){
