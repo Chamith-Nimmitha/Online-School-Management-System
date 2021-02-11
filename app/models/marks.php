@@ -268,7 +268,7 @@
 		}
 
 		public function student_subject_lists($grade){
-			$query = "SELECT * FROM `subject` WHERE `grade`=?";
+			$query = "SELECT * FROM `subject` WHERE `grade`=? AND `type` != 'Other'";
 			$stmt = $this->con->db->prepare($query);
 			$result = $stmt->execute([$grade]);
 			if($result){
