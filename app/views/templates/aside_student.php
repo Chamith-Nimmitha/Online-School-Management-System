@@ -31,7 +31,7 @@
 				</li>
 				
 				<li class="nav-item aside-li">
-					<a href="<?php echo set_url('student/view/parent/'.$parent_id); ?>" class="nav-link">
+					<a href="<?php echo set_url('profile/parent/'.$parent_id); ?>" class="nav-link">
 						<i class="fas fa-user-shield"></i>Parent Info
 					</a>
 				</li>

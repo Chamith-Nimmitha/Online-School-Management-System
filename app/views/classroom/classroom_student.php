@@ -102,7 +102,7 @@
 									$row .= "checked";
 								}
 								$row .= ' onchange="update_student_removed_set(this)"></td>';
-								$row .= '<td class="col-2  word-break"><a href="'.set_url("pages/student_profile_view?student_id=".$student['id']).'">profile</a></td>';
+								$row .= '<td class="col-2 justify-content-center align-items-center word-break"><a href="'.set_url("profile/student/".$student['id']).'" class="btn btn-blue">profile</a></td>';
 								$row .= '</tr>';
 								echo $row;
 							}
