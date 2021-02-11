@@ -145,6 +145,12 @@
 					throw new PDOException();
 				}
 				$teacher_id = $result->fetch()['id'];
+
+				$result = $this->con->insert("user",['email'=>$data['email'], "role"=>"teacher"]);
+				if(!$result || $result->rowCount() !== 1){
+					throw new PDOException();
+				}
+
 				require_once(MODELS."timetable.php");
 				$t = new TimetableModel();
 				$result = $t->create($teacher_id,"teacher","FREE");

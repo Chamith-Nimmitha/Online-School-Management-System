@@ -19,9 +19,12 @@
 
 	 ?>
 
-	<div class="mt-5">
+	 <p id="ajax_update_state" class='bg-green p-3 w-75 text-center fg-white d-none'>
+	 </p>
+
+	<div class="mt-5 text-center">
 		<h2 style="font-size: 30px;">Classroom Timetable Create/Update</h2>
-		<span><?php echo $grade."-".$class; ?></span>
+		<span><?php echo $grade."-".$class; ?> Classroom</span>
 		<input type="hidden" id="classroom_id" value="<?php echo $classroom_id; ?>">
 		<input type="hidden" id="classroom_grade" value="<?php echo $grade; ?>">
 		<input type="hidden" id="classroom_class" value="<?php echo $class; ?>">

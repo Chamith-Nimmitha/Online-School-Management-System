@@ -102,11 +102,12 @@ class ApiTeacher extends Controller{
 	// check teacher timetable conflits when defin classroom timetable
 	public function timetable_conflit(){
 		// header("Content-type: application/json");
+		$classroom_id = $_POST['classroom_id'];
 		$teacher_id = $_POST['teacher_id'];
 		$day = $_POST['day'];
 		$period = $_POST['period'];
 		$subject_id = $_POST['subject_id'];
-		$task = "G--".$subject_id;
+		$task = $_POST['task'];
 
 		$this->load->model("teacher");
 		$result = $this->load->teacher->get_timetable_data($teacher_id,$day,$period);

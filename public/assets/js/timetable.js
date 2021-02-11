@@ -100,9 +100,10 @@ function calc_free_periods(){
 
 //scroll smootly to teacher select element
 function scroll_to_teacher(ele){
-	let amount = ele.getBoundingClientRect().top-200;
-	let per_frame = 30;
-	let fps = 50;
+	let amount = ele.getBoundingClientRect().top-100;
+	console.log(amount)
+	let per_frame = 300;
+	let fps = 10;
 	let timer = setInterval(()=>{
 		if(amount <=0){
 			clearInterval(timer);
@@ -117,6 +118,7 @@ function scroll_to_teacher(ele){
 function check_teacher_in_database(teacher_id,day_p,subject_id){
 	var form = new FormData();
 	form.append("teacher_id", teacher_id);
+	form.append("classroom_id", classroom_id);
 	form.append("day", day_p[0]);
 	form.append("period", day_p[1]);
 	form.append("subject_id", subject_id);
@@ -152,7 +154,6 @@ function check_teacher_in_database(teacher_id,day_p,subject_id){
 
 // check teacher available for that periods
 function check_teacher_availbility(tar){
-	console.log("dfdf");
 	let teachers = subjects_tbl.querySelectorAll("select");
 	teachers.forEach((teacher)=>{
 		teacher.classList.remove("teacher-select");
@@ -233,7 +234,6 @@ function change_option(id){
 				if( as.value != op.getAttribute("value") && op.getAttribute("value") != "None" && op.getAttribute("value") ==  a.value){
 					flag = false;
 				}else if( as.value == op.getAttribute("value")){
-					console.log(op.getAttribute("value"));
 					op.setAttribute("selected","selected" );
 				}
 				
@@ -475,6 +475,8 @@ function update_timetable(e){
 		subjects : ajax_subs
 	}
 
+	window.scrollTo(0,0);
+
 	fetch(base_url+"api/classroom/timetable/update",{
 		headers: {
 	      'Accept': 'application/json',
@@ -482,9 +484,20 @@ function update_timetable(e){
 	    },
 		method:"POST",
 		body:JSON.stringify(data),
-	}).then( (res)=> { return res.text()})
+	}).then( (res)=> { return res.json()})
 	.then( (data)=>{
-		console.log(data);
+		if(parseInt(data.success) == 1){
+			let ajax_update_state = document.getElementById("ajax_update_state");
+			ajax_update_state.classList.remove("bg-red");
+			ajax_update_state.classList.add("bg-green");
+			ajax_update_state.classList.remove("d-none");
+			ajax_update_state.innerHTML = "Update Successful.";
+		}else{
+			ajax_update_state.classList.remove("d-none");
+			ajax_update_state.classList.remove("bg-green");
+			ajax_update_state.classList.add("bg-red");
+			ajax_update_state.innerHTML = "Update Failed.";
+		}
 	}).catch((err)=>{
 		console.log(err);
 	});

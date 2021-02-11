@@ -379,16 +379,31 @@
 			if(!$result || $result->rowCount() !== 0){
 				return FALSE;
 			}
-			$result = $this->con->insert("classroom",$data);
-			if($result && $result->rowCount() === 1){
+
+			try {
+				$this->con->db->beginTransaction();
+
+				$result = $this->con->insert("classroom",$data);
+				if(!$result || $result->rowCount() !== 1){
+					throw new PDOException();
+				}
 				$this->con->get(['id']);
 				$result = $this->con->select("classroom",$data);
-				if($result && $result->rowCount() === 1){
-					return $this->set_by_id($result->fetch()['id']);
-				}else{
-					return FALSE;
+				if(!$result || $result->rowCount() !== 1){
+					throw new PDOException();
 				}
-			}else{
+				require_once(MODELS."timetable.php");
+				$id = $result->fetch()['id'];
+				$tt = new TimetableModel();
+				$result = $tt->create($id,"classroom");
+				if(!$result){
+					throw new PDOException();
+				}
+				$this->set_by_id($id);
+				$this->con->db->commit();
+				return TRUE;
+			} catch (Exception $e) {
+				$this->con->db->rollBack();
 				return FALSE;
 			}
 		}
