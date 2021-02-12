@@ -53,7 +53,7 @@
 				$required_fields = array();
 				$required_fields['name-with-initials']=[0,50,1,"Name with initials"];
 				$required_fields['first-name']=[0,20,1,"First name"];
-				$required_fields['middle-name']=[0,50,0,"Middle name"];
+				// $required_fields['middle-name']=[0,50,0,"Middle name"];
 				$required_fields['last-name']=[0,20,1,"Last name"];
 				$required_fields['grade']=[1,2,1,"Grade"];
 				$required_fields['gender']=[1,6,1,"Gender"];

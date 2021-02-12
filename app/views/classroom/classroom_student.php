@@ -41,36 +41,11 @@
 			</div>
 			<div class="d-flex w-100">
 				<label class="col-4" for="grade">Grade</label>
-				<select name="grade_search" id="grade_search">
-					<option value="notfound">Not Found</option>
-					<?php 
-						if(isset($section_list)){
-							foreach ($section_list as $section) {
-								echo '<option value="'.$section['grade'].'" ';
-								if($section['grade'] == $classroom_info['grade']){
-									echo "selected='selected'";
-								}
-								echo '>'.$section['grade'].'</option>';
-							}
-						}
-					 ?>
-				</select>
+				<input type="text" name="grade" id="grade" placeholder="Classroom ID" value="<?php if(!empty($classroom_info)){echo $classroom_info['grade'];} ?>" disabled="disabled">
 			</div>
 			<div class="d-flex w-100">
 				<label class="col-4" for="class">Class</label>
-				<select name="class" id="class">
-					<option value="">SELECT</option>
-					<?php 
-						foreach ($class_list as $class) {
-							echo "<option value='".$class['class']."'";
-							if($class['class'] == $classroom_info['class']){
-								echo "selected='selected'";
-							}
-							echo ">".$class['class']."</option>";
-						}
-
-					 ?>
-				</select>
+				<input type="text" name="class" id="class" placeholder="Class" value="<?php if(!empty($classroom_info)){echo $classroom_info['class'];} ?>" disabled="disable">
 			</div>
 		</fieldset>
 
