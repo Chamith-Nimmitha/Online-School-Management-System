@@ -240,6 +240,7 @@ function interview_add_teacher(element,target){
 	label.setAttribute("for","teacherid-" + num);
 	var input = document.createElement("INPUT");
 	input.setAttribute("type","text");
+	input.setAttribute("placeholder","Teacher ID");
 	input.setAttribute("name","teacherid-" + num);
 	input.setAttribute("id","teacherid-" + num);
 	input.setAttribute("oninput","validate_teacher_id(this,7,7,1)");

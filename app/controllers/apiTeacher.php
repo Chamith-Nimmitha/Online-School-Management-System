@@ -159,5 +159,17 @@ class ApiTeacher extends Controller{
 
 	}
 
+	// check teacher is in database
+	public function validate_teacher($teacher_id){
+		$this->load->model("teacher");
+		$result = $this->load->teacher->set_by_id($teacher_id);
+
+		if($result === FALSE){
+			echo json_encode( ["success"=>0, "error"=>"Teacher Not Found."]);
+		}else{
+			echo json_encode( ["success"=>1, "data"=>$this->load->teacher->get_name()]);
+		}
+	}
+
 }
 ?>

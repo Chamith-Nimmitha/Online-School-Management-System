@@ -125,13 +125,15 @@
 
 			try{
 				$this->con->db->beginTransaction();
-				$cr = new ClassroomModel();
-				$result = $cr->set_by_id($classroom_id);
-				if(!$result){
-					throw new PDOException();
+				if($classroom_id != NULL){
+					$cr = new ClassroomModel();
+					$result = $cr->set_by_id($classroom_id);
+					if(!$result){
+						throw new PDOException();
+					}
+					$grade = $cr->get_grade();
+					$class = $cr->get_class();
 				}
-				$grade = $cr->get_grade();
-				$class = $cr->get_class();
 				foreach ($timetable as $cell) {
 					$result = $this->con->update("normal_day",["task"=>$cell['task']],array("timetable_id"=>$this->id,"day"=>$cell['day'],"period"=>$cell['period']));
 					if(!$result && $result->rowCount() != 1){

@@ -1,6 +1,18 @@
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 
+	<?php 
+		if(isset($info) && !empty($info)){
+			 echo "<p class='w-75 bg-green p-2 text-center'>";
+            echo $info;
+            echo "</p>";
+		}
+		if(isset($error) && !empty($error)){
+            echo "<p class='w-75 bg-red p-2 text-center'>";
+            echo $error;
+            echo "</p>";
+        }
+	 ?>
 	<div>
 		<h2>Create and Update Interview Panel</h2>
 	</div>
@@ -49,15 +61,13 @@
 							$i =1;
 							foreach ($interview_teachers as $id) {
 								$row = '<div id="teacherid-'.$i.'" class="form-group interview-teacher-id">';
-								$row .= "<label for='teacher-".$i."'> Teacher ID (<code title=\"required\"> * </code>)</label>";
-								$row .= '<input type="text" name="teacher-'.$i.'" id="teacher-'.$i.'" required="required" value="';
-								$row .= $id['id'].'" >';
-								// $row .= '<input type="hidden" name="hidden-teacher-'.$i.'" id="hidden-teacher-'.$i.'" required="required" value="';
-								// $row .= $id['id'].'" >';
+								$row .= "<label for='teacher-".$i."'> Teacher ID</label>";
+								$row .= '<input type="text" name="teacher-'.$i.'" placeholder="Teacher ID" id="teacher-'.$i.'" value="';
+								$row .= $id['id'].'" required="required">';
 								$row .= '<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>';
-								if($i >3){
+								if($i >1){
 									$row .= '<button type="button" class="mt-2 float-right" onclick="removeElement(
-										\'teacherid-'.$i.'\')" required="required">-remove teacher</button>';
+										\'teacherid-'.$i.'\')">-remove teacher</button>';
 								}
 								$row .= '</div>';
 								echo $row;
@@ -65,27 +75,26 @@
 							}
 						}else{
 							echo '<div id="teacherid-1" class="form-group interview-teacher-id">
-									<label for="teacher-1">Teacher ID (<code title="required"> * </code>)</label>
-									<input type="text" name="teacher-1" id="teacher-1" required="required">
-									<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
-								</div>
-								<div id="teacherid-2" class="form-group  interview-teacher-id">
-									<label for="teacherid-2">Teacher ID (<code title="required"> * </code>)</label>
-									<input type="text" name="teacher-2" id="teacher-2" required="required">
-									<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
-								</div>
-								<div id="teacherid-3" class="form-group  interview-teacher-id">
-									<label for="teacherid-3">Teacher ID (<code title="required"> * </code>)</label>
-									<input type="text" name="teacher-3" id="teacher-3" required="required">
+									<label for="teacher-1">Teacher ID</label>
+									<input type="text" name="teacher-1" placeholder="Teacher ID" id="teacher-1"  required="required">
 									<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 								</div>';
 						}
 					?>
 				</div>
 
-				<div class=" form-group d-flex justify-content-end">
-					<button type="button" class="btn btn-blue" id="add-teacher"  onclick="interview_add_teacher(this,'interview-teachers',4)">+add a teacher</button>
-				</div>
+				<?php 	
+					if(isset($interview_teachers) && !empty($interview_teachers)){
+						echo '<div class=" form-group d-flex justify-content-end">
+							<button type="button" class="btn btn-blue"  id="add-teacher"  onclick="interview_add_teacher(this,\'interview-teachers\','.count($interview_teachers).')">+add a teacher</button>
+						</div>';
+					}else{
+						echo '<div class=" form-group d-flex justify-content-end">
+							<button type="button" class="btn btn-blue" id="add-teacher"  onclick="interview_add_teacher(this,\'interview-teachers\',2)">+add a teacher</button>
+						</div>';
+					}
+				 ?>
+
 				<hr>
 				<div class="d-flex justify-content-end">
 					<?php 
