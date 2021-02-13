@@ -15,7 +15,7 @@
         }
 
      ?>
-    <h2 class="fs-30">TEACHER-REGISTRATION FORM</h2>
+    <h2 class="fs-30 mt-5">TEACHER-REGISTRATION FORM</h2>
 		
     <hr class="w-100 mt-5 mb-5">
 
@@ -23,7 +23,7 @@
         <fieldset class="p-5">
             <legend>Registration form</legend>
             <div class="form-group mt-1">
-                <label>NAME WITH INITIALS</label>
+                <label>NAME WITH INITIALS (<code title="required"> * </code>)</label>
                 <input type="text" name="name_with_initials"  value="<?php if(isset($_POST['name_with_initials'])){echo $_POST['name_with_initials'];} ?>" oninput="validate_user_input(this,0,50,1)" placeholder="Name With initials">
                 <?php 
                 if(isset($field_errors['name_with_initials'])){
@@ -35,7 +35,7 @@
             </div>
 
             <div class="form-group mt-1">
-                <label>FIRST NAME</label>
+                <label>FIRST NAME (<code title="required"> * </code>)</label>
                 <input type="text" name="first_name"  placeholder="First Name" value="<?php if(isset($_POST['first_name'])){echo $_POST['first_name'];} ?>" oninput="validate_user_input(this,0,20,1)">
                 <?php 
                 if(isset($field_errors['first_name'])){
@@ -59,7 +59,7 @@
             </div>
 
             <div class="form-group mt-1">
-                <label>LAST NAME</label>
+                <label>LAST NAME (<code title="required"> * </code>)</label>
                 <input type="text" name="last_name"  value="<?php if(isset($_POST['last_name'])){echo $_POST['last_name'];} ?>" placeholder="Last Name" oninput="validate_user_input(this,0,20,1)">
                 <?php 
                 if(isset($field_errors['last_name'])){
@@ -71,7 +71,7 @@
             </div>
 
             <div class="form-group">
-                <label>GENDER</label>
+                <label>GENDER (<code title="required"> * </code>)</label>
                 <select name="gender" style="width: 100px;">
                     <option value="male" <?php if(isset($_POST['gender']) && $_POST['gender']== 'male'){echo "selected='selected'";} ?>>MALE</option>
                     <option value="female" <?php if(isset($_POST['gender']) && $_POST['gender']== 'female'){echo "selected='selected'";} ?>>FEMALE</option>
@@ -86,7 +86,7 @@
             </div>
 
             <div class="form-group mt-1">
-                <label for="dob">DATE OF BIRTH</label>
+                <label for="dob">DATE OF BIRTH (<code title="required"> * </code>)</label>
                 <input type="date" name="dob" id="dob" value="<?php if(isset($_POST['dob'])){echo $_POST['dob'];} ?>" onchange="validate_birthday(this,20)">
                 <?php 
                 if(isset($field_errors['dob'])){
@@ -98,7 +98,7 @@
             </div>
 
             <div class="form-group mt-1">
-                <label>ADDRESS</label>
+                <label>ADDRESS (<code title="required"> * </code>)</label>
                 <input type="text" name="address" placeholder="Address"  value="<?php if(isset($_POST['address'])){echo $_POST['address'];} ?>" oninput="validate_user_input(this,0,100,1)">
                 <?php 
                 if(isset($field_errors['address'])){
@@ -110,7 +110,7 @@
             </div>
 
             <div class="form-group mt-1">
-                <label>EMAIL</label>
+                <label>EMAIL (<code title="required"> * </code>)</label>
                 <input type="text" name="email" placeholder="Email" value="<?php if(isset($_POST['email'])){echo $_POST['email'];} ?>" oninput="validate_email(this,0,100,1)">
                 <?php 
                 if(isset($field_errors['email'])){
@@ -122,7 +122,7 @@
             </div>
 
             <div class="form-group mt-1">
-                <label>CONTACT NUMBER</label>
+                <label>CONTACT NUMBER (<code title="required"> * </code>)</label>
                 <input type="text" name="contact_number" placeholder="Contact Number" value="<?php if(isset($_POST['contact_number'])){echo $_POST['contact_number'];} ?>" oninput="validate_contact_number(this)">
                 <?php 
                 if(isset($field_errors['contact_number'])){
@@ -134,7 +134,7 @@
             </div>
 
             <div class="form-group mt-1">
-                <label>NIC</label>
+                <label>NIC (<code title="required"> * </code>)</label>
                 <input type="text" name="nic" placeholder="NIC" value="<?php if(isset($_POST['nic'])){echo $_POST['nic'];} ?>" oninput="validate_user_input(this,10,12,1)">
                 <?php 
                 if(isset($field_errors['nic'])){

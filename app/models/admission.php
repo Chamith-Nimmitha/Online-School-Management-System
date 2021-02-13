@@ -7,7 +7,7 @@
 			return $result = $this->con->insert("admission",$data);
 		}
 
-		public function change_state($admission_id,$state){
+		public function change_admission_state($admission_id,$state){
 			return $this->con->update("admission", ["state"=>$state],["id" =>$admission_id]);
 		}
 

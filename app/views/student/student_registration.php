@@ -60,7 +60,7 @@
 					</div>
 
 					<div class="form-group col-12">
-						<label for="middle-name">Middle Name (<code title="required"> * </code>)</label>
+						<label for="middle-name">Middle Name</label>
 						<input type="text" value="<?php if(isset($_POST['middle-name'])){echo $_POST['middle-name'];} ?>" name="middle-name" placeholder="Middle Name" id="middle-name" oninput="validate_user_input(this,0,50,0)">
 						<?php 
 							if(isset($field_errors['middle-name'])){

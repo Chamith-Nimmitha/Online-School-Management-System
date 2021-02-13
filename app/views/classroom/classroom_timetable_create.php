@@ -24,7 +24,7 @@
 
 	<div class="mt-5 text-center">
 		<h2 style="font-size: 30px;">Classroom Timetable Create/Update</h2>
-		<span><?php echo $grade."-".$class; ?> Classroom</span>
+		<span style="font-size: 20px;font-weight: bold;"><?php echo $grade."-".$class; ?> Classroom</span>
 		<input type="hidden" id="classroom_id" value="<?php echo $classroom_id; ?>">
 		<input type="hidden" id="classroom_grade" value="<?php echo $grade; ?>">
 		<input type="hidden" id="classroom_class" value="<?php echo $class; ?>">

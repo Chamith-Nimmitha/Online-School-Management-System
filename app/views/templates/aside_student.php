@@ -46,7 +46,7 @@
 					</button>
 					<nav id="settings-nav" class="no-collapsed nav sub-nav">
 						<ul class="d-flex flex-col">
-							<li class="nav-item"><a href="<?php echo set_url('settings/website') ?>" class="nav-link"  parent-li="settings-li">Website settings</a></li>
+							<li class="nav-item"><a href="<?php echo set_url('settings/website') ?>" class="nav-link"  parent-li="settings-li">Website Settings</a></li>
 						</ul>
 						
 					</nav>

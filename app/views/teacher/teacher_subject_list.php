@@ -33,7 +33,7 @@
 
 	<hr class="w-100 mt-5">
 	<div class="col-10">
-		<?php if(isset($_GET['teacher_id'])){?>
+		<?php if(isset($teacher_info['id']) && $teacher_info['id']!== $_SESSION['user_id']){?>
 			<div class="pt-5">
 				<h2 style="color: darkblue;">Teacher Subject List</h2>
 			</div>
