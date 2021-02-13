@@ -11,19 +11,22 @@ function validate_teacher_id(){
 	var id = this.value;
 	var ele = this;
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET","../php/getdata/get_teacher_info.php?id="+id,true);
+	xhr.open("GET",base_url+"api/teacher/validate_id/"+id,true);
+
 
 	xhr.onload = function(){
 		errors = validate_user_input(ele,7,7,1);
 		if(errors.length == 0 ){
 			var response = xhr.responseText;
-			console.log(response);
-			if(response.search("invalid") != -1){
+			response = JSON.parse(response);
+			if(response.success == 0){
 				if(ele.nextElementSibling != null && ele.nextElementSibling.nodeName == "P"){
 					var p_ele = ele.nextElementSibling;
 					p_ele.style.cssText = "display:inherit !important;";
 					if(p_ele.innerHTML.length == 0){
-						p_ele.innerHTML += "Invalid id.";
+						p_ele.innerHTML += "Invalid Teahcer id.";
+						p_ele.classList.add("bg-red");
+						p_ele.classList.remove("bg-green");
 					}
 					ele.parentElement.style.border = "1px solid red";
 					ele.parentElement.style.borderRadius = "5px";
@@ -31,11 +34,17 @@ function validate_teacher_id(){
 			}else{
 				if(ele.nextElementSibling != null && ele.nextElementSibling.nodeName == "P"){
 					var p_ele = ele.nextElementSibling;
-					p_ele.style.cssText = "display:none !important;";
-					p_ele.innerHTML = "";
-					ele.parentElement.style.border = "none";
+					p_ele.style.cssText = "display:inherit !important;";
+					p_ele.classList.add("bg-green");
+					p_ele.classList.remove("bg-red");
+					p_ele.innerHTML = response.data;
+					ele.parentElement.style.border = "1px solid green";
 				}
 			}
+		}else{
+			let p_ele = ele.nextElementSibling;
+			p_ele.classList.add("bg-red");
+			p_ele.classList.remove("bg-green");
 		}
 	}
 	xhr.send();

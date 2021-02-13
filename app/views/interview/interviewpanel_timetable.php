@@ -2,18 +2,14 @@
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 
 	<?php 
-		if(isset($errors) && !empty($errors)){
+		if(isset($error) && !empty($error)){
 			echo "<p class='w-75 bg-red fg-white p-2 text-center'>";
-			foreach ($errors as $error) {
-				echo $error ."<br/>";
-			}
+			echo $error ."<br/>";
 			echo "</p>";
 		}
 		if(isset($info) && !empty($info)){
 			echo "<p class='w-75 bg-green fg-white p-2 text-center'>";
-			foreach ($info as $i) {
-				echo $i ."<br/>";
-			}
+			echo $info ."<br/>";
 			echo "</p>";
 		}
 

@@ -160,6 +160,7 @@
 	$routes['api/teacher/subject'] = "apiTeacher/subject";
 	$routes['api/timetable/teacher/conflit'] = "apiTeacher/timetable_conflit";
 	$routes['api/teacher/subject/student/list'] = "apiTeacher/tea_sub_student";
+	$routes['api/teacher/validate_id/$1'] = "apiTeacher/validate_teacher/$1";
 
 	$routes['api/attendance/classroom/student/search'] = "apiAttendance/classroom_attendance_search";
 	$routes['api/attendance/teacher/search'] = "apiAttendance/teacher_attendance_search";
