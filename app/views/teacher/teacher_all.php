@@ -4,6 +4,9 @@
 	}
 </script>
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
+		<div class="student-header mt-3">
+			<h2 class="fs-30">Teacher List</h2>
+		</div>
 		<div class="d-flex justify-content-center align-items-center">
 			<form action="<?php echo set_url('teacher/list'); ?>" method="post" class="d-flex align-items-center col-12" enctype="multipart/form-data">
 				<div class="d-flex col-12 align-items-center justify-content-center">

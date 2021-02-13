@@ -120,7 +120,7 @@
 
 					<nav class="nav sub-nav no-collapsed" id="student-nav">
 						<ul class="d-flex flex-col">
-							<li class="nav-item"><a href="<?php echo set_url('student/list'); ?>" class="nav-link"  parent-li="student-li">Students list</a></li>
+							<li class="nav-item"><a href="<?php echo set_url('student/list'); ?>" class="nav-link"  parent-li="student-li">Student List</a></li>
 						</ul>
 					</nav>
 				</li>
@@ -134,14 +134,14 @@
 
 					<nav class="nav sub-nav no-collapsed" id="teacher-nav">
 						<ul class="d-flex flex-col">
-							<li class="nav-item"><a href="<?php echo set_url('teacher/list'); ?>" class="nav-link" parent-li="teacher-li">Teachers List</a></li>
+							<li class="nav-item"><a href="<?php echo set_url('teacher/list'); ?>" class="nav-link" parent-li="teacher-li">Teacher List</a></li>
 							<li class="nav-item"><a href="<?php echo set_url('teacher/registration') ?>" class="nav-link"  parent-li="teacher-li">Add teacher</a></li>
 						</ul>
 					</nav>
 				</li>
 				<li class="nav-item aside-li" id="classroom-li">
 					<a href="<?php echo set_url('classroom/list') ?>" class="nav-link">
-						<i class="fas fa-store-alt"></i>Class Rooms
+						<i class="fas fa-store-alt"></i>Classrooms
 					</a>
 					<button class="toggle-button" target="classroom-nav">
 						<img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" width="20px" alt="">
@@ -149,7 +149,7 @@
 
 					<nav  id="classroom-nav" class="nav sub-nav no-collapsed">
 						<ul class="d-flex flex-col">
-							<li class="nav-item"><a href="<?php echo set_url('classroom/list') ?>" class="nav-link" parent-li="classroom-li">Classroom list</a></li>
+							<li class="nav-item"><a href="<?php echo set_url('classroom/list') ?>" class="nav-link" parent-li="classroom-li">Classroom List</a></li>
 							<li class="nav-item"><a href="<?php echo set_url('classroom/registration') ?>" class="nav-link" parent-li="classroom-li">Add new Classroom</a></li>
 						</ul>
 					</nav>
@@ -165,7 +165,7 @@
 					<nav class="nav sub-nav no-collapsed" id="subject-nav">
 						<ul class="d-flex flex-col">
 							<li class="nav-item">
-								<a href="<?php echo set_url('subject/list') ?>" class="nav-link" parent-li="subject-li">Subjects list</a></li>
+								<a href="<?php echo set_url('subject/list') ?>" class="nav-link" parent-li="subject-li">Subjects List</a></li>
 							<li class="nav-item">
 								<a href="<?php echo set_url('subject/registration') ?>" class="nav-link" parent-li="subject-li">Add a Subject</a></li>
 						</ul>
@@ -180,8 +180,8 @@
 					</button>
 					<nav id="interview-nav" class="no-collapsed nav sub-nav">
 						<ul class="d-flex flex-col">
-							<li class="nav-item"><a href="<?php echo set_url('interviewpanel/list') ?>" class="nav-link"  parent-li="interview-li">All panels</a></li>
-							<li class="nav-item"><a href="<?php echo set_url('interviewpanel/registration') ?>" class="nav-link" parent-li="interview-li">Add new Panel</a></li>
+							<li class="nav-item"><a href="<?php echo set_url('interviewpanel/list') ?>" class="nav-link"  parent-li="interview-li">All Panels</a></li>
+							<li class="nav-item"><a href="<?php echo set_url('interviewpanel/registration') ?>" class="nav-link" parent-li="interview-li">Add New Panel</a></li>
 							<li class="nav-item">
 								<a href="<?php echo set_url('interview/list') ?>"  class="nav-link" parent-li="interview-li">Interview List</a>
 							</li>
@@ -189,12 +189,11 @@
 						
 					</nav>
 				</li>
-				<li class="nav-item aside-li">
+				<!-- <li class="nav-item aside-li">
 					<a href="<?php echo set_url('userrole/permission') ?>" class="nav-link">
 						<i class="fas fa-users-cog"></i>User Roles
 					</a>
-
-				</li>
+				</li> -->
 				<li class="nav-item aside-li">
 					<a href="<?php echo set_url('parent/list') ?>" class="nav-link" class="nav-link">
 						<i class="fas fa-user-shield"></i>Parents
@@ -208,8 +207,8 @@
 					</button>
 					<nav id="settings-nav" class="no-collapsed nav sub-nav">
 						<ul class="d-flex flex-col">
-							<li class="nav-item"><a href="<?php echo set_url('settings/school') ?>" class="nav-link"  parent-li="settings-li">School settings</a></li>
-							<li class="nav-item"><a href="<?php echo set_url('settings/website') ?>" class="nav-link"  parent-li="settings-li">Website settings</a></li>
+							<li class="nav-item"><a href="<?php echo set_url('settings/school') ?>" class="nav-link"  parent-li="settings-li">School Settings</a></li>
+							<li class="nav-item"><a href="<?php echo set_url('settings/website') ?>" class="nav-link"  parent-li="settings-li">Website Settings</a></li>
 						</ul>
 						
 					</nav>

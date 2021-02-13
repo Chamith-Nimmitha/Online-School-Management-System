@@ -7,6 +7,11 @@
 			echo $error ."<br/>";
 			echo "</p>";
 		}
+		if(isset($info) && !empty($info)){
+			echo "<p class='w-75 bg-green fg-white p-2 text-center'>";
+			echo $info ."<br/>";
+			echo "</p>";
+		}
 	 ?>
 	<div class="registration-form col-12 justify-content-center">
 		<div class="admissions-header mt-5">

@@ -186,6 +186,7 @@
 			$this->load->model("interview");
 			$con = new Database();
 			$error = "";
+			$info = "";
 			$field_errors = [];
 			// when submit the data
 			if(isset($_POST['submit'])){
@@ -267,7 +268,6 @@
 						$required_fields['guardian-email']=[0,100,1,"Guardian email"];
 					}
 				}
-
 				$field_errors = array_merge($field_errors,check_input_fields($required_fields));
 
 				if($already_have_account == true){
@@ -400,9 +400,9 @@
 								}
 								$student_id = $result->fetch()['id'];
 
+								$res1 =$con->update("admission", ["state"=>"Registered"],["id" =>$admission_id]);
+								$res2 =$con->update("interview", ["state"=>"Interviewed"],["id" =>$admission_id]);
 
-								$res1 = $this->load->admission->change_state($admission_id,"Registered");
-								$res2 = $this->load->interview->change_state($admission_id,"Interviewed");
 								if(!$res1 || !$res2){
 									throw new PDOException("State Upadate Failed.", 1);
 								}
@@ -412,6 +412,7 @@
 								}
 
 								$con->db->commit();
+								$info = "Student and Parent Registration Successful.";
 								// header("Location:". set_url("interview/get_files/".$admission_id));
 							}catch(Exception $e){
 								$con->db->rollback();
@@ -456,6 +457,7 @@
 				$data['result'] = $result;
 			}
 			$data['error'] = $error;
+			$data['info'] = $info;
 			$this->view_header_and_aside();
 			$this->load->view("interview/interview_admission_view",$data);
 			$this->load->view("templates/footer");

@@ -56,7 +56,7 @@
 		}
 
 		// change interview state
-		public function change_state($admission_id,$state){
+		public function change_interview_state($admission_id,$state){
 			return $this->con->update("interview",["state"=>$state],["admission_id"=>$admission_id]);
 		}
 	}

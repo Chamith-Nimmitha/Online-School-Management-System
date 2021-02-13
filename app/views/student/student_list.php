@@ -9,8 +9,8 @@
 	}
  ?>
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start pt-5">
-	<div class="section-wrapper mt-5">
-		<div class="student-header mt-5 ">
+	<div class="section-wrapper">
+		<div class="student-header mt-3">
 			<h2 class="fs-30">Student List</h2>
 		</div> <!-- .student-header -->
 		<div id="all-admission-table"  class="admissions-table col-11">

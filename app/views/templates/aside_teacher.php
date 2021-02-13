@@ -53,7 +53,7 @@
 
 					<nav class="nav sub-nav no-collapsed" id="student-nav">
 						<ul class="d-flex flex-col">
-							<li class="nav-item"><a href="<?php echo set_url('student/list'); ?>" class="nav-link"  parent-li="student-li">Students list</a></li>
+							<li class="nav-item"><a href="<?php echo set_url('student/list'); ?>" class="nav-link"  parent-li="student-li">Students List</a></li>
 						</ul>
 					</nav>
 				</li>
@@ -73,7 +73,7 @@
 				</li>
 				<li class="nav-item aside-li" id="classroom-li">
 					<a href="<?php echo set_url('classroom/list') ?>" class="nav-link">
-						<i class="fas fa-store-alt"></i>Class Rooms
+						<i class="fas fa-store-alt"></i>Classrooms
 					</a>
 					<button class="toggle-button" target="classroom-nav">
 						<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px" alt="">
@@ -81,7 +81,7 @@
 
 					<nav  id="classroom-nav" class="nav sub-nav no-collapsed">
 						<ul class="d-flex flex-col">
-							<li class="nav-item"><a href="<?php echo set_url('classroom/list') ?>" class="nav-link" parent-li="classroom-li">Classroom list</a></li>
+							<li class="nav-item"><a href="<?php echo set_url('classroom/list') ?>" class="nav-link" parent-li="classroom-li">Classroom List</a></li>
 						</ul>
 					</nav>
 				</li>
@@ -119,7 +119,7 @@
 					</button>
 						<div id="interview-nav" class="no-collapsed nav sub-nav">
 							<ul class="d-flex flex-col">
-								<li class="nav-item"><a href="<?php echo set_url('teacher/interview/panel');?>" class="nav-link"  parent-li="interview-li">My panel</a></li>
+								<li class="nav-item"><a href="<?php echo set_url('teacher/interview/panel');?>" class="nav-link"  parent-li="interview-li">My Panel</a></li>
 								<li class="nav-item">
 									<a href="<?php echo set_url('teacher/interviews'); ?>"  class="nav-link" parent-li="interview-li">Interview List</a>
 								</li>
@@ -135,7 +135,7 @@
 					</button>
 					<nav id="settings-nav" class="no-collapsed nav sub-nav">
 						<ul class="d-flex flex-col">
-							<li class="nav-item"><a href="<?php echo set_url('settings/website') ?>" class="nav-link"  parent-li="settings-li">Website settings</a></li>
+							<li class="nav-item"><a href="<?php echo set_url('settings/website') ?>" class="nav-link"  parent-li="settings-li">Website Settings</a></li>
 						</ul>
 						
 					</nav>
