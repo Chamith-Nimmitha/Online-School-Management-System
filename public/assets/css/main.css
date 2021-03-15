@@ -420,6 +420,58 @@ footer{
 /* END OF PROFILE PAGE STYLES*/
 
 
+/* BEGIN HELP CENTER STYLES*/
+#help-center-links a{
+	text-decoration: none;
+	word-break: break-word;
+}
+#help-center-links span{
+	color: red;
+}
+
+#help-center-item-wrapper{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#help-center-item-wrapper .help-center-item{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;	
+}
+
+#help-center-item-wrapper .help-center-item span{ 
+	color: red;
+}
+
+#help-center-item-wrapper .help-center-item-header{
+	width: 90%;
+	padding: 20px;
+	padding-top: 50px;
+}
+
+#help-center-item-wrapper .help-center-item-header a{
+	text-decoration: none;
+}
+
+#help-center-item-wrapper .help-center-item-video{
+	display: flex;
+	justify-content: center;
+}
+
+#help-center-item-wrapper .help-center-item-video video{
+	border: none;
+	outline: none;
+	transition: none;
+	width: 80%;
+}
+
+
+/* END OF HELP CENTER STYLES*/
+
 @media  (min-width:0px){
 	
 }

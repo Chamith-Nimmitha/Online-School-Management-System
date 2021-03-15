@@ -140,6 +140,9 @@
 	$routes['marks/classroom/view/$1/$2/$3'] = "marks/classroom_view/$1/$2/$3";
 	$routes['marks/upload'] = "marks/marksheet_preview";
 
+	// help center
+	$routes['help_center'] = "helpCenter/help_center";
+
 
 
 	// FOR APIS
