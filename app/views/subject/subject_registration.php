@@ -60,7 +60,7 @@
          <div class="ml-5 align-items-center">
             <label for="type" class="mr-3 d-normal">Type:</label>
             <select name="type" id="type" onchange="subject_category(this)">
-                <option value="General" <?php if(isset($type) && ($type == "General")){echo 'selected="selected"';} ?> >General</option>
+                <option value="General" <?php if(isset($type) && ($type == "General")){echo 'selected="selected"';} ?> >Mandatory</option>
                 <option value="Optional" <?php if(isset($type) && ($type == "Optional")){echo 'selected="selected"';} ?> >Optional</option>
                 <option value="Other" <?php if(isset($type) && ($type == "Other")){echo 'selected="selected"';} ?> >Other</option>
             </select>               

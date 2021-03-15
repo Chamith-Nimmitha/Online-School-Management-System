@@ -44,7 +44,7 @@
 	<form action="" method="POST" class="col-12 d-flex justify-content-center p-2">
 		<fieldset class="col-12 p-2 mb-2 justify-content-center">
 			<!-- <span class="mb-3">Insert optional subjects in <span style="color: red;">GENERAL FORMAT.</span></span> -->
-			<span>General Subjects</span>
+			<span>Mandatory Subjects</span>
 			<div class="col-12" id="general-subject-wrapper">
 
 				<!-- dummy select input for javascript -->

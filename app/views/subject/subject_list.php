@@ -109,7 +109,7 @@
 					<td><?php echo $result['medium']; ?></td>
 					<td><?php echo $result['name']; ?></td>
 					<td><?php echo $result['code']; ?></td>
-					<td><?php echo $result['type']; ?></td>
+					<td><?php if($result['type']=='General'){echo "Mandatory";}else{echo $result['type'];} ?></td>
 					
 					
 					<?php if($_SESSION['role'] =='admin'){ ?>
