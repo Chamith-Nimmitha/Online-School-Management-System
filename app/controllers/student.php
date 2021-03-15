@@ -72,7 +72,7 @@
         }
 
         // admin can delete student
-        public function student_delete($student_id){
+        public function student_delete($student_id,$val=1){
             $this->load->model("student");
             $result = $this->load->student->set_by_id($student_id);
             $msg  = "";
@@ -80,11 +80,15 @@
             if(!$result){
                 $err = "Student ${student_id} didn't exist.";
             }
-            $result = $this->load->student->delete_self();
+            $result = $this->load->student->delete_self($val);
             if(!$result){
                 $err = "Deletion failed.";
             }else{
-                $msg = "Student ${student_id} deleted.";
+                if($val==1){
+                    $msg = "Student ${student_id} blocked.";
+                }else if($val == 0){
+                    $msg = "Student ${student_id} activated.";
+                }
             }
             if(!empty($msg)){
                 $_SESSION['snackbar_msg'] = $msg;

@@ -219,11 +219,25 @@
 		}
 
 		// delete self. It perform updating is_deleted field. 
-		public function delete_self(){
-			$result = $this->con->update($this->table, array("is_deleted"=>1), array("id"=>$this->id));
-			$this->is_deleted = 1;
-			return $result;
-
+		public function delete_self($val=1){
+			try {
+				$this->con->db->beginTransaction();
+				$result = $this->con->update($this->table, array("is_deleted"=>$val), array("id"=>$this->id));
+				if(!$result || $result->rowCount()!== 1){
+					throw new PDOException();
+				}
+				$result = $this->con->update("user", array("is_deleted"=>$val), array("email"=>$this->email));
+				if(!$result || $result->rowCount()!== 1){
+				exit();
+					throw new PDOException();
+				}
+				$this->con->db->commit();
+				$this->is_deleted = $val;
+				return TRUE;
+			} catch (Exception $e) {
+				$this->con->db->rollback();
+				return FALSE;
+			}
 		}
 
 		public function __destruct(){
