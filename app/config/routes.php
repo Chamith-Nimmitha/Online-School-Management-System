@@ -89,7 +89,7 @@
 	$routes['student/timetable/view/$1'] = "student/timetable_view/$1";
 	$routes['student/exam'] = "student/exam_report";
 	$routes['student/exam/$1'] = "student/exam_report/$1";
-	$routes['student/delete/$1'] = "student/student_delete/$1";
+	$routes['student/delete/$1/$2'] = "student/student_delete/$1/$2";
 	$routes['student/attendance'] = "student/attendance";
 	$routes['student/attendance/$1'] = "student/attendance/$1";
 	$routes['student/attendance/report'] = "student/attendance_report";

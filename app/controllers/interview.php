@@ -334,10 +334,12 @@
 							$this->load->view("templates/footer");
 							return;
 						}
-						$con->db->beginTransaction();
-						$result = $con ->update('admission',$data,array("id"=>$admission_id));
-						if($result){
-							try{
+						try {
+							$con->db->beginTransaction();
+							$result = $con ->update('admission',$data,array("id"=>$admission_id));
+
+							
+							if($result){
 								if($data["already_have_account"] == 0){
 									$parent_data['name'] = $data["parent_name"];
 									$parent_data['type'] = $data["parent_type"];
@@ -401,7 +403,7 @@
 								$student_id = $result->fetch()['id'];
 
 								$res1 =$con->update("admission", ["state"=>"Registered"],["id" =>$admission_id]);
-								$res2 =$con->update("interview", ["state"=>"Interviewed"],["id" =>$admission_id]);
+								$res2 =$con->update("interview", ["state"=>"Interviewed"],["admission_id" =>$admission_id]);
 
 								if(!$res1 || !$res2){
 									throw new PDOException("State Upadate Failed.", 1);
@@ -411,15 +413,16 @@
 									throw new PDOException("Faild to update interview state.",1);
 								}
 
-								$con->db->commit();
-								$info = "Student and Parent Registration Successful.";
-								// header("Location:". set_url("interview/get_files/".$admission_id));
-							}catch(Exception $e){
-								$con->db->rollback();
-								$error = $e->getMessage();
+							}else{
+								throw new PDOException("Account creation failed.", 1);
+								
 							}
-						}else{
-							$error = "Account creation failed.";
+							$con->db->commit();
+							$info = "Student and Parent Registration Successful.";
+							// header("Location:". set_url("interview/get_files/".$admission_id));
+						} catch (Exception $e) {
+							$con->db->rollback();
+							$error = $e->getMessage();
 						}
 					}
 				}

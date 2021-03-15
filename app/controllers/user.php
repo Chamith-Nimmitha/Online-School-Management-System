@@ -18,7 +18,10 @@
 				$this->load->model("user");
 				$result = $this->load->user->get_user_data("user",$email);
 
-				if($result){
+				if($result && $result['is_deleted'] == 1){
+					$message ="User blocked.";
+				}
+				else if($result){
 					$salt =$result['salt'];
 					$db_hashed_pass =$result['password'];
 					$user_hashed_pass = sha1($user_password.$salt);
