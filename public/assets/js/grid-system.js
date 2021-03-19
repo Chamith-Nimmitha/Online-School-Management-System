@@ -6,22 +6,27 @@ for(var i=0; i < toggle_buttons.length; i++){
 }
 
 // aside navbar togglers
-function collapseToggle(){
-	target = document.getElementById(this.getAttribute("target"));
+function collapseToggle(e,ele=undefined){
+	if(typeof(ele) == "undefined" ){
+		ele = this;
+	}
+	target = document.getElementById(ele.getAttribute("target"));
 	if(target.classList.contains('no-collapsed')){
 		target.classList.add("collapsed");
 		target.classList.remove("no-collapsed");
-		var img = this.getElementsByTagName("img")[0];
+		var img = ele.getElementsByTagName("img")[0];
 		img.src=base_url+"public/assets/img/menu_arrow.png";
 		img.style.transform = "rotate(-90deg)";
 		img.style.transitionDuration = "0.5s"
+		user_toggle_flag = 1;
 	}else{
 		target.classList.add("no-collapsed");
 		target.classList.remove("collapsed");
-		var img = this.getElementsByTagName("img")[0];
+		var img = ele.getElementsByTagName("img")[0];
 		img.src=base_url+"public/assets/img/menu_arrow.png";
 		img.style.transform = "rotate(0deg)";
 		img.style.transitionDuration = "0.5s"
+		user_toggle_flag = 0;
 	}
 }
 

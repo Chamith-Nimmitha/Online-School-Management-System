@@ -1,3 +1,5 @@
+var user_toggle_flag = 0;
+
 document.addEventListener("DOMContentLoaded",function(){
 	dynamically_set();
 	var schoolHeader = document.querySelector(".school-name");
@@ -73,6 +75,15 @@ document.addEventListener("DOMContentLoaded",function(){
 			goToTop.classList.add("hide");
 		}
 	},1000)
+	window.addEventListener("click", (e)=>{
+		let user_nav_wrapper = document.getElementById("user_nav_wrapper");
+		let user_toggle_button = document.getElementById("user_toggle_button");
+		if(user_nav_wrapper && user_toggle_flag ==1){
+			if(!user_nav_wrapper.contains(e.target)){
+				collapseToggle(e,user_toggle_button);
+			}
+		}
+	});
 });
 
 var ul_xm_ids = [];
