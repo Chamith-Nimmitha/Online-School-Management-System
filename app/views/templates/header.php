@@ -39,7 +39,7 @@
 			</div> <!-- #header-school-info -->
 			<?php if(isset($_SESSION['username'])){
 				$user_info = '
-			<div  class="col-2 col-md-3 d-flex flex-col justify-content-center" style="position:relative;">
+			<div  class="col-2 col-md-3 d-flex flex-col justify-content-center" style="position:relative;" id="user_nav_wrapper">
 				<div  id="header-user-info" class="d-flex align-items-center justify-content-center mr-5" target="user-nav">
 					<div class="d-none d-md-flex">
 						<div>
@@ -55,7 +55,7 @@
 							<span >'.$_SESSION['username'].'</span>
 						</div>
 					</div>
-					<button class="toggle-button" target="user-nav">
+					<button class="toggle-button" target="user-nav" id="user_toggle_button">
 						<img src="'.set_url('public/assets/img/menu_arrow.png').'" width="20px" height="20px" alt="">
 					</button>
 				</div>
