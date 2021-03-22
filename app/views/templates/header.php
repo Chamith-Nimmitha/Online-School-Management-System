@@ -21,7 +21,7 @@
 	<?php require_once(ASSETS."gadgets/snackbar.html"); ?>
 	<?php require_once(ASSETS."gadgets/input.html"); ?>
 	<?php require_once(ASSETS."gadgets/image_viewer.html"); ?>
-	<div class="container bg-lightgray">
+	<div class="container">
 		<div class="row theme-header sticky-top" id="top-header">
 			<div class="school-badge col-4 col-md-3 justify-content-center pt-2">
 				<a href="<?php echo set_url(''); ?>"><img src="<?php echo set_url('public/assets/img/school_badge') ?><?php if(!empty($header)){echo $header['badge'];}?>" width="80px" alt=""  id="school-badge" ></a>
@@ -40,7 +40,7 @@
 			<?php if(isset($_SESSION['username'])){
 				$user_info = '
 			<div  class="col-2 col-md-3 d-flex flex-col justify-content-center" style="position:relative;" id="user_nav_wrapper">
-				<div  id="header-user-info" class="d-flex align-items-center justify-content-center mr-5" target="user-nav">
+				<div  id="header-user-info" class="header-user-info d-flex align-items-center justify-content-center mr-5" target="user-nav">
 					<div class="d-none d-md-flex">
 						<div>
 							<img src="';
@@ -78,8 +78,8 @@
 			echo $buttons;
 			}
 			?>
-		<hr style="background-color: orange; height: 5px; width:100%; box-shadow: 0 10px 20px 3px black; padding: 0; margin: 0">
+		<hr class="header-hr">
 		</div> <!-- .row -->
-		<div class="row sticky-top-m" id="asd">
+		<div class="row sticky-top-m" id="middle-wrapper">
 
 

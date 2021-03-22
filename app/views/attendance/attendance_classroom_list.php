@@ -3,7 +3,8 @@
 		<div class="section-wrapper mt-5 mb-5">
 				<h2 class="pt-3 pb-3">
 					Classroom List
-				</h2>	
+				</h2>
+				<hr class="topic-hr w-100">
 			<div class="d-flex justify-content-center align-items-center">
 				<form action="<?php echo set_url('pages/attendance_classroom_list.php'); ?>" method="post" id="classroom_filter" class="d-flex align-items-center col-12">
 					<div class="d-flex col-12 align-items-center justify-content-center">
@@ -121,6 +122,7 @@
 
 		<div class="col-12 justify-content-center" >
 			<h2 class="text-center p-5">Classroom Attendance Charts</h2>
+			<hr class="topic-hr w-100">
 			<div class="col-12 d-flex justify-content-center">
 				<form id="classroom_attendance_comparission" class="col-11 d-flex mb-3 align-items-center justify-content-start">
 					<button type="reset" class="btn btn-blue mr-2 mt-5 p-2" onclick="setTimeout( ()=>{show_classroom_filter_option_class('compare_grade');show_classroom_filter_option_date('compare_class');},100);">Reset</button>

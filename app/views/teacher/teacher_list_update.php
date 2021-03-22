@@ -17,7 +17,10 @@
      ?>
 
 
-<h2 class="fs-30">UPDATE TEACHERS</h2>
+<div class="mt-5  w-75 d-flex flex-col align-items-center">
+    <h2 class="pt-3 pb-3">Teacher Update</h2>
+    <hr class="topic-hr w-100">
+</div>
 
 <form method="POST" class="col-10" action="<?php echo set_url('teacher/update/'.$data['id'].''); ?>">
     

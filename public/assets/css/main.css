@@ -3,8 +3,8 @@
 	--green-theme-dot:green;
 	--blue-theme-dot:blue;
 	--dark-theme-dot:darkblue;
-}
-
+	--light-theme-dot:white;
+}light
 * {
 	padding: 0;
 	margin: 0;
@@ -15,6 +15,8 @@ body{
 	margin: 0;	;
 	width: 100%;
 	overflow-wrap: break-word;
+	min-height: 100vh;
+	background: var(--content-bg);
 }
 body *{
 	transition: all 0.3s linear;
@@ -30,10 +32,23 @@ body *{
 	transition: all 0.25s ease-in 0.25s;
 	padding-bottom: 10px;
  }
+
+#top-header{
+	box-shadow: 0px 2px 2px 2px rgba(122,122,122,0.5);
+}
  
-#header-user-info{
+.header-user-info{
 	border: none;
 	color: white;
+}
+
+.header-collapsed{
+	border: none !important;
+    padding: 0 !important;
+    margin-bottom: 0 !important;
+}
+.header-expaned{
+	border: 2px solid var(--border-color) !important;
 }
 
 #aside-nav-wrapper a i{
@@ -42,7 +57,7 @@ body *{
 	text-align: center;
 }
 .school-name span{
-	-webkit-text-stroke: 0.3px yellow;
+	-webkit-text-stroke: var(--stoke);
 	color : var(--color);
 	transition: all 0.8s ease;
 	opacity :0.2;
@@ -200,12 +215,28 @@ footer{
 	background: green;
 }
 
+#interview-timetable{
+	text-align: center;
+	font-size: 14px;
+}
 #interview-timetable th{
 	width: 15%;
 	word-wrap: break-word;
+	background: #31326f;
+	color: white;
 }
+
+#interview-timetable th:first-child{
+	border-top-left-radius: 5px;
+}
+
+#interview-timetable th:last-child{
+	border-top-right-radius: 5px;
+}
+
 #interview-timetable td{
 	background: white;
+	border: 1px solid black;
 }
 
 .timetable-select{
@@ -261,6 +292,10 @@ footer{
 
 #dark-dot>div{
 	background-color: var(--dark-theme-dot);
+}
+
+#light-dot>div{
+	background-color: var(--light-theme-dot);
 }
 
 .selected_theme_dot{
@@ -469,8 +504,40 @@ footer{
 	width: 80%;
 }
 
-
 /* END OF HELP CENTER STYLES*/
+
+.toggle-button img {
+	transition: all 0.1s !important;
+}
+
+h2{
+	color: var(--header-color);
+}
+
+.header-hr{
+	background: var(--bg);
+	height: var(--height);
+	width:100%;
+	box-shadow: var(--box-shadow);
+	padding: var(--p);
+	margin: var(--m);
+}
+
+.topic-hr{
+	background: var(--bg);
+	border: 0;
+	height: var(--height);
+	background-image: -webkit-linear-gradient(left, var(--bg-image-color1), var(--bg-image-color2), var(--bg-image-color1));
+	/*background-image: -moz-linear-gradient(left, var(--bg-image-color1), var(--bg-image-color2), var(--bg-image-color1));
+	background-image: -ms-linear-gradient(left, var(--bg-image-color1), var(--bg-image-color2), var(--bg-image-color1));
+	background-image: -o-linear-gradient(left, var(--bg-image-color1), var(--bg-image-color2), var(--bg-image-color1));*/
+	height: var(--height);
+	width:100%;
+	box-shadow: var(--box-shadow);
+	padding: var(--p);
+	margin: var(--m);
+}
+
 
 @media  (min-width:0px){
 	
@@ -481,9 +548,9 @@ footer{
 }
 
 @media  (min-width:768px){
-	#header-user-info{
-		border: 2px solid orange;
-		color: white;
+	.header-user-info{
+		border: 2px solid var(--border-color);
+		color: var(--font-color);
 	}
 	#user-nav{
 		left:  2% !important;

@@ -110,8 +110,9 @@
 
 	 ?>
 
-	<div class="mt-5">
+	<div class="mt-5  w-75 d-flex flex-col align-items-center">
 		<h2 class="fs-30">Assign Subject to Teacher</h2>
+		<hr class="topic-hr w-100">
 	</div>
 	<div class="col-10">
 		<form action="teacher_assign_subject.php?teacher-id=<?php if(isset($_GET['teacher-id'])){echo $_GET['teacher-id'];} ?>" method="post" class="col-12">

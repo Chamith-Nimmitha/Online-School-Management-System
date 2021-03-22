@@ -18,6 +18,7 @@
 		<h2>Subject Timetable</h2>
 		<span>Grade <?php if(isset($teacher_subject_info)){echo $teacher_subject_info['grade']." - ".$teacher_subject_info['name']; } ?></span>
 	</div>
+	<hr class="topic-hr w-75">
 
 	<form action="#" method="POST" class="col-12 d-flex flex-col align-items-center">
 		<fieldset class="col-12 col-md-8 col-lg-6 p-3">

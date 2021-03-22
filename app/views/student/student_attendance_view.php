@@ -1,5 +1,8 @@
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
-
+    <div class="mt-5  w-75 d-flex flex-col align-items-center">
+        <h2 class="pt-3 pb-3">Student Attendance View</h2>
+        <hr class="topic-hr w-100">
+    </div>
 	<div class="col-12 flex-col justify-content-center align-items-center">
     		<h2 class="text-center p-5">Attendance Report</h2>
         <!-- <div id="attendance-statistics" class="col-12  justify-content-center ">
@@ -119,8 +122,9 @@
 
         <!-- student attendance overview-->
         <div class="col-10 mt-5">
-            <div class="col-12 mt-5 justify-content-center">
+            <div class="mt-5  w-75 d-flex flex-col align-items-center">
                 <h3>Student Attendance Overview</h3>
+                <hr class="topic-hr w-100">
             </div>
             <form id="student_attendance_overview" class="col-12">
                 <input type="hidden" name="student_id_bar" value="<?php if(isset($student_id)){echo $student_id;} ?>">

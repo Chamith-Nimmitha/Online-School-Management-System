@@ -12,8 +12,9 @@
 		}
 
 	 ?>
-	<div class="p-5">
+	<div class="p-5 mt-3 w-75 d-flex flex-col align-items-center">
 		<h1>Student Subject List</h1>
+		<hr class="topic-hr w-100">
 	</div>
 	<hr class="w-100">
 	<div class="p-5 col-12 col-md-8 text-center">

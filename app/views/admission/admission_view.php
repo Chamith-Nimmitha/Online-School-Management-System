@@ -1,9 +1,9 @@
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
-	<div class="admissions-header mt-5">
+	<div class="admissions-header mt-5  w-75 d-flex flex-col align-items-center">
 		<h2 class="fs-30">View Admissions</h2>
+		<hr class="topic-hr w-100">
 	</div> <!-- .admission-header -->
-	<hr class="w-100">
 	<div class="admission-details col-12">
 		<form action="<?php echo set_url('admission/view/'.$result['id'])?>" class="col-12 align-items-start" method="post">
 			<div class="col-12 col-md-6 p-3">

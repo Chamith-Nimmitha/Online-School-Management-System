@@ -1,10 +1,10 @@
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 
-	<div class="p-5  w-100 d-flex align-items-center flex-col">
+	<div class="p-5 mt-5  w-75 d-flex flex-col align-items-center">
 		<h1>Teacher-Subject Students</h1>
+		<hr class="topic-hr w-100">
 	</div>
-	<hr class="w-100 mb-5">
 
 	<form action="#" method="POST" class="col-12 d-flex flex-col align-items-center">
 		<fieldset class="col-12 col-md-8 col-lg-6 p-3">

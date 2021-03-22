@@ -9,8 +9,9 @@
 		}
 	 ?>
 
-	<div>
+	<div class="mt-5  w-75 d-flex flex-col align-items-center">
 		<h2>Your Interview Panel</h2>
+		<hr class="topic-hr w-100">
 	</div>
 	<form action="<?php echo set_url('pages/interview_panel_view.php'); if(isset($_GET['interview-panel-id'])){echo '?interview-panel-id='.$_GET['interview-panel-id'];} ?>" class="col-12" method="POST">
 		<div class="col-12 col-lg-6 p-3">

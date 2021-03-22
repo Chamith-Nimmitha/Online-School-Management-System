@@ -17,16 +17,14 @@ function collapseToggle(e,ele=undefined){
 		var img = ele.getElementsByTagName("img")[0];
 		img.src=base_url+"public/assets/img/menu_arrow.png";
 		img.style.transform = "rotate(-90deg)";
-		img.style.transitionDuration = "0.5s"
-		user_toggle_flag = 1;
+		img.style.transitionDuration = "0.1s"
 	}else{
 		target.classList.add("no-collapsed");
 		target.classList.remove("collapsed");
 		var img = ele.getElementsByTagName("img")[0];
 		img.src=base_url+"public/assets/img/menu_arrow.png";
 		img.style.transform = "rotate(0deg)";
-		img.style.transitionDuration = "0.5s"
-		user_toggle_flag = 0;
+		img.style.transitionDuration = "0.1s"
 	}
 }
 
@@ -48,16 +46,16 @@ function dynamically_set(){
 		    document.getElementById("school-badge").style.cssText = "width:50px;";
 		    let user_info = document.getElementById("header-user-info");
 		    if(user_info){
-			    user_info.style.border = "none";
-			    user_info.style.padding = "0";
-			    user_info.style.marginBottom = "0";
+			    user_info.classList.remove("header-expanded");
+			    user_info.classList.add("header-collapsed");
 		    }
 		} else {
 		    document.getElementById("header-school-other-info").style.cssText = "opacity:1";
 		    document.getElementById("school-badge").style.cssText = "width:80px;";
 		    let user_info = document.getElementById("header-user-info");
 		    if(user_info){
-			    user_info.style.border = "2px solid orange";    
+			    user_info.classList.remove("header-collapsed");
+			    user_info.classList.add("header-expanded");
 		    }
 		}
 	}

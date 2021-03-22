@@ -12,8 +12,9 @@
             echo "</p>";
         }
 	 ?>
-		<div class="student-header mt-3">
+		<div class="student-header mt-3  w-75 d-flex flex-col align-items-center">
 			<h2 class="fs-30">Classroom List</h2>
+			<hr class="topic-hr w-100">
 		</div>
 		<div class="d-flex justify-content-center align-items-center">
 			<form action="<?php echo set_url('classroom/list'); ?>" method="post" class="d-flex align-items-center col-12">

@@ -24,6 +24,10 @@
 				<div data-theme="dark"></div>
 				<span>Dark</span>
 			</div>
+			<div id="light-dot" class="theme-dots">
+				<div data-theme="light"></div>
+				<span>Light</span>
+			</div>
 		</div>
 	</div>
 </div>

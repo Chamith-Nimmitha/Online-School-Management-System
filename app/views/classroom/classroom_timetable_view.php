@@ -11,6 +11,7 @@
 		<h2>Timetable View</h2>
 		<span>Classroom <?php echo $grade."-".$class; ?></span>
 	</div>
+	<hr class="topic-hr w-75">
 	<div class="col-12 d-flex flex-col mt-5">
 		<hr class="w-100">
 		<div class="p-5">

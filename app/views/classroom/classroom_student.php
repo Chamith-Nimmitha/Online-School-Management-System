@@ -25,12 +25,12 @@
 	 ?>
 
 	<div class="p-5  w-100 d-flex align-items-center flex-col">
-		<h1>Classroom Students</h1>
 		<div class="w-75 d-flex justify-content-end">
-			<a class="t-d-none btn btn-blue-outline" href="<?php echo set_url('classroom/student/add/'.$classroom_info['id']); ?>">+add new students</a>
+			<h2 class="mr-5">Classroom Students</h2>
+			<a class="t-d-none ml-5 btn btn-blue-outline" href="<?php echo set_url('classroom/student/add/'.$classroom_info['id']); ?>">+add new students</a>
 		</div>
-	</div>
-	<hr class="w-100 mb-5">
+		<hr class="topic-hr w-75">
+	</div>	
 
 	<form action="classroom_student.php" class="col-12 d-flex flex-col align-items-center">
 		<fieldset class="col-12 col-md-8 col-lg-6 p-3">
@@ -95,10 +95,10 @@
 	</form>
 	<hr class="w-100 mt-5 mb-3">
 	<div class="d-flex flex-col col-12 align-items-center border">
-		<div>
+		<div class=" w-75 d-flex flex-col align-items-center">
 			<h2>Selected Students for Remove</h2>
+			<hr class="topic-hr w-100">
 		</div>
-		<hr class="w-100 mb-5">
 		<form action="<?php echo set_url('classroom/student/list/'.$classroom_info['id']); ?>" method="post" class="col-12 d-flex flex-col align-items-center">
 			<input type="hidden" name="classroom_id" value="<?php echo $classroom_info['id']; ?>" >
 			<div class="col-10 mb-5 d-flex flex-wrap" id="removed-set">

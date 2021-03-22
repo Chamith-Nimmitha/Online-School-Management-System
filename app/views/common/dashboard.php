@@ -13,6 +13,7 @@
 	<div class="col-12 d-flex">
 		<div id="school-statistics" class="flex-1 justify-content-center ">
 			<h2 class="text-center p-5">School Statistics</h2>
+			<hr class="topic-hr w-100">
 			<div class="statistics-flex justify-content-center">
 				<div class="s-item-wrapper">
 					<div class="d-flex flex-col s-item align-items-center" style="cursor: pointer;" <?php if(isset($statics_link_show) && $statics_link_show===1){echo 'onclick="window.open('.set_url('student/list').')"';} ?>>
@@ -209,6 +210,7 @@
 
 	<div id="school-attendance" class="col-12 d-flex flex-col align-items-center section-wrapper p-5 mt-5">
 		<h2 class="text-center p-5">School Attendance</h2>
+		<hr class="topic-hr w-100">
 		<div class="col-12 d-flex justify-content-center">
 			<form id="dashboard_attendance_filter">
 				<div class="d-flex align-items-center">
@@ -276,4 +278,4 @@
 		</div>
 	</div>
 
-</div> <!-- #content -->
+</div> <!-- #content

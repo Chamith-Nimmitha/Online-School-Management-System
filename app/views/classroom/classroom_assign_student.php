@@ -24,11 +24,13 @@
 
 	 ?>
 
-	<div class="p-5 w-100 d-flex align-items-center flex-col">
-		<h1>Assign New Students</h1>
+	<div class="p-5 w-100 d-flex d-row align-items-center flex-col">
 		<div class="w-75 d-flex justify-content-end">
-			<a class="t-d-none btn btn-blue-outline p-1" href="<?php echo set_url('classroom/student/list/'.$classroom_info['id']); ?>"> Show classroom students</a>
+			<h2 class="mr-5">Assign New Students</h2>
+			<a class="t-d-none btn btn-blue-outline p-1 ml-5" href="<?php echo set_url('classroom/student/list/'.$classroom_info['id']); ?>"> Show classroom students</a>
+
 		</div>
+		<hr class="topic-hr w-75">
 	</div>
 	<hr class="w-100 mb-5">
 
@@ -80,7 +82,7 @@
 								$row .= '<td class="col-2 word-break">'.$student['email'].'</td>';
 								$row .= '<td class="col-2  word-break">'.$student['contact_number'].'</td>';
 								$row .= '<td class="col-2  word-break d-flex justify-content-center align-items-center"><input type="checkbox" name="assign-'.$student['id'].'" value="'.$student['id'].'" onchange="update_student_selected_set(this)"></td>';
-								$row .= '<td class="col-2  word-break"><a href="'.set_url("pages/student_profile_view?student_id=".$student['id']).'">profile</a></td>';
+								$row .= '<td class="col-2 d-flex justify-content-center word-break"><a class="btn btn-blue" href="'.set_url("pages/student_profile_view?student_id=".$student['id']).'">profile</a></td>';
 								$row .= '</tr>';
 								echo $row;
 							}
@@ -97,10 +99,10 @@
 	</form>
 	<hr class="w-100 mt-5 mb-3">
 	<div class="d-flex flex-col col-12 align-items-center border">
-		<div>
+		<div class=" w-75 d-flex flex-col align-items-center">
 			<h2>Selected Students for Add</h2>
+			<hr class="topic-hr w-100">
 		</div>
-		<hr class="w-100 mb-5">
 		<form action="<?php echo set_url('classroom/student/add/'.$classroom_info['id']); ?>" method="post" class="col-12 d-flex flex-col align-items-center">
 			<input type="hidden" name="classroom_id" value="<?php echo $classroom_info['id']; ?>" >
 			<div class="col-10 mb-5 d-flex flex-wrap" id="selected-set">

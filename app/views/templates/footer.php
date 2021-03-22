@@ -3,7 +3,7 @@
 	</div> <!-- .container -->
 	<div class="row">
 		
-		<hr style="background-color: orange; height: 5px; width:100%;">
+		<hr class="header-hr">
 		<footer class="text-center col-12 d-block">
 			<p>Copyright &copy  2020 All rights reserved | This template is made by<b> Group-08</b></p>
 		</footer>

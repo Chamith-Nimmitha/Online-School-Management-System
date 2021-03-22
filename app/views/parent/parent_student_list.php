@@ -1,5 +1,9 @@
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
+    <div class="mt-5  w-75 d-flex flex-col align-items-center">
+        <h2 class="pt-3 pb-3">Clildrent List</h2>
+        <hr class="topic-hr w-100">
+    </div>
 	<div class="col-8 flex-col" style="overflow-x: scroll;overflow-y: hidden;">
 	    <table class="table-strip-dark">
 		    <caption class="p-5"><b>Children List</b></caption>

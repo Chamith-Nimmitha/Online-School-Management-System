@@ -4,8 +4,9 @@
 	}
 </script>
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
-		<div class="student-header mt-3">
+		<div class="student-header mt-3  w-75 d-flex flex-col align-items-center">
 			<h2 class="fs-30">Teacher List</h2>
+			<hr class="topic-hr w-100">
 		</div>
 		<div class="d-flex justify-content-center align-items-center">
 			<form action="<?php echo set_url('teacher/list'); ?>" method="post" class="d-flex align-items-center col-12" enctype="multipart/form-data">
@@ -19,7 +20,7 @@
 			</form>
 		</div>
 
-		<div class="col-12 flex-col" style="overflow-x: scroll;overflow-y: hidden;">
+		<div class="col-11 flex-col" style="overflow-x: scroll;overflow-y: hidden;">
 		<div class="col-12 flex-col" style="position:relative;overflow-x: scroll;overflow-y: hidden;">
 			<div class="loader hide-loader">
 				 	<div class="col-12">

@@ -7,8 +7,9 @@
 
 	<!-- For unread, read, accepted applications -->
 	<div id="useful-all-admission-table"  class=" col-11 admissions-table bg-white d-flex flex-col align-items-center section-wrapper">
-		<div class="mt-5">
+		<div class="mt-5 w-75 d-flex flex-col align-items-center">
 			<h2 class="fs-30">Student Admissions</h2>
+			<hr class="topic-hr w-100">
 		</div>
 		<div class="d-flex justify-content-center align-items-center">
 			<form action="<?php echo set_url('admission/list'); ?>" method="post" class="d-flex align-items-center">
@@ -94,8 +95,9 @@
 
 	<!-- For rejected, NotInterviewed, Registered admissions  -->
 	<div id="unuseful-all-admission-table"  class="col-11 d-flex align-items-center admissions-table section-wrapper">
-		<div class="mt-5">
+		<div class="mt-5  w-75 d-flex flex-col align-items-center">
 			<h2 class="fs-30">Already Viewed Admissions</h2>
+			<hr class="topic-hr w-100">
 		</div>
 		<div class="d-flex justify-content-center align-items-center">
 			<form action="<?php echo set_url('admission/list'); ?>" method="post" class="d-flex align-items-center">

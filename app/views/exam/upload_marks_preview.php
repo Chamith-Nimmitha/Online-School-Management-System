@@ -7,6 +7,10 @@ function showDiv() {
     <div id="marks_notification" class="d-none w-75">
         <p style="background: #eee;" class="w-100 p-2 text-center fg-red"> </p>
     </div>
+    <div class="mt-5  w-75 d-flex flex-col align-items-center">
+        <h2 class="pt-3 pb-3">Exam Results Upload Preview</h2>
+        <hr class="topic-hr w-100">
+    </div>
     <form  id="upload_marks" class="col-12 d-flex justify-content-center" method="POST" action="<?php echo set_url("marks/upload");?>">
         <div class="align-items-center justify-content-center bg-green">
             <h2>Preview for the Marksheet</h2>
