@@ -20,7 +20,7 @@
 }
 
 table{
-	--border-top:10px solid blue ;
+	--border-top:none;
 	--border-right: none;
 	--border-bottom: 1px solid red;
 	--border-left: none;
@@ -108,43 +108,43 @@ table th, td{
 }
 
 h2{
-	--color: darkblue;
+	--color: rgba(0,0,128,0.6);
 }
 
+.btn1{--bg: #11698e;--color: white;}
+.btn1:hover{--bg: #19456b;}
 
-.btn1{--bg: blue;--color: white;}
-.btn1:hover{--bg: darkblue;}
-
-.btn2{--bg: red;--color: white;}
+.btn2{--bg: #ec4646;--color: white;}
 .btn2:hover{--bg: darkred;}
 
 .btn3{--bg: green;--color: white;}
 .btn3:hover{--bg: darkgreen;}
 
-.pagination-btn1{--bg: blue;--color: white}
+.pagination-btn1{--bg: #11698e;--color: white}
 .pagination-btn1:hover{--bg: darkblue;}
 
-.pagination-btn2{--bg: red;--color: white}
-.pagination-btn2:hover{--bg: darkred;}
+.pagination-btn2{--bg: #ec4646;--color: white}
+.pagination-btn2:hover{--bg: #dd2c00;}
 
 .pagination-btn3{--bg: gray;--color: white}
 .pagination-btn3:hover{--bg: darkgray;}
 
+
 .section-wrapper,section{
-	--bg: transparent;
-	--border-radius: ;
-	--box-shadow: ;
+	--bg: linear-gradient(to left top, rgba(240,240,240,0.5), rgba(240,240,240,0.8));
+	--border-radius: 20px;
+	--box-shadow: 6px 6px 10px rgba(122,122,122,0.4);
 	--display: flex;
 	--flex-direction: column;
 	--align-items: center;
-	--width: 100%;
+	--width: 95%;
 	--padding-right: 20px;
 	--padding-left: 20px;
 }
 .section-item{
-	--bg: white;
-	--border-radius: ;
-	--box-shadow: ;
+	--bg: linear-gradient(to left top, rgba(255,255,255,0.6), rgba(255,255,255,0.8));
+	--border-radius: 10px;
+	--box-shadow: 6px 6px 6px rgba(122,122,122,0.2);
 	--display: flex;
 	--flex-direction: column;
 	--align-items: center;
