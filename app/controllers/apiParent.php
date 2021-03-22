@@ -45,8 +45,6 @@
 					$body .= "<td>".$result['id']."</td>";
 					$body .= "<td>".$result['name']."</td>";
 					$body .= "<td>".$result['type']."</td>";
-					$body .= "<td>".$result['occupation']."</td>";
-					$body .= "<td>".$result['email']."</td>";
 					$body .= "<td class='text-center'>".$result['contact_number']."</td>";
 					$body .= "<td>
 								<div>

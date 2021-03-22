@@ -47,8 +47,6 @@
 						<th>ID</th>
 						<th>Name</th>
 						<th>Type</th>
-						<th>Occupation</th>
-						<th>Email</th>
 						<th>Contact Number</th>
 						<th>Profile</th>
 						<?php if($_SESSION['role'] =='admin'){ 
@@ -63,8 +61,6 @@
 							<td><?php echo $result['id']; ?></td>
 							<td><?php echo $result['name']; ?></td>
 							<td><?php echo $result['type']; ?></td>
-							<td><?php echo $result['occupation']; ?></td>
-							<td><?php echo $result['email']; ?></td>
 							<td class='text-center'><?php echo $result['contact_number']; ?></td>
 							<td>
 								<div>

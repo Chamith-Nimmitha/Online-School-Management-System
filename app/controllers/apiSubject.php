@@ -44,7 +44,13 @@
 
 			if($result_set && !empty($result_set)){
 				$body = "";
+				$grade = 0;
 				foreach ($result_set as $result) {
+					if($grade !== 0 && $grade != $result['grade']){
+	        			$body .= "<tr><td colspan=10 class='text-center p-0 bg-gray'></td></tr>";
+	        			$body .= "<tr><td colspan=10 class='text-center bg-gray'></td></tr>";
+	        		}
+	        		$grade = $result['grade'];
 					$body .="<tr>";
 					$body .= "<td>".$result['id']."</td>";
 					$body .= "<td>".$result['grade']."</td>";

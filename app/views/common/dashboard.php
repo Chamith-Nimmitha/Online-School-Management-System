@@ -162,13 +162,13 @@
 							<?php 	if($_SESSION['role'] !== 'parent'){ ?>
 								<h3><?php if(isset($grade) && !empty($grade)){ echo "{$grade}-{$class}";} ?> Notice Board</h3>
 							<?php 	}else{ ?>
-								<p class="w-100 text-center mt-2" style="font-size: 17px; font-weight: 900;">NOTICE NOT FOUND</p>
+								<p class="w-100 text-center mt-2" style="font-size: 17px; font-weight: 900;">You haven't a Classroom</p>
 							<?php 	} ?>
 								<?php if($is_classroom_teacher===1){ ?>
 									<button type="button" class="btn btn-blue p-1 mr-2" onclick="add_new_form('classroom_notice_board','add_new_classroom_notice')">Add</button>
 								<?php } ?>
 							</div>
-							<p class="w-100 text-center mt-2" style="font-size: 17px; font-weight: 900;">NOTICE NOT FOUND</p>
+							
 							<div class="noticeboard_content_wrapper">
 								<div id="noticeboard_content" class="col-12">
 									<div class="content">

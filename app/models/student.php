@@ -64,10 +64,8 @@
 					}
 					$this->class = $c->get_class();
 					unset($c);
-					return TRUE;
-				}else{
-					return FALSE;
 				}
+				return TRUE;
 			}else{
 				return FALSE;
 			}

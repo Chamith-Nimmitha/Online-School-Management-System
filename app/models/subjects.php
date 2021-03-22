@@ -60,7 +60,7 @@
 				array_push($params, $medium);
 				$flag = 1;
 			}
-			$query .= " LIMIT $start,$count";
+			$query .= "order by `grade` LIMIT $start,$count";
 			$stmt = $this->con->db->prepare($query);
 			$result= $stmt->execute($params);
 			if($result){
