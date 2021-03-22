@@ -11,11 +11,11 @@
 		<div class="d-flex justify-content-center align-items-center">
 			<form action="<?php echo set_url('teacher/list'); ?>" method="post" class="d-flex align-items-center col-12" enctype="multipart/form-data">
 				<div class="d-flex col-12 align-items-center justify-content-center">
-					<div class="ml-5">
+					<div class="ml-5 d-flex align-items-center justify-content-center">
 						<label for="teacher-id">Teacher ID/Name</label>
 						<input type="text" name="teacher-id" id="teacher-id" placeholder="ID, Name" oninput="teacher_search()"  value="<?php if(isset($teacher_id) && $teacher_id !== NULL){echo $teacher_id;} ?>" >
 					</div>
-					<input type="submit" class="btn btn-blue ml-3 mt-5" value="Show">
+					<!-- <input type="submit" class="btn btn-blue ml-3 mt-5" value="Show"> -->
 				</div>
 			</form>
 		</div>
@@ -36,9 +36,7 @@
 				    <tr>
 						<th>ID</th>
 						<th>NAME</th>
-						<th>EMAIL</th>
 						<th>CONTACT NUMBER</th>
-					    <th>NIC</th>
 					    <th>Subjects</th>
 					    <th>Profile</th>
 					   <?php
@@ -62,9 +60,7 @@
 				$row ="<tr>";
 				$row .= "<td>".$result['id']."</td>";
 				$row .= "<td>".stripslashes($result['name_with_initials'])."</td>";
-				$row .= "<td>".$result['email']."</td>";
 				$row .= "<td>".$result['contact_number']."</td>";
-				$row .= "<td>".$result['nic']."</td>";
 
 				$row .= "<td class='text-center'><a href=". set_url('teacher/subject/list/').$result['id']." class='btn btn-blue t-d-none p-1'>List</a>";
 				$row .= "<td class='text-center'><a href=". set_url('profile/teacher/').$result['id']." class='btn btn-blue t-d-none p-1'>Profile</a>";

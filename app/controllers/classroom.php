@@ -64,7 +64,7 @@
 			}else{
 				$error = "Deletion failed.";
 			}
-			$this->classroom_list($info,$error);
+			$this->classroom_list(NULL,NULL,$info,$error);
 		}
 		// view classroom student list. this function can use any user role
 		public function student_list($classroom_id=""){
@@ -149,7 +149,6 @@
 			}else{
 				$start = ($page-1)*$per_page;
 			}
-
 			$data['page'] = $page;
 			$data['per_page'] = $per_page;
 			$data['start'] = $start;

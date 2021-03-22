@@ -36,9 +36,7 @@ class ApiTeacher extends Controller{
 				$row .="<tr>";
 				$row .= "<td>".$result['id']."</td>";
 				$row .= "<td>".stripslashes($result['name_with_initials'])."</td>";
-				$row .= "<td>".$result['email']."</td>";
 				$row .= "<td>".$result['contact_number']."</td>";
-				$row .= "<td>".$result['nic']."</td>";
 
 				$row .= "<td class='text-center'><a class='btn btn-blue t-d-none p-1' href=". set_url('teacher/subject/list/').$result['id'].">List</a>";
 				$row .= "<td class='text-center'><a class='btn btn-blue t-d-none p-1' href=". set_url('profile/teacher/').$result['id'].">Profile</a>";
