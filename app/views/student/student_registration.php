@@ -20,7 +20,6 @@
 			<h2 class="fs-30">Student Registration Form</h2>
 			<hr class="topic-hr w-100">
 		</div> <!-- .admission-header -->
-		<hr class="w-100">
 		<form action="<?php echo set_url('student/registration') ?>" class="col-12 align-items-start" method="post">
 			<div class="col-12 col-md-6 p-3">
 				<fieldset class="p-3">

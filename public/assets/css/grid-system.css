@@ -550,12 +550,12 @@ form code{
 
 /* tables*/
 table{
+	border: var(--border) !important;
 	background: var(--bg) !important;
 	border-top: var(--border-top) !important;
 	border-right: var(--border-right) !important;
 	border-bottom: : var(--border-bottom) !important;
 	border-left: var(--border-left) !important;
-	border: var(--border) !important;
 	border-collapse: var(--border-collapse) !important;
 	border-radius: var(--border-radius) !important;
 	padding: var(--padding) !important;
@@ -563,11 +563,11 @@ table{
 
 
 table th, td{
+	border: var(--border) !important;
 	border-top: var(--border-top) !important;
 	border-right: var(--border-right) !important;
 	border-bottom: var(--border-bottom) !important;
 	border-left: var(--border-left) !important;
-	border: var(--border) !important;
 	padding: var(--padding) !important;
 	border-radius: var(--border-radius);
 }

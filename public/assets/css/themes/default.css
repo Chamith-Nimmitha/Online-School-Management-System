@@ -7,6 +7,8 @@
 	--fieldset-border-color : darkblue;
 	--footer-bg:#1f4068;
 	--footer-color:white;
+	--border-color: orange;
+	--font-color: white;
 }
 
 .school-name span{
@@ -138,4 +140,21 @@ h2{
 	--width: 100%;
 	--padding-right: 20px;
 	--padding-left: 20px;
+}
+
+.header-hr{
+	--bg: orange;
+	--height: 4px;
+	--box-shadow:0 2px 4px 1px rgba(122,122,122,0.5);
+	--p: 0;
+	--m: 0;
+}
+.topic-hr{
+	--bg-image-color1:#b1b8e3;
+	--bg-image-color2:darkblue;
+	--bg-image-color3:#b1b8e3;
+	--height: 3px;
+	--box-shadow: none;
+	--p: 0;
+	--m: 0 0 10px 0;
 }
