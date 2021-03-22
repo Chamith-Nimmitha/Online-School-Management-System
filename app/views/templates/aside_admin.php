@@ -14,7 +14,7 @@
 
 <aside class="navbar col-1 col-md-4 col-lg-3 m-0 p-0 d-flex justify-content-start bg-blue" >
 	<!-- for small devices -->
-	<div class="d-md-none flex-col align-items-center bg-blue">
+	<div class="d-md-none flex-col align-items-center bg-blue" id="aside-nav-wrapper-xm">
 		<ul class="" id="aside-nav-xm-ul">
 			<li class="nav-item aside-xm-li" id="admission-xm-li"><a href="<?php echo set_url('pages/admissions_all.php?aside-link-selector=all') ?>" class="nav-link"><img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" alt="da" ></a>
 				<nav class="nav sub-nav no-collapsed theme-darkblue" id="admission-xm-nav">

@@ -20,8 +20,11 @@
             echo "</p>";
         }
      ?>
-    <h2 class="fs-30 mt-5 mb-5">ADD SUBJECTS</h2>		
-    <hr class="w-100">
+
+    <div class="mt-5  w-75 d-flex flex-col align-items-center">
+        <h2 class="pt-3 pb-3">Subject Registration Form</h2>
+        <hr class="topic-hr w-100">
+    </div>
 
     <form  method="post" action="<?php set_url("subject/registration") ?>">
 

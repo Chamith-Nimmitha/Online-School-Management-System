@@ -15,9 +15,10 @@
         }
 
      ?>
-    <h2 class="fs-30 mt-5">TEACHER-REGISTRATION FORM</h2>
-		
-    <hr class="w-100 mt-5 mb-5">
+    <div class="mt-5  w-75 d-flex flex-col align-items-center">
+        <h2 class="pt-3 pb-3">Teacher Registration Form</h2>
+        <hr class="topic-hr w-100">
+    </div>
 
     <form  method="post" action="<?php echo set_url("teacher/registration");?>" class="col-8">
         <fieldset class="p-5">

@@ -14,10 +14,10 @@
 		}
 	 ?>
 	<div class="registration-form col-12 justify-content-center">
-		<div class="admissions-header mt-5">
+		<div class="admissions-header mt-5  w-75 d-flex flex-col align-items-center">
 			<h2 class="fs-30">Student Admission</h2>
+			<hr class="topic-hr w-100">
 		</div> <!-- .admission-header -->
-		<hr class="w-100">
 		<form action="<?php echo set_url("interview/view/".$result['id']); ?>" class="col-12 align-items-start" method="post">
 			<div class="col-12 col-md-6 p-3">
 				<fieldset class="p-3">

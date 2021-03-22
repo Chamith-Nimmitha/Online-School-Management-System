@@ -14,8 +14,9 @@
 			echo "<script>show_snackbar('${msg}')</script>";
 		}
     ?>
-    <div class="student-header mt-3">
+    <div class="student-header mt-3  w-75 d-flex flex-col align-items-center">
 		<h2 class="fs-30">Subject List</h2>
+		<hr class="topic-hr w-100">
 	</div>
     <form enctype="multipart/form-data" method="post" role="form">
 	    <div class="form-group">

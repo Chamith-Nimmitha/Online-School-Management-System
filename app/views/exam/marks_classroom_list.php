@@ -1,5 +1,8 @@
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
-
+	<div class="mt-5  w-75 d-flex flex-col align-items-center">
+        <h2 class="pt-3 pb-3">Exam Result Center - Classroom List</h2>
+        <hr class="topic-hr w-100">
+    </div>
 
 		<div class="d-flex justify-content-center align-items-center">
 			<form action="<?php echo set_url('pages/attendance_classroom_list.php'); ?>" method="post" id="classroom_filter" class="d-flex align-items-center col-12">

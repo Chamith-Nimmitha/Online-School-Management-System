@@ -78,9 +78,17 @@ document.addEventListener("DOMContentLoaded",function(){
 	window.addEventListener("click", (e)=>{
 		let user_nav_wrapper = document.getElementById("user_nav_wrapper");
 		let user_toggle_button = document.getElementById("user_toggle_button");
-		if(user_nav_wrapper && user_toggle_flag ==1){
-			if(!user_nav_wrapper.contains(e.target)){
+		if(user_nav_wrapper){
+			if(!user_nav_wrapper.contains(e.target) &&  user_toggle_flag ==1){
 				collapseToggle(e,user_toggle_button);
+				user_toggle_flag = 0;
+				console.log("false")
+			}else if(user_nav_wrapper.contains(e.target) && user_toggle_flag ==0){
+				console.log("true")
+				user_toggle_flag = 1;
+			}else{
+				console.log("false")
+				user_toggle_flag = 0;
 			}
 		}
 	});

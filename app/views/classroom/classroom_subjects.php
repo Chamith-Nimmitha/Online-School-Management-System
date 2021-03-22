@@ -12,8 +12,9 @@
         }
 	 ?>
 
-<div>
-	<h2 style="font-size: 25px;">Classroom Subjects</h2>
+<div class="mt-5  w-75 d-flex flex-col align-items-center">
+    <h2 class="pt-3 pb-3">Classroom Subjects</h2>
+    <hr class="topic-hr w-100">
 </div>
 
 <div class="col-12">
@@ -38,9 +39,10 @@
 
 
 <div class="col-8 mt-5">
-	<div class="mb-5">
+	<div class="mb-0">
 		<h3 style="font-size: 25px;">Assign Subjects For Classroom</h3>
 	</div>
+	<hr class="mb-3 topic-hr w-100">
 	<form action="" method="POST" class="col-12 d-flex justify-content-center p-2">
 		<fieldset class="col-12 p-2 mb-2 justify-content-center">
 			<!-- <span class="mb-3">Insert optional subjects in <span style="color: red;">GENERAL FORMAT.</span></span> -->

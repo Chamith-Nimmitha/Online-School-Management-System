@@ -10,11 +10,11 @@
  ?>
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start pt-5">
 	<div class="section-wrapper">
-		<div class="student-header mt-3">
+		<div class="student-header mt-3  w-75 d-flex flex-col align-items-center">
 			<h2 class="fs-30">Student List</h2>
+			<hr class="topic-hr w-100">
 		</div> <!-- .student-header -->
 		<div id="all-admission-table"  class="admissions-table col-11">
-			<hr>
 			<div class="d-flex justify-content-center align-items-center">
 				<form action="<?php echo set_url('student/list'); ?>" method="POST" class="d-flex align-items-center col-12">
 					<div class="d-flex col-12 align-items-center justify-content-center">

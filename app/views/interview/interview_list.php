@@ -1,10 +1,10 @@
 
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
-	<div class="interview-header mt-5">
+	<div class="interview-header mt-5  w-75 d-flex flex-col align-items-center">
 		<h2 class="fs-30">Interview List</h2>
+		<hr class="topic-hr w-100">
 	</div> <!-- .interview-header -->
 	<div id="all-admission-table"  class="admissions-table">
-		<hr>
 		<div class="d-flex justify-content-center align-items-center">
 			<form action="<?php echo set_url('interview/list'); ?>" method="post" class="d-flex align-items-center col-12">
 				<div class="d-flex col-12 align-items-center justify-content-center">

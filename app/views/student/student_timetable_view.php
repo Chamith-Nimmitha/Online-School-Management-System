@@ -7,8 +7,9 @@
 			echo "</p>";
 		}
 	 ?>
-	<div class="mt-5">
+	<div class="mt-5  w-75 d-flex flex-col align-items-center">
 		<h2><?php if(isset($grade) && !empty($grade)){echo "{$grade}-{$class}";} ?> Student Timetable</h2>
+		<hr class="topic-hr w-100">
 	</div>
 	<div class="col-12 d-flex flex-col mt-5">
 		<hr class="w-100">

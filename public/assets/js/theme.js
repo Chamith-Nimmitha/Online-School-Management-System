@@ -36,6 +36,8 @@ document.addEventListener("DOMContentLoaded", function(){
 			link.href = base_url+"public/assets/css/themes/green.css";
 		}else if(theme == "dark"){
 			link.href = base_url+"public/assets/css/themes/dark.css";
+		}else if(theme == "light"){
+			link.href = base_url+"public/assets/css/themes/light.css";
 		}
 		localStorage.setItem('sms_theme',theme);
 	}

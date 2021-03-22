@@ -18,8 +18,9 @@
 			echo "</p></div>";
 		}
 	 ?>
-	<div class="mt-5">
-		<h2>Student Profile</h2>
+	<div class="mt-5  w-75 d-flex flex-col align-items-center">
+	    <h2 class="pt-3 pb-3">Student Profile</h2>
+	    <hr class="topic-hr w-100">
 	</div>
 
 	<div class="col-12">

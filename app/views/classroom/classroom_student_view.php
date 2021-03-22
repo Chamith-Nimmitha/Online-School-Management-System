@@ -22,10 +22,10 @@
 		}
 	 ?>
 
-	<div class="p-5  w-100 d-flex align-items-center flex-col">
-		<h1>Classroom Students</h1>
+	<div class="mt-5  w-75 d-flex flex-col align-items-center">
+	    <h2 class="pt-3 pb-3">Classroom Students</h2>
+	    <hr class="topic-hr w-100">
 	</div>
-	<hr class="w-100 mb-5">
 
 	<form action="classroom_student.php" class="col-12 d-flex flex-col align-items-center">
 		<fieldset class="col-12 col-md-8 col-lg-6 p-3">

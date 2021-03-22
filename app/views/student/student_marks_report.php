@@ -4,7 +4,15 @@
  ?>
 <div id="content" class="col-9 flex-col align-items-center justify-content-start fs-14">
 
-<h2>Student Details</h2>
+<div class="mt-5  w-75 d-flex flex-col align-items-center">
+    <h2 class="pt-3 pb-3">Student Exam Marks Report</h2>
+    <hr class="topic-hr w-100">
+</div>
+
+<div class="mt-5 w-75 d-flex flex-col align-items-center">  
+  <h2>Student Details</h2>
+  <hr class="topic-hr w-100">
+</div>
 
 <div class="container mt-5 col-12 table table-strip-dark text-center">
 

@@ -13,9 +13,10 @@
 		}
 	 ?>
 
-	 <div class="d-flex justify-content-center mt-5">
-	 	<h2 style="font-size: 30px;">Teacher Subject List</h2>
-	 </div>
+	 <div class="mt-5  w-75 d-flex flex-col align-items-center">
+	    <h2 class="pt-3 pb-3">Teacher Subject List View</h2>
+	    <hr class="topic-hr w-100">
+	</div>
 	
 	<div class="col-8">
 		<form method="post" class="col-12">

@@ -29,8 +29,8 @@
 		<input type="hidden" id="classroom_grade" value="<?php echo $grade; ?>">
 		<input type="hidden" id="classroom_class" value="<?php echo $class; ?>">
 	</div>
+		<hr class="topic-hr w-75">
 	<div class="col-12 d-flex flex-col mt-5">
-		<hr class="w-100">
 		<div class="p-5">
 			<form action="<?php echo set_url('classroom/timetable/'.$classroom_id); ?>" method="post" id="timetable_form">
 				<table class="w-100 table-strip-dark" id="classroom_timetable">

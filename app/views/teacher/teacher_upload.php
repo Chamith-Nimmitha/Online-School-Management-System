@@ -15,8 +15,10 @@
         }
     ?>
 
-    <h2 class="fs-30 mt-5 mb-5">UPLOAD TEACHERS</h2>
-    <hr class="w-100">
+    <div class="mt-5  w-75 d-flex flex-col align-items-center">
+        <h2 class="pt-3 pb-3">Teacher Upload</h2>
+        <hr class="topic-hr w-100">
+    </div>
 
     <form method="POST" action="<?php set_url("teacher/csv")?>" class="col-12 align-items-start" enctype="multipart/form-data">
         <div class="ml-5 align-items-center">

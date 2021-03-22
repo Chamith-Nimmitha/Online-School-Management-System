@@ -14,10 +14,10 @@
         }
      ?>
 
-    <div>
-        <h2 class="fs-30">ADD CLASSROOMS</h2>
-    </div>	
-    <hr class="w-100">
+    <div class="mt-5  w-75 d-flex flex-col align-items-center">
+        <h2 class="pt-3 pb-3">Classroom Registration Form</h2>
+        <hr class="topic-hr w-100">
+    </div>
 
     <form  method="post" action="<?php if(isset($result)){echo set_url('classroom/update/'.$result['id']);}else{echo set_url('classroom/registration');} ?>" class="col-6">
         <fieldset class="p-4">

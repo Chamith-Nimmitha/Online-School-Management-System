@@ -14,8 +14,9 @@
 
 	 ?>
 
-	<div class="mt-5 d-flex flex-col align-items-center">
+	<div class="mt-5  w-75 d-flex flex-col align-items-center">
 		<h2>Teacher Timetable</h2>
+		<hr class="topic-hr w-100">
 	</div>
 
 	<form action="#" method="POST" class="col-12 d-flex flex-col align-items-center">

@@ -1,5 +1,8 @@
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
-
+    <div class="mt-5  w-75 d-flex flex-col align-items-center">
+        <h2 class="pt-3 pb-3">Teacher Attendance Overview</h2>
+        <hr class="topic-hr w-100">
+    </div>
 	<div class="col-12 flex-col justify-content-center align-items-center">
         <!-- <div id="attendance-statistics" class="col-12  justify-content-center ">
     		<h2 class="text-center p-5">Attendance Statistics</h2>

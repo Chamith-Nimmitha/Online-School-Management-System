@@ -9,6 +9,7 @@
 	 ?>
 
 	<h2 class="mt-5 mb-5"><?php if(isset($result) && !empty($result)){echo "{$result['grade']}-{$result['class']}";} ?> Classroom View</h2>
+	<hr class="topic-hr w-75">
 	<div class="col-12 d-flex flex-col align-items-center">
 		 <form class="col-8">
 	        <fieldset class="p-4 col-12">
@@ -46,7 +47,7 @@
 
 	<div class="col-12 mt-5 d-flex flex-col align-items-center">
 		<h2 class="mb-5">Links</h2>
-
+		<hr class="topic-hr w-75">
 		<div class="col-8 d-flex flex-col">
 			<a href="<?php echo set_url("classroom/student/list/".$result['id']); ?>" class="profile-links">
 				<p>Classroom Students</p>

@@ -31,7 +31,10 @@ table{
 table th, td{
 	--padding: 5px;
 	--border-radius: 3px;
-	--border-right: 2px solid darkblue;
+	--border-top: 1px solid darkblue;
+	--border-right: 1px solid darkblue;
+	--border-bottom: 1px solid darkblue;
+	--border-left: 1px solid darkblue;
 }
 .table-strip-dark thead th{
 	--bg: darkblue;
@@ -553,18 +556,22 @@ table{
 	border-bottom: : var(--border-bottom) !important;
 	border-left: var(--border-left) !important;
 	border: var(--border) !important;
-
 	border-collapse: var(--border-collapse) !important;
-
 	border-radius: var(--border-radius) !important;
 	padding: var(--padding) !important;
 }
 
+
 table th, td{
-	border-right: var(--border-right);
-	padding: var(--padding);
+	border-top: var(--border-top) !important;
+	border-right: var(--border-right) !important;
+	border-bottom: var(--border-bottom) !important;
+	border-left: var(--border-left) !important;
+	border: var(--border) !important;
+	padding: var(--padding) !important;
 	border-radius: var(--border-radius);
 }
+
 .table-strip-dark thead th{
 	background: var(--bg);
 	color: var(--color);

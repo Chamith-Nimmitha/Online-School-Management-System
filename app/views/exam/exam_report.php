@@ -1,10 +1,8 @@
-<div id="content" class="col-9 flex-col align-items-center justify-content-start fs-14">
-
-
-<div class="mt-5">
-
-<h2>Student Exam Report</h2>
-
+<div id="content" class="col-12 flex-col align-items-center justify-content-start fs-14">
+  
+<div class="mt-5  w-75 d-flex flex-col align-items-center">
+    <h2 class="pt-3 pb-3">Student Exam Report</h2>
+    <hr class="topic-hr w-100">
 </div>
 
   <table  class="w-100 mt-5 table table-strip-dark text-center">

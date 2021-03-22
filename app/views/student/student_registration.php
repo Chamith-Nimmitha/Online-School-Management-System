@@ -16,8 +16,9 @@
 
 	 ?>
 	<div class="registration-form col-12 justify-content-center">
-		<div class="admissions-header mt-5">
+		<div class="admissions-header mt-5  w-75 d-flex flex-col align-items-center">
 			<h2 class="fs-30">Student Registration Form</h2>
+			<hr class="topic-hr w-100">
 		</div> <!-- .admission-header -->
 		<hr class="w-100">
 		<form action="<?php echo set_url('student/registration') ?>" class="col-12 align-items-start" method="post">
@@ -99,7 +100,7 @@
 
 					<div class="form-group col-4">
 						<label for="dob">Date of Birth (<code title="required"> * </code>)</label>
-						<input type="date" value="<?php if(isset($_POST['dob'])){echo $_POST['dob'];} ?>" name="dob" id="dob" onchange="validate_birthday(this,6)">
+						<input type="date" value="<?php if(isset($_POST['dob'])){echo $_POST['dob'];}else{ echo date("Y-m-d");} ?>" name="dob" id="dob" onchange="validate_birthday(this,6)">
 						<?php 
 							if(isset($field_errors['dob'])){
 								echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["dob"].'</p>';

@@ -7,8 +7,9 @@
 			</script>";
 		}
 	 ?>
-	<div class="mt-5">
-		<h2 class="fs-30">Parent List</h2>
+	<div class="mt-5  w-75 d-flex flex-col align-items-center">
+	    <h2 class="pt-3 pb-3">Parent List</h2>
+	    <hr class="topic-hr w-100">
 	</div>
 	<hr class="w-100">
 	<div class="col-12 d-flex justify-content-center">

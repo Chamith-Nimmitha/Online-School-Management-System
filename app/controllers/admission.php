@@ -234,10 +234,10 @@
 			}
 			$this->load->model("admission");
 			if(isset($_POST['Accept'])){
-				$this->load->admission->change_state($admission_id,"Accepted");
+				$this->load->admission->change_admission_state($admission_id,"Accepted");
 				header("Location:".set_url("interview/set/".$admission_id));
 			}else if(isset($_POST['Reject'])){
-				$this->load->admission->change_state($admission_id,"Rejected");
+				$this->load->admission->change_admission_state($admission_id,"Rejected");
 				header("Location:".set_url('admission/list'));
 			}
 			$this->load->model("admission");
@@ -247,7 +247,7 @@
 				exit();
 			}
 			if($admission_data['state'] === "Unread"){
-				$this->load->admission->change_state($admission_id,"Read");
+				$this->load->admission->change_admission_state($admission_id,"Read");
 			}
 
 			$data['result'] = $admission_data;

@@ -13,12 +13,12 @@
 		}
 	 ?>
 	<div class="p-5  w-100 d-flex align-items-center flex-col">
-		<h1>Add students</h1>
+		<h2>Add students</h2>
 		<div class="w-75 d-flex justify-content-end">
 			<a class="t-d-none btn btn-blue-outline" href="<?php echo set_url('teacher/subject/student/list/').$teacher_subject_id; ?>">+show students</a>
 		</div>
 	</div>
-	<hr class="w-100 mb-5">
+	<hr class="topic-hr w-100">
 
 	<form action="#" method="POST" class="col-12 d-flex flex-col align-items-center">
 		<fieldset class="col-12 col-md-8 col-lg-6 p-3">

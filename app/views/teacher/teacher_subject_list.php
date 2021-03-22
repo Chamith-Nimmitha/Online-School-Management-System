@@ -12,6 +12,10 @@
 			echo "</p>";
 		}
 	 ?>
+	<div class="mt-5  w-75 d-flex flex-col align-items-center">
+	    <h2 class="pt-3 pb-3">Teacher Subjects List</h2>
+	    <hr class="topic-hr w-100">
+	</div>
 	
 	<div class="col-8">
 		<form method="post" class="col-12">

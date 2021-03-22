@@ -19,7 +19,7 @@
 			$info = "";
 			$this->load->model("interview");
 			$this->load->model("admission");
-			$this->load->admission->change_state($admission_id,"Accepted");
+			$this->load->admission->change_admission_state($admission_id,"Accepted");
 			//when cre ate inteview
 			if(isset($_POST['submit'])){
 				try{
@@ -63,7 +63,7 @@
 						if(!$result){
 							throw new PDOException("Interview Update failed.", 1);
 						}else{
-							$result = $this->load->admission->change_state($admission_id,"Not Interview");
+							$result = $this->load->admission->change_admission_state($admission_id,"Not Interview");
 							if(!$result){
 								throw new PDOException("Admission State update failed.");
 							}

@@ -1,4 +1,8 @@
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
+    <div class="mt-5  w-75 d-flex flex-col align-items-center">
+        <h2 class="pt-3 pb-3">Teacher Attendance</h2>
+        <hr class="topic-hr w-100">
+    </div>
     <div id="attendance_notification" class="d-none w-75">
         <p style="background: #eee;" class="w-100 p-2 text-center fg-red"> </p>
     </div>
