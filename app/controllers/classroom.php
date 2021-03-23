@@ -80,23 +80,23 @@
 			if($role === "teacher"){
 				$this->load->model("classroom");
 				$this->load->model("teacher");
-				$result = $this->load->teacher->set_by_id($_SESSION['user_id']);
-				if($result){
+				if($classroom_id==NULL){
+					$result = $this->load->teacher->set_by_id($_SESSION['user_id']);
 					$classroom_id = $this->load->teacher->get_classroom_id();
+				}
 
-					if($classroom_id){
-						$result= $this->load->classroom->set_by_id($classroom_id);
-						if(!$result){
-							$data["student_list"]= [];
-							$data["classroom_info"] = [];
-						}else{
-							$data["student_list"] = $this->load->classroom->get_students_data();
-							$data["classroom_info"] = $this->load->classroom->get_data();
-						}
-					}else{
+				if($classroom_id){
+					$result= $this->load->classroom->set_by_id($classroom_id);
+					if(!$result){
 						$data["student_list"]= [];
 						$data["classroom_info"] = [];
+					}else{
+						$data["student_list"] = $this->load->classroom->get_students_data();
+						$data["classroom_info"] = $this->load->classroom->get_data();
 					}
+				}else{
+					$data["student_list"]= [];
+					$data["classroom_info"] = [];
 				}
 
 				$this->view_header_and_aside();
@@ -377,7 +377,7 @@
 		}
 
 		// classroom timetable view
-		public function timetable_view($classroom_id){
+		public function timetable_view($classroom_id=NULL){
 			if(!$this->checkPermission->check_permission("classroom","view")){
                 $this->view_header_and_aside();
                 $this->load->view("common/error");
@@ -388,6 +388,7 @@
             $day_map = ["1"=>"mon","2"=>"tue","3"=>"wed","4"=>"thu","5"=>"fri"];
             $timetable_data = [];
             
+
             $this->load->model("classroom");
             $result = $this->load->classroom->set_by_id($classroom_id);
             if(!$result){
@@ -576,7 +577,6 @@
 			$this->load->model("classroom");
 
 			// set classroom object
-
 			$error = "";
 			if($classroom_id == NULL){
 				if($_SESSION['role'] == 'student'){
