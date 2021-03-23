@@ -71,11 +71,18 @@
 							<input type="text" name="address" id="address" placeholder="Address" value="<?php if(isset($result)){echo htmlspecialchars(stripslashes($result['address']));} ?>"required="required" oninput="validate_user_input(this,0,100,1)" <?php if(!$editable){ echo "disabled='disabled'";} ?>>
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>
+						<?php if($editable){?>
 						<div class="d-flex w-100">
 							<label class="col-4" for="email">Email</label>
 							<input type="text" name="email" id="email" placeholder="Email" value="<?php if(isset($result)){echo  htmlspecialchars(stripslashes($result['email']));} ?>" oninput="validate_email(this,0,100,1)" <?php if(!$editable){ echo "disabled='disabled'";} ?>>
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>
+						<div class="d-flex w-100">
+							<label class="col-4" for="nic">NIC</label>
+							<input type="text" name="nic" id="nic" placeholder="NIC" value="<?php if(isset($result)){echo  $result['nic'];} ?>" oninput="validate_user_input(this,10,12,1)" <?php if(!$editable){ echo "disabled='disabled'";} ?>>
+							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
+						</div>
+						<?php } ?>
 						<div class="d-flex w-100">
 							<label class="col-4" for="contact-number">Contact Number</label>
 							<input type="text" name="contact-number" id="contact-number" placeholder="Contact Number" value="<?php if(isset($result)){echo $result['contact_number'];} ?>" oninput="validate_contact_number(this)" <?php if(!$editable){ echo "disabled='disabled'";} ?>>
@@ -93,9 +100,11 @@
 		<h2 class="mb-5">Links</h2>
 
 		<div class="col-8 d-flex flex-col">
+			<?php if($editable){ ?>
 			<a href="<?php echo set_url("teacher/attendance/".$result['id']); ?>" class="profile-links">
 				<p>Attendance</p>
 			</a>
+		<?php } ?>
 			<a href="<?php echo set_url("teacher/timetable/".$result['id']); ?>" class="profile-links">
 				<p>Timetable</p>
 			</a>
@@ -104,7 +113,7 @@
 				<a href="<?php echo set_url("interviewpanel/view/".$result['interview_panel_id']); ?>" class="profile-links">
 					<p>Interview Panel</p>
 				</a>
-			<?php }else{  ?>
+			<?php }else if($result['interview_panel_id'] && $editable){  ?>
 				<a href="<?php echo set_url("teacher/interview/panel/".$result['id']); ?>" class="profile-links">
 					<p>Interview Panel</p>
 				</a>

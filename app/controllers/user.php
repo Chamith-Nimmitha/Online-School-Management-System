@@ -187,7 +187,7 @@
 			}else{
 				$is_admin = FALSE;
 			}
-			if(empty($role) || $is_admin || $role == $_SESSION['role']){
+			if(empty($role) || $is_admin || $user_id == $_SESSION['user_id']){
 				$editable = TRUE;
 			}else{
 				$editable = FALSE;
