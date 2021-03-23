@@ -546,6 +546,7 @@ form code{
 
 .b-radius-5{border-radius: 5px;}
 .b-radius-10{border-radius: 10px;}
+.b-radius-round{border-radius: 50%;}
 
 
 /* tables*/

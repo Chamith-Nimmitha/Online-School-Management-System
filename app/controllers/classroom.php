@@ -75,23 +75,28 @@
 				return;
 			}
 			$role = $_SESSION['role'];
-			if(empty($classroom_id)){
-				$this->load->model("student");
-				$result = $this->load->student->set_by_id($_SESSION['user_id']);
-				if($result){
-					$classroom_id = $this->load->student->get_classroom_id();
-				}
-			}
 
-			if($role !== "admin"){
+			
+			if($role === "teacher"){
 				$this->load->model("classroom");
-				$result= $this->load->classroom->set_by_id($classroom_id);
-				if(!$result){
-					$data["student_list"]= [];
-					$data["classroom_info"] = [];
-				}else{
-					$data["student_list"] = $this->load->classroom->get_students_data();
-					$data["classroom_info"] = $this->load->classroom->get_data();
+				$this->load->model("teacher");
+				$result = $this->load->teacher->set_by_id($_SESSION['user_id']);
+				if($result){
+					$classroom_id = $this->load->teacher->get_classroom_id();
+
+					if($classroom_id){
+						$result= $this->load->classroom->set_by_id($classroom_id);
+						if(!$result){
+							$data["student_list"]= [];
+							$data["classroom_info"] = [];
+						}else{
+							$data["student_list"] = $this->load->classroom->get_students_data();
+							$data["classroom_info"] = $this->load->classroom->get_data();
+						}
+					}else{
+						$data["student_list"]= [];
+						$data["classroom_info"] = [];
+					}
 				}
 
 				$this->view_header_and_aside();
@@ -154,33 +159,46 @@
 			$data['start'] = $start;
 
 			$this->load->model("classrooms");
+			$this->load->model("classroom");
+			if(isset($_SESSION['classroom_id']) && !empty($_SESSION['classroom_id'])){
+			 	$result = $this->load->classroom->set_by_id($_SESSION['classroom_id']);
+			 	if($result){
+				 	$grade = $this->load->classroom->get_grade();
+			 	}
+			}else{
+				if(isset($_POST['grade']) && $_POST['grade'] != 'all'){
+					$grade = $_POST['grade'];
+				}else{
+					$grade = NULL;
+				}
+			}
 
 			if(!isset($_POST['classroom-id']) || empty($_POST['classroom-id'])){
                 $data['classroom_id'] = "";
                 if(isset($_POST['grade']) && $_POST['grade'] != 'all'){
                     if(isset($_POST['class']) && $_POST['class'] != 'all'){
-                        $result_set = $this->load->classrooms->get_classroom_list($start,$per_page,null,$_POST['grade'],$_POST['class']);
-                        $data['grade'] = $_POST['grade'];
+                        $result_set = $this->load->classrooms->get_classroom_list($start,$per_page,null,$grade,$_POST['class']);
+                        $data['grade'] = $grade;
                         $data['class'] = $_POST['class'];
                     }else{
-                        $result_set = $this->load->classrooms->get_classroom_list($start,$per_page,null,$_POST['grade']);
-                        $data['grade'] = $_POST['grade'];
+                        $result_set = $this->load->classrooms->get_classroom_list($start,$per_page,null,$grade);
+                        $data['grade'] = $grade;
                     }
                 }else{
                     if(isset($_POST['class']) && $_POST['class'] != 'all'){
                         $result_set = $this->load->classrooms->get_classroom_list($start,$per_page,null,null,$_POST['class']);
                         $data['class'] = $_POST['class'];
                     }else{
-                        $result_set = $this->load->classrooms->get_classroom_list($start,$per_page);
+                        $result_set = $this->load->classrooms->get_classroom_list($start,$per_page,null,$grade);
                     }
                 }
             }else{
                 $data['classroom_id'] = $_POST['classroom-id'];
                 if(isset($_POST['grade']) && $_POST['grade'] != 'all'){
                     if(isset($_POST['class']) && $_POST['class'] != 'all'){
-                        $result_set = $this->load->classrooms->get_classroom_list($start,$per_page,$_POST['classroom-id'],$_POST['grade'],$_POST['class']);
+                        $result_set = $this->load->classrooms->get_classroom_list($start,$per_page,$_POST['classroom-id'],$grade,$_POST['class']);
                     }else{
-                        $result_set = $this->load->classrooms->get_classroom_list($start,$per_page,$_POST['classroom-id'],$_POST['grade']);
+                        $result_set = $this->load->classrooms->get_classroom_list($start,$per_page,$_POST['classroom-id'],$grade);
                     }
                 }else{
                     if(isset($_POST['class']) && $_POST['class'] != 'all'){
@@ -559,28 +577,48 @@
 
 			// set classroom object
 
-			if($classroom_id == NULL && $_SESSION['role'] == 'student'){
-				$this->load->model("student");
-				$this->load->student->set_by_id($_SESSION['user_id']);
-				$classroom_id = $this->load->student->get_classroom_id();
-			}
-
 			$error = "";
-			$result = $this->load->classroom->set_by_id($classroom_id);
-			if(!$result){
-				$error = "classroom not found.";
-			}
-			
-			//get classroom information
-			$data['result'] = $this->load->classroom->get_data();
-			if($data['result'] && !empty($data['result']['class_teacher_id'])){
-				$t_data = $this->load->classroom->get_class_teacher_data();
-				if($t_data){
-					$data['result']['class_teacher_name'] =$t_data['name_with_initials'];
+			if($classroom_id == NULL){
+				if($_SESSION['role'] == 'student'){
+					$this->load->model("student");
+					$result = $this->load->student->set_by_id($_SESSION['user_id']);
+					if(!$result){
+						$error = "Student Not Found.";
+					}else{
+						$classroom_id = $this->load->student->get_classroom_id();
+						if(!$classroom_id){
+							$error = "Classroom Not Found.";
+						}
+					}
+				}else if($_SESSION['role'] == "teacher"){
+					$this->load->model("teacher");
+					$result = $this->load->teacher->set_by_id($_SESSION['user_id']);
+					if(!$result){
+						$error = "Teacher Not Found.";
+					}else{
+						$classroom_id = $this->load->teacher->get_classroom_id();
+						if(!$classroom_id){
+							$error = "Classroom Not Found.";
+						}
+					}
 				}
 			}
-			// print_r($data);
-			// exit();
+			if(!empty($classroom_id)){
+				$result = $this->load->classroom->set_by_id($classroom_id);
+				if(!$result){
+					$error = "classroom not found.";
+				}
+
+				$data['result'] = $this->load->classroom->get_data();
+				//get classroom information
+				if($data['result'] && !empty($data['result']['class_teacher_id'])){
+					$t_data = $this->load->classroom->get_class_teacher_data();
+					if($t_data){
+						$data['result']['class_teacher_name'] =$t_data['name_with_initials'];
+					}
+				}
+			}
+			
 
 			$data['error'] = $error;
 

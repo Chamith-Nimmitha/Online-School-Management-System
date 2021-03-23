@@ -21,15 +21,15 @@
 	<div class="col-8">
 		<form method="post" class="col-12">
 			<div class="col-12">
-				<fieldset class="col-12">
+				<fieldset class="col-12 p-4">
 					<legend>Teacher Info</legend>
-					<div class="form-group">
-						<label for="id">ID</label>
-						<input type="text" name="id" placeholder="Teacher ID" value="<?php if(isset($teacher_info['id'])){echo $teacher_info['id'];} ?>" disabled="disabled">
+					<div class="d-flex flex-row col-11 ml-5">
+						<label class="col-4" for="id">ID</label>
+						<input type="text" name="id" class="col-8" placeholder="Teacher ID" value="<?php if(isset($teacher_info['id'])){echo $teacher_info['id'];} ?>" disabled="disabled">
 					</div>
-					<div class="form-group">
-						<label for="name">Name</label>
-						<input type="text" name="name" placeholder="Teacher Name" value="<?php if(isset($teacher_info['name_with_initials'])){echo $teacher_info['name_with_initials'];} ?>"  disabled="disabled">
+					<div class="d-flex flex-row col-11 ml-5">
+						<label class="col-4" for="name">Name</label>
+						<input type="text" class="col-8" name="name" placeholder="Teacher Name" value="<?php if(isset($teacher_info['name_with_initials'])){echo $teacher_info['name_with_initials'];} ?>"  disabled="disabled">
 					</div>
 				</fieldset>
 			</div>
@@ -38,17 +38,18 @@
 
 	<hr class="w-100 mt-5">
 	<div class="col-10">
-		<?php if(isset($_GET['teacher_id'])){?>
-			<div class="pt-5">
+		<?php if($teacher_info['id'] != $_SESSION['user_id']){?>
+			<div class="pt-5 w-100 d-flex flex-col align-items-center">
 				<h2 style="color: darkblue;">Teacher Subject List</h2>
+				<hr class="topic-hr w-100">
 			</div>
 		<?php }else{ ?>
-			<div class="pt-5">
+			<div class="pt-5 w-100 d-flex flex-col align-items-center">
 				<h2 style="color: darkblue;">My Subject List</h2>
+				<hr class="topic-hr w-100">
 			</div>
 		<?php } ?>
 
-		<hr class="w-100">
 		<div class="p-5 col-12 col-md-12 text-center">
 			<div class="col-12 flex-col" style="overflow-x: scroll;overflow-y: hidden;">
 				<?php 

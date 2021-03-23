@@ -174,6 +174,7 @@
         		$t->create($teacher_id,"teacher","FREE");
         	}
         	$timetable = $t->get_timetable();
+        	$timetable_id = $t->get_id();
         	try {
 	        	foreach ($timetable as $day => $periods) {
 	        		foreach ($periods as $period => $task) {
@@ -186,7 +187,15 @@
 	        			if(!$result){
 	        				throw new PDOException();
 	        			}
-	        			$timetable[$day][$period] = ["{$ext[0]}-{$ext[1]}",$ext[2],$result->fetch()['name']];
+	        			if($result->rowCount() == 0){
+	        				$result = $this->con->update("normal_day",["task"=>"FREE"],["timetable_id"=>$timetable_id]);
+	        				if(!$result){
+		        				throw new PDOException();
+	        				}
+		        			$timetable[$day][$period] = ["FREE",$ext[2],NULL];
+	        			}else{
+		        			$timetable[$day][$period] = ["{$ext[0]}-{$ext[1]}",$ext[2],$result->fetch()['name']];
+	        			}
 
 	        		}
 	        	}
@@ -208,6 +217,19 @@
 
         	$query = "SELECT `nd`.`task` FROM `normal_day` AS `nd` INNER JOIN `normal_timetable` AS `nt` ON `nt`.`id`=`nd`.`timetable_id` WHERE `nt`.`user_id`=? AND `nt`.`type`='teacher' AND `nd`.`day`=? AND `nd`.`period`=? ";
         	return $this->con->pure_query($query,[$teacher_id,$day,$period]);
+        }
+
+        // get count of not interviewed admissions
+        public function get_count_interviews(){
+        	if(!empty($this->interview_panel_id)){
+	        	$query = "SELECT count(*) AS `count` FROM `interview` WHERE `interview_panel_id`= ? AND `state`='notInterviewed';";
+	        	$result = $this->con->pure_query($query,[$this->interview_panel_id]);
+	        	if($result){
+	        		return $result->fetch()['count'];
+	        	}else{
+	        		return 0;
+	        	}
+        	}
         }
 
 
