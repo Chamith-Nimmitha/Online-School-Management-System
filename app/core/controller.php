@@ -64,14 +64,19 @@
 					$this->load->student->set_by_id($_SESSION['user_id']);
 					$parent_id = $this->load->student->get_parent_id();
 					$this->header['classroom_id'] = $this->load->student->get_classroom_id();
+					$_SESSION['classroom_id'] = $this->header(['classroom_id']);
 					unset($this->load->student);
 					$this->load->view("templates/aside_student",["parent_id"=>$parent_id]);
 				}else if($_SESSION['role'] == "teacher"){
 					$this->load->model('teacher');
 					$this->load->teacher->set_by_id($_SESSION['user_id']);
 					$header['interview_panel_id'] = $this->load->teacher->get_interview_panel_id();
+					if($header['interview_panel_id']){
+						$header['interview_count'] = $this->load->teacher->get_count_interviews();
+					}
 					$header['classroom_id'] = $this->load->teacher->get_classroom_id();
 					$this->header['classroom_id'] = $header['classroom_id'];
+					$_SESSION['classroom_id'] = $header['classroom_id'];
 					unset($this->load->teacher);
 					$this->load->view("templates/aside_teacher",$header);
 				}else if($_SESSION['role'] == "admin"){

@@ -43,7 +43,7 @@
 			if($where_flag === 1){
 				$query .= ")";
 			}
-			$query .= " LIMIT $start,$count";
+			$query .= "order by `s`.`grade`,`c`.`class` LIMIT $start,$count";
 			$stmt = $this->con->db->prepare($query);
 			$result = $stmt->execute($params);
 			if($result){
