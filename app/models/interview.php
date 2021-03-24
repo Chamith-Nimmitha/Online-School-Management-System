@@ -17,8 +17,8 @@
 			return $this->con->update('interview',$data,['admission_id'=>$admission_id]);
 		}
 
-		public function search($admission_id=NULL,$panel_id=NULL,$state=NULL){
-			$query = "SELECT * FROM `interview`";
+		public function search($start,$per_page,$admission_id=NULL,$panel_id=NULL,$state=NULL){
+			$query = "SELECT SQL_CALC_FOUND_ROWS * FROM `interview`";
 			$where_flag = 0;
 			$params = [];
 			if($admission_id != NULL){
@@ -46,6 +46,8 @@
 				array_push($params, $state);
 				$where_flag = 1;
 			}
+			$query .= " ORDER BY FIELD(state,'notInterviewed') DESC, `id` ASC  ";
+			$query .=  "LIMIT $start,$per_page";
 			$stmt = $this->con->db->prepare($query);
 			$result = $stmt->execute($params);
 			if($result){
@@ -53,6 +55,11 @@
 			}else{
 				return FALSE;
 			}
+		}
+
+		// get result count
+		public function get_count(){
+			return $this->con->get_count();
 		}
 
 		// change interview state

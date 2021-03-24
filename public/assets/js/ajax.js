@@ -635,6 +635,72 @@ function parent_search(page=null, per_page=null){
 	xhr.send( JSON.stringify(data) );
 }
 
+
+// search interview using ajax
+function interview_search(page=null, per_page=null){
+	e = window.event;
+	e.preventDefault();
+	var adm_id = document.getElementById("admission-id").value;
+	var panel_id = document.getElementById("panel-id").value;
+	var state = document.getElementById("state").value;
+	var xhr = new XMLHttpRequest();
+	var tbody =document.getElementById('tbody');
+	xhr.open("POST",base_url+"api/interview/search",true);
+	xhr.setRequestHeader("Content-Type", "application/json");
+	var func = "interview_search";
+	var route = "interview/list";
+
+	// for loader
+	var loader = document.querySelector(".loader");
+	loader.classList.remove('hide-loader');
+	xhr.addEventListener("readystatechange", ()=>{
+		if(xhr.readyState !== 4){
+			loader.classList.remove('hide-loader');
+		}else{
+			loader.classList.add('hide-loader');
+		}
+	})// end of loader
+
+	xhr.onload = function(){
+		var respond = xhr.responseText;
+		if(this.status == 200){
+			respond = JSON.parse(respond);
+			tbody.innerHTML = respond.body;
+
+			var xhr2 = new XMLHttpRequest();
+			xhr2.open("POST",base_url+"api/pagination",true);
+			xhr2.setRequestHeader("Content-Type", "application/json");
+			xhr2.onload = function(){
+				if(this.status == 200){
+					var respond_p = xhr2.responseText;
+					var pagination =document.getElementById('pagination');
+					var row_count = document.getElementById('row_count');
+					var pagination_data =document.getElementById('pagination_data');
+					row_count.textContent = count;
+					pagination_data.innerHTML = respond_p;
+				}
+			}
+			var count = respond.count;
+			if(page == null){
+				var data2 = {route:route, count:count,func:func};
+			}else{
+				var data2 = {route:route,count:count,page:page,per_page:per_page,func:func};
+			}
+			xhr2.send( JSON.stringify(data2) );
+		}else{
+			respond = JSON.parse(respond);
+			tbody.innerHTML = respond.body;			
+		}
+	}
+
+	if(page == null){
+		var data = {adm_id:adm_id,panel_id:panel_id,state:state};
+	}else{
+		var data = {adm_id:adm_id,panel_id:panel_id,state:state,page:page,per_page:per_page};
+	}
+	xhr.send( JSON.stringify(data) );
+}
+
 function teacher_search(page=null,per_page=null){
 	var value = document.getElementById("teacher-id").value;
 	var nameVal =value;

@@ -1,7 +1,7 @@
 <?php 
 
 	class Parents extends Controller{
-
+		private $msg;
 		public function __construct() {
 			parent::__construct();
 		}
@@ -95,10 +95,13 @@
 			$this->load->model("parents");
 			$result = $this->load->parents->delete_parent($parent_id);
 			if($result){
-				$this->list(NULL,NULL,"Parent {$parent_id} deleted.");
+				$this->msg = "Parent {$parent_id} deleted.";
+				// $this->list(NULL,NULL,"Parent {$parent_id} deleted.");
 			}else{
-				$this->list(NULL,NULL,"Parent Delete Failed");
+				$this->msg = "Parent Delete Failed";
+				// $this->list(NULL,NULL,"Parent Delete Failed");
 			}
+			header("Location:".set_url("parent/list"));
 		}
 	}
  ?>

@@ -35,6 +35,11 @@
 				array_push($params, "%{$occupation}%");
 				$where_flag = 1;
 			}
+			if($where_flag == 1){
+				$query .= " && `is_deleted`=0 ";
+			}else{
+				$query .= " WHERE `is_deleted`=0 ";
+			}
 			$query .=  "LIMIT $start,$per_page";
 			$stmt = $this->con->db->prepare($query);
 			$result = $stmt->execute($params);

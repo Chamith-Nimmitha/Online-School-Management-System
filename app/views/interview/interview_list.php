@@ -9,7 +9,7 @@
 			<form action="<?php echo set_url('interview/list'); ?>" method="post" class="d-flex align-items-center col-12">
 				<div class="d-flex col-12 align-items-center justify-content-center">
 					<div class="mt-5">
-						<input type="reset" class="btn btn-blue" onclick="reset_form(this)" value="reset">
+						<input type="reset" class="btn btn-blue" onclick="reset_form(this)" value="Reset">
 					</div>
 					<div class="ml-5">
 						<label for="admission-id">Admission ID</label>
@@ -27,11 +27,20 @@
 							<option value="notInterviewed" <?php if(isset($_POST['state']) && ($_POST['state'] == "notInterviewed")){echo 'selected="selected"';} ?> >Not Interviewed</option>
 						</select>				
 					</div>
-					<input type="submit" class="btn btn-blue ml-3 mt-5" name="search" value="Show">
+					<input type="button" onclick="interview_search()" class="btn btn-blue ml-3 mt-5" name="search" value="Show">
 				</div>
 			</form>
 		</div>
-		<div class="col-12 flex-col" style="overflow-x: scroll;overflow-y: hidden;">
+		<div class="col-12 flex-col" style="position:relative;overflow-x: scroll;overflow-y: hidden;">
+			<div class="loader hide-loader">
+			 	<div class="col-12">
+					<div id="one"><div></div></div>
+					<div id="two"><div></div></div>
+					<div id="three"><div></div></div>
+					<div id="four"><div></div></div>
+					<div id="five"></div>
+			 	</div>
+			</div>
 				<?php 
 					$table = "<table class='table-strip-dark'>
 								<caption class=\"p-5\">";
@@ -47,10 +56,14 @@
 										<th>Time</th>
 										<th>Panel ID</th>
 										<th>State</th>
-										<th>View</th>
-									</tr>
+										<th>View</th>";
+									if($_SESSION['role'] == "admin"){
+										$table .= "<th>Delete</th>";
+									}
+
+						$table .= "</tr>
 								</thead>
-								<tbody>";
+								<tbody id='tbody'>";
 					echo $table;
 					if(isset($result_set) && !empty($result_set)){
 						foreach ($result_set as $result) {
@@ -67,6 +80,9 @@
 							}
 
 							$row .= "<td><a class='t-d-none btn btn-blue p-1' href='".set_url('interview/view/').$result['admission_id']."'>View</a></td>";
+							if($_SESSION['role'] == "admin"){
+								$row .= "<td><a class='d-flex justify-content-center t-d-none btn p-1' href='".set_url('interview/delete/').$result['admission_id']."' onclick=\"show_dialog(this,'Delete message','Are you sure to delete?')\"><i class='fas fa-trash delete-button'></i></a></td>";
+							}
 							echo $row;
 						}
 						echo "</tbody>";
@@ -77,6 +93,13 @@
 						echo "</table>";
 					}
 				 ?>
+		</div>
+		<div id="pagination" class="col-12">
+			<span>Number of results found : <span id="row_count"><?php echo $count; ?></span></span>
+			<div id="pagination_data" class="col-12">
+				<?php require_once(INCLUDES."pagination.php"); ?>
+				<?php display_pagination($count,$page,$per_page, "interview/list","interview_search"); ?>
+			</div>
 		</div>
 	</div>
 </div>

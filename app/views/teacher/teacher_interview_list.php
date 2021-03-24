@@ -56,10 +56,10 @@
 						$row .= "<td>".$result['date']."</td>";
 						$row .= "<td>".$time_map[$result['period']]."</td>";
 						$row .= "<td>".$result['interview_panel_id']."</td>";
-						if($result['state'] == 'Not Interviewed'){
-							$row .= "<td style='background:#009922'>".$result['state']."</td>";
+						if($result['state'] == 'notInterviewed'){
+							$row .= "<td style='background:#009922'>To be Interview</td>";
 						}else{
-							$row .= "<td style='background:#333333;color:white';>".$result['state']."</td>";
+							$row .= "<td style='background:#333333;color:white;' class='text-center'>".$result['state']."</td>";
 						}
 
 						$row .= "<td><a href='".set_url('interview/view/'.$result['admission_id'])."' class='btn btn-blue p-1'>view</a></td>";
