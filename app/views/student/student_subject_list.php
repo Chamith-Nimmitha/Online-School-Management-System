@@ -13,7 +13,14 @@
 
 	 ?>
 	<div class="p-5 mt-3 w-75 d-flex flex-col align-items-center">
-		<h1>Student Subject List</h1>
+		<?php 
+		if($_SESSION['role'] == "student"){ 
+			echo "<h2>My Subject List</h2>";
+		}
+		else{
+			echo "<h2>Student Subject List</h2>";
+		}
+		?>
 		<hr class="topic-hr w-100">
 	</div>
 	<hr class="w-100">

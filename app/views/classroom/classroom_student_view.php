@@ -44,32 +44,38 @@
 			</div>
 		</fieldset>
 		<hr class="w-100 mt-5">
-		<div class="col-10">
+		<div class="col-10 flex-col">
+			
 			<legend class="p-5">Student List</legend>
-			<table class="table-strip-dark col-12">
-				<thead class="col-12">
-					<tr class="col-12">
-						<th class="col-2">ID</th>
-						<th class="col-3">Name</th>
-						<th class="col-4">Email</th>
-						<th class="col-3">Contact Number</th>
+			<table class="table-strip-dark mb-5" style="">
+				<thead class="">
+					<tr class="">
+						<th class="">ID</th>
+						<th class="">Name</th>
+						<?php if($_SESSION['role'] != "student" && $_SESSION['role'] != "parent" ){ ?>
+							<th class="">Email</th>
+							<th class="">Contact Number</th>
+						<?php } ?>
 					</tr>
 				</thead>
-				<tbody class="col-12">
+				<tbody class="">
 					<?php 
 						if(isset($student_list) && !empty($student_list)){
 							foreach ($student_list as $student) {
-								$row = '<tr class="col-12 word-break">';
-								$row .= '<td class="col-2 word-break">'.$student['id'].'</td>';
-								$row .= '<td class="col-3 word-break">'.$student['name_with_initials'].'</td>';
-								$row .= '<td class="col-4 word-break">'.$student['email'].'</td>';
-								$row .= '<td class="col-3  word-break">'.$student['contact_number'].'</td>';
+								$row = '<tr class=" word-break">';
+								$row .= '<td class=" word-break">'.$student['id'].'</td>';
+								$row .= '<td class=" word-break">'.$student['name_with_initials'].'</td>';
+
+								if($_SESSION['role'] != "student" && $_SESSION['role'] != "parent" ){
+									$row .= '<td class=" word-break">'.$student['email'].'</td>';
+									$row .= '<td class="  word-break">'.$student['contact_number'].'</td>';
+								}
 								$row .= '</tr>';
 								echo $row;
 							}
 						}else{
-							echo "<tr class='col-12'>";
-							echo "<td colspan=6 class='col-12 bg-red'><p class='text-center w-100'>Students Not found...</p></td>";
+							echo "<tr >";
+							echo "<td colspan=6 class=' bg-red'><p class='text-center w-100'>Students Not found...</p></td>";
 							echo "</tr>";
 						}
 

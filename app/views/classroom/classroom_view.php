@@ -60,8 +60,16 @@
 					<p>Classroom Subjects</p>
 				</a>';
 
+			// }else if($_SESSION['role'] == "teacher" || ($_SESSION['role']=="student" && $_SESSION['classroom_id'] == $result['id'])){
 			}else if($_SESSION['role'] == "teacher" || ($_SESSION['role']=="student" && $_SESSION['classroom_id'] == $result['id'])){
 				echo '<a href="'.set_url("classroom/student/list").'" class="profile-links">
+					<p>Classroom Students</p>
+				</a>';
+				echo '<a href="'.set_url("classroom/timetable/view/".$result['id']).'" class="profile-links">
+					<p>Classroom Timetable</p>
+				</a>';				
+			}else if($_SESSION['role'] == "parent"){
+				echo '<a href="'.set_url("classroom/student/list/".$result['id']).'" class="profile-links">
 					<p>Classroom Students</p>
 				</a>';
 				echo '<a href="'.set_url("classroom/timetable/view/".$result['id']).'" class="profile-links">

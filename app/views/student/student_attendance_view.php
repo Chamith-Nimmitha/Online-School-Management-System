@@ -4,7 +4,7 @@
         <hr class="topic-hr w-100">
     </div>
 	<div class="col-12 flex-col justify-content-center align-items-center">
-    		<h2 class="text-center p-5">Attendance Report</h2>
+    		<!-- <h2 class="text-center p-5">Attendance Report</h2> -->
         <!-- <div id="attendance-statistics" class="col-12  justify-content-center ">
     		<div class="statistics-flex justify-content-center">	
     			<div  class="d-flex flex-col s-item align-items-center bg-lightblue m-2 p-3">

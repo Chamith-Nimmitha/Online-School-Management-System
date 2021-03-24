@@ -76,7 +76,13 @@
 
 		<div class="col-8 d-flex flex-col">
 			<a href="<?php echo set_url("parent/student/list/".$result['id']); ?>" class="profile-links">
-				<p>Children List</p>
+				<?php 
+					if($_SESSION['role'] == "student"){ 
+						echo "<p>View My Siblings</p>";
+					}else{
+						echo "<p>Children List</p>";
+					}
+				?>
 			</a>
 		</div>
 	</div>

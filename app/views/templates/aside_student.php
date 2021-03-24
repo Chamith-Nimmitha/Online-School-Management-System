@@ -10,20 +10,39 @@
 				</li>
 				<li class="nav-item aside-li" id="attendance-li">
 					<a href="<?php echo set_url('student/attendance'); ?>" class="nav-link">
-						<i class="far fa-calendar-check"></i>Student Attendance
+						<i class="far fa-calendar-check"></i>My Attendance
 					</a>
 					
 				</li>
 				<li class="nav-item aside-li" id="timetable-li">
 					<a href="<?php echo set_url('student/timetable/view');?>" class="nav-link">
-						<i class="fas fa-user-clock"></i>Student Timetable
+						<i class="fas fa-user-clock"></i>My Timetable
 					</a>
 				</li>
+				<?php if(isset($classroom_id) && !empty($classroom_id)){ ?>
 				<li class="nav-item aside-li" id="classroom-li">
 					<a href="<?php echo set_url('classroom/view') ?>" class="nav-link">
 						<i class="fas fa-store-alt"></i>My Classroom
 					</a>
+					<button class="toggle-button" target="classroom-nav">
+						<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px">
+					</button>
+					<nav id="classroom-nav" class="no-collapsed nav sub-nav">
+						<ul class="d-flex flex-col">
+							<li class="nav-item">
+								<a href="<?php echo set_url('classroom/view') ?>" class="nav-link"  parent-li="classroom-li">Classroom Info</a>
+							</li>
+							<li class="nav-item">
+								<a href="<?php echo set_url('classroom/student/list') ?>" class="nav-link"  parent-li="classroom-li">Classroom Students</a>
+							</li>
+							<li class="nav-item">
+								<a href="<?php echo set_url('classroom/timetable/view/'.$classroom_id); ?>" class="nav-link"  parent-li="classroom-li">Classroom Timetable</a>
+							</li>
+						</ul>
+						
+					</nav>
 				</li>
+				<?php } ?>
 				<li class="nav-item aside-li" id="subject-li">
 					<a href="<?php echo set_url('student/subject/list') ?>" class="nav-link">
 						<i class="fas fa-book"></i>My Subjects
@@ -35,21 +54,13 @@
 						<i class="fas fa-user-shield"></i>Parent Info
 					</a>
 				</li>
-							<li class="nav-item aside-li" id="exam-result-li">
-								<a href="<?php echo set_url('marks/classroom/result/view/'.$_SESSION['user_id'].'/1'); ?>" class="nav-link"><i class="far fa-file"></i>Exam Result</a>
-							</li>
+				<li class="nav-item aside-li" id="exam-result-li">
+					<a href="<?php echo set_url('marks/classroom/result/view/'.$_SESSION['user_id'].'/1'); ?>" class="nav-link"><i class="far fa-file"></i>My Exam Result</a>
+				</li>
 				<li id="settings-li" class="nav-item aside-li">
 					<a href="<?php echo set_url('settings/website') ?>" class="nav-link">
-						<i class="fas fa-sliders-h"></i>All Settings</a>
-					<button class="toggle-button" target="settings-nav">
-						<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px">
-					</button>
-					<nav id="settings-nav" class="no-collapsed nav sub-nav">
-						<ul class="d-flex flex-col">
-							<li class="nav-item"><a href="<?php echo set_url('settings/website') ?>" class="nav-link"  parent-li="settings-li">Website Settings</a></li>
-						</ul>
-						
-					</nav>
+						<i class="fas fa-sliders-h"></i>Website Settings
+					</a>
 				</li>
 			</ul>
 		</nav>
