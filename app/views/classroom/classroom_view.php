@@ -60,7 +60,7 @@
 					<p>Classroom Subjects</p>
 				</a>';
 
-			}else{
+			}else if($_SESSION['role'] == "teacher" || ($_SESSION['role']=="student" && $_SESSION['classroom_id'] == $result['id'])){
 				echo '<a href="'.set_url("classroom/student/list").'" class="profile-links">
 					<p>Classroom Students</p>
 				</a>';

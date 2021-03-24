@@ -14,8 +14,10 @@
                     <th>Grade</th>
                     <th>Classroom</th>
                     <th>Timetable</th>
-                    <th>Attendance</th>
-                    <th>Exam Results</th>
+                    <?php if($_SESSION['role']=="admin" || $_SESSION['role']=="teacher"){ ?>
+                        <th>Attendance</th>
+                        <th>Exam Results</th>
+                    <?php } ?>
 			    </tr>
 		    </thead>  
             <tbody>
@@ -32,6 +34,8 @@
                 				<a href="<?php echo set_url('student/timetable/view/'.$student
                                 ['id']); ?>" class="btn btn-blue p-1">view</a>
                 			</td>
+
+                            <?php if($_SESSION['role']=="admin" || $_SESSION['role']=="teacher"){ ?>
                 			<td class="text-center">
                 				<a href="<?php echo set_url('student/attendance/'.$student
                                 ['id']) ?>" class="btn btn-blue p-1">Report</a>
@@ -39,6 +43,7 @@
                             <td class="text-center">
                                 <a href="<?php echo set_url('student/marks/report/'.$student['id']); ?>" class="btn btn-blue p-1">Report</a>
                             </td>
+                            <?php } ?>
                 		</tr>	
                 <?php 
             		}
