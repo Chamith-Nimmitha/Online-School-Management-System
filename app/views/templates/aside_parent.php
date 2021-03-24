@@ -14,16 +14,7 @@
 				</li>
 				<li id="settings-li" class="nav-item aside-li">
 					<a href="<?php echo set_url('settings/website') ?>" class="nav-link">
-						<i class="fas fa-sliders-h"></i>All Settings</a>
-					<button class="toggle-button" target="settings-nav">
-						<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px">
-					</button>
-					<nav id="settings-nav" class="no-collapsed nav sub-nav">
-						<ul class="d-flex flex-col">
-							<li class="nav-item"><a href="<?php echo set_url('settings/website') ?>" class="nav-link"  parent-li="settings-li">Website settings</a></li>
-						</ul>
-						
-					</nav>
+						<i class="fas fa-sliders-h"></i>Website Settings</a>
 				</li>
 			</ul>
 		</nav>

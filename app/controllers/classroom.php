@@ -156,7 +156,11 @@
 				}
 
 				$this->view_header_and_aside();
-				$this->load->view("classroom/classroom_student",$data);
+				if($role == "admin"){
+					$this->load->view("classroom/classroom_student",$data);
+				}else{
+					$this->load->view("classroom/classroom_student_view",$data);
+				}
 				$this->load->view("templates/footer");
 			}
 		}
@@ -182,7 +186,7 @@
 			$data['page'] = $page;
 			$data['per_page'] = $per_page;
 			$data['start'] = $start;
-
+			$grade = "";
 			$this->load->model("classrooms");
 			$this->load->model("classroom");
 			if(isset($_SESSION['classroom_id']) && !empty($_SESSION['classroom_id'])){
@@ -239,6 +243,7 @@
 			$data['count'] = $this->load->classrooms->get_count()->fetch()['count'];
 			$data['info'] = $info;
 			$data['error'] = $error;
+			$data['grade'] = $grade;
 			$this->view_header_and_aside();
 			$this->load->view("classroom/classroom_list",$data);
 			$this->load->view("templates/footer");

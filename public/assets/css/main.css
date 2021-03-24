@@ -4,7 +4,7 @@
 	--blue-theme-dot:blue;
 	--dark-theme-dot:darkblue;
 	--light-theme-dot:white;
-}light
+}
 * {
 	padding: 0;
 	margin: 0;
@@ -15,7 +15,10 @@ body{
 	margin: 0;	;
 	width: 100%;
 	overflow-wrap: break-word;
-	min-height: 100vh;
+	min-height: 100vh !important;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 	background: var(--content-bg);
 }
 body *{

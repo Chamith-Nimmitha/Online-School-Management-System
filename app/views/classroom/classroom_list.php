@@ -13,7 +13,7 @@
         }
 	 ?>
 		<div class="student-header mt-3  w-75 d-flex flex-col align-items-center">
-			<h2 class="fs-30">Classroom List</h2>
+			<h2 class="fs-30">Classroom List <?php if($_SESSION['role'] == 'teacher' && (isset($_SESSION['classroom_id']) && !empty($_SESSION['classroom_id']))){echo " - Grade ".$grade;}  ?></h2>
 			<hr class="topic-hr w-100">
 		</div>
 		<div class="d-flex justify-content-center align-items-center">
@@ -26,7 +26,11 @@
 						<label for="classroom-id">Classroom ID</label>
 						<input type="text" name="classroom-id" id="classroom-id" placeholder="classroom ID" value="<?php if(isset($_POST['classroom-id'])){echo $_POST['classroom-id'];} ?>" oninput="classroom_search()">
 					</div>
-					<div  class="  ml-5 align-items-center">
+					<?php 
+					if($_SESSION['role'] != "admin"){
+						echo "<input type='hidden' value='{$grade}' id='grade'>";
+					}else{ ?>
+					<div  class="ml-5 align-items-center">
 						<label for="grade" class="mr-3 d-normal">Grade : </label>
 						<select name="grade" id="grade" style="width: 100px">
 							<option value="all" <?php if(isset($grade)){if($grade == "all"){echo 'selected="selected"';}}else{echo 'selected="selected"';} ?>>All</option>
@@ -45,6 +49,7 @@
 							<option value="13" <?php if(isset($grade) && ($grade == "13")){echo 'selected="selected"';} ?> >13</option>
 						</select>
 					</div>
+					<?php } ?>
 					<div  class="  ml-5 align-items-center">
 						<label for="class" class="mr-3 d-normal">Class:</label>
 						<select name="class" id="class">
