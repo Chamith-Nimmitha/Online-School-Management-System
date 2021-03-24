@@ -203,11 +203,11 @@
 						
 					</nav>
 				</li>
-				<!-- <li class="nav-item aside-li">
+				<li class="nav-item aside-li">
 					<a href="<?php echo set_url('userrole/permission') ?>" class="nav-link">
 						<i class="fas fa-users-cog"></i>User Roles
 					</a>
-				</li> -->
+				</li>
 				<li class="nav-item aside-li">
 					<a href="<?php echo set_url('parent/list') ?>" class="nav-link" class="nav-link">
 						<i class="fas fa-user-shield"></i>Parents

@@ -17,7 +17,7 @@
 			<form action="<?php echo set_url("parent/list"); ?>" method="post" class="d-flex align-items-center col-12">
 				<div class="d-flex col-12 align-items-center justify-content-center">
 					<div class="mt-5">
-						<input type="reset" class="btn btn-blue" onclick="reset_form(this)" value="reset">
+						<input type="reset" class="btn btn-blue" onclick="reset_form(this)" value="Reset">
 					</div>
 					<div class="ml-5">
 						<label for="parent-id">Parent ID/Name</label>

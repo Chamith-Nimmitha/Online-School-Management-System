@@ -134,13 +134,30 @@
 		}
 
 		// get interview list
-		public function list(){
+		public function list($page=NULL,$per_page=NULL){
 			if(!$this->checkPermission->check_permission("interview","view")){
 				$this->view_header_and_aside();
 				$this->load->view("common/error");
 				$this->load->view("templates/footer");
 				return;
 			}
+
+
+			// count page info for pagination
+            if($per_page === NULL){
+                $per_page = PER_PAGE;
+            }
+            if($page === Null){
+                $page = 1;
+                $start = 0;
+            }else{
+                $start = ($page-1)*$per_page;
+            }
+
+            $data['page'] = $page;
+            $data['per_page'] = $per_page;
+            $data['start'] = $start;
+
 			$admission_id = NULL;
 			$panel_id = NULL;
 			$state = 'all';
@@ -160,10 +177,11 @@
 			$time_map = ["1"=>"7.50a.m - 8.30a.m", "2"=>"8.30a.m - 9.10a.m", "3"=>"9.10a.m - 9.50a.m", "4"=> "9.50a.m - 10.30a.m", "5"=> "10.50a.m - 11.30a.m", "6"=>"11.30a.m - 12.10p.m", "7"=> "12.10p.m - 12.50p.m", "8"=>"12.50p.m - 1.30p.m"];
 
 			$this->load->model("interview");
-			$result_set = $this->load->interview->search($admission_id,$panel_id,$state);
+			$result_set = $this->load->interview->search($start,$per_page,$admission_id,$panel_id,$state);
 			if($result_set){
 				$result_set = $result_set->fetchAll();
 				$data['result_set'] = $result_set;
+				$data['count'] = $this->load->interview->get_count()->fetch()['count'];
 				$data['time_map'] = $time_map;
 			}else{
 				echo "query error";
@@ -471,6 +489,28 @@
 			$this->view_header_and_aside();
 			$this->load->view("admission/admission_student_register",$data);
 			$this->load->view("templates/footer");
+		}
+
+		// delete a interview permanantly
+		public function delete_interview($interview_id){
+			if(!$this->checkPermission->check_permission("interview","delete")){
+				$this->view_header_and_aside();
+				$this->load->view("common/error");
+				$this->load->view("templates/footer");
+				return;
+			}
+			$this->load->model("interview");
+			$result = $this->load->interview->set_by_id($interview_id);
+			if($result){
+				$result = $this->load->interview->delete_interview($interview_id);
+				if($result){
+					$this->list(NULL,NULL,"Interview {$interview_id} deleted.");
+				}else{
+					$this->list(NULL,NULL,"Interview Delete Failed");
+				}
+			}else{
+					$this->list(NULL,NULL,"Interview Delete Failed");
+			}
 		}
 
 	}

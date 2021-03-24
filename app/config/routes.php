@@ -116,6 +116,7 @@
 	$routes['interview/list'] = "interview/list";
 	$routes['interview/view/$1'] = "interview/view_admission/$1";
 	$routes['"interview/get_files/$1'] = "interview/get_files/$1";
+	$routes['"interview/delete/$1'] = "interview/delete_interview/$1";
 
 
 	// interview panel routes
@@ -157,6 +158,7 @@
 	$routes['api/student/search'] = "apiStudent/search";
 	$routes['api/subject/search'] = "apiSubject/search";
 	$routes['api/parent/search'] = "apiParent/search";
+	$routes['api/interview/search'] = "apiInterview/search";
 	$routes['api/teacher/search'] = "apiTeacher/search";
 	$routes['api/teacher/subject/$1'] = "apiTeacher/subject/$1";
 	$routes['api/teacher/subject/delete/$1/$2'] = "apiTeacher/delete_teacher_subject/$1/$2";
@@ -176,7 +178,7 @@
 
 	$routes['api/marks/classroom/search'] = "apiMarks/classroom_search";
 	$routes['api/marks/classroom/student/search'] = "apiMarks/classroom_marks_search";
-
+	
 	// draw charts
 	$routes['api/draw_charts/attendance/student'] = "apiDrawChart/student_attendance_overview_bar";
 	$routes['api/draw_charts/attendance/teacher'] = "apiDrawChart/teacher_attendance_overview_bar";

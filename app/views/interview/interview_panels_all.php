@@ -60,7 +60,7 @@
 
 						$row .= "<td class='text-center'><a class='btn btn-blue t-d-none p-1' href='".set_url('interviewpanel/view/').$result['id']."'>view</a></td>";
 
-						$row .= "<td class='text-center'><a class='btn btn-lightred t-d-none p-1' href=". set_url('interviewpanel/delete/').$result['id'].">delete</a>";
+						$row .= "<td class='text-center'><a class='btn t-d-none p-1' href=". set_url('interviewpanel/delete/'.$result['id'])." onclick=\" show_dialog(this,'Delete message','Are you sure to delete?')\"><i class='fas fa-trash delete-button'></a>";
 						$row .= "</tr>";
 						echo $row;
 					}
