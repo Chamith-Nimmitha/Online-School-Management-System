@@ -64,9 +64,13 @@
 					$this->load->student->set_by_id($_SESSION['user_id']);
 					$parent_id = $this->load->student->get_parent_id();
 					$this->header['classroom_id'] = $this->load->student->get_classroom_id();
-					$_SESSION['classroom_id'] = $this->header(['classroom_id']);
+					$header['parent_id'] = $parent_id;
+					$_SESSION['classroom_id'] = $this->header['classroom_id'];
+					$header['classroom_id'] = $this->load->student->get_classroom_id();
+					$this->header['classroom_id'] = $header['classroom_id'];
+					$_SESSION['classroom_id'] = $header['classroom_id'];
 					unset($this->load->student);
-					$this->load->view("templates/aside_student",["parent_id"=>$parent_id]);
+					$this->load->view("templates/aside_student",$header);
 				}else if($_SESSION['role'] == "teacher"){
 					$this->load->model('teacher');
 					$this->load->teacher->set_by_id($_SESSION['user_id']);

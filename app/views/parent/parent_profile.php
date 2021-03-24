@@ -76,7 +76,7 @@
 
 		<div class="col-8 d-flex flex-col">
 			<a href="<?php echo set_url("parent/student/list/".$result['id']); ?>" class="profile-links">
-				<p>Student List</p>
+				<p>Children List</p>
 			</a>
 		</div>
 	</div>

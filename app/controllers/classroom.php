@@ -102,6 +102,31 @@
 				$this->view_header_and_aside();
 				$this->load->view("classroom/classroom_student_view",$data);
 				$this->load->view("templates/footer");
+			}else if($role == "student"){
+				$this->load->model("classroom");
+				$this->load->model("student");
+				if($classroom_id==NULL){
+					$result = $this->load->student->set_by_id($_SESSION['user_id']);
+					$classroom_id = $this->load->student->get_classroom_id();
+				}
+
+				if($classroom_id){
+					$result= $this->load->classroom->set_by_id($classroom_id);
+					if(!$result){
+						$data["student_list"]= [];
+						$data["classroom_info"] = [];
+					}else{
+						$data["student_list"] = $this->load->classroom->get_students_data();
+						$data["classroom_info"] = $this->load->classroom->get_data();
+					}
+				}else{
+					$data["student_list"]= [];
+					$data["classroom_info"] = [];
+				}
+
+				$this->view_header_and_aside();
+				$this->load->view("classroom/classroom_student_view",$data);
+				$this->load->view("templates/footer");
 			}else{
 				// only admin can remove students
 				if(!empty($classroom_id)){
