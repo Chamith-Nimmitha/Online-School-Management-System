@@ -32,8 +32,6 @@ document.addEventListener("DOMContentLoaded", function(){
 			link.href = base_url+"public/assets/css/themes/default.css";
 		}else if(theme == "blue"){
 			link.href = base_url+"public/assets/css/themes/blue.css";
-		}else if(theme == "green"){
-			link.href = base_url+"public/assets/css/themes/green.css";
 		}else if(theme == "dark"){
 			link.href = base_url+"public/assets/css/themes/dark.css";
 		}else if(theme == "light"){

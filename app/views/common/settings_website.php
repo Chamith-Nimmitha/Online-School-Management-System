@@ -16,10 +16,6 @@
 				<div data-theme="blue"></div>
 				<span>Blue</span>
 			</div>
-			<div id="green-dot" class="theme-dots">
-				<div data-theme="green"></div>
-				<span>Green</span>
-			</div>
 			<div id="dark-dot" class="theme-dots">
 				<div data-theme="dark"></div>
 				<span>Dark</span>
