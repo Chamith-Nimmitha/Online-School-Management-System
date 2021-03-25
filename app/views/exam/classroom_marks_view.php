@@ -34,19 +34,14 @@
             <input type="hidden" name="classroom_id_hidden" class="btn btn-blue" value="<?php echo $classroom_data['id']; ?>">
             <input type="hidden" name="date_hidden" id="date_hidden" value="<?php if(isset($date)){echo $date;}else{echo date("Y-m-d");} ?>">
             <table class="table-strip-dark">
-                <caption class="p-5"><b>Student Marks</b></caption>
+                <caption class="p-5"><b>Student Marks-<?php echo $grade.$class;
+                echo "<br>";echo 'Term-'.$t; ?></b></caption>
                     <thead>
                         <tr>
                             <th width='20%'>Student ID</th>
                             <th width='20%'>Student Name</th>
-                                <?php 
-                                    foreach ($subject_list as $subject) {
-                                ?>
-                                            <th width='6%'><?php echo substr($subject['name'],0,3);?></th>
-                                <?php
-                                    }
-                                ?>
-
+                            <th width='20%'>Average</th>
+                            <th width='20%'>Rank</th>
                         </tr>
                     </thead>
                     <tbody id="tbody" class="p-1">
@@ -57,14 +52,8 @@
                          <tr>
                             <td <?php if($student['id']==$student_id){echo 'style="background-color:#00FF00"';} ?>><?php echo $student['id']; ?></td>
                             <td <?php if($student['id']==$student_id){echo 'style="background-color:#00FF00"';} ?>><?php echo $student['name_with_initials']; ?></td>
-                                <?php 
-                                    foreach ($subject_list as $subject) {
-                                ?>
-                                    <td <?php if($student['id']==$student_id){echo 'style="background-color:#00FF00"';} ?>><?php if(isset($std_marks[$student['id'].'-'.$subject['id']])){echo $std_marks[$student['id'].'-'.$subject['id']];} ?></td>
-                                <?php 
-                                }
-
-                                ?>
+                            <td <?php if($student['id']==$student_id){echo 'style="background-color:#00FF00"';} ?>><?php if(isset($marks_average[$student['id'].'-'.$t])){echo $marks_average[$student['id'].'-'.$t];} ?></td>
+                            <td <?php if($student['id']==$student_id){echo 'style="background-color:#00FF00"';} ?>><?php if(isset($student_rank[$student['id'].$t.'-term'])){echo $student_rank[$student['id'].$t.'-term'];} ?></td>
                         </tr> 
                         <?php 
                                 }
