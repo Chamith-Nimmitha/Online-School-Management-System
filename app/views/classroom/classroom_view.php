@@ -38,7 +38,10 @@
 	                <label class="col-4" for="description">Description</label>
 	                <textarea name="description" id="description"  class="w-100" rows="10" disabled="disabled"><?php if(isset($result)){echo $result['description'];} ?></textarea>
 	            </div>
-
+	            <div class="d-flex w-100">
+	                <label class="col-4">Number of Students</label>
+	                <input type="text" value="<?php echo $result['student_count']; ?>" disabled="disabled">
+	            </div>
 	            <div class="w-100 p-1"></div>
 	        </fieldset>
 	    </form>

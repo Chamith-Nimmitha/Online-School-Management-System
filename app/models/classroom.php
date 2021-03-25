@@ -10,6 +10,7 @@
 		private $timetable_id;
 		private $description;
 		private $state;
+		private $student_count;
 		// create database connection
 		public function __construct(){
 			$this->con = new Database();
@@ -24,6 +25,7 @@
 					$this->$key = $value;
 				}
 				$this->state = 1;
+				$this->student_count = $this->get_student_count();
 				return TRUE;
 			}else{
 				return FALSE;
@@ -57,6 +59,7 @@
 					$this->category = $result['category'];
 				}
 				$this->con->get(['id']);
+				$this->student_count = $this->get_student_count();
 				$result =$this->con->select('normal_timetable',['user_id'=>$this->id, "type"=>"classroom"]);
 				if($result && $result->rowCount() === 1){
 					$this->timetable_id = $result->fetch()['id'];
@@ -171,11 +174,11 @@
 			}		
 		}
 
-		// get student count
-		public function get_student_count(){
-			$query = "SELECT COUNT(*) AS `count` FROM `student` WHERE `classroom_id`= ? ";
-			return $this->con->pure_query($query,[$this->id]);
-		}
+		// // get student count
+		// public function get_student_count(){
+		// 	$query = "SELECT COUNT(*) AS `count` FROM `student` WHERE `classroom_id`= ? ";
+		// 	return $this->con->pure_query($query,[$this->id]);
+		// }
 
 		// get classroom student list array
 		public function get_students_data($filters=""){
@@ -202,6 +205,7 @@
 			$data['timetable_id'] = $this->timetable_id;
 			$data['description'] = $this->description;
 			$data['state'] = $this->state;
+			$data['student_count'] = $this->student_count;
 			return $data;
 		}
 
@@ -527,6 +531,16 @@
 			return $this->con->delete("classroom",["id"=>$id]);
 		}
 		
+		// get current student count
+		public function get_student_count(){
+			$query = "SELECT COUNT(*) AS `count` FROM `student` WHERE `classroom_id`= ? && `is_deleted`= ? ;";
+			$result = $this->con->pure_query($query, ["{$this->id}", "0"]);
+			if($result){
+				return $result->fetch()['count'];
+			}else{
+				return 0;
+			}
+		}
 		public function __destruct(){
 			unset($this->con);
 		}

@@ -15,7 +15,11 @@
      ?>
 
     <div class="mt-5  w-75 d-flex flex-col align-items-center">
-        <h2 class="pt-3 pb-3">Classroom Registration Form</h2>
+        <?php if(isset($result) && !empty($result)){ ?>
+            <h2 class="pt-3 pb-3">Classroom Update Form</h2>
+        <?php }else{ ?>
+            <h2 class="pt-3 pb-3">Classroom Registration Form</h2>
+        <?php } ?>
         <hr class="topic-hr w-100">
     </div>
 
@@ -23,7 +27,7 @@
         <fieldset class="p-4">
             <div class="form-group mt-1">
                 <label>Section</label>
-                <select name="section" id="section" required="required" onchange="get_classroom_grades(this,'grade')">
+                <select name="section" id="section" required="required" onchange="get_classroom_grades(this,'grade')"  <?php if(isset($result) && !empty($result)){echo "disabled='disabled'"; }?>>
                     <option value="">select</option>
                     <?php 
                         if(isset($categories) && !empty($categories)){
@@ -38,7 +42,7 @@
 
             <div class="form-group mt-1">
                 <label>Grade</label>
-                <select name="grade" id="grade" required="required">
+                <select name="grade" id="grade" required="required" <?php if(isset($result) && !empty($result)){echo "disabled='disabled'"; }?>>
                     <option value="">select</option>
                     <?php 
                     if(isset($sections) && !empty($sections)){
@@ -50,7 +54,7 @@
                 
             <div class="form-group mt-1">
                 <label>Class</label>
-                <input type="text" name="class" value="<?php if(isset($result)){echo $result['class'];} ?>" required="required">
+                <input type="text" name="class" value="<?php if(isset($result)){echo $result['class'];} ?>" required="required" <?php if(isset($result) && !empty($result)){echo "disabled='disabled'"; }?>>
             </div>
 
 
