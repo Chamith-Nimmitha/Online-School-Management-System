@@ -471,7 +471,7 @@
 					}
 				}
 				if($fl==1){
-				$subject_avg[$res['subject_id'].'-'.$res['term']] = $subject_total[$res['subject_id'].'-'.$res['term']] / $no_of_students_subjects[$res['subject_id'].'-'.$res['term']];
+				$subject_avg[$res['subject_id'].'-'.$res['term']] = round($subject_total[$res['subject_id'].'-'.$res['term']] / $no_of_students_subjects[$res['subject_id'].'-'.$res['term']]);
 				} 
 			}
 

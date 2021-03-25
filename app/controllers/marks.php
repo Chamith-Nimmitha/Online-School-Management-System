@@ -99,7 +99,7 @@
 					$rank = $this->load->marks-> get_rank($i,$r['classroom_id']);
 					$rank = $rank->fetchAll();
 					foreach ($rank as $r) {
-						if($r['student_id']==$student_id){
+						if($r['student_id']==$student_id && $marks_average[$y.'-'.$i]!==0){
 							//echo $r['rank'];
 							$student_rank[$i.'-term'] = $r['rank'];
 						}
@@ -151,6 +151,9 @@
 			$res = $this->load->marks->student_subject_lists($grd['grade']);
 			$data['subject_list'] = $res->fetchAll();
 
+			$data['grade'] = $grd['grade'];
+			$data['class'] = $grd['class'];
+
 			if(isset($_POST['filter'])){
 				$term= $_POST['term'];
 				$y = 2020;
@@ -171,12 +174,40 @@
 
 						$marks_total[$student['id'].'-'.$t] = $marks_total[$student['id'].'-'.$t] + $student_marks[$student['id'].'-'.$abc['subject_id']] ;
 					}
+
+					if(count($data['subject_list'])!== 0){
+						$marks_average[$student['id'].'-'.$t] = $marks_total[$student['id'].'-'.$t] / count($data['subject_list']) ;
+					}else{
+						$marks_average[$student['id'].'-'.$t] = 0;
+					}
+
 				}
 
 				if(isset($student_marks)){
 					$data['std_marks'] = $student_marks;
 				}
 
+			$data['marks_total'] =$marks_total;
+			$data['marks_average'] =$marks_average;
+
+			for ($i=1; $i <=3 ; $i++) { 
+				
+					$rank = $this->load->marks-> get_rank($i,$classroom_id);
+					$rank = $rank->fetchAll();
+					foreach ($rank as $r) {
+						//if($r['student_id']==$student_id){
+							//echo $r['rank'];
+							$student_rank[$r['student_id'].$i.'-term'] = $r['rank'];
+						//}
+					}
+			}
+			if(isset($student_rank)){
+				$data['student_rank']  =$student_rank;
+			}
+			if(isset($student_rank)){
+				$data['student_rank'] =$student_rank;
+			}
+			
 				$this->view_header_and_aside();
 				$this->load->view("exam/classroom_marks_view",$data);
 				$this->load->view("templates/footer");

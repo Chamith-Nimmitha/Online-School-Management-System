@@ -357,6 +357,7 @@ var grade = document.getElementById('marks_classroom_grade').value;
 	            yAxes: [{
 	            	ticks: {
 	            		beginAtZero : true,
+	            		precision: 0,
 	            	}
 	            }]
 	        },
@@ -365,7 +366,7 @@ var grade = document.getElementById('marks_classroom_grade').value;
 	        },
 	        title: {
 		        display: true,
-		        text: "Number of Passed Students",
+		        text: "Number of Passed Students (above 40 marks)",
 		        fontSize : 20
 		    },
 	    }
