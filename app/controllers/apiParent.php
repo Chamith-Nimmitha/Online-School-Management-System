@@ -46,9 +46,9 @@
 					$body .= "<td>".$result['name']."</td>";
 					$body .= "<td>".$result['type']."</td>";
 					$body .= "<td class='text-center'>".$result['contact_number']."</td>";
-					$body .= "<td>
+					$body .= "<td class='text-center'>
 								<div>
-									<a href='".set_url('profile/parent/'.$result['id']). "'' class='btn btn-blue t-d-none'>profile</a>
+									<a href='".set_url('profile/parent/'.$result['id']). "'' class='btn t-d-none'><i title='profile' class='fas fa-user-circle profile-button'></i></a>
 								</div>
 							</td>";
 					$body .= "<td class='text-center'>

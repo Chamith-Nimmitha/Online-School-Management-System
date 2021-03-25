@@ -30,10 +30,10 @@
 	
 
 	<div class="d-flex justify-content-center align-items-center">
-		<form action="<?php echo set_url('subject/list'); ?>" method="post" class="d-flex align-items-center col-12">
+		<form action="<?php echo set_url('subject/list'); ?>" method="post" class="d-flex align-items-center col-12" id="subject_search_form">
 			<div class="d-flex col-12 align-items-center justify-content-center">
 				<div class="mt-5">
-					<input type="Reset" class="btn btn-blue" onclick="reset_form(this)" value="reset">
+					<input type="Reset" class="btn btn-blue" onclick="reset_form('subject_search_form','subject_search')" value="Reset">
 				</div>
 				<div class="ml-5">
 					<label for="subject-id">Subject ID/Name/Code</label>
@@ -41,7 +41,7 @@
 				</div>
 				<div  class="  ml-5 align-items-center">
 					<label for="grade" class="mr-3 d-normal">Grade : </label>
-					<select name="grade" id="grade" style="width: 100px">
+					<select name="grade" id="grade" style="width: 100px" onchange="subject_search()">
 						<option value="all">All</option>
 						<option value="1">1</option>
 						<option value="2">2</option>
@@ -60,14 +60,13 @@
 				</div>
 				<div  class="  ml-5 align-items-center">
 					<label for="medium" class="mr-3 d-normal">Medium:</label>
-					<select name="medium" id="medium">
+					<select name="medium" id="medium" onchange="subject_search()">
 						<option value="all" >All</option>
 						<option value="Sinhala">Sinhala</option>
 						<option value="English">English</option>
 						<option value="Tamil">Tamil</option>
 					</select>				
 				</div>
-				<button onclick="subject_search()" class="btn btn-blue ml-3 mt-5">Filter</button>
 			</div>
 		</form>
 	</div>
@@ -124,7 +123,9 @@
 					<?php if($_SESSION['role'] =='admin'){ ?>
 						<td>
 							<div class="login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center">
-								<a class="btn btn-blue" href="<?php echo set_url('subject/update/').$result['id']; ?>">Update</a>
+								<a class="btn " href="<?php echo set_url('subject/update/').$result['id']; ?>">
+									<i  title="edit" class="far fa-edit edit-button"></i>
+									 </a>
 		    				</div>
 						</td>
 						<td>

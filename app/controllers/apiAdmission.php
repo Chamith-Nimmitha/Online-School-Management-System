@@ -52,7 +52,7 @@ class ApiAdmission extends Controller{
 					$body .= "<td class='text-center' style='background:#333333;color:white;'>".$result['state']."</td>";
 				}
 
-				$body .= "<td class='text-center'><a class='btn btn-blue p-1 pr-2 pl-2' href=". set_url('admission/view/').$result['id'].">View</a>";
+				$body .= "<td class='text-center'><a class='btn p-1 pr-2 pl-2' href=". set_url('admission/view/').$result['id']."><i title='view' class='view-button far fa-eye'></i></a>";
 				$body .= "</tr>";
 			}
 			$data['body'] = $body;
@@ -112,7 +112,7 @@ class ApiAdmission extends Controller{
 					$body .= "<td class='text-center' style='background:#333333;color:white;'>".$result['state']."</td>";
 				}
 
-				$body .= "<td class='text-center'><a class='btn btn-blue p-1 pr-2 pl-2' href=". set_url('admission/view/').$result['id'].">View</a>";
+				$body .= "<td class='text-center'><a class='btn p-1 pr-2 pl-2' href=". set_url('admission/view/').$result['id']."><i title='view' class='view-button far fa-eye'></i></a>";
 				$body .= "</tr>";
 			}
 			$data['body'] = $body;

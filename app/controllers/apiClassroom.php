@@ -83,9 +83,6 @@
             			}
 					$body .= "</td>";
 
-					$body .= '<td class="text-center">
-							<a class="btn btn-blue p-1" href="'. set_url('classroom/view/'.$result['id']). '">View</a>
-						</td>';
 
                     if($_SESSION['role']==='admin'){							
 						$body .= "<td>
@@ -93,9 +90,14 @@
 		                				<a class='btn btn-blue p-1' href='".set_url('classroom/subjects/'.$result['id'])."'>Subjects</a>
 				    				</div>
 								</td>";
+					}
+					$body .= '<td class="text-center">
+							<a class="btn p-1" href="'. set_url('classroom/view/'.$result['id']). '"><i title="view" class="view-button far fa-eye"></i></a>
+						</td>';
+					if($_SESSION['role']==='admin'){							
 						$body .= "<td>
-									<div class='login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center'>
-		                				<a class='btn btn-blue p-1' href='".set_url('classroom/update/'.$result['id'])."'>Update</a>
+									<div class='col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center'>
+		                				<a class='btn p-1' href='".set_url('classroom/update/'.$result['id'])."'> <i class='far fa-edit edit-button' title='edit'></i> </a>
 				    				</div>
 								</td>";
 						$body .= "<td>

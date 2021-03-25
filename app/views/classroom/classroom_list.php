@@ -17,10 +17,10 @@
 			<hr class="topic-hr w-100">
 		</div>
 		<div class="d-flex justify-content-center align-items-center">
-			<form action="<?php echo set_url('classroom/list'); ?>" method="post" class="d-flex align-items-center col-12">
+			<form action="<?php echo set_url('classroom/list'); ?>" method="post" class="d-flex align-items-center col-12" id="classroom_list">
 				<div class="d-flex col-12 align-items-center justify-content-center">
 					<div class="mt-5">
-						<input type="reset" class="btn btn-blue" onclick="reset_form(this)" value="Reset">
+						<input type="reset" class="btn btn-blue" onclick="reset_form('classroom_list','classroom_search')" value="Reset">
 					</div>
 					<div class="ml-5">
 						<label for="classroom-id">Classroom ID</label>
@@ -32,7 +32,7 @@
 					}else{ ?>
 					<div  class="ml-5 align-items-center">
 						<label for="grade" class="mr-3 d-normal">Grade : </label>
-						<select name="grade" id="grade" style="width: 100px">
+						<select name="grade" id="grade" style="width: 100px" onchange="classroom_search()">
 							<option value="all" <?php if(isset($grade)){if($grade == "all"){echo 'selected="selected"';}}else{echo 'selected="selected"';} ?>>All</option>
 							<option value="1" <?php if(isset($grade) && ($grade == "1")){echo 'selected="selected"';} ?> >1</option>
 							<option value="2" <?php if(isset($grade) && ($grade == "2")){echo 'selected="selected"';} ?> >2</option>
@@ -52,7 +52,7 @@
 					<?php } ?>
 					<div  class="  ml-5 align-items-center">
 						<label for="class" class="mr-3 d-normal">Class:</label>
-						<select name="class" id="class">
+						<select name="class" id="class" onchange="classroom_search()">
 							<option value="all" <?php if(isset($class) && ($class == "all")){echo 'selected="selected"';} ?> >All</option>
 							<option value="A" <?php if(isset($class) && ($class == "A")){echo 'selected="selected"';} ?> >A</option>
 							<option value="B" <?php if(isset($class) && ($class == "B")){echo 'selected="selected"';} ?> >B</option>
@@ -64,7 +64,6 @@
 							<option value="H" <?php if(isset($class) && ($class == "H")){echo 'selected="selected"';} ?> >H</option>
 						</select>				
 					</div>
-					<button onclick="classroom_search()" class="btn btn-blue ml-3 mt-5">Filter</button>
 				</div>
 			</form>
 		</div>
@@ -88,11 +87,15 @@
                         <th>Class Teacher</th>
                         <th>Students</th>
                         <th>Timetable</th>
-                        <th>View</th>
                         <?php 
 	                        if($_SESSION['role']==='admin'){
                          ?>
 					    <th>Subjects</th>
+						<?php } ?>
+                        <th>View</th>
+                        <?php 
+	                        if($_SESSION['role']==='admin'){
+                         ?>
 					    <th>Update</th>
 					    <th>Delete</th>
 						<?php } ?>
@@ -137,9 +140,6 @@
 	        				<?php } ?>
 						</td>
 
-						<td class="text-center">
-							<a class="btn btn-blue p-1" href="<?php  echo set_url('classroom/view/'.$result['id']); ?>">View</a>
-						</td>
 						<?php 
 	                        if($_SESSION['role']==='admin'){
                          ?>
@@ -148,9 +148,16 @@
 	                				<a class="btn btn-blue p-1" href="<?php echo set_url('classroom/subjects/'.$result['id']); ?> ">Subjects</a>
 			    				</div>
 							</td>
+						<?php } ?>
+						<td class="text-center">
+							<a class="btn p-1" href="<?php  echo set_url('classroom/view/'.$result['id']); ?>"><i title="view" class="view-button far fa-eye"></i></a>
+						</td>
+						<?php 
+	                        if($_SESSION['role']==='admin'){
+                         ?>
 							<td>
 								<div class="login_buttons col-12 col-md-12 justify-content-end pr-5 d-flex align-items-center">
-	                				<a class="btn btn-blue p-1" href="<?php echo set_url('classroom/update/'.$result['id']); ?> ">Update</a>
+	                				<a class="btn p-1 edit-button " href="<?php echo set_url('classroom/update/'.$result['id']); ?> "><i class="far fa-edit" title="edit"></i></a>
 			    				</div>
 							</td>
 

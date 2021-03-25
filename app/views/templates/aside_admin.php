@@ -98,7 +98,7 @@
 				</li>
 							<li class="nav-item aside-li" id="exam-li">
 								<a href="<?php echo set_url('marks/classroom/list'); ?>" class="nav-link">
-									<i class="far fa-file"></i>Examination
+									<i class="far fa-file"></i>Exam Results
 								</a>
 								<button class="toggle-button" target="exam-nav">
 									<img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" width="20px" alt="">

@@ -267,6 +267,43 @@ footer{
 	color: black;
 }
 
+.edit-button{
+	text-align: center;
+	font-size: 20px;
+	color: green;
+}
+
+.edit-button:hover{
+	color: black;
+}
+
+.view-button{
+	text-align: center;
+	font-size: 20px;
+	color: blue;
+}
+
+.view-button:hover{
+	color: black;
+}
+
+.profile-button{
+	text-align: center;
+	font-size: 20px;
+	color: blue;
+}
+
+.profile-button:hover{
+	color: black;
+}
+.search-button{
+	text-align: center;
+	font-size: 14px;
+	color: white;
+	padding-right: 10px;
+}
+
+
 #theme-dots-wrapper>div{
 	display: flex;
 	flex-direction: column;

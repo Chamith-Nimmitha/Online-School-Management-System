@@ -8,7 +8,7 @@
 			<form action="<?php echo set_url('pages/attendance_classroom_list.php'); ?>" method="post" id="classroom_filter" class="d-flex align-items-center col-12">
 				<div class="d-flex col-12 align-items-center justify-content-center">
 					<div class="mt-5">
-						<input type="reset" class="btn btn-blue" onclick="reset_form('classroom_filter')" value="reset">
+						<input type="reset" class="btn btn-blue" onclick="reset_form('classroom_filter', 'marks_classroom_search')" value="Reset">
 					</div>
 					<div class="ml-5">
 						<label for="classroom-id">Classroom ID</label>
@@ -16,7 +16,7 @@
 					</div>
 					<div  class="  ml-5 align-items-center">
 						<label for="grade" class="mr-3 d-normal">Grade : </label>
-						<select name="grade" id="grade" style="width: 100px">
+						<select name="grade" id="grade" style="width: 100px" onchange="marks_classroom_search()">
 							<option value="all" <?php if(isset($grade)){if($grade == "all"){echo 'selected="selected"';}}else{echo 'selected="selected"';} ?>>All</option>
 							<option value="1" <?php if(isset($grade) && ($grade == "1")){echo 'selected="selected"';} ?> >1</option>
 							<option value="2" <?php if(isset($grade) && ($grade == "2")){echo 'selected="selected"';} ?> >2</option>
@@ -35,7 +35,7 @@
 					</div>
 					<div  class="  ml-5 align-items-center">
 						<label for="class" class="mr-3 d-normal">Class:</label>
-						<select name="class" id="class">
+						<select name="class" id="class" onchange="marks_classroom_search()">
 							<option value="all" <?php if(isset($class) && ($class == "all")){echo 'selected="selected"';} ?> >All</option>
 							<option value="A" <?php if(isset($class) && ($class == "A")){echo 'selected="selected"';} ?> >A</option>
 							<option value="B" <?php if(isset($class) && ($class == "B")){echo 'selected="selected"';} ?> >B</option>
@@ -47,12 +47,11 @@
 							<option value="H" <?php if(isset($class) && ($class == "H")){echo 'selected="selected"';} ?> >H</option>
 						</select>				
 					</div>
-					<button onclick="marks_classroom_search()" class="btn btn-blue ml-3 mt-5">Filter</button>
 				</div>
 			</form>
 		</div>
 
-		<div class="col-10 flex-col" style="position:relative;overflow-x: scroll;overflow-y: hidden;">
+		<div class="col-10 flex-col mt-5" style="position:relative;overflow-x: scroll;overflow-y: hidden;">
 			<div class="loader hide-loader">
 			 	<div class="col-12">
 					<div id="one"><div></div></div>
@@ -64,7 +63,6 @@
 			</div>
 
 		    <table class="table-strip-dark">
-			    <caption class="p-5"><b>ALL CLASSROOM MARKS</b></caption>
 			    <thead>
 				    <tr>
                         <th>Classroom ID</th>
