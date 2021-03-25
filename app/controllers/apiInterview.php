@@ -5,7 +5,7 @@
 		public function __construct(){
 			parent::__construct();
 		}
-
+		
 		public function search(){
 			$post = json_decode(file_get_contents("php://input"));
 			$adm_id = addslashes(trim($post->adm_id));
@@ -58,7 +58,7 @@
 						$body .= "<td style='background:#333333;color:white;' class='text-center'>".$result['state']."</td>";
 					}
 
-					$body .= "<td><a class='t-d-none btn btn-blue p-1' href='".set_url('interview/view/').$result['admission_id']."'>View</a></td>";
+					$body .= "<td class='text-center'><a class='t-d-none btn p-1' href='".set_url('interview/view/').$result['admission_id']."'><i title='view' class='view-button far fa-eye'></i></a></td>";
 					if($_SESSION['role'] == "admin"){
 						$body .= "<td><a class='d-flex justify-content-center t-d-none btn p-1' href='".set_url('interview/delete/').$result['admission_id']."' onclick=\"show_dialog(this,'Delete message','Are you sure to delete?')\"><i class='fas fa-trash delete-button'></i></a></td>";
 					}

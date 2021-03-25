@@ -11,13 +11,12 @@
 	    <h2 class="pt-3 pb-3">Parent List</h2>
 	    <hr class="topic-hr w-100">
 	</div>
-	<hr class="w-100">
 	<div class="col-12 d-flex justify-content-center">
 		<div class="d-flex justify-content-center mb-5 align-items-center">
-			<form action="<?php echo set_url("parent/list"); ?>" method="post" class="d-flex align-items-center col-12">
+			<form action="<?php echo set_url("parent/list"); ?>" method="post" class="d-flex align-items-center col-12" id="parent_search_form">
 				<div class="d-flex col-12 align-items-center justify-content-center">
 					<div class="mt-5">
-						<input type="reset" class="btn btn-blue" onclick="reset_form(this)" value="Reset">
+						<input type="reset" class="btn btn-blue" onclick="reset_form('parent_search_form','parent_search')" value="Reset">
 					</div>
 					<div class="ml-5">
 						<label for="parent-id">Parent ID/Name</label>
@@ -25,9 +24,8 @@
 					</div>
 					<div class="ml-5">
 						<label for="occupation">Occupation</label>
-						<input type="text" name="occupation" id="occupation" placeholder="ID, Name" value="<?php if(isset($_POST['occupation'])){echo $_POST['occupation'];} ?>">
+						<input type="text" name="occupation" id="occupation" placeholder="ID, Name" value="<?php if(isset($_POST['occupation'])){echo $_POST['occupation'];} ?>" oninput="parent_search()">
 					</div>
-					<button onclick="parent_search()" class="btn btn-blue ml-3 mt-5">Filter</button>
 				</div>
 			</form>
 		</div>
@@ -60,11 +58,11 @@
 						<tr>
 							<td><?php echo $result['id']; ?></td>
 							<td><?php echo $result['name']; ?></td>
-							<td><?php echo $result['type']; ?></td>
+							<td class="text-center"><?php echo ucfirst($result['type']); ?></td>
 							<td class='text-center'><?php echo $result['contact_number']; ?></td>
 							<td>
-								<div>
-									<a href="<?php echo set_url('profile/parent/'.$result['id']); ?>" class="btn btn-blue t-d-none">profile</a>
+								<div class="text-center w-100">
+									<a href="<?php echo set_url('profile/parent/'.$result['id']); ?>" class="btn  t-d-none"><i title='profile' class='fas fa-user-circle profile-button'></i></a>
 								</div>
 							</td>
 							<?php if($_SESSION['role'] =='admin'){ ?>

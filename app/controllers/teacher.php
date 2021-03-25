@@ -800,7 +800,7 @@
 		}
 
 		// get teacher related interview list
-		public function interview_list(){
+		public function interview_list($page=Null, $per_page=NULL){
 			if(!$this->checkPermission->check_permission("interview_panel","view")){
 				$this->view_header_and_aside();
 				$this->load->view("common/error");
@@ -810,16 +810,30 @@
 
 
 			$time_map = ["1"=>"7.50a.m - 8.30a.m", "2"=>"8.30a.m - 9.10a.m", "3"=>"9.10a.m - 9.50a.m", "4"=> "9.50a.m - 10.30a.m", "5"=> "10.50a.m - 11.30a.m", "6"=>"11.30a.m - 12.10p.m", "7"=> "12.10p.m - 12.50p.m", "8"=>"12.50p.m - 1.30p.m"];
+			// count page info for pagination
+			if($per_page === NULL){
+				$per_page = PER_PAGE;
+			}
+			if($page === Null){
+				$page = 1;
+				$start = 0;
+			}else{
+				$start = ($page-1)*$per_page;
+			}
+			$data['page'] = $page;
+			$data['per_page'] = $per_page;
+			$data['start'] = $start;
 
 			$this->load->model("teacher");
 			$this->load->teacher->set_by_id($_SESSION['user_id']);
 			$interview_panel_id = $this->load->teacher->get_interview_panel_id();
-
+			$data['panel_id'] = $interview_panel_id;
 			$this->load->model("interview");
-			$result = $this->load->interview->search(NULL,$interview_panel_id);
+			$result = $this->load->interview->search($start,$per_page,NULL,$interview_panel_id);
 			$data['time_map']= $time_map;
 			if($result){
 				$data['interviews'] = $result->fetchAll();
+				$data['count'] = $this->load->interview->get_count()->fetch()['count'];
 			}
 
 			$this->view_header_and_aside();

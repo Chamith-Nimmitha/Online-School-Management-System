@@ -6,28 +6,27 @@
 	</div> <!-- .interview-header -->
 	<div id="all-admission-table"  class="admissions-table">
 		<div class="d-flex justify-content-center align-items-center">
-			<form action="<?php echo set_url('interview/list'); ?>" method="post" class="d-flex align-items-center col-12">
+			<form action="<?php echo set_url('interview/list'); ?>" method="post" class="d-flex align-items-center col-12" id="interview_search_form">
 				<div class="d-flex col-12 align-items-center justify-content-center">
 					<div class="mt-5">
-						<input type="reset" class="btn btn-blue" onclick="reset_form(this)" value="Reset">
+						<input type="reset" class="btn btn-blue" onclick="reset_form('interview_search_form','interview_search')" value="Reset">
 					</div>
 					<div class="ml-5">
 						<label for="admission-id">Admission ID</label>
-						<input type="text" name="admission-id" id="admission-id" placeholder="admission ID" value="<?php if(isset($_POST['admission-id'])){echo $_POST['admission-id'];} ?>">
+						<input type="text" name="admission-id" id="admission-id" placeholder="admission ID" value="<?php if(isset($_POST['admission-id'])){echo $_POST['admission-id'];} ?>" oninput="interview_search()">
 					</div>
 					<div class="ml-5">
 						<label for="panel-id">Panel ID</label>
-						<input type="text" name="panel-id" id="panel-id" placeholder="panel ID" value="<?php if(isset($_POST['panel-id'])){echo $_POST['panel-id'];} ?>">
+						<input type="text" name="panel-id" id="panel-id" placeholder="panel ID" value="<?php if(isset($_POST['panel-id'])){echo $_POST['panel-id'];} ?>" oninput="interview_search()">
 					</div>
 					<div  class="  ml-5 align-items-center">
 						<label for="class" class="mr-3 d-normal">State:</label>
-						<select name="state" id="state">
+						<select name="state" id="state" onchange="interview_search()">
 							<option value="all" <?php if(isset($_POST['state']) && ($_POST['state'] == "all")){echo 'selected="selected"';} ?> >All</option>
 							<option value="Interviewed" <?php if(isset($_POST['state']) && ($_POST['state'] == "Interviewed")){echo 'selected="selected"';} ?> >Interviewed</option>
 							<option value="notInterviewed" <?php if(isset($_POST['state']) && ($_POST['state'] == "notInterviewed")){echo 'selected="selected"';} ?> >Not Interviewed</option>
 						</select>				
 					</div>
-					<input type="button" onclick="interview_search()" class="btn btn-blue ml-3 mt-5" name="search" value="Show">
 				</div>
 			</form>
 		</div>
@@ -79,7 +78,7 @@
 								$row .= "<td style='background:#333333;color:white;' class='text-center'>".$result['state']."</td>";
 							}
 
-							$row .= "<td><a class='t-d-none btn btn-blue p-1' href='".set_url('interview/view/').$result['admission_id']."'>View</a></td>";
+							$row .= "<td class='text-center'><a class='t-d-none btn p-1' href='".set_url('interview/view/').$result['admission_id']."'><i title='view' class='view-button far fa-eye'></i></a></td>";
 							if($_SESSION['role'] == "admin"){
 								$row .= "<td><a class='d-flex justify-content-center t-d-none btn p-1' href='".set_url('interview/delete/').$result['admission_id']."' onclick=\"show_dialog(this,'Delete message','Are you sure to delete?')\"><i class='fas fa-trash delete-button'></i></a></td>";
 							}

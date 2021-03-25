@@ -523,8 +523,9 @@ function update_student_removed_set(checkbox){
 	}
 }
 
-function reset_form(form_id){
+function reset_form(form_id,func){
 	document.getElementById(form_id).reset();
+	window[func]();
 }
 
 function create_subject_code(ele){

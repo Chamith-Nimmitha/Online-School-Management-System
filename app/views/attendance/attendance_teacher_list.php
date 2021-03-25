@@ -11,7 +11,7 @@
             <form  id="attendance_filter" class="d-flex align-items-center col-12">
                 <div class="d-flex col-12 align-items-center justify-content-center">
                     <div class="mt-5">
-                        <input type="reset" class="btn btn-blue" onclick="reset_form(this)" value="reset">
+                        <input type="reset" class="btn btn-blue" onclick="reset_form('attendance_filter','teacher_attendance_search')" value="Reset">
                     </div>
                     <div class="ml-5">
                         <label for="teacher-id">Teacher ID/Name</label>
@@ -19,9 +19,8 @@
                     </div>
                     <div class="ml-5 d-flex flex-col">
                         <label for="date">Date</label>
-                        <input type="date" name="date" id="date" placeholder="Student ID" value="<?php  if(isset($date)){echo $date;}else{echo date('Y-m-d');} ?>">
+                        <input type="date" onchange="teacher_attendance_search()" name="date" id="date" placeholder="Student ID" value="<?php  if(isset($date)){echo $date;}else{echo date('Y-m-d');} ?>">
                     </div>
-                    <input type="submit" onclick="teacher_attendance_search()" class="btn btn-blue ml-3 mt-5" value="Filter">
                 </div>
             </form>
         </div>

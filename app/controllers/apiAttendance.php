@@ -59,7 +59,7 @@
 					$body .= "</td>";
 					$body .= "<td class='text-center'>
 								<div>
-	                				<a class='btn btn-blue' href='". set_url('attendance/classroom/view/'.$result['id'])."'>View</a>
+	                				<a class='btn' href='". set_url('attendance/classroom/view/'.$result['id'])."'><i title='view' class='view-button far fa-eye'></i></a>
 			    				</div>
 							</td>";
 					$body .= "</tr>";

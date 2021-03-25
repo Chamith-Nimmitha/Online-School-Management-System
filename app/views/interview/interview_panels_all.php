@@ -58,7 +58,7 @@
 						$row .= "<td class='text-center'>".$result['name']."</td>";
 						$row .= "<td class='text-center'>".$result['grade']."</td>";
 
-						$row .= "<td class='text-center'><a class='btn btn-blue t-d-none p-1' href='".set_url('interviewpanel/view/').$result['id']."'>view</a></td>";
+						$row .= "<td class='text-center'><a class='btn t-d-none p-1' href='".set_url('interviewpanel/view/').$result['id']."'><i title='view' class='view-button far fa-eye'></i></a></td>";
 
 						$row .= "<td class='text-center'><a class='btn t-d-none p-1' href=". set_url('interviewpanel/delete/'.$result['id'])." onclick=\" show_dialog(this,'Delete message','Are you sure to delete?')\"><i class='fas fa-trash delete-button'></a>";
 						$row .= "</tr>";
