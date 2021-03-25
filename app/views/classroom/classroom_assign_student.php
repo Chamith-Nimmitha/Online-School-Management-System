@@ -25,14 +25,11 @@
 	 ?>
 
 	<div class="p-5 w-100 d-flex d-row align-items-center flex-col">
-		<div class="w-75 d-flex justify-content-end">
+		<div class="w-75 d-flex justify-content-center">
 			<h2 class="mr-5">Assign New Students</h2>
-			<a class="t-d-none btn btn-blue-outline p-1 ml-5" href="<?php echo set_url('classroom/student/list/'.$classroom_info['id']); ?>"> Show classroom students</a>
-
 		</div>
 		<hr class="topic-hr w-75">
 	</div>
-	<hr class="w-100 mb-5">
 
 	<form action="classroom_assign_student.php" class="col-12 d-flex flex-col align-items-center">
 		<fieldset class="col-12 col-md-8 col-lg-6 p-3">
@@ -52,13 +49,16 @@
 		</fieldset>
 
 
-		<fieldset class="col-12 p-3">
+		<fieldset class="col-11 p-3">
 			<legend>Student Info</legend>
 
-			<div class="d-flex  mb-5" id="search_student">
-				<div class="align-items-center d-flex pl-5 ml-5">
-					<label style="width: 150px;" class="pr-3" for="id_search">Student ID?Name</label>
-					<input type="text" name="id_search" id="id_search" placeholder="Student ID/Name"  oninput="get_student_data2('target','id_search','id_search','grade')">
+			<div class="d-flex  mb-5 w-100" id="search_student">
+				<div class="align-items-center d-flex justify-content-between w-100 pl-5 ml-5">
+					<div class="d-flex align-items-center">
+						<label style="width: 150px;" class="pr-3" for="id_search">Student ID/Name</label>
+						<input type="text" style="width: 300px;" name="id_search" id="id_search" placeholder="Student ID/Name"  oninput="get_student_data2('target','id_search','id_search','grade')">
+					</div>
+					<a class="t-d-none btn btn-blue-outline p-1 ml-5" style="width: 200px;" href="<?php echo set_url('classroom/student/list/'.$classroom_info['id']); ?>"> Show classroom students</a>
 				</div>
 			</div>
 			<table class="table-strip-dark col-12">
@@ -97,13 +97,13 @@
 			</table>
 		</fieldset>
 	</form>
-	<hr class="w-100 mt-5 mb-3">
+	<hr class="col-11 mt-5 mb-3">
 	<div class="d-flex flex-col col-12 align-items-center border">
 		<div class=" w-75 d-flex flex-col align-items-center">
 			<h2>Selected Students for Add</h2>
 			<hr class="topic-hr w-100">
 		</div>
-		<form action="<?php echo set_url('classroom/student/add/'.$classroom_info['id']); ?>" method="post" class="col-12 d-flex flex-col align-items-center">
+		<form action="<?php echo set_url('classroom/student/add/'.$classroom_info['id']); ?>" method="post" class="col-11 d-flex flex-col align-items-center">
 			<input type="hidden" name="classroom_id" value="<?php echo $classroom_info['id']; ?>" >
 			<div class="col-10 mb-5 d-flex flex-wrap" id="selected-set">
 				<!-- add student here -->

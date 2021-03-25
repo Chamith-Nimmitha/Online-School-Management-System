@@ -47,9 +47,10 @@
 		<div class="col-10 flex-col">
 			
 			<legend class="p-5">Student List</legend>
-			<table class="table-strip-dark mb-5" style="">
-				<thead class="">
+			<table class="table-strip-dark mb-5 w-100" style="">
+				<thead class="w-100">
 					<tr class="">
+						<th class="">No</th>
 						<th class="">ID</th>
 						<th class="">Name</th>
 						<?php if($_SESSION['role'] != "student" && $_SESSION['role'] != "parent" ){ ?>
@@ -58,11 +59,13 @@
 						<?php } ?>
 					</tr>
 				</thead>
-				<tbody class="">
+				<tbody class="w-100">
 					<?php 
 						if(isset($student_list) && !empty($student_list)){
+							$no = 1;
 							foreach ($student_list as $student) {
 								$row = '<tr class=" word-break">';
+								$row .= "<td>".str_pad($no,2,'0',STR_PAD_LEFT)."</td>";
 								$row .= '<td class=" word-break">'.$student['id'].'</td>';
 								$row .= '<td class=" word-break">'.$student['name_with_initials'].'</td>';
 
@@ -72,10 +75,11 @@
 								}
 								$row .= '</tr>';
 								echo $row;
+								$no++;
 							}
 						}else{
-							echo "<tr >";
-							echo "<td colspan=6 class=' bg-red'><p class='text-center w-100'>Students Not found...</p></td>";
+							echo "<tr class='w-100'>";
+							echo "<td colspan=6 class='w-100 bg-red'><p class='text-center w-100'>Students Not found...</p></td>";
 							echo "</tr>";
 						}
 
