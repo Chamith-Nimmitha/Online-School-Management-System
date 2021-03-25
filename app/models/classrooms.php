@@ -99,5 +99,32 @@
 				return FALSE;
 			}
 		}
+
+		// get section id using grade
+		public function get_section_id($grade){
+			$result = $this->con->select("section",["grade"=>$grade]);
+			if($result){
+				return $result->fetch()['id'];
+			}else{
+				return FALSE;
+			}
+		}
+
+
+		// get classroom list of specific section
+		public function get_class_list($section_id){
+			$query = "SELECT  `c`.`class` AS `class` FROM `classroom` AS `c` INNER JOIN `section` AS `s` ON `s`.`id`=`c`.`section_id` WHERE `s`.`id` = ? ";
+			$result_set = $this->con->pure_query($query, [$section_id]);
+			if($result_set){
+				$class_list = array();
+				$result_set = $result_set->fetchAll();
+				foreach ($result_set as $result) {
+					array_push($class_list, $result['class']);
+				}
+				return $class_list;
+			}else{
+				return FALSE;
+			}
+		}
 	}
  ?>

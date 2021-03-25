@@ -193,6 +193,8 @@
 			 	$result = $this->load->classroom->set_by_id($_SESSION['classroom_id']);
 			 	if($result){
 				 	$grade = $this->load->classroom->get_grade();
+				 	$section_id = $this->load->classroom->get_section_id();
+				 	$data['class_list'] = $this->load->classrooms->get_class_list($section_id);
 			 	}
 			}else{
 				if(isset($_POST['grade']) && $_POST['grade'] != 'all'){
@@ -239,6 +241,7 @@
             }
 
             unset($_POST);
+
 			$data['result_set'] = $result_set;
 			$data['count'] = $this->load->classrooms->get_count()->fetch()['count'];
 			$data['info'] = $info;

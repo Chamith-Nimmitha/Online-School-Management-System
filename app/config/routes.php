@@ -155,6 +155,7 @@
 	$routes['api/classroom/notice/add'] = "apiClassroom/add_notice";
 	$routes['api/classroom/notice/$1'] = "apiClassroom/get_notice/$1";
 	$routes['api/classroom/notice/update/$1'] = "apiClassroom/update_notice/$1";
+	$routes['api/classroom/get_class_list'] = "apiClassroom/get_class_list";
 	$routes['api/student/search'] = "apiStudent/search";
 	$routes['api/subject/search'] = "apiSubject/search";
 	$routes['api/parent/search'] = "apiParent/search";
