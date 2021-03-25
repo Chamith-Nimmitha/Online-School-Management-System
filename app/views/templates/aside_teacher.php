@@ -7,6 +7,24 @@
 						<i class="fas fa-chart-line"></i>Dashbord
 					</a>
 				</li>
+				<?php if(isset($classroom_id) && $classroom_id != FALSE){ ?>
+				<li class="nav-item aside-li" id="classroom-li">
+					<a href="<?php echo set_url('classroom/list') ?>" class="nav-link">
+						<i class="fas fa-store-alt"></i>Classrooms
+					</a>
+					<button class="toggle-button" target="classroom-nav">
+						<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px" alt="">
+					</button>
+
+					<nav  id="classroom-nav" class="nav sub-nav no-collapsed">
+						<ul class="d-flex flex-col">
+							<li class="nav-item"><a href="<?php echo set_url('classroom/student/list') ?>" class="nav-link" parent-li="classroom-li">My Classroom Student List</a></li>
+							<li class="nav-item"><a href="<?php echo set_url('classroom/view') ?>" class="nav-link" parent-li="classroom-li">My Classroom Info</a></li>
+							<li class="nav-item"><a href="<?php echo set_url('classroom/list') ?>" class="nav-link" parent-li="classroom-li">Classroom List</a></li>
+						</ul>
+					</nav>
+				</li>
+				<?php } ?>
 				<li class="nav-item aside-li" id="attendance-li">
 					<a href="<?php if(isset($classroom_id) && $classroom_id != FALSE){echo set_url('teacher/classroom/attendance');}else{echo set_url('teacher/attendance');} ?>" class="nav-link">
 						<i class="far fa-calendar-check"></i>Attendance
@@ -40,39 +58,7 @@
 						</nav>
 					</li>
 				<?php } ?>
-				<li class="nav-item aside-li" id="teacher-li">
-					<a href="<?php echo set_url('teacher/list'); ?>" class="nav-link">
-						<i class="fas fa-user-tie"></i>Teachers
-					</a>
-					<button class="toggle-button" target="teacher-nav">
-						<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px" alt="">
-					</button>
-
-					<nav class="nav sub-nav no-collapsed" id="teacher-nav">
-						<ul class="d-flex flex-col">
-							<li class="nav-item"><a href="<?php echo set_url('teacher/list'); ?>" class="nav-link" parent-li="teacher-li">Teachers List</a></li>
-						</ul>
-					</nav>
-				</li>
-				<?php if(isset($classroom_id) && $classroom_id != FALSE){ ?>
-				<li class="nav-item aside-li" id="classroom-li">
-					<a href="<?php echo set_url('classroom/list') ?>" class="nav-link">
-						<i class="fas fa-store-alt"></i>Classrooms
-					</a>
-					<button class="toggle-button" target="classroom-nav">
-						<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px" alt="">
-					</button>
-
-					<nav  id="classroom-nav" class="nav sub-nav no-collapsed">
-						<ul class="d-flex flex-col">
-							<li class="nav-item"><a href="<?php echo set_url('classroom/student/list') ?>" class="nav-link" parent-li="classroom-li">My Classroom Student List</a></li>
-							<li class="nav-item"><a href="<?php echo set_url('classroom/view') ?>" class="nav-link" parent-li="classroom-li">My Classroom Info</a></li>
-							<li class="nav-item"><a href="<?php echo set_url('classroom/list') ?>" class="nav-link" parent-li="classroom-li">Classroom List</a></li>
-						</ul>
-					</nav>
-				</li>
-				<?php } ?>
-				<li class="nav-item aside-li" id="subject-li">
+								<li class="nav-item aside-li" id="subject-li">
 					<a href="<?php echo set_url('teacher/subject/list') ?>" class="nav-link">
 						<i class="fas fa-book"></i>Subjects
 					</a>
@@ -95,6 +81,20 @@
 					<a href="<?php echo set_url('teacher/timetable') ?>" class="nav-link">
 						<i class="fas fa-user-clock"></i>My Timetable
 					</a>
+				</li>
+				<li class="nav-item aside-li" id="teacher-li">
+					<a href="<?php echo set_url('teacher/list'); ?>" class="nav-link">
+						<i class="fas fa-user-tie"></i>Teachers
+					</a>
+					<button class="toggle-button" target="teacher-nav">
+						<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px" alt="">
+					</button>
+
+					<nav class="nav sub-nav no-collapsed" id="teacher-nav">
+						<ul class="d-flex flex-col">
+							<li class="nav-item"><a href="<?php echo set_url('teacher/list'); ?>" class="nav-link" parent-li="teacher-li">Teachers List</a></li>
+						</ul>
+					</nav>
 				</li>
 				<?php if(isset($interview_panel_id)){ ?>
 				<li id="interview-li" class="nav-item aside-li">

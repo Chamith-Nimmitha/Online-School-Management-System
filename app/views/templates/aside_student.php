@@ -8,17 +8,6 @@
 						<i class="fas fa-chart-line"></i>Dashbord
 					</a>
 				</li>
-				<li class="nav-item aside-li" id="attendance-li">
-					<a href="<?php echo set_url('student/attendance'); ?>" class="nav-link">
-						<i class="far fa-calendar-check"></i>My Attendance
-					</a>
-					
-				</li>
-				<li class="nav-item aside-li" id="timetable-li">
-					<a href="<?php echo set_url('student/timetable/view');?>" class="nav-link">
-						<i class="fas fa-user-clock"></i>My Timetable
-					</a>
-				</li>
 				<?php if(isset($classroom_id) && !empty($classroom_id)){ ?>
 				<li class="nav-item aside-li" id="classroom-li">
 					<a href="<?php echo set_url('classroom/view') ?>" class="nav-link">
@@ -43,19 +32,29 @@
 					</nav>
 				</li>
 				<?php } ?>
+				<li class="nav-item aside-li" id="attendance-li">
+					<a href="<?php echo set_url('student/attendance'); ?>" class="nav-link">
+						<i class="far fa-calendar-check"></i>My Attendance
+					</a>
+					
+				</li>
+				<li class="nav-item aside-li" id="timetable-li">
+					<a href="<?php echo set_url('student/timetable/view');?>" class="nav-link">
+						<i class="fas fa-user-clock"></i>My Timetable
+					</a>
+				</li>
 				<li class="nav-item aside-li" id="subject-li">
 					<a href="<?php echo set_url('student/subject/list') ?>" class="nav-link">
 						<i class="fas fa-book"></i>My Subjects
 					</a>
 				</li>
-				
+				<li class="nav-item aside-li" id="exam-result-li">
+					<a href="<?php echo set_url('marks/classroom/result/view/'.$_SESSION['user_id'].'/1'); ?>" class="nav-link"><i class="far fa-file"></i>My Exam Result</a>
+				</li>
 				<li class="nav-item aside-li">
 					<a href="<?php echo set_url('profile/parent/'.$parent_id); ?>" class="nav-link">
 						<i class="fas fa-user-shield"></i>Parent Info
 					</a>
-				</li>
-				<li class="nav-item aside-li" id="exam-result-li">
-					<a href="<?php echo set_url('marks/classroom/result/view/'.$_SESSION['user_id'].'/1'); ?>" class="nav-link"><i class="far fa-file"></i>My Exam Result</a>
 				</li>
 				<li id="settings-li" class="nav-item aside-li">
 					<a href="<?php echo set_url('settings/website') ?>" class="nav-link">
