@@ -5,6 +5,7 @@
 			parent::__construct();
 		}
 
+		// get grade using category
 		public function get_grades($category){
 			$this->load->model("classrooms");
 			$result = $this->load->classrooms->get_section_list_by_category($category);
@@ -15,6 +16,7 @@
 			}
 		}
 
+		// search classrooms
 		public function search(){
 			$post = json_decode(file_get_contents("php://input"));
 
@@ -234,6 +236,19 @@
 				echo json_encode(["success"=>1]);
 			}else{
 				echo json_encode(["success"=>0,"error"=>"Update Failed."]);
+			}
+		}
+
+		// get class list using section id
+		public function get_class_list(){
+			$grade = $_POST['grade'];
+			$this->load->model("classrooms");
+			$grade = $this->load->classrooms->get_section_id($grade);
+			$class_list = $this->load->classrooms->get_class_list($grade);
+			if($class_list){
+				echo json_encode(["success"=>1, "data"=>$class_list]);
+			}else{
+				echo json_encode(["success"=>0, "error"=>["A","B","C","D","E","F","G","H"]]);
 			}
 		}
 	}

@@ -2,8 +2,9 @@
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 
 	<div class="mt-5">
-		<div class="d-flex justify-content-center">
+		<div class="d-flex flex-col align-items-center">
 			<h2 class="fs-30">Help Center</h2>
+			<hr class="topic-hr w-100">
 		</div>
 		<div id="help-center-links" class="col-12 p-5">
 			<div class="col-12">

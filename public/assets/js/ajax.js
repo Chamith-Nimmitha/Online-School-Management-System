@@ -1073,3 +1073,29 @@ function classroom_marks_search(){
 		console.error(error)
 	})
 }
+
+// get class list for specific section
+function get_class_list(grade_input, target){
+	classroom_search();
+	var form = new FormData();
+	var target_select = document.getElementById(target);
+	form.append("grade",grade_input.value)
+	fetch(base_url+ "api/classroom/get_class_list",{
+		method : "POST",
+		body : form,
+	}).then( res=>{
+		return res.json();
+	}).then( data=>{
+		console.log(data);
+		if(data.success == "1"){
+			let innerHtml = `<option value="all">All</option>`;
+			console.log(innerHtml)
+			for (i in data.data) {
+				innerHtml += `<option value="${data.data[i]}">${data.data[i]}</option>`;
+			}
+			target_select.innerHTML = innerHtml;
+		}
+	}).catch( err=>{
+		console.error(err);
+	})
+}
