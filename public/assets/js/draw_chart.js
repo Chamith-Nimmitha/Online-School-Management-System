@@ -6,10 +6,8 @@ document.addEventListener("DOMContentLoaded",() => {
 		dashboard_teacher_attendance_doughnut();
 		dashboard_classroom_student_attendance_bar();
 		dashboard_teacher_attendance_bar();
-		subject_grades_pie();
-		student_result_overview_bar();
-		subject_average_overview_bar();
 	}
+	
 	if( document.getElementById('student_attendance_overview_bar')){
 		student_attendance_overview_bar();
 	}
@@ -76,24 +74,12 @@ function dashboard_student_attendance_doughnut(){
 			            labels: '# of students',
 			            data: [response.present, response.absent],
 			            backgroundColor: "white",
-			            backgroundColor: [
-			                'rgba(255, 99, 132, 0.5)',
-			                'rgba(54, 162, 235, 0.5)',
-			            ],
-			            borderColor: [
-			                'rgba(255, 99, 132, 0.8)',
-			                'rgba(54, 162, 235, 0.8)',
-			            ],
+			            backgroundColor: [get_color_array(1,0.5,3),get_color_array(1,0.5)],
+			            borderColor: [get_color_array(1,0.8,3),get_color_array(1,0.8)],
 			            borderWidth: 1,
-			            hoverBackgroundColor:[
-			                'rgba(255, 99, 132, 1)',
-			                'rgba(54, 162, 235, 1)',
-			            ],
+			            hoverBackgroundColor:[get_color_array(1,1,3),get_color_array(1,1)],
 			            hoverboderwidth:3,
-			            hoverbodercolor: [
-			                'rgba(255, 99, 132, 1)',
-			                'rgba(54, 162, 235, 1)',
-			            ]
+			            hoverbodercolor: [get_color_array(1,1,3),get_color_array(1,1)]
 			        }]
 			    },
 			    options: {
@@ -137,24 +123,12 @@ function dashboard_teacher_attendance_doughnut(){
 			            labels: '# of students',
 			            data: [response.present, response.absent],
 			            backgroundColor: "white",
-			            backgroundColor: [
-			                'rgba(255, 99, 132, 0.5)',
-			                'rgba(54, 162, 235, 0.5)',
-			            ],
-			            borderColor: [
-			                'rgba(255, 99, 132, 0.8)',
-			                'rgba(54, 162, 235, 0.8)',
-			            ],
+			            backgroundColor: [get_color_array(1,0.5,3),get_color_array(1,0.5)],
+			            borderColor: [get_color_array(1,0.8,3),get_color_array(1,0.8)],
 			            borderWidth: 1,
-			            hoverBackgroundColor:[
-			                'rgba(255, 99, 132, 1)',
-			                'rgba(54, 162, 235, 1)',
-			            ],
+			            hoverBackgroundColor:[get_color_array(1,1,3),get_color_array(1,1)],
 			            hoverboderwidth:3,
-			            hoverbodercolor: [
-			                'rgba(255, 99, 132, 1)',
-			                'rgba(54, 162, 235, 1)',
-			            ]
+			            hoverbodercolor: [get_color_array(1,1,3),get_color_array(1,1)]
 			        }]
 			    },
 			    options: {
@@ -176,88 +150,149 @@ function dashboard_teacher_attendance_doughnut(){
 }
 
 function dashboard_classroom_student_attendance_bar(){
-	var ctx = document.getElementById('dashboard_classroom_student_attendance_bar').getContext('2d');
-	var myChart = new Chart(ctx, {
-	    type: 'bar',
-	    data: {
-	        labels: ['mon','tue','wed','thu','fri'],
-	        datasets: [{
-	            label: '# of students',
-	            data: [25,42,32,12,54],
-	            backgroundColor: get_color_array(5,0.5),
-	            borderColor: get_color_array(5,0.8),
-	            borderWidth: 1,
-	            hoverBackgroundColor:get_color_array(5,1),
-	            hoverboderwidth:3,
-	            hoverbodercolor: get_color_array(5,1)
-	        }]
-	    },
-	    options: {
-	        scales: {
-	            yAxes: [{
-	            	ticks: {
-	            		beginAtZero : true,
-	            	}
-	            }]
-	        },
-	        legend: {
-	        	display : false
-	        },
-	        title: {
-		        display: true,
-		        text: "Attendance of students",
-		        fontSize : 20
-		    },
-	    }
-	});
+
+	fetch( base_url+ "api/draw_charts/attendance/student/week",{
+		method: "GET",
+	}).then( res => {
+		return res.json();
+	}).then( data=> {
+		if(data.success==1){
+			let attendance = data.data;
+			let present_data = [];
+			let absent_data = [];
+			let labels = ['mon','tue','wed','thu','fri'];
+			for (i in attendance) {
+				present_data.push( attendance[i].present);
+				absent_data.push( attendance[i].absent);
+				labels[i] = labels[i]+`(${attendance[i].day})`;
+			}
+			var ctx = document.getElementById('dashboard_classroom_student_attendance_bar').getContext('2d');
+			var myChart = new Chart(ctx, {
+			    type: 'bar',
+			    data: {
+			        labels: labels,
+			        datasets: [{
+			            label: '# of Student Present: ',
+			            data: present_data,
+			          	backgroundColor: get_color_array(5,0.5),
+			            borderColor: get_color_array(5,0.8),
+			            borderWidth: 1,
+			            hoverBackgroundColor:get_color_array(5,1),
+			            hoverboderwidth:3,
+			            hoverbodercolor: get_color_array(5,1)
+			        },
+			        {
+			            label: '# of Student Absent: ',
+			            data: absent_data,
+			          	backgroundColor: get_color_array(5,0.5),
+			            borderColor: get_color_array(5,0.8),
+			            borderWidth: 1,
+			            hoverBackgroundColor:get_color_array(5,1),
+			            hoverboderwidth:3,
+			            hoverbodercolor: get_color_array(5,1)
+			        }]
+			    },
+			    options: {
+			        scales: {
+			        	xAxes:[{
+			        		stacked: true,
+			        	}],
+			            yAxes: [{
+			            	stacked: true,
+			            	ticks: {
+			            		beginAtZero : true,
+			            		precision: 0,
+			            	}
+			            }]
+			        },
+			        legend: {
+			        	display : false
+			        },
+			        title: {
+				        display: true,
+				        text: "Week Attendance of Students",
+				        fontSize : 20
+				    },
+			    }
+			});	
+		}
+	}).catch( err=> {
+		console.log(err);
+	})
+
+	
 }
 
 function dashboard_teacher_attendance_bar(){
-	var ctx = document.getElementById('dashboard_teacher_attendance_bar').getContext('2d');
-	var myChart = new Chart(ctx, {
-	    type: 'bar',
-	    data: {
-	        labels: ['mon','tue','wed','thu','fri'],
-	        datasets: [{
-	            label: '# ',
-	            data: [25,42,32,12,54],
-	          	backgroundColor: get_color_array(5,0.5),
-	            borderColor: get_color_array(5,0.8),
-	            borderWidth: 1,
-	            hoverBackgroundColor:get_color_array(5,1),
-	            hoverboderwidth:3,
-	            hoverbodercolor: get_color_array(5,1)
-	        },
-	        {
-	            label: '# of teachers',
-	            data: [25,42,32,12,54],
-	          	backgroundColor: get_color_array(5,0.5),
-	            borderColor: get_color_array(5,0.8),
-	            borderWidth: 1,
-	            hoverBackgroundColor:get_color_array(5,1),
-	            hoverboderwidth:3,
-	            hoverbodercolor: get_color_array(5,1)
-	        }]
-	    },
-	    options: {
-	        scales: {
-	        	xAxes:[{
-	        		stacked: true,
-	        	}],
-	            yAxes: [{
-	            	stacked: true,
-	            }]
-	        },
-	        legend: {
-	        	display : true,
-	        },
-	        title: {
-		        display: true,
-		        text: "Attendance of teachers",
-		        fontSize : 20
-		    },
-	    }
-	});
+
+	fetch( base_url+ "api/draw_charts/attendance/teacher/week",{
+		method: "GET",
+	}).then( res => {
+		return res.json();
+	}).then( data=> {
+		if(data.success==1){
+			let attendance = data.data;
+			let present_data = [];
+			let absent_data = [];
+			let labels = ['mon','tue','wed','thu','fri'];
+			for (i in attendance) {
+				present_data.push( attendance[i].present);
+				absent_data.push( attendance[i].absent);
+				labels[i] = labels[i]+`(${attendance[i].day})`;
+			}
+			var ctx = document.getElementById('dashboard_teacher_attendance_bar').getContext('2d');
+			var myChart = new Chart(ctx, {
+			    type: 'bar',
+			    data: {
+			        labels: labels,
+			        datasets: [{
+			            label: '# of Teacher Present: ',
+			            data: present_data,
+			          	backgroundColor: get_color_array(5,0.5),
+			            borderColor: get_color_array(5,0.8),
+			            borderWidth: 1,
+			            hoverBackgroundColor:get_color_array(5,1),
+			            hoverboderwidth:3,
+			            hoverbodercolor: get_color_array(5,1)
+			        },
+			        {
+			            label: '# of Teacher Absent: ',
+			            data: absent_data,
+			          	backgroundColor: get_color_array(5,0.5),
+			            borderColor: get_color_array(5,0.8),
+			            borderWidth: 1,
+			            hoverBackgroundColor:get_color_array(5,1),
+			            hoverboderwidth:3,
+			            hoverbodercolor: get_color_array(5,1)
+			        }]
+			    },
+			    options: {
+			        scales: {
+			        	xAxes:[{
+			        		stacked: true,
+			        	}],
+			            yAxes: [{
+			            	stacked: true,
+			            	ticks: {
+			            		beginAtZero : true,
+			            		precision: 0,
+			            	}
+			            }]
+			        },
+			        legend: {
+			        	display : false
+			        },
+			        title: {
+				        display: true,
+				        text: "Week Attendance of Teachers",
+				        fontSize : 20
+				    },
+			    }
+			});	
+		}
+	}).catch( err=> {
+		console.log(err);
+	})
 }
 
 var subject_grades_pie_chart = undefined;
@@ -590,7 +625,6 @@ function classroom_attendance_comparission_bar(){
 	}).then( (res) => {
 		return res.text();
 	}).then( (text) => {
-		console.log(text);
 		var response = JSON.parse(text)
 		var canvas = document.getElementById('classroom_attendance_comparission_bar')
 		var ctx = canvas.getContext('2d');

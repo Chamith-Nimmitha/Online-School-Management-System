@@ -262,7 +262,7 @@
 				}else{
 					if($parent_type == "father"){
 						$required_fields['father-name']=[0,50,1,"Father name"];
-						$required_fields['father-occupation']=[0,50,1,"Father Occupation"];
+						$required_fields['father-occupation']=[0,50,0,"Father Occupation"];
 						$c_result = validate_contact_number($_POST['father-contact-number']);
 						if($c_result !== 1){
 							$field_errors['father-contact-number'] = $c_result;
@@ -270,7 +270,7 @@
 						$required_fields['father-email']=[0,100,1,"Father Email"];
 					}else if($parent_type == "mother"){
 						$required_fields['mother-name']=[0,50,1,"Mother name"];
-						$required_fields['mother-occupation']=[0,50,1,"Mother Occupation"];
+						$required_fields['mother-occupation']=[0,50,0,"Mother Occupation"];
 						$c_result = validate_contact_number($_POST['mother-contact-number']);
 						if($c_result !== 1){
 							$field_errors['mother-contact-number'] = $c_result;
@@ -278,7 +278,7 @@
 						$required_fields['mother-email']=[0,100,1,"Mother email"];
 					}else{
 						$required_fields['guardian-name']=[0,50,1,"Guardian name"];
-						$required_fields['guardian-occupation']=[0,50,1,"Guardian Occupation"];
+						$required_fields['guardian-occupation']=[0,50,0,"Guardian Occupation"];
 						$c_result = validate_contact_number($_POST['guardian-contact-number']);
 						if($c_result !== 1){
 							$field_errors['guardian-contact-number'] = $c_result;

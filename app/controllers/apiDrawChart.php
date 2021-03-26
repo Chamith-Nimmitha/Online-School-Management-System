@@ -492,6 +492,56 @@
 			echo json_encode(['label'=>$subject_names,'first_term_data'=>$first_term_data,'second_term_data'=>$second_term_data,'third_term_data'=>$third_term_data]);
 
 		}
+
+		// student week attendance bar chart
+		public function dashboard_student_attendance_week_bar(){
+			$this->load->model('attendance');
+
+			$firstday = date('d', strtotime("this week"));
+			$firstday = (int)$firstday;
+			$month = date("m");
+			$year = date("Y");
+			$attendance = [];
+			for ($i=0; $i < 5; $i++) {
+				$date = "{$year}/{$month}/".($firstday+$i);
+				$day = date("d", strtotime($date));
+				$present_result = $this->load->attendance->dashboard_student_attendance_overview_bar($date,1);
+				$absent_result = $this->load->attendance->dashboard_student_attendance_overview_bar($date,0);
+				if($present_result !== FALSE && $absent_result !== FALSE){
+					array_push($attendance,["day"=>$day,"present"=>$present_result,"absent"=>$absent_result]);
+				}else{
+					echo json_encode(["success"=>0]);
+					return;
+				}
+			}
+			echo json_encode(["success"=>1, "data"=>$attendance]);
+			return;
+		}
+
+		// teacher week attendance bar chart
+		public function dashboard_teacher_attendance_week_bar(){
+			$this->load->model('attendance');
+
+			$firstday = date('d', strtotime("this week"));
+			$firstday = (int)$firstday;
+			$month = date("m");
+			$year = date("Y");
+			$attendance = [];
+			for ($i=0; $i < 5; $i++) {
+				$date = "{$year}/{$month}/".($firstday+$i);
+				$day = date("d", strtotime($date));
+				$present_result = $this->load->attendance->dashboard_teacher_attendance_overview_bar($date,1);
+				$absent_result = $this->load->attendance->dashboard_teacher_attendance_overview_bar($date,0);
+				if($present_result !== FALSE && $absent_result !== FALSE){
+					array_push($attendance,["day"=>$day,"present"=>$present_result,"absent"=>$absent_result]);
+				}else{
+					echo json_encode(["success"=>0]);
+					return;
+				}
+			}
+			echo json_encode(["success"=>1, "data"=>$attendance]);
+			return;
+		}
 		
 	}
 

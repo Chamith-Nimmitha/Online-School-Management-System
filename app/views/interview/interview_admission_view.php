@@ -187,8 +187,8 @@
 							</div>
 
 							<div class="form-group">
-								<label for="father-occupation">Father Occupation (<code title="required"> * </code>)</label>
-								<input type="text" value='<?php if(isset($result['father_occupation'])){echo $result['father_occupation'];} ?>' name="father-occupation" placeholder="Father Occupation" id="father-occupation" oninput="validate_user_input(this,0,50,1)">
+								<label for="father-occupation">Father Occupation</label>
+								<input type="text" value='<?php if(isset($result['father_occupation'])){echo $result['father_occupation'];} ?>' name="father-occupation" placeholder="Father Occupation" id="father-occupation" oninput="validate_user_input(this,0,50,0)">
 								<?php 
 									if(isset($field_errors['father-occupation'])){
 										echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["father-occupation"].'</p>';
@@ -237,8 +237,8 @@
 							</div>
 
 							<div class="form-group">
-								<label for="mother-occupation">Mother Occupation (<code title="required"> * </code>)</label>
-								<input type="text" value='<?php if(isset($result['mother_occupation'])){echo $result['mother_occupation'];} ?>' name="mother-occupation" placeholder="Mother Occupation" id="mother-occupation" oninput="validate_user_input(this,0,50,1)">
+								<label for="mother-occupation">Mother Occupation</label>
+								<input type="text" value='<?php if(isset($result['mother_occupation'])){echo $result['mother_occupation'];} ?>' name="mother-occupation" placeholder="Mother Occupation" id="mother-occupation" oninput="validate_user_input(this,0,50,0)">
 								<?php 
 									if(isset($field_errors['mother-occupation'])){
 										echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["mother-occupation"].'</p>';
@@ -287,8 +287,8 @@
 							</div>
 
 							<div class="form-group">
-								<label for="guardian-occupation">Guardian Occupation (<code title="required"> * </code>)</label>
-								<input type="text" value='<?php if(isset($result['guardian_occupation'])){echo $result['guardian_occupation'];} ?>' name="guardian-occupation" placeholder="Guardian Occupation" id="guardian-occupation" oninput="validate_user_input(this,0,50,1)">
+								<label for="guardian-occupation">Guardian Occupation</label>
+								<input type="text" value='<?php if(isset($result['guardian_occupation'])){echo $result['guardian_occupation'];} ?>' name="guardian-occupation" placeholder="Guardian Occupation" id="guardian-occupation" oninput="validate_user_input(this,0,50,0)">
 								<?php 
 									if(isset($field_errors['guardian-occupation'])){
 										echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["guardian-occupation"].'</p>';

@@ -19,14 +19,16 @@
 
 		//get statics for dashboard
 		public function get_staticstic_count(){
-			$con = new Database();
-			$tables = array("student","teacher","subject","classroom","parent");
+			$tables = array("student","teacher","subject","classroom","parent","interview_panel");
 			foreach ($tables as $table) {
 				$query = "SELECT COUNT(`id`) as count FROM `". $table."`";
 				$result_set = $this->con->pure_query($query);
 				if($result_set)
 					$count[$table] = $result_set->fetch()['count'];
 			}
+			$query = "SELECT COUNT(`id`) as count FROM `interview` WHERE `state`= 'notInterviewed';";
+			$result_set = $this->con->pure_query($query);
+			$count["interview"] = $result_set->fetch()['count'];
 			return $count;
 		}
 

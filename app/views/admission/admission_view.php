@@ -111,7 +111,7 @@
 							</div>
 
 							<div class="form-group">
-								<label for="father-occupation">Father Occupation (<code title="required"> * </code>)</label>
+								<label for="father-occupation">Father Occupation </label>
 								<input type="text" value="<?php if(isset($result['parent_occupation'])){echo $result['parent_occupation'];} ?>" name="father-occupation" placeholder="Father Occupation" id="father-occupation" disabled="disabled" >
 							</div>
 
@@ -133,7 +133,7 @@
 							</div>
 
 							<div class="form-group">
-								<label for="mother-occupation">Mother Occupation (<code title="required"> * </code>)</label>
+								<label for="mother-occupation">Mother Occupation</label>
 								<input type="text" value="<?php if(isset($result['parent_occupation'])){echo $result['parent_occupation'];} ?>" name="mother-occupation" placeholder="Mother Occupation" id="mother-occupation" disabled="disabled">
 							</div>
 
@@ -155,7 +155,7 @@
 							</div>
 
 							<div class="form-group">
-								<label for="guardian-occupation">Guardian Occupation (<code title="required"> * </code>)</label>
+								<label for="guardian-occupation">Guardian Occupation</label>
 								<input type="text" value="<?php if(isset($result['parent_occupation'])){echo $result['parent_occupation'];} ?>" name="guardian-occupation" placeholder="Guardian Occupation" id="guardian-occupation" disabled="disabled">
 							</div>
 
