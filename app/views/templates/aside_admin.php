@@ -79,6 +79,7 @@
 				<li class="nav-item aside-li" id="admission-li">
 					<a href="<?php echo set_url('admission/list'); ?>" class="nav-link">
 						<i class="far fa-address-card"></i>Admissions
+						<span class="bg-blue ml-5  b-radius-round pl-2 pr-2 p-1 fg-white text-center" ><?php if(isset($admission_count)){echo $admission_count;}?></span>
 					</a>
 				</li>
 				<li id="interview-li" class="nav-item aside-li">

@@ -84,7 +84,9 @@
 					unset($this->load->teacher);
 					$this->load->view("templates/aside_teacher",$header);
 				}else if($_SESSION['role'] == "admin"){
-					$this->load->view("templates/aside_admin");
+					$this->load->model("admission");
+					$header['admission_count'] = $this->load->admission->get_active_admisson_count();
+					$this->load->view("templates/aside_admin",$header);
 				}else if($_SESSION['role'] == "parent"){
 					$this->load->view("templates/aside_parent");
 				}

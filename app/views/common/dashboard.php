@@ -45,6 +45,18 @@
 						<span class="pt-1"><?php if(isset($count['parent'])){echo $count['parent']; } ?></span>
 					</div>
 				</div>
+				<div class="s-item-wrapper">
+					<div class="d-flex flex-col s-item align-items-center" style="cursor: pointer;" <?php if(isset($statics_link_show) && $statics_link_show===1){echo 'onclick="window.open('.set_url('interviewpanel/list').')"';} ?>>
+						<i class="fas fa-user-cog"></i><h3 class="bb pb-1  text-center">Total Interview Panels</h3>
+						<span class="pt-1"><?php if(isset($count['interview_panel'])){echo $count['interview_panel']; } ?></span>
+					</div>
+				</div>
+				<div class="s-item-wrapper">
+					<div class="d-flex flex-col s-item align-items-center" style="cursor: pointer;" <?php if(isset($statics_link_show) && $statics_link_show===1){echo 'onclick="window.open('.set_url('interview/list').')"';} ?>>
+						<i class="fas fa-clock"></i><h3 class="bb pb-1  text-center">Upcoming Interviews</h3>
+						<span class="pt-1"><?php if(isset($count['interview'])){echo $count['interview']; } ?></span>
+					</div>
+				</div>
 				
 			</div>
 		</div> <!-- #school-statistics -->
@@ -262,20 +274,6 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-12 justify-content-around section-wrapper pb-5 mt-5" style="flex-direction: row !important;">
-		<!-- subject grades pie -->
-		<div class="mt-5 section-item" style="width: 45%;">
-			<div class="bg-white p-5 w-100">
-				<canvas id="subject_grades_pie" width="100" height="100"></canvas>
-			</div>
-		</div>
 
-		<!-- classroom student attendance -->
-		<div class="mt-5  section-item" style="width: 45%;">
-			<div class="bg-white p-5 w-100">
-				<canvas id="student_result_overview_bar" width="100" height="100"></canvas>
-			</div>
-		</div>
-	</div>
 
 </div> <!-- #content

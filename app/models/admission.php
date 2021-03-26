@@ -22,6 +22,17 @@
 			}
 		}
 
+		// get unread admission counts
+		public function get_active_admisson_count(){
+        	$query = "SELECT count(*) AS `count` FROM `admission` WHERE `state`= ? || `state`= ? || `state`= ?;";
+        	$result = $this->con->pure_query($query,["Unread","Read","Accepted"]);
+        	if($result){
+        		return $result->fetch()['count'];
+        	}else{
+        		return 0;
+        	}
+        }
+
 		// get admission list
 		public function get_list($start, $count, $id=NULL,$name=NULL,$grade=NULL, $state=[]){
 			$query = "SELECT SQL_CALC_FOUND_ROWS * FROM `admission` ";
