@@ -13,6 +13,14 @@
 			echo "</p>";
 		}
 	 ?>
+	 <div class="mt-5 w-75 d-flex flex-col align-items-center">
+	 	<?php if(isset($result) && !empty($result)){ ?>
+			<h2 class="fs-30">Update Interview</h2>
+	 	<?php }else{ ?>
+			<h2 class="fs-30">Create a Interview</h2>
+		<?php } ?>
+		<hr class="topic-hr w-100">
+	</div>
 	<form action="<?php echo set_url('interview/set/'.$result['id']); ?>" method="post" class="col-12 col-md-8">
 		<fieldset>
 			<legend>Interview Info</legend>

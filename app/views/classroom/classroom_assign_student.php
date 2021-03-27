@@ -82,7 +82,7 @@
 								$row .= '<td class="col-2 word-break">'.$student['email'].'</td>';
 								$row .= '<td class="col-2  word-break">'.$student['contact_number'].'</td>';
 								$row .= '<td class="col-2  word-break d-flex justify-content-center align-items-center"><input type="checkbox" name="assign-'.$student['id'].'" value="'.$student['id'].'" onchange="update_student_selected_set(this)"></td>';
-								$row .= '<td class="col-2 d-flex justify-content-center word-break"><a class="btn btn-blue" href="'.set_url("pages/student_profile_view?student_id=".$student['id']).'">profile</a></td>';
+								$row .= '<td class="col-2 d-flex justify-content-center word-break"><a class="btn" href="'.set_url("pages/student_profile_view?student_id=".$student['id']).'"><i title="profile" class="fas fa-user-circle profile-button"></i></a></td>';
 								$row .= '</tr>';
 								echo $row;
 							}
