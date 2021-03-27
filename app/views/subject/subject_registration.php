@@ -79,7 +79,7 @@
             <input type="hidden" id="code" name="code"  value="<?php if(isset($code)){echo $code;} ?>">
         <div  class="form-group mt-1">
             <label for="description">SUBJECT DESCRIPTION</label>
-            <textarea  class="col-12 p-3" name="description" id="description" placeholder="-----ENTER DESCRIPTION HERE.....-----" required="required"><?php if(isset($description)){echo $description;} ?></textarea>
+            <textarea  class="col-12 p-3" name="description" id="description" placeholder="-----ENTER DESCRIPTION HERE.....-----"><?php if(isset($description)){echo $description;} ?></textarea>
         </div>
 
         <div class="w-100 p-1"></div>

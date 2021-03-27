@@ -24,8 +24,8 @@
 
 		// get unread admission counts
 		public function get_active_admisson_count(){
-        	$query = "SELECT count(*) AS `count` FROM `admission` WHERE `state`= ? || `state`= ? || `state`= ?;";
-        	$result = $this->con->pure_query($query,["Unread","Read","Accepted"]);
+        	$query = "SELECT count(*) AS `count` FROM `admission` WHERE `state`= ? || `state`= ? ;";
+        	$result = $this->con->pure_query($query,["Unread","Read"]);
         	if($result){
         		return $result->fetch()['count'];
         	}else{
