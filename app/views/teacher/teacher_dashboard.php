@@ -9,11 +9,85 @@
 			echo "<script>show_snackbar('{$del_msg}')</script>";
 		}
 	?>
+	<div class="row">
+		<div class="col-6 d-flex flex-col mb-1 border b-rad justify-content-start align-items-start mt-1" >
+			 			 	<div class="row justify-content-center align-items-center">
+					<div class="bg-navyblue1 fs-20 fs-white border b-rad mt-1">
+					TimeTable
+				</div>
+				</div>
+		<div class=" mb-1">
+			<?php if(strtolower($cur_day)!=='sat' && strtolower($cur_day)!=='sun'){?>
+			<table class="table-strip-dark text-center m-1" style="width: 178%" >
+				<thead>
+					<tr>
+						<th style="width: 100px;">Time\Day</th>
+						<?php 
+								echo '<th style="width:100px;height:50px">'.$cur_day.'</th>';
+						?>
 
-	<div class="col-12 d-flex justify-content-center mb-3">
+					</tr>
+				</thead>
+				<tbody>						
+			<?php
+				if(isset($timetable) && !empty($timetable)){
+							foreach ($timetable as $key => $value) {
+								//echo $key;
+							}
+							//echo $timetable['mon'][1];
+					for ($i=1; $i <= 9; $i++) { 
+
+						if($i == 5){
+							echo "<tr><th colspan='6' class='text-center bg-gray fg-white'>Interval</th></tr>";
+							continue;
+						}
+						$period = $i > 5 ? $i-1 : $i;
+
+						$row = "<tr>";
+						$row .= "<th>".$time_map[$period]."</th>";
+
+						for ($j=1; $j <=5 ; $j++) {
+							if($day_map[$j]==strtolower($cur_day)){
+								$td = $timetable["{$day_map[$j]}"][$period];
+								if($td=="FREE"){
+									$row .= "<td style='height:48px'>";
+									$row .= "FREE";
+									$row .= "</td>";
+								}else{
+									$row .= "<td style='height:48px'>";
+									$row .= "{$td[0]}({$td[2]})";
+									$row .= "</td>";
+								}
+							}
+						}
+						$row .= "</tr>";
+						echo $row;
+					}
+				}else{
+					echo "<tr><td colspan=7 class='text-center bg-red'>Timetable Not Found...</td></tr>";
+					echo "</tbody>";
+					echo "</table>";
+				}
+			 ?>
+				</tbody>
+			</table>
+			<?php }
+			else{
+				echo '<div class="col-12 w-200 " style="height:200px;width:500px">';
+				echo '<div class=" col-12 fs-20 w-200  d-flex justify-content-center align-items-center">';
+				echo "No Timetable for ".date('l').".";
+				echo "</div></div>";
+				}
+			?>
+		</div>
+		
+	</div>
+
+	<div class="col-6">
+	<div class="col-12 d-flex flex-col justify-content-end border b-rad">
  <!-- #school-statistics -->
- 		<div class="col-12 border b-rad justify-content-center align-items-center mb-3">
- 			 	<div class="row justify-content-center align-items-center">
+ 		<div class="col-12  justify-content-center align-items-center">
+ 			 	<div class="row justify-content-center align-items-center mb-1">
 					<div class="bg-navyblue1 fs-20 fs-white border b-rad">
 					Notice Board
 				</div>
@@ -21,7 +95,8 @@
 		<?php if(isset($show_notice_board) && ($show_notice_board ===1)){ ?>
 		<div>
 			<!-- ADD A NEW NOTICE -->
-			<div id="add_new_classroom_notice" class="d-none justify-content-center align-items-center border">
+			<div id="add_new_classroom_notice" class="d-none p-1 justify-content-end align-items-end border">
+
 				<div id="noticeboard_title" class="w-100">
 					<!-- <button type="button" class="btn btn-blue p-1 ml-5" onclick="show_available_notice('add_new_classroom_notice','classroom_notice_board')">Back</button> -->
 					<button type="button" class="btn btn-blue p-1 ml-5" onclick="location.reload()">Back</button>
@@ -178,64 +253,9 @@
 			<!-- END OF NOTICE BOARD -->
 		</div>
 	</div>
-		<div class="col-12 d-flex flex-col border mb-3 b-rad">
-		<hr class="w-100">
-		<div class="p-5 mb-1">
-			<table class="w-100 table-strip-dark text-center m-1">
-			<caption>				
-				<div class="bg-navyblue1 fs-20 fs-white border b-rad mb-2">
-					TimeTable
-				</div>
-			</caption>
-				<thead>
-					<tr>
-						<th style="width: 20%;">Time\Day</th>
-						<th style="width: 15%;">Mon</th>
-						<th style="width: 15%;">Tue</th>
-						<th style="width: 15%;">Wed</th>
-						<th style="width: 15%;">Thu</th>
-						<th style="width: 15%;">Fri</th>
-					</tr>
-				</thead>
-				<tbody>						
-			<?php 
-				if(isset($timetable) && !empty($timetable)){
-					for ($i=1; $i <= 9; $i++) { 
+</div>
+</div>
 
-						if($i == 5){
-							echo "<tr><th colspan='6' class='text-center bg-gray fg-white'>Interval</th></tr>";
-							continue;
-						}
-						$period = $i > 5 ? $i-1 : $i;
-
-						$row = "<tr>";
-						$row .= "<th>".$time_map[$period]."</th>";
-						for ($j=1; $j <=5 ; $j++) { 
-							$td = $timetable["{$day_map[$j]}"][$period];
-							if($td=="FREE"){
-								$row .= "<td>";
-								$row .= "FREE";
-								$row .= "</td>";
-							}else{
-								$row .= "<td>";
-								$row .= "{$td[0]}({$td[2]})";
-								$row .= "</td>";
-							}
-						}
-						$row .= "</tr>";
-						echo $row;
-					}
-				}else{
-					echo "<tr><td colspan=7 class='text-center bg-red'>Timetable Not Found...</td></tr>";
-					echo "</tbody>";
-					echo "</table>";
-				}
-			 ?>
-				</tbody>
-			</table>
-		</div>
-		
-	</div>
 <div class="col-12 border b-rad justify-content-center align-items-center">
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 	<div class="bg-navyblue1 fs-20 fs-white border b-rad">

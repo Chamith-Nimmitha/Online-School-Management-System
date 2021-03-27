@@ -938,7 +938,12 @@
 					$data['time_map'] = $time_map;
 					$data['day_map'] = $day_map;
 
-					
+					//echo "sdfsdf"."<br>"."<br>"."<br>"."<br>"."<br>"."<br>".substr(date(l), 0,3);
+					//echo "sdfsdf"."<br>"."<br>"."<br>"."<br>"."<br>"."<br>"."sadfad";
+					/*foreach ($data['timetable'] as $key => $value) {
+						echo $key;
+					}*/
+					$data['cur_day'] = substr(date('l'),0,3);
 					$this->load->model("attendance");
 		            $result_set = $this->load->attendance->get_attendance_by_teacher_id($teacher_id);
 		            if($result_set){
