@@ -47,24 +47,30 @@
 							$_SESSION["user_id"]=$user['id'];
 							$_SESSION["username"]=$user['first_name'];
 							$_SESSION["profile_photo"]=$user['profile_photo'];
+							$_SESSION['login_msg'] = "Login Successful";
+							header('Location:'.set_url("dashboard"));
 						}else if($_SESSION["role"]==="teacher"){
 							$user = $this->load->user->get_user_data("teacher",$email);
 							$_SESSION["user_id"]=$user['id'];
 							$_SESSION["username"]=$user['name_with_initials'];
 							$_SESSION["profile_photo"]=$user['profile_photo'];
+							$_SESSION['login_msg'] = "Login Successful";
+							header('Location:'.set_url("teacher/dashboard"));
 						}else if($_SESSION["role"]==="parent"){
 							$user = $this->load->user->get_user_data("parent",$email);
 							$_SESSION["user_id"]=$user['id'];
 							$_SESSION["username"]=$user['name'];
 							$_SESSION["profile_photo"]=$user['profile_photo'];
+							$_SESSION['login_msg'] = "Login Successful";
+							header('Location:'.set_url("dashboard"));
 						}else if($_SESSION["role"]==="admin"){
 							$user = $this->load->user->get_user_data("admin",$email);
 							$_SESSION["user_id"]=$user['id'];
 							$_SESSION["username"]=$user['username'];
 							$_SESSION["profile_photo"]=$user['profile_photo'];
+							$_SESSION['login_msg'] = "Login Successful";
+							header('Location:'.set_url("dashboard"));
 						}
-						$_SESSION['login_msg'] = "Login Successful";
-						header('Location:'.set_url("dashboard"));
 					}
 				}else{
 					$message ="Invalid email or password";
