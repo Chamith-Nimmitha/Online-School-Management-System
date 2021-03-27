@@ -114,21 +114,6 @@
 						</ul>
 					</nav>
 				</li>
-				<li class="nav-item aside-li" id="teacher-li">
-					<a href="<?php echo set_url('teacher/list'); ?>" class="nav-link">
-						<i class="fas fa-user-tie"></i>Teachers
-					</a>
-					<button class="toggle-button" target="teacher-nav">
-						<img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" width="20px" alt="">
-					</button>
-
-					<nav class="nav sub-nav no-collapsed" id="teacher-nav">
-						<ul class="d-flex flex-col">
-							<li class="nav-item"><a href="<?php echo set_url('teacher/list'); ?>" class="nav-link" parent-li="teacher-li">Teacher List</a></li>
-							<li class="nav-item"><a href="<?php echo set_url('teacher/registration') ?>" class="nav-link"  parent-li="teacher-li">Add teacher</a></li>
-						</ul>
-					</nav>
-				</li>
 				<li class="nav-item aside-li" id="subject-li">
 					<a href="<?php echo set_url('subject/list') ?>" class="nav-link">
 						<i class="fas fa-book"></i>Subjects
@@ -143,6 +128,21 @@
 								<a href="<?php echo set_url('subject/list') ?>" class="nav-link" parent-li="subject-li">Subjects List</a></li>
 							<li class="nav-item">
 								<a href="<?php echo set_url('subject/registration') ?>" class="nav-link" parent-li="subject-li">Add a Subject</a></li>
+						</ul>
+					</nav>
+				</li>
+				<li class="nav-item aside-li" id="teacher-li">
+					<a href="<?php echo set_url('teacher/list'); ?>" class="nav-link">
+						<i class="fas fa-user-tie"></i>Teachers
+					</a>
+					<button class="toggle-button" target="teacher-nav">
+						<img src="<?php echo set_url('public/assets/img/menu_arrow.png'); ?>" width="20px" alt="">
+					</button>
+
+					<nav class="nav sub-nav no-collapsed" id="teacher-nav">
+						<ul class="d-flex flex-col">
+							<li class="nav-item"><a href="<?php echo set_url('teacher/list'); ?>" class="nav-link" parent-li="teacher-li">Teacher List</a></li>
+							<li class="nav-item"><a href="<?php echo set_url('teacher/registration') ?>" class="nav-link"  parent-li="teacher-li">Add teacher</a></li>
 						</ul>
 					</nav>
 				</li>
