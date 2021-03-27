@@ -869,5 +869,89 @@
 			$attendance_controller = new Attendance();
 			$attendance_controller->classroom_view($classroom_id);
 		}
+
+		public function teacher_dashboard(){
+
+		if(!$this->checkPermission->check_permission("dashboard","view")){
+						$this->view_header_and_aside();
+						$this->load->view("common/error");
+						$this->load->view("templates/footer");
+						return;
+					}
+					$this->load->model("user");
+					$counts = $this->load->user->get_staticstic_count();
+					$data['count'] = $counts;
+
+					if(isset($_SESSION['login_msg'])){
+						$data['msg'] = $_SESSION['login_msg'];
+						unset($_SESSION['login_msg']);
+					}
+					if(isset($_SESSION['del_msg'])){
+						$data['del_msg'] = $_SESSION['del_msg'];
+						unset($_SESSION['del_msg']);
+					}
+
+					$is_classroom_teacher = 0;
+					$show_notice_board = 0;
+					$statics_link_show = 0;
+					$statics_link_show = 1;
+
+					if($_SESSION['role'] == "teacher"){
+						$this->load->model("teacher");
+						$this->load->teacher->set_by_id($_SESSION['user_id']);
+						$cls = $this->load->teacher->get_classroom_object();
+						if($cls){
+							$data['notice_classroom_id'] = $cls->get_id();
+							$data['grade'] = $cls->get_grade();
+							$data['class'] = $cls->get_class();
+							$result = $cls->get_notices();
+							if($result  && $result->rowCount() >0){
+								$data['classroom_notices'][0] = ["notices"=>$result->fetchAll(),"grade"=>$cls->get_grade(),"class"=>$cls->get_class()];
+							}
+							$is_classroom_teacher = 1;
+							$show_notice_board = 1;
+						}
+					}
+
+
+					$data['is_classroom_teacher'] = $is_classroom_teacher;
+					$data['show_notice_board'] = $show_notice_board;
+					$data['statics_link_show'] = $statics_link_show;
+
+						$teacher_id = $_SESSION['user_id'];
+					$error = "";
+					$this->load->model("teacher");
+					$result = $this->load->teacher->set_by_id($teacher_id);
+
+					if(!$result){
+						$error = "Teacher Not Found.";
+					}else{
+						$data['teacher_info'] = $this->load->teacher->get_data();
+					}
+					$result = $this->load->teacher->get_timetable();
+					if($result){
+						$data['timetable'] = $result;
+					}
+
+					$time_map = ["1"=>"7.50a.m - 8.30a.m", "2"=>"8.30a.m - 9.10a.m", "3"=>"9.10a.m - 9.50a.m", "4"=> "9.50a.m - 10.30a.m", "5"=> "10.50a.m - 11.30a.m", "6"=>"11.30a.m - 12.10p.m", "7"=> "12.10p.m - 12.50p.m", "8"=>"12.50p.m - 1.30p.m"];
+					$day_map = ["1"=>"mon","2"=>"tue","3"=>"wed","4"=>"thu","5"=>"fri"];
+					$data['time_map'] = $time_map;
+					$data['day_map'] = $day_map;
+
+					
+					$this->load->model("attendance");
+		            $result_set = $this->load->attendance->get_attendance_by_teacher_id($teacher_id);
+		            if($result_set){
+		                $data['result_set'] = $result_set->fetchAll();
+		            }else{
+		                $data['result_set'] = FALSE;
+		            }
+		            $data['teacher_id'] = $teacher_id;
+
+
+					$this->view_header_and_aside();
+					$this->load->view("teacher/teacher_dashboard",$data);
+					$this->load->view("templates/footer");
+	}
 	 }
 ?>

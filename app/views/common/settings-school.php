@@ -165,7 +165,7 @@
 
 				<div class="form-group">
 					<label for="school-vision">School Vision</label>
-					<input type="text" name="school-vision" id="school-vision" oninput="validate_user_input(this,0,50,1)" value="<?php if(!empty($result)){echo $result['school_vision'];} ?>">
+					<textarea rows="6" cols="80" type="text" name="school-vision" id="school-vision" oninput="validate_user_input(this,0,50,1)" value=""><?php if(!empty($result)){echo $result['school_vision'];} ?></textarea>
 					<?php 
 						if(isset($field_errors['school-vision'])){
 							echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["school-vision"].'</p>';
@@ -177,7 +177,7 @@
 
 				<div class="form-group">
 					<label for="school-mission">School Mission</label>
-					<input type="text" name="school-mission" id="school-mission" oninput="validate_user_input(this,0,150,1)" value="<?php if(!empty($result)){echo $result['school_mission'];} ?>">
+					<textarea rows="6" cols="80" type="text" name="school-mission" id="school-mission" oninput="validate_user_input(this,0,150,1)" value=""><?php if(!empty($result)){echo $result['school_mission'];} ?></textarea>
 					<?php 
 						if(isset($field_errors['school-mission'])){
 							echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["school-mission"].'</p>';
@@ -189,7 +189,7 @@
 
 				<div class="form-group">
 					<label for="school-welcome-message">School Welcome Message</label>
-					<input type="text" name="school-welcome-message" id="school-welcome-message" oninput="validate_user_input(this,0,550,1)" value="<?php if(!empty($result)){echo $result['school_welcome_message'];} ?>">
+					<textarea rows="10"  cols=" 150" type="text" name="school-welcome-message" id="school-welcome-message" oninput="validate_user_input(this,0,550,1)" value=""><?php if(!empty($result)){echo $result['school_welcome_message'];} ?></textarea>
 					<?php 
 						if(isset($field_errors['school-welcome-message'])){
 							echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["school-welcome-message"].'</p>';
@@ -201,7 +201,7 @@
 
 				<div class="form-group">
 					<label for="school-description">School Description</label>
-					<input type="text" name="school-description" id="school-description" oninput="validate_user_input(this,0,1000,1)" value="<?php if(!empty($result)){echo $result['school_description'];} ?>">
+					<textarea rows="10" cols="150" type="text" name="school-description" id="school-description" oninput="validate_user_input(this,0,1000,1)" value=""><?php if(!empty($result)){echo $result['school_description'];} ?></textarea>
 					<?php 
 						if(isset($field_errors['school-description'])){
 							echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["school-description"].'</p>';
@@ -213,7 +213,7 @@
 
 				<div class="form-group">
 					<label for="school-principal-message">School Principal's Message</label>
-					<input type="text" name="school-principal-message" id="school-principal-message" oninput="validate_user_input(this,0,550,1)" value="<?php if(!empty($result)){echo $result['school_principal_message'];} ?>">
+					<textarea rows="10" cols="150" type="text" name="school-principal-message" id="school-principal-message" oninput="validate_user_input(this,0,550,1)" value=""><?php if(!empty($result)){echo $result['school_principal_message'];} ?></textarea>
 					<?php 
 						if(isset($field_errors['school-principal-message'])){
 							echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["school-principal-message"].'</p>';
@@ -225,7 +225,7 @@
 
 				<div class="form-group">
 					<label for="school-brief-history">School Brief History</label>
-					<input type="text" name="school-brief-history" id="school-brief-history" oninput="validate_user_input(this,0,2000,1)" value="<?php if(!empty($result)){echo $result['school_brief_history'];} ?>">
+					<textarea rows="18" cols="150" type="text" name="school-brief-history" id="school-brief-history" oninput="validate_user_input(this,0,2000,1)" value=""><?php if(!empty($result)){echo $result['school_brief_history'];} ?></textarea>
 					<?php 
 						if(isset($field_errors['school-brief-history'])){
 							echo '<p class="bg-red fg-white pl-5 p-2 d-inherit w-100">'.$field_errors["school-brief-history"].'</p>';
