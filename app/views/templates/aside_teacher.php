@@ -3,7 +3,7 @@
 		<nav class="nav fs-18">
 			<ul class="d-flex flex-col" id="aside_nav">
 				<li class="nav-item aside-li">
-					<a href="<?php echo set_url('dashboard'); ?>" class="nav-link active">
+					<a href="<?php echo set_url('teacher/dashboard'); ?>" class="nav-link active">
 						<i class="fas fa-chart-line"></i>Dashbord
 					</a>
 				</li>
