@@ -323,12 +323,12 @@ function subject_grades_pie(){
 			        datasets: [{
 			            label: '# of students',
 			            data: [response.A,response.B,response.C,response.S,response.F],
-			          	backgroundColor: get_color_array(5,0.5),
-			            borderColor: get_color_array(5,0.8),
+			          	backgroundColor: ["#008000","#9ACD32","#CDBA00","#E86100","#FF0000"],
+			            borderColor: "#FFFFFF",
 			            borderWidth: 1,
-			            hoverBackgroundColor:get_color_array(5,1),
+			            hoverBackgroundColor:["#007300","#8BB92D","#B4A300","#CF5600","#E60000"],
 			            hoverboderwidth:3,
-			            hoverbodercolor: get_color_array(5,1)
+			            hoverbodercolor: "#FFFFFF"
 			        }]
 			    },
 			    options: {

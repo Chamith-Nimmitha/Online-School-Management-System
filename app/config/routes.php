@@ -58,6 +58,7 @@
 	$routes['teacher/interviews'] = "teacher/interview_list";
 	$routes['teacher/timetable'] = "teacher/teacher_timetable";
 	$routes['teacher/timetable/$1'] = "teacher/teacher_timetable/$1";
+	$routes['teacher/dashboard'] = "teacher/teacher_dashboard";
 
 	//classroom routes
 	$routes['classroom/list'] = "classroom/classroom_list";
