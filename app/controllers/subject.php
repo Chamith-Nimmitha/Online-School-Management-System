@@ -55,6 +55,55 @@
                 unset($_POST);
             }
 
+            //Uploading a csv file
+            if(isset($_POST["upload"]))
+            {
+                if($_FILES['file']['name'])
+                {
+                    $filename = explode(".", $_FILES['file']['name']);
+
+                    if($filename[1] == 'csv')
+                    {
+                        $handle = fopen($_FILES['file']['tmp_name'], "r");
+
+                        while($dataset = fgetcsv($handle))
+                        {
+                            $insert = array();
+
+                            $insert["name"] = $dataset[0];
+                            $insert["grade"] = $dataset[1];
+                            $insert["medium"] = $dataset[2];
+                            $insert["type"] = $dataset[3];
+                            $insert["category"] = $dataset[4];
+                            $insert["code"] = $dataset[5];
+
+                            $this->load->model("subjects");
+                            //$result = $this->load->subjects->insert_data($data0);
+                            $result = $this->load->subjects->register($insert);
+
+                            if($result)
+                            {
+                                //$info = "File Uploaded Successfully";
+                                //$_SESSION['info'] = $info;
+                                $data['info'] = "Subject registration success.";
+                            }
+                            else
+                            {
+                                //$info = "File Uploading Fail";
+                                $errors['registration'] = "Already Registered.";
+                            }
+                            unset($_POST);
+                        }
+                        
+                    }
+
+                    fclose($handle);
+                }
+                
+            }
+
+
+
             $data['errors'] = $errors;
             $data['oparation'] = "register";
             $this->view_header_and_aside();

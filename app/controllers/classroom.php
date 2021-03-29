@@ -36,6 +36,62 @@
 				}
 			}
 
+			//Uploading a csv file
+            if(isset($_POST["upload"]))
+            {
+                if($_FILES['file']['name'])
+                {
+                    $filename = explode(".", $_FILES['file']['name']);
+
+                    if($filename[1] == 'csv')
+                    {
+                        $handle = fopen($_FILES['file']['tmp_name'], "r");
+
+                        while($dataset = fgetcsv($handle))
+                        {
+							$details = array();
+							$data0 = array();
+
+							$data0["section"] = $dataset[0];
+							$data0["grade"] = $dataset[1];
+							$data0["class"] = $dataset[2];
+							$data0["class_teacher"] = $dataset[3];
+							//$data0["description"] = $dataset[4];
+
+
+                            $details["section_id"] = $data0["grade"];
+                           // $details["grade"] = $dataset[1];
+                            $details["class"] = $data0["class"];
+                            $details["class_teacher_id"] = $data0["class_teacher"];
+                           // $details["description"] = $dataset[4];
+                           // $insert["code"] = $dataset[5];
+
+                            $this->load->model("classroom");
+                            //$result = $this->load->subjects->insert_data($data0);
+                            $result = $this->load->classroom->register($details);
+
+                            if($result)
+                            {
+                                //$info = "File Uploaded Successfully";
+                                //$_SESSION['info'] = $info;
+                                $data['info'] = "Classrooms registration success.";
+                            }
+                            else
+                            {
+                                //$info = "File Uploading Fail";
+                                $errors['registration'] = "Already Registered.";
+                            }
+                           // unset($_POST);
+                        }
+                        
+                    }
+
+                    fclose($handle);
+                }
+                
+            }
+
+
 			$teachers = $this->load->teachers->get_not_class_teacher_list();
 			if(!$teachers){
 				echo "Query failed.";
