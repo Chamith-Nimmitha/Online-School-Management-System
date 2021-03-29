@@ -10,20 +10,20 @@
 		}
 	?>
 	<div class="row">
-		<div class="col-6 d-flex flex-col mb-1 border b-rad justify-content-start align-items-start mt-1" >
+		<div class="col-6 d-flex flex-col mb-1 p-5 b-rad justify-content-start align-items-start mt-1" >
 			 			 	<div class="row justify-content-center align-items-center">
 					<div class="bg-navyblue1 fs-20 fs-white border b-rad mt-1">
 					TimeTable
 				</div>
 				</div>
-		<div class=" mb-1">
+		<div class=" mb-1 w-100">
 			<?php if(strtolower($cur_day)!=='sat' && strtolower($cur_day)!=='sun'){?>
-			<table class="table-strip-dark text-center m-1" style="width: 178%" >
+			<table class="w-100 table-strip-dark text-center m-1"  >
 				<thead>
 					<tr>
-						<th style="width: 100px;">Time\Day</th>
+						<th class="w-50">Time\Day</th>
 						<?php 
-								echo '<th style="width:100px;height:50px">'.$cur_day.'</th>';
+								echo '<th style=height:50px">'.$cur_day.'</th>';
 						?>
 
 					</tr>
@@ -84,16 +84,19 @@
 	</div>
 
 	<div class="col-6">
-	<div class="col-12 d-flex flex-col justify-content-end border b-rad">
+	<div class="col-12 d-flex flex-col justify-content-start border b-rad">
  <!-- #school-statistics -->
- 		<div class="col-12  justify-content-center align-items-center">
+ 		<div class="col-12 flex-col  justify-content-center align-items-center">
  			 	<div class="row justify-content-center align-items-center mb-1">
 					<div class="bg-navyblue1 fs-20 fs-white border b-rad">
-					Notice Board
+						Classroom Notice Board
+					</div>
 				</div>
-				</div>
-		<?php if(isset($show_notice_board) && ($show_notice_board ===1)){ ?>
+				<?php if(!isset($show_notice_board) || ($show_notice_board !==1)){ ?>
+					<p class="mt-5 bg-red fg-white p-2 w-75 text-center">You haven't Classroom.</p>
+				<?php } ?>
 		<div>
+	<?php if(isset($show_notice_board) && ($show_notice_board ===1)){ ?>
 			<!-- ADD A NEW NOTICE -->
 			<div id="add_new_classroom_notice" class="d-none p-1 justify-content-end align-items-end border">
 

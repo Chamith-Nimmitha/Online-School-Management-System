@@ -4,7 +4,7 @@
         <hr class="topic-hr w-100">
     </div>
     <div id="attendance_notification" class="d-none w-75">
-        <p style="background: #eee;" class="w-100 p-2 text-center fg-red"> </p>
+        <p  class="w-100 p-2 bg-green fg-white text-center"> </p>
     </div>
     <div class="d-flex justify-content-center align-items-center">
         <form id="attendance_filter" class="d-flex align-items-center col-12">

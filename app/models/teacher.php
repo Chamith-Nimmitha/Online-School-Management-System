@@ -171,7 +171,7 @@
         	$t = new TimetableModel();
         	$result = $t->set_by_user_id($this->id,"teacher");			
         	if(!$result){
-        		$t->create($teacher_id,"teacher","FREE");
+        		$t->create($this->id,"teacher","FREE");
         	}
         	$timetable = $t->get_timetable();
         	$timetable_id = $t->get_id();

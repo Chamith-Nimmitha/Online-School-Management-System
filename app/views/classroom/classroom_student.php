@@ -2,13 +2,13 @@
 <div id="content" class="col-11 col-md-8 col-lg-9 flex-col align-items-center justify-content-start">
 
 	<?php 
-		if(isset($error) || (isset($update_errors) && !empty($update_errors))){
+		if((isset($error)  && !empty($errors)) || (isset($update_errors) && !empty($update_errors))){
 			echo "<p class='w-75 p-2 bg-red fg-white'>";
-			if(isset($error)){
+			if((isset($error)  && !empty($errors))){
 				echo $error. "<br/>";
 			}
 
-			if(isset($update_errors)){
+			if((isset($update_errors) && !empty($update_errors))){
 				foreach ($update_errors as $e) {
 					echo $e. "<br/>";
 				}
@@ -16,7 +16,7 @@
 			echo "</p>";
 		}
 
-		if(isset($info)){
+		if(isset($info) && !empty($info)){
 			echo "<p class='bg-green fg-white p-2 w-75 text-center'>";
 			echo $info."<br/>";
 			echo "</p>";

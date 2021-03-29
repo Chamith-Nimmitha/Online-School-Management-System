@@ -75,7 +75,9 @@
 				return;
 			}
 			$role = $_SESSION['role'];
-
+			$error = "";
+			$info = "";
+			$update_errors = [];
 			
 			if($role === "teacher"){
 				$this->load->model("classroom");
@@ -155,6 +157,9 @@
 					$data["classroom_info"] = [];
 				}
 
+				$data['info'] = $info;
+				$data['error'] = $error;
+				$data['update_errors'] = $update_errors;
 				$this->view_header_and_aside();
 				if($role == "admin"){
 					$this->load->view("classroom/classroom_student",$data);
@@ -260,6 +265,8 @@
 				$this->load->view("templates/footer");
 				return;
 			}
+			$error = "";
+			$info = "";
 			$role = $_SESSION['role'];
 			$con = new Database();
 			if(empty($classroom_id)){
@@ -270,8 +277,7 @@
 				}
 			}
 			if(empty($classroom_id)){
-				echo "classroom not found";
-				exit();
+				$error =  "classroom not found";
 			}
 
 			// only admin can add students
@@ -286,7 +292,7 @@
 					}
 				}
 				if(empty($update_errors)){
-					$info = "Removed successful.";
+					$info = "Student Assign Success.";
 				}
 			}
 			$this->load->model("classroom");
@@ -296,8 +302,12 @@
 			$query = "SELECT `id`,`name_with_initials`,`email`,`contact_number`,`classroom_id` FROM `student` WHERE `classroom_id` IS NULL && `grade`=".$data['classroom_info']['grade']." LIMIT 10" ;
 			$result = $con->pure_query($query);
 			if(!$result){
-				echo "query failed";
+				$error =  "Oparetion Failed. Please try again.";
+			}else{
+
 			}
+			$data['error'] = $error;
+			$data['info'] = $info;
 			$data['student_list'] = $result->fetchAll();
 			$this->view_header_and_aside();
 			$this->load->view("classroom/classroom_assign_student",$data);
@@ -461,14 +471,9 @@
 					echo "classroom not found.";
 					exit();
 				}
-				$section = $_POST['section'];
-				$grade = $_POST['grade'];
-				$class = addslashes(trim($_POST['class']));
 				$class_teacher_id = $_POST['class_teacher'];
 				$description = addslashes(trim($_POST['description']));
 
-				$details['section_id'] = $grade;
-				$details['class'] = $class;
 				if(!empty($class_teacher_id)){
 					$details['class_teacher_id'] = $class_teacher_id;
 				}else{
