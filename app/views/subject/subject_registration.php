@@ -93,6 +93,21 @@
             }
          ?>
         </div>
+
+        
     </form>
+
+    <form  id="upload_marks" class="col-12 d-flex justify-content-center" method="POST" enctype="multipart/form-data" action="<?php echo set_url("subject/registration");?>">
+    <?php 
+        if($_SESSION['role']=='admin'){
+            echo '<div class="d-flex flex-row w-75 justify-content-center align-items-center">';
+            echo '<label></b>Upload Subjects&nbsp&nbsp&nbsp</b></label>';
+            echo '<input type="file" name="file" id="file">';
+            echo '<input type="submit" name="upload" id="upload" onclick="//mark_classroom_attendance()" class="btn btn-blue m-1">';
+            echo '</div>';
+        }
+    ?>
+    </form>
+
  </div>
  
