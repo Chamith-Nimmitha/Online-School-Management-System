@@ -9,7 +9,7 @@
 				</li>
 				<li class="nav-item aside-li">
 					<a href="<?php echo set_url('parent/student/list'); ?>" class="nav-link">
-						<i class="fas fa-user-graduate"></i>Students List
+						<i class="fas fa-user-graduate"></i>Children List
 					</a>
 				</li>
 				<li id="settings-li" class="nav-item aside-li">
