@@ -99,6 +99,7 @@
 	$routes['student/view/parent/$2'] = "user/profile_view/$1/$2";
 	$routes['student/csv'] = "student/student_upload";
 	$routes['student/marks/report/$1'] = "marks/marks_report/$1";
+	$routes['student/dashboard'] = "student/student_dashboard";
 
 	//admin route --> only admin can access
 	$routes['userrole'] = "userrole/permission";
@@ -112,6 +113,7 @@
 	$routes['parent/student/list'] = "parents/student_list";
 	$routes['parent/student/list/$1'] = "parents/student_list/$1";
 	$routes['parent/delete/$1'] = "parents/delete/$1";
+	$routes['parent/dashboard'] = "parents/parent_dashboard";
 
 	// interview routes
 	$routes['interview/set/$1'] = "interview/set/$1";

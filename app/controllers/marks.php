@@ -94,6 +94,7 @@
 			}
 			$data['y'] = $y;
 
+			if(isset($r['classroom_id']) && !empty($r['classroom_id'])){
 			for ($i=1; $i <=3 ; $i++) { 
 				
 					$rank = $this->load->marks-> get_rank($i,$r['classroom_id']);
@@ -104,6 +105,7 @@
 							$student_rank[$i.'-term'] = $r['rank'];
 						}
 					}
+			}
 			}
 			if(isset($student_rank)){
 				$data['student_rank']  =$student_rank;

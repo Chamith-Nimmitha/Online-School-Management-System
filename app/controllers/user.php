@@ -48,7 +48,7 @@
 							$_SESSION["username"]=$user['first_name'];
 							$_SESSION["profile_photo"]=$user['profile_photo'];
 							$_SESSION['login_msg'] = "Login Successful";
-							header('Location:'.set_url("dashboard"));
+							header('Location:'.set_url("student/dashboard"));
 						}else if($_SESSION["role"]==="teacher"){
 							$user = $this->load->user->get_user_data("teacher",$email);
 							$_SESSION["user_id"]=$user['id'];
@@ -62,7 +62,7 @@
 							$_SESSION["username"]=$user['name'];
 							$_SESSION["profile_photo"]=$user['profile_photo'];
 							$_SESSION['login_msg'] = "Login Successful";
-							header('Location:'.set_url("dashboard"));
+							header('Location:'.set_url("parent/dashboard"));
 						}else if($_SESSION["role"]==="admin"){
 							$user = $this->load->user->get_user_data("admin",$email);
 							$_SESSION["user_id"]=$user['id'];
