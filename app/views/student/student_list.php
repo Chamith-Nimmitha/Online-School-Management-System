@@ -129,18 +129,7 @@
 					echo "</table>";
 				 ?>
 			</div>
-			<center>
-			    <div>
-	                <a class="btn btn-blue" onClick="window.print()">Download as a PDF</a>
-			    </div>
-			</center>
 			
-			<center>
-		        <div>
-                    <a class="btn btn-blue" href = "teacher/csv">Upload Teachers' Details</a>
-			
-		        </div>
-		    </center>
 
 
 			<div id="pagination" class="col-12">

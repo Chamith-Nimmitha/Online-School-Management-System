@@ -82,21 +82,7 @@
   ?>
 		</div>  
         <br>
-		<div>
-            <a class="btn btn-blue" onClick="window.print()">Download as a PDF</a>
-			
-		</div>
-
-		<center>
-		<div>
-            <a class="btn btn-blue" href = "teacher/csv">Upload Teachers' Details</a>
-			
-		</div>
-		</center>
-
-		<form>
-            <input type="button" value="Click Me" onclick="codespeedy()">
-        </form>
+		
         
 		<div id="pagination" class="col-12">
 			<span>Number of results found : <span id="row_count"><?php echo $count; ?></span></span>
