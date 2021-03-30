@@ -1,16 +1,19 @@
 <div id="content" class="col-12 flex-col align-items-center justify-content-start fs-14">
+	<?php
+		if(isset($error) && !empty($error)){
+			echo "<p class='w-75 bg-red fg-white p-2 text-center'>";
+			echo $error ."<br/>";
+			echo "</p>";
+		}
+
+		if(isset($info) && !empty($info)){
+			echo "<p class='w-75 bg-green fg-white p-2 text-center'>";
+			echo $info ."<br/>";
+			echo "</p>";
+		}
+		?>
 	<div class="row align-items-center justify-content-center">
 		<div class="col-3 align-items-center justify-content-start">
-			<?php
-			
-			if(isset($error)){
-			 echo $error;
-			}
-			
-			if(isset($msg)){
-			 echo $msg ;
-			}
- 			?>
 
 			<form action="" method="post" enctype="multipart/form-data" >
 	

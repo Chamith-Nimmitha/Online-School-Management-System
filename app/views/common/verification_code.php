@@ -1,13 +1,15 @@
 <div id="content" class="col-12 flex-col align-items-center justify-content-start fs-14">
 	<div class="row align-items-center justify-content-center">
 		<div class="col-3 align-items-center justify-content-start">
+			<?php
+				if(isset($error) && !empty($error)){ 
+					echo "<p class='w-75 bg-red fg-white p-2 text-center'>";
+					echo $error ."<br/>";
+					echo "</p>";
+				}
+			?>
 
 			<form action="" method="post" enctype="multipart/form-data" >
-				<?php
-					if(isset($error)){ 
-					echo $error;
-				}
-				?>
 				<fieldset class="col-12 justify-content-center align-items-center">
 				<legend>Verification Code</legend>
 				<div class="form-group">
