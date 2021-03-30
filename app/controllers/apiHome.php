@@ -40,7 +40,7 @@
 
 		// update a notice
 		public function update_notice($notice_id){
-			$this->load->model("notice");
+			$this->load->model("home");
 
 			$notice['text'] = trim($_POST['text']);
 			$file = NULL;

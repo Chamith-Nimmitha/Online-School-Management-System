@@ -22,9 +22,16 @@
 		public function index(){
 			$this->view_header_and_aside();
 			$rls_set = $this->load->home->get_noticeboard_data();
+			$data = [];
+			if(isset($_SESSION['del_msg'])){
+				$data['del_msg'] = $_SESSION['del_msg'];
+				unset($_SESSION['del_msg']);
+			}
+
 			if($rls_set){
-				$rls_set = $rls_set->fetchAll();
-				$this->load->view("common/home",["header"=>$this->header_data,"notices"=>$rls_set]);
+				$data['header'] = $this->header_data;
+				$data['notices'] = $rls_set->fetchAll();
+				$this->load->view("common/home",$data);
 				$this->load->view("templates/footer");
 			}else{
 				echo "header data not found.";
@@ -403,6 +410,18 @@
 			$this->view_header_and_aside();
 			$this->load->view("common/settings_website");
 			$this->load->view("templates/footer");
+		}
+
+		// delete school notice
+		public function delete_notice($notice_id){
+			$this->load->model("home");
+			$result = $this->load->home->delete_notice($notice_id);
+			if($result){
+				$_SESSION['del_msg'] = "Notice {$notice_id} deleted.";
+			}else{
+				$_SESSION['del_msg'] = "Deletion failed.";
+			}
+			header("Location: ".set_url("") );
 		}
 
 

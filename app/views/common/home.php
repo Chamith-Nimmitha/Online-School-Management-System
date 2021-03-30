@@ -1,6 +1,10 @@
-
 <div class="bg-white">
 
+  <?php  
+      if(isset($del_msg) && !empty($del_msg)){
+        echo "<script>show_snackbar('{$del_msg}')</script>";
+      }
+    ?>
   <div class="row fs-15 bg-darkblue " >
     <div class="col-10 hmpg ">
       <ul>
@@ -106,18 +110,18 @@
     <div class="col-4 h-60 justify-content-start align-items-start bg-white">
       
       <!-- ADD A NEW NOTICE -->
-      <div id="add_new_school_notice" class="d-none">
+      <div id="add_new_school_notice" class="d-none border b-rad">
         <div id="noticeboard_title" class="w-100">
           <!-- <button type="button" class="btn btn-blue p-1 ml-5" onclick="show_available_notice('add_new_classroom_notice','classroom_notice_board')">Back</button> -->
           <button type="button" class="btn btn-blue p-1 ml-5" onclick="location.reload()">Back</button>
           <h3>ADD NEW NOTICE</h3>
         </div>
         <div class="form-wrapper">
-          <form method="POST" onSubmit="add_new_school_notice(this)">
-            <p class="text-center" id="form_state"></p>
+          <form method="POST" onSubmit="add_new_school_notice(this)" class="w-100">
+            <p class="text-center fg-white" id="form_state"></p>
             <div class="form-group">
               <label for="text">Text</label>
-              <textarea type="text" name="text" id="text" placeholder="Text"></textarea>
+              <textarea type="text" name="text" id="text" class="w-100 p-2" placeholder="Text"></textarea>
             </div>
             <div class="form-group">
               <label for="img">Image</label>
@@ -136,7 +140,7 @@
       <!-- END OF ADD A NEW NOTICE -->
 
       <!-- UPDATE NOTICE -->
-      <div id="update_school_notice" class="d-none">
+      <div id="update_school_notice" class="d-none border b-rad">
         <div id="noticeboard_title" class="w-100">
           <!-- <button type="button" class="btn btn-blue p-1 ml-5" onclick="show_available_notice('update_classroom_notice','classroom_notice_board')">Back</button> -->
           <button type="button" class="btn btn-blue p-1 ml-5" onclick="location.reload()">Back</button>
@@ -145,10 +149,10 @@
         </div>
         <div class="form-wrapper">
           <form action="" method="POST" data-notice="" onSubmit="update_school_notice(this)">
-            <p class="text-center" id="form_state"></p>
+            <p class="text-center fg-white" id="form_state"></p>
             <div class="form-group p-0 pr-2 pl-2">
               <label for="text">Text</label>
-              <input type="text" name="text" id="text" placeholder="Text">
+              <textarea type="text" name="text" id="text" class="w-100 p-2" placeholder="Text"></textarea>
             </div>
             <div class="form-group  p-0 pr-2 pl-2">
               <label for="img">Image</label>
