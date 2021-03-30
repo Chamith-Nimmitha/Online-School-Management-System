@@ -145,7 +145,7 @@
           <!-- <button type="button" class="btn btn-blue p-1 ml-5" onclick="show_available_notice('update_classroom_notice','classroom_notice_board')">Back</button> -->
           <button type="button" class="btn btn-blue p-1 ml-5" onclick="location.reload()">Back</button>
           <h3>UPDATE NOTICE</h3>
-          <a href="" class="btn btn-blue p-0 pr-2 pl-2 mr-2 mr-2" onclick="delete_school_notice(this,'Delete Message','Are you sure?')">Del</a>
+          <a href="" class="btn btn-red p-0 pr-2 pl-2 mr-2 mr-2" onclick="delete_school_notice(this,'Delete Message','Are you sure?')">Del</a>
         </div>
         <div class="form-wrapper">
           <form action="" method="POST" data-notice="" onSubmit="update_school_notice(this)">
@@ -174,7 +174,7 @@
 
         <div class="row justify-content-around align-items-start fs-white">
           <h3>School Notice Board</h3>
-          <?php if($_SESSION['role'] == 'admin'){ ?>
+          <?php if(isset($_SESSION['role']) && $_SESSION['role'] == 'admin'){ ?>
             <div>
               <button class="btn btn-blue" onclick="add_new_school_notice_form('school_noticeboard','add_new_school_notice')">Add</button>
               <button class="btn btn-blue" onclick="update_school_notice_form('school_noticeboard','update_school_notice')">Update</button>
