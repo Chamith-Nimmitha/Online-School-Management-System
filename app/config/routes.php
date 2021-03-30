@@ -113,6 +113,7 @@
 	$routes['parent/student/list'] = "parents/student_list";
 	$routes['parent/student/list/$1'] = "parents/student_list/$1";
 	$routes['parent/delete/$1'] = "parents/delete/$1";
+	$routes['parent/dashboard'] = "parents/parent_dashboard";
 
 	// interview routes
 	$routes['interview/set/$1'] = "interview/set/$1";
