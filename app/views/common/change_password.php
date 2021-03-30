@@ -22,17 +22,19 @@
 
 					<div class="form-group">
 						<label for="email">New Password</label>
-						<input type="password" name="password" id="password" placeholder="password">
+						<input type="password" name="password" id="password" placeholder="Password" oninput="validate_password(this,'submit')">
+						<p class="bg-red fg-white p-2 d-none"></p>
 					</div>
 
 					<div class="form-group">
 						<label for="email">Confirm Password</label>
-						<input type="password" name="cpassword" id="cpassword" placeholder="password">
+						<input type="password" name="cpassword" id="cpassword" placeholder="Confirm Password" oninput="validate_password(this,'submit')">
+						<p class="bg-red fg-white p-2 d-none"></p>
 					</div>
 
 					<div class="form-group ">
 						<div class="row justify-content-center align-items-center">
-							<input type="submit" value="submit" name="submit" class="m-2 btn btn-blue" size="50">
+							<input type="submit" id="submit" value="submit" name="submit" class="m-2 btn btn-blue" size="50">
 						</div>
 					</div>
 
