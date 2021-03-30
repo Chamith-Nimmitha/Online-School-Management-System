@@ -92,7 +92,7 @@ function update_school_notice_form(this_id,id){
 			update_form.querySelector("#img").value = data.image;
 		}
 	}).catch((err)=>{
-		console.err(err);
+		console.error(err);
 	})
 }
 

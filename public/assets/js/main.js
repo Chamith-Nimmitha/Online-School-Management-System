@@ -496,11 +496,12 @@ function validate_email(ele,min,max,required) {
 	validate_user_input(ele,min,max,required,errors);
 }
 
-function validate_password(ele){
+function validate_password(ele,sbt_btn_id=null){
 	var val = ele.value.trim();
 	var contain_upper = false;
 	var contain_lower = false;
 	var contain_number = false;
+	var contain_symbol = false;
 	var number = /^[0-9]$/;
 	var lower = /^[a-z]$/;
 	var upper = /^[A-Z]$/;
@@ -516,6 +517,8 @@ function validate_password(ele){
 				contain_lower = true;
 			}else if(val[i].match(upper)){
 				contain_upper = true;
+			}else{
+				contain_symbol = true;
 			}
 		}
 	}
@@ -526,21 +529,44 @@ function validate_password(ele){
 			error = "Password must contain lowercase letter.";
 		}else if(!contain_upper){
 			error = "Password must contain uppercase letter.";
+		}else if(!contain_symbol){
+			error = "Password must contain symbol.";
 		}
 	}
-	var p = ele.parentElement.nextElementSibling;
+	var p = undefined;
+	
+	if(ele.nextElementSibling.nodeName == "P"){
+		p = ele.nextElementSibling;
+	}else{
+		console.log("sssjjj")
+		p = ele.parentElement.nextElementSibling;
+	}
 	if(error.length != 0){
 		if(p.nodeName == "P"){
 			p.classList.remove("d-none");
 			p.classList.add("d-block");
 			p.innerHTML = error;
+
+		}
+		if(sbt_btn_id != null){
+			let sbt_btn = document.getElementById(sbt_btn_id);
+			sbt_btn.classList.remove("btn-blue");
+			sbt_btn.classList.add("btn-gray");
+			sbt_btn.setAttribute("disabled","disabled");
 		}
 	}else{
 		if(p.nodeName == "P"){
-			var p = ele.parentElement.nextElementSibling;
 			p.classList.remove("d-block");
 			p.classList.add("d-none");
 			p.innerHTML = "";
+		}
+		if(sbt_btn_id != null){
+			let sbt_btn = document.getElementById(sbt_btn_id);
+			sbt_btn.classList.remove("btn-gray");
+			sbt_btn.classList.add("btn-blue");
+			if(sbt_btn.hasAttribute("disabled")){
+				sbt_btn.removeAttribute("disabled");	
+			}
 		}
 	}
 }

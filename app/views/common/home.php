@@ -117,7 +117,7 @@
           <h3>ADD NEW NOTICE</h3>
         </div>
         <div class="form-wrapper">
-          <form method="POST" onSubmit="add_new_school_notice(this)" class="w-100">
+          <form method="POST" onSubmit="add_new_school_notice(this)" enctype="multipart/form-data" class="w-100">
             <p class="text-center fg-white" id="form_state"></p>
             <div class="form-group">
               <label for="text">Text</label>
@@ -148,7 +148,7 @@
           <a href="" class="btn btn-red p-0 pr-2 pl-2 mr-2 mr-2" onclick="delete_school_notice(this,'Delete Message','Are you sure?')">Del</a>
         </div>
         <div class="form-wrapper">
-          <form action="" method="POST" data-notice="" onSubmit="update_school_notice(this)">
+          <form action="" method="POST" data-notice="" enctype="multipart/form-data" onSubmit="update_school_notice(this)">
             <p class="text-center fg-white" id="form_state"></p>
             <div class="form-group p-0 pr-2 pl-2">
               <label for="text">Text</label>
