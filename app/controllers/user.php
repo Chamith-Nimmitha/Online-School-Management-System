@@ -350,6 +350,9 @@
 
 			$this->load->{$role}->set_by_id($user_id);
 			$result = $this->load->{$role}->get_data();
+			if($result && !empty($result)){
+				$_SESSION['change_email_id'] = $result['email'];
+			}
 			// load header and navbar
 			$this->view_header_and_aside();
 			// load profile page
@@ -409,40 +412,43 @@
 
 		//forget password page
 		public function forget_password(){
-			$this->view_header_and_aside();
-				if(isset($_POST['submit'])){
-					if(!empty($_POST['email']) && valid_email($_POST['email']) ){
-						//session_destroy();
-						session_start();
-						$_SESSION['change_email_id']=$_POST['email'];
-						header('Location:'.set_url("verification_code"));
-					}
-					else{
-						set_url("verfication_code");
-					}
+			$error = "";
+			if(isset($_POST['submit'])){
+				if(!empty($_POST['email']) && valid_email($_POST['email']) ){
+					$_SESSION['change_email_id']=$_POST['email'];
+					header('Location:'.set_url("verification_code"));
 				}
+				else{
+					$error = "Invalid Email";
+				}
+			}
+			$this->view_header_and_aside();
 			$this->load->view("common/forget_password",['header'=>$this->header_data]);
 			$this->load->view("templates/footer");
 		}
 		//for verification_code page
 		public function verification_code(){
-			$this->view_header_and_aside();
-				if(isset($_POST['submit'])){
-					if(isset($_POST['ver-code']) && $_POST['ver-code']=='abc@1234'){
-						header('Location:'.set_url("change_password"));
-					}
-					else{
-						$error="Incorrect Verification Code";
-					}
-
+			$error = "";
+			if(isset($_POST['submit'])){
+				if(isset($_POST['ver-code']) && $_POST['ver-code']=='abc@1234'){
+					header('Location:'.set_url("change_password"));
 				}
-			$this->load->view("common/verification_code",['header'=>$this->header_data]);
+				else{
+					$error="Incorrect Verification Code";
+				}
+
+			}
+			$data["header"] = $this->header_data;
+			$data["error"] = $error;
+			$this->view_header_and_aside();
+			$this->load->view("common/verification_code",$data);
 			$this->load->view("templates/footer");
 		}
 
 		//for change_password page
 		public function change_password(){
-			$this->view_header_and_aside();
+			$info = "";
+			$error = "";
 			if(isset($_POST['submit'])){
 				if((isset($_POST['password']) && isset($_POST['cpassword']))  && ($_POST['password']==$_POST['cpassword']) ){
 					$this->load->model("user");
@@ -453,16 +459,19 @@
 
 					$con = new Database();
 					$con->update("user",array("password"=>$hashed_password),array("email"=>$_SESSION["change_email_id"]));
-					session_destroy();
-					$msg="Your Password Changed successfully";
+					$info="Your Password Changed successfully";
 				}
 
 				else{
 					$error ='Please Check Your Password';
-					}
-
+				}
 			}
-			$this->load->view("common/change_password",['header'=>$this->header_data]);
+			$data["header"] = $this->header_data;
+			$data["error"] = $error;
+			$data["info"] = $info;
+
+			$this->view_header_and_aside();
+			$this->load->view("common/change_password",$data);
 			$this->load->view("templates/footer");
 
 		}

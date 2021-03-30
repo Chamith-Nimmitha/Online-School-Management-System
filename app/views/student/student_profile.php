@@ -99,7 +99,8 @@
 							<p class="bg-red fg-white pl-5 p-2 d-none w-100"></p>
 						</div>
 						<?php if($editable || $is_admin){ ?>
-							<div class="justify-content-end pr-5 col-12  d-flex">
+							<div class="justify-content-between pr-5 col-12  d-flex">
+								<a href="<?php echo set_url('verification_code'); ?>" class="btn btn-lightred p-1 fs-12" style="margin-left: 220px;">Change Password</a>
 								<input type="submit" value="save" name="submit" id="submit" class="btn btn-blue">
 							</div>
 						<?php } ?>

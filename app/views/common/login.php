@@ -33,12 +33,15 @@
      		 <div class="form-group">
       			<!-- <label for="password">Password (<a href="<?php echo set_url("forget_password");?> " class="d-inline-block t-d-none b-radius-10 pl-2 pr-2">Forget Password?</a>)</label>
         		<input type="password" name="password" id="password" placeholder="password" value="<?php if(isset($_COOKIE["password"])) { echo $_COOKIE["password"];} ?>" class="form-control"> -->
-        		<div class="test-field-outer">
+        		<div class="test-field-outer mb-0 pb-0">
 					<div class="test-field-inner col-12">
 						<i class="fas fa-key"></i>
 						<input type="password" name="password" id='password'  placeholder="password">
 						<label for="password" id="label"><span class="label-span">Password</span></label>
 					</div>
+				</div>
+				<div class="d-flex justify-content-end w-90">
+					<a href="<?php echo set_url('forget_password'); ?>" class="btn btn-lightred p-1 fs-12">Forget Password</a>
 				</div>
 
       		</div>
@@ -49,7 +52,7 @@
 	            </div>
 
 	            <div class="justify-content-center align-items-center text-center">
-	     			<input type="submit" name="submit" class="btn btn-blue"  value="Log In">
+	     			<input type="submit" name="submit" class="fs-16 btn btn-blue pl-5 pr-5"  value="Log In">
 	 			</div>
       		</div>
       		<div class="col-12 d-flex justify-content-center align-items-center fg-white bg-blue b-radius-5">
