@@ -33,13 +33,17 @@
     			    <caption class="p-5"><b>Teachers Attendance<br/><span id="attendance_date"><?php if(isset($date)){echo $date;}else{echo date("Y-m-d");} ?></span></b></caption>
     			    <thead>
     				    <tr>
-                            <th>No.</th>
-                            <th>ID</th>
-                            <th>NAME</th>
-                            <th>ATTENDANCE</th>
-                            <th>NOTE</th>
-                            <th>VIEW ATTENDANCE</th>
+                            <th rowspan="2">No.</th>
+                            <th rowspan="2">ID</th>
+                            <th rowspan="2">NAME</th>
+                            <th colspan="2">ATTENDANCE</th>
+                            <th rowspan="2">NOTE</th>
+                            <th rowspan="2">VIEW ATTENDANCE</th>
     				    </tr>
+                        <tr>
+                            <th style="border-top: 1px solid white;">Present</td>
+                            <th>Absent</td>
+                        </tr>
     			    </thead>  
                     <tbody id="tbody">
                         <?php 
@@ -50,13 +54,14 @@
                             <td class="text-center"><?php echo $i+1; ?></td>
                             <td><?php echo $teacher_list[$i]['id']; ?></td>
                             <td><?php echo $teacher_list[$i]['name_with_initials']; ?></td>
-                            <td class="d-flex flex-col">
-                                 <label for="present-<?php echo $teacher_list[$i]['id']; ?>">
-                                    <input type="radio" id="present-<?php echo $teacher_list[$i]['id']; ?>" name="attendance-<?php echo $teacher_list[$i]['id']; ?>" value="1" <?php if(isset($teacher_list[$i]['attendance']) && $teacher_list[$i]['attendance'] == 1){echo " checked='checked'";} ?> > Present
+                            <td>
+                                 <label class="p-2 pr-4 pl-4"  for="present-<?php echo $teacher_list[$i]['id']; ?>">
+                                    <input type="radio" id="present-<?php echo $teacher_list[$i]['id']; ?>" name="attendance-<?php echo $teacher_list[$i]['id']; ?>" value="1" <?php if(isset($teacher_list[$i]['attendance']) && $teacher_list[$i]['attendance'] == 1){echo " checked='checked'";} ?> >
                                 </label>
-                                <label for="absent-<?php echo $teacher_list[$i]['id']; ?>">
-                                    <input type="radio" id="absent-<?php echo $teacher_list[$i]['id']; ?>" name="attendance-<?php echo $teacher_list[$i]['id']; ?>" value="0" <?php if(isset($teacher_list[$i]['attendance']) && $teacher_list[$i]['attendance'] == 0){echo " checked='checked'";} ?> > Absent
-                                </label>
+                            </td>
+                            <td>
+                                <label class="p-2 pr-4 pl-4" for="absent-<?php echo $teacher_list[$i]['id']; ?>">
+                                    <input type="radio" id="absent-<?php echo $teacher_list[$i]['id']; ?>" name="attendance-<?php echo $teacher_list[$i]['id']; ?>" value="0" <?php if(isset($teacher_list[$i]['attendance']) && $teacher_list[$i]['attendance'] == 0){echo " checked='checked'";} ?> >                                </label>
                             </td>
                             <td><input type="text" name="note-<?php echo $teacher_list[$i]['id']; ?>" value="<?php if(isset($teacher_list[$i]['note'])) {echo $teacher_list[$i]['note'];} ?>"></td>
                             <td> <a href="<?php echo set_url("teacher/attendance/".$teacher_list[$i]['id']) ?>" class="btn btn-blue">View Report</a></td>
