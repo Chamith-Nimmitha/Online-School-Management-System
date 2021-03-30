@@ -41,8 +41,7 @@
 			if(!$result){
 				return;
 			}
-			$result = $classroom ->get_student_count();
-			$student_count = $result->fetch()['count'];
+			$student_count = $classroom ->get_student_count();
 			unset($classroom);
 
 			// get classroom attendance
@@ -77,12 +76,12 @@
 
 					foreach ($overrole_present as $result) {
 						if($result['count'] != 0){
-							$formatted_data["present_presentage"][$result['month']-1] = $result['count']/$student_count;
+							$formatted_data["present_presentage"][$result['month']-1] = round(($result['count']/$student_count));
 						}
 					}
 					foreach ($overrole_absent as $result) {
 						if($result['count'] != 0){
-							$formatted_data["absent_presentage"][$result['month']-1] = $result['count']/$student_count;
+							$formatted_data["absent_presentage"][$result['month']-1] = round(($result['count']/$student_count));
 						}
 					}
 				}else{
@@ -122,7 +121,7 @@
 							$week_no = ($result['week'] +1 - date("W", mktime(0,0,0,$month,1,$year)));
 						}
 						if( $result['count'] != 0){
-							$formatted_data["present_presentage"][$week_no] = $result['count']/$student_count;
+							$formatted_data["present_presentage"][$week_no] = round(($result['count']/$student_count));
 						}
 					}
 					foreach ($overrole_absent as $result) {
@@ -132,7 +131,7 @@
 							$week_no = ($result['week'] +1 - date("W", mktime(0,0,0,$month,1,$year)));
 						}
 						if ($result['count'] != 0) {
-							$formatted_data["absent_presentage"][$week_no] = $result['count']/$student_count;
+							$formatted_data["absent_presentage"][$week_no] = round(($result['count']/$student_count));
 						}
 					}
 				}
