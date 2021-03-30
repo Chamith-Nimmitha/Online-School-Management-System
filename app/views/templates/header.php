@@ -63,7 +63,7 @@
 					<ul class="nav">
 						<li class="nav-item"><a href="'.set_url("dashboard").'" class="nav-link">Dashboard</a></li>
 						<li class="nav-item"><a href="'.set_url("profile").'" class="nav-link">Profile</a></li>
-						<li class="nav-item"><a href="" class="nav-link">Notifications</a></li>
+						<li class="nav-item"><a href="'.set_url('settings/website').'" class="nav-link">Settings</a></li>
 						<li class="nav-item"><a href="' . set_url('logout').'" class="nav-link">Log out</a></li>
 					</ul>
 				</div>

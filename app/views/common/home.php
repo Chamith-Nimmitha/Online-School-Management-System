@@ -105,38 +105,98 @@
 
     <div class="col-4 h-60 justify-content-start align-items-start bg-white">
       
-      <div class="notice-board col-12 h-40 border b-rad bg-navyblue1 ">
+      <!-- ADD A NEW NOTICE -->
+      <div id="add_new_school_notice" class="d-none">
+        <div id="noticeboard_title" class="w-100">
+          <!-- <button type="button" class="btn btn-blue p-1 ml-5" onclick="show_available_notice('add_new_classroom_notice','classroom_notice_board')">Back</button> -->
+          <button type="button" class="btn btn-blue p-1 ml-5" onclick="location.reload()">Back</button>
+          <h3>ADD NEW NOTICE</h3>
+        </div>
+        <div class="form-wrapper">
+          <form method="POST" onSubmit="add_new_school_notice(this)">
+            <p class="text-center" id="form_state"></p>
+            <div class="form-group">
+              <label for="text">Text</label>
+              <textarea type="text" name="text" id="text" placeholder="Text"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="img">Image</label>
+              <input type="file" name="img" id="img" placeholder="Image">
+            </div>
+            <div class="form-group">
+              <label for="reference">Reference</label>
+              <textarea name="reference" id="reference" class="w-100 p-2"  rows="2"></textarea>
+            </div>
+            <div class="w-100 d-flex justify-content-end">
+              <input type="submit" value="Save" class="btn btn-blue">
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- END OF ADD A NEW NOTICE -->
 
-        <div class="row justify-content-center align-items-start fs-white">
+      <!-- UPDATE NOTICE -->
+      <div id="update_school_notice" class="d-none">
+        <div id="noticeboard_title" class="w-100">
+          <!-- <button type="button" class="btn btn-blue p-1 ml-5" onclick="show_available_notice('update_classroom_notice','classroom_notice_board')">Back</button> -->
+          <button type="button" class="btn btn-blue p-1 ml-5" onclick="location.reload()">Back</button>
+          <h3>UPDATE NOTICE</h3>
+          <a href="" class="btn btn-blue p-0 pr-2 pl-2 mr-2 mr-2" onclick="delete_school_notice(this,'Delete Message','Are you sure?')">Del</a>
+        </div>
+        <div class="form-wrapper">
+          <form action="" method="POST" data-notice="" onSubmit="update_school_notice(this)">
+            <p class="text-center" id="form_state"></p>
+            <div class="form-group p-0 pr-2 pl-2">
+              <label for="text">Text</label>
+              <input type="text" name="text" id="text" placeholder="Text">
+            </div>
+            <div class="form-group  p-0 pr-2 pl-2">
+              <label for="img">Image</label>
+              <input type="file" name="img" id="img" placeholder="Image">
+            </div>
+            <div class="form-group  p-0 pr-2 pl-2">
+              <label for="reference">Reference</label>
+              <textarea name="reference" id="reference" class="w-100 p-2"  rows="2"></textarea>
+            </div>
+            <div class="w-100 d-flex justify-content-end">
+              <input type="submit" value="Save" class="btn btn-blue">
+            </div>
+          </form>
+        </div>
+      </div>
+      <!--END OF UPDATE NOTICE -->
+
+      <div id="school_noticeboard" class="notice-board col-12 h-40 border b-rad bg-navyblue1 ">
+
+        <div class="row justify-content-around align-items-start fs-white">
           <h3>School Notice Board</h3>
+          <?php if($_SESSION['role'] == 'admin'){ ?>
+            <div>
+              <button class="btn btn-blue" onclick="add_new_school_notice_form('school_noticeboard','add_new_school_notice')">Add</button>
+              <button class="btn btn-blue" onclick="update_school_notice_form('school_noticeboard','update_school_notice')">Update</button>
+            </div>
+          <?php } ?>
         </div>
 
           <?php
-            if($rls_set){
-              foreach ($rls_set as $data1) {
-                $notice[$data1['id']."_text"] = $data1['text'];
-                $notice[$data1['id']."_image"] = $data1['image'];
-                $notice[$data1['id']."_reference"] = $data1['reference'];
-              }
-            }
 
-            for ($x = 1; $x <= $notice["1000_text"]; $x++) {
+            for ($x = 0; $x < count($notices); $x++) {
               echo '        
-              <div class="row notices h-30 ">
+              <div class="row notices h-30 " data-notice="'.$notices[$x]["id"].'">
                 <div class="row">
                   <div class="col-6 h-30 fs-12 border b-rad bg-white ">
                     <div class="align-items-start justify-content-start text-justify" >
-                       <p>';if(!empty($notice[$x."_text"])){echo $notice[$x."_text"];} echo '<br><br</p>
+                       <p>';if(!empty($notices[$x]["text"])){echo $notices[$x]["text"];} echo '<br><br</p>
                     </div>
 
                     <div class="row align-items-end justify-content-end d-block" >
-                      <p>Reference :&nbsp<a href=';if(!empty($notice[$x."_reference"])){echo $notice[$x."_reference"];} echo '>';if(!empty($notice[$x."_reference"])){echo $notice[$x."_reference"];} echo '</a></p>
+                      <p>Reference :&nbsp<a href=';if(!empty($notices[$x]["reference"])){echo $notices[$x]["reference"];} echo '>';if(!empty($notices[$x]["reference"])){echo $notices[$x]["reference"];} echo '</a></p>
                     </div>
 
                   </div>
 
                   <div class="col-6 h-30 fs-12 border b-rad bg-white  ">
-                    <img src="'.set_url('public/assets/img/notice_images/'); if(!empty($notice[$x."_image"])){echo $notice[$x."_image"];}  echo '" alt="imgg" width=200px height=285px onClick="open_image_viewer(this)">
+                    <img src="'.set_url('public/assets/img/notice_images/'); if(!empty($notices[$x]["image"])){echo $notices[$x]["image"];}  echo '" alt="imgg" width=200px height=285px onClick="open_image_viewer(this)">
 
                   </div>
 
@@ -152,8 +212,8 @@
                 <div class="row justify-content-center">
 
                   <?php
-                  for ($x = 1; $x <= $notice["1000_text"]; $x++) {
-                      echo '<span class="dot m-2" onclick="currentNotice('.$x.')"></span>';
+                  for ($x = 0; $x < count($notices); $x++) {
+                      echo '<span class="dot m-2" onclick="currentNotice('.($x+1).')"></span>';
                       }
                   ?>
             </div>

@@ -3,13 +3,13 @@
         <?php 
         
         if(isset($error) && !empty($error)){
-            echo "<p class='mt-5 w-75 bg-red p-5 text-center'>";
+            echo "<p class='mt-5 w-75 bg-red fg-white p-5 text-center'>";
             echo $error;
             echo "</p>";
         }
 
         if(isset($info) && !empty($info)){
-            echo "<p class='mt-5 w-75 bg-green p-5 text-center'>";
+            echo "<p class='mt-5 w-75 bg-green fg-white p-5 text-center'>";
             echo $info;
             echo "</p>";
         }

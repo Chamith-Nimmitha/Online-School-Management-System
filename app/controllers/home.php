@@ -24,7 +24,7 @@
 			$rls_set = $this->load->home->get_noticeboard_data();
 			if($rls_set){
 				$rls_set = $rls_set->fetchAll();
-				$this->load->view("common/home",["header"=>$this->header_data,"rls_set"=>$rls_set]);
+				$this->load->view("common/home",["header"=>$this->header_data,"notices"=>$rls_set]);
 				$this->load->view("templates/footer");
 			}else{
 				echo "header data not found.";
