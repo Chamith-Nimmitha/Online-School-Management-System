@@ -133,6 +133,9 @@
 			$this->query .= "(".$keys.") VALUES (".$values.");";
 			$this->pre_query = $this->query;
 			$stmt = $this->db->prepare($this->query);
+			// echo $this->query;
+			// print_r($this->parameters);
+			// exit();
 			$stmt->execute($this->parameters);
 			$this->reset_values();
 			return $stmt;
@@ -198,6 +201,7 @@
 			$stmt = $this->db->prepare($this->query);
 			// echo $this->query;
 			// print_r($this->parameters);
+			// exit();
 			$stmt->execute($this->parameters);
 			// $this->db->closeCursor();
 			$this->reset_values();

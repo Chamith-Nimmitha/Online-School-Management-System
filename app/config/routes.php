@@ -154,8 +154,11 @@
 	$routes['api/classroom/search'] = "apiClassroom/search";
 	$routes['api/classroom/timetable/update'] = "apiClassroom/update_timetable";
 	$routes['api/classroom/notice/add'] = "apiClassroom/add_notice";
+	$routes['api/school/notice/add'] = "apiHome/add_notice";
 	$routes['api/classroom/notice/$1'] = "apiClassroom/get_notice/$1";
+	$routes['api/school/notice/$1'] = "apiHome/get_notice/$1";
 	$routes['api/classroom/notice/update/$1'] = "apiClassroom/update_notice/$1";
+	$routes['api/school/notice/update/$1'] = "apiHome/update_notice/$1";
 	$routes['api/classroom/get_class_list'] = "apiClassroom/get_class_list";
 	$routes['api/student/search'] = "apiStudent/search";
 	$routes['api/subject/search'] = "apiSubject/search";

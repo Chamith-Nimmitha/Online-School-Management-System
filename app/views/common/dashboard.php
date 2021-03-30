@@ -94,7 +94,7 @@
 					</form>
 				</div>
 			</div>
-			<!-- ADD A NEW NOTICE -->
+			<!-- END OF ADD A NEW NOTICE -->
 
 			<!-- UPDATE NOTICE -->
 			<div id="update_classroom_notice" class="d-none">
