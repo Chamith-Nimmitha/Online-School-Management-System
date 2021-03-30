@@ -120,3 +120,7 @@ function update_school_notice(form){
 		console.log(err);
 	});	
 }
+
+function delete_school_notice(ele,title,msg){
+	show_dialog(ele,title,msg);
+}

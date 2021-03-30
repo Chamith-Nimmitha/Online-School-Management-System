@@ -909,20 +909,21 @@ function teacher_attendance_search(){
 						<td>${parseInt(i)+1}</td>
 						<td>${response[i]['id']}</td>
 						<td>${response[i]['name_with_initials']}</td>
-						<td class='d-flex flex-col'>
-	                        <label for='present-${response[i]['id']}'>
+						<td>
+	                        <label class="p-2 pr-4 pl-4" for='present-${response[i]['id']}'>
 	                            <input type='radio' id='present-${response[i]['id']}' name='attendance-${response[i]['id']}' value='1'`
                             if(response[i]['attendance'] == 1){
                             	body += "checked='checked'";
                             }
-                    body += `> Present
+                    body += `> </td>
+                    		<td>
 	                        </label>
-	                        <label for='absent-${response[i]['id']}'>
+	                        <label class="p-2 pr-4 pl-4" for='absent-${response[i]['id']}'>
 	                            <input type='radio' id='absent-${response[i]['id']}' name='attendance-${response[i]['id']}' value='0'`;
                             if(response[i]['attendance'] == 0){
                             	body += "checked='checked'";
                             }
-                    body += `> Absent
+                    body += `>
 	                        </label>
 	                    </td>
 						<td><input type='text' name='note-${response[i]['id']}' value='`;

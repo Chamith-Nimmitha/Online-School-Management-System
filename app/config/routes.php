@@ -27,6 +27,7 @@
 
 	// common routes
 	$routes['dashboard'] = "user/dashboard";
+	$routes['school/notice/delete/$1'] = "home/delete_notice/$1";
 	// $routes['dashboard/$1'] = "user/dashboard/$1";
 	$routes['profile'] = "user/profile";
 	$routes['profile/$1/$2'] = "user/profile/$1/$2";
