@@ -11,24 +11,24 @@
 				<h3 class="fs-20">Guideline Links</h3>
 			</div>
 			<div class="col-4 pr-3">
-				<a href="#item-01"><span>#</span> Link 01</a>
+				<a href="#item-01"><span>#</span> How to Use student registration form</a>
 			</div>
 			<div class="col-4 pr-3">
-				<a href="#item-02"><span>#</span> Link 01</a>
+				<a href="#item-02"><span>#</span> How admin assign students to classroom</a>
 			</div>
 			<div class="col-4">
-				<a href="#item-03"><span>#</span> Link 01</a>
+				<a href="#item-03"><span>#</span> How Mark Teacher Attendance</a>
 			</div>
 		</div>
 		<div id="help-center-item-wrapper">
 			<!-- Item 01 -->
 			<div class="help-center-item" id="item-01">
 				<div class="help-center-item-header">
-					<h3><a href="#"><span>#</span> Help video 1</a></h3>
+					<h3><a href="#"><span>#</span>How to Use student registration form</a></h3>
 				</div>
 				<div class="help-center-item-video">
 					<video controls="true">
-						<source src="<?php echo BASE_URL.'public/assets/video/Dummy.mp4'; ?>" type="video/mp4">
+						<source src="<?php echo BASE_URL.'public/assets/video/student registration.mp4'; ?>" type="video/mp4">
 					</video>
 				</div>
 			</div>
@@ -36,11 +36,11 @@
 			<!-- Item 02 -->
 			<div class="help-center-item" id="item-02">
 				<div class="help-center-item-header">
-					<h3><a href="#"><span>#</span> Help video 2</a></h3>
+					<h3><a href="#"><span>#</span> How admin assign students to classroom</a></h3>
 				</div>
 				<div class="help-center-item-video">
 					<video controls="true">
-						<source src="<?php echo BASE_URL.'public/assets/video/Dummy.mp4'; ?>" type="video/mp4">
+						<source src="<?php echo BASE_URL.'public/assets/video/assign classroom students.mp4'; ?>" type="video/mp4">
 					</video>
 				</div>
 			</div>
@@ -48,11 +48,11 @@
 			<!-- Item 03 -->
 			<div class="help-center-item" id="item-03">
 				<div class="help-center-item-header">
-					<h3><a href="#"><span>#</span> Help video 3</a></h3>
+					<h3><a href="#"><span>#</span> How Mark Teacher Attendance</a></h3>
 				</div>
 				<div class="help-center-item-video">
 					<video controls="true">
-						<source src="<?php echo BASE_URL.'public/assets/video/Dummy.mp4'; ?>" type="video/mp4">
+						<source src="<?php echo BASE_URL.'public/assets/video/mark teacher attendance.mp4'; ?>" type="video/mp4">
 					</video>
 				</div>
 			</div>
