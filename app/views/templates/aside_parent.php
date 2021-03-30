@@ -12,6 +12,11 @@
 						<i class="fas fa-user-graduate"></i>Children List
 					</a>
 				</li>
+				<li id="help-center-li" class="nav-item aside-li">
+					<a href="<?php echo set_url('help_center') ?>" class="nav-link">
+						<i class="fas fa-clock"></i>Help Center
+					</a>
+				</li>
 				<li id="settings-li" class="nav-item aside-li">
 					<a href="<?php echo set_url('settings/website') ?>" class="nav-link">
 						<i class="fas fa-sliders-h"></i>Website Settings</a>

@@ -199,21 +199,12 @@
 					<a href="<?php echo set_url('help_center') ?>" class="nav-link">
 						<i class="fas fa-clock"></i>Help Center
 					</a>
-					<button class="toggle-button" target="help-center-nav">
-						<img src="<?php echo set_url('public/assets/img/menu_arrow.png') ?>" width="20px">
-					</button>
-					<nav id="help-center-nav" class="no-collapsed nav sub-nav">
-						<ul class="d-flex flex-col">
-							<li class="nav-item"><a href="<?php echo set_url('help_center') ?>" class="nav-link"  parent-li="help-center-li">Help Center</a></li>
-						</ul>
-						
-					</nav>
 				</li>
-				<li class="nav-item aside-li">
+				<!-- <li class="nav-item aside-li">
 					<a href="<?php echo set_url('userrole/permission') ?>" class="nav-link">
 						<i class="fas fa-users-cog"></i>User Roles
 					</a>
-				</li>
+				</li> -->
 				<li id="settings-li" class="nav-item aside-li">
 					<a href="<?php echo set_url('settings/school') ?>" class="nav-link">
 						<i class="fas fa-sliders-h"></i>All Settings</a>
