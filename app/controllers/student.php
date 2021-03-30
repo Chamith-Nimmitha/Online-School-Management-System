@@ -401,4 +401,103 @@
             $this->load->view("teacher/student_upload", ["field_errors"=>$field_errors,"info"=>$info,"error"=>$error]);
             $this->load->view("templates/footer");
         }
+
+    public function student_dashboard(){
+            if(!$this->checkPermission->check_permission("dashboard","view")){
+                $this->view_header_and_aside();
+                $this->load->view("common/error");
+                $this->load->view("templates/footer");
+                return;
+            }
+            $this->load->model("user");
+            $counts = $this->load->user->get_staticstic_count();
+            $data['count'] = $counts;
+
+            if(isset($_SESSION['login_msg'])){
+                $data['msg'] = $_SESSION['login_msg'];
+                unset($_SESSION['login_msg']);
+            }
+            if(isset($_SESSION['del_msg'])){
+                $data['del_msg'] = $_SESSION['del_msg'];
+                unset($_SESSION['del_msg']);
+            }
+
+            $is_classroom_teacher = 0;
+            $show_notice_board = 0;
+            $statics_link_show = 0;
+            $statics_link_show = 1;
+
+            if($_SESSION['role'] == "student"){
+                $this->load->model("student");
+                $this->load->student->set_by_id($_SESSION['user_id']);
+                $cls = $this->load->student->get_classroom_object();
+                if($cls){
+                    $data['notice_classroom_id'] = $cls->get_id();
+                    $data['grade'] = $cls->get_grade();
+                    $data['class'] = $cls->get_class();
+                    $result = $cls->get_notices();
+                    if($result && $result->rowCount() >0){
+                        $data['classroom_notices'][0] = ["notices"=>$result->fetchAll(),"grade"=>$cls->get_grade(),"class"=>$cls->get_class()];
+                    }
+                }
+                $show_notice_board = 1;
+                $statics_link_show = 0;
+            }
+
+
+            $data['is_classroom_teacher'] = $is_classroom_teacher;
+            $data['show_notice_board'] = $show_notice_board;
+            $data['statics_link_show'] = $statics_link_show;
+
+
+
+ $time_map = ["1"=>"7.50a.m - 8.30a.m", "2"=>"8.30a.m - 9.10a.m", "3"=>"9.10a.m - 9.50a.m", "4"=> "9.50a.m - 10.30a.m", "5"=> "10.50a.m - 11.30a.m", "6"=>"11.30a.m - 12.10p.m", "7"=> "12.10p.m - 12.50p.m", "8"=>"12.50p.m - 1.30p.m"];
+            $day_map = ["1"=>"mon","2"=>"tue","3"=>"wed","4"=>"thu","5"=>"fri"];
+            $timetable_data = [];
+            $classroom_id = NULL;
+            $grade = NULL;
+            $class = NULL;
+            if(!empty($id)){
+                $user_id = $id;
+            }else{
+                $user_id = $_SESSION['user_id'];
+            }
+            $this->load->model("student");
+            $this->load->model("subjects");
+            $result = $this->load->student->set_by_id($user_id);
+            if($result){
+                $grade = $this->load->student->get_grade();
+                $class = $this->load->student->get_class();
+                $cls = $this->load->student->get_classroom_object();
+                if($cls){
+                    $classroom_id = $cls->get_id();
+                    $tt = $cls->get_converted_timetable();
+                    if($tt){
+                        $timetable_data = $tt;
+                    }
+                }
+            }
+            $data['cur_day'] = substr(date('l'),0,3);
+
+            $data['timetable_data'] = $timetable_data;
+            $data['time_map'] = $time_map;
+            $data['day_map'] = $day_map;
+            $data['classroom_id'] = $classroom_id;
+
+            $student_id = $_SESSION['user_id'];
+            $this->load->model("attendance");
+            $result_set = $this->load->attendance->get_attendance_by_student_id($student_id);
+            if($result_set){
+                $data['result_set'] = $result_set->fetchAll();
+            }else{
+                $data['result_set'] = FALSE;
+            }
+            $data['student_id'] = $student_id;
+
+            $this->view_header_and_aside();
+            $this->load->view("student/student_dashboard", $data);
+            $this->load->view("templates/footer");
+
+
+    }
     }
