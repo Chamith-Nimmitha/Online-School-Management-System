@@ -36,9 +36,10 @@
         		<div class="test-field-outer mb-0 pb-0">
 					<div class="test-field-inner col-12">
 						<i class="fas fa-key"></i>
-						<input type="password" name="password" id='password'  placeholder="password">
+						<input type="password" name="password" id='password'  placeholder="password" oninput="validate_password(this)">
 						<label for="password" id="label"><span class="label-span">Password</span></label>
 					</div>
+					<p class="bg-red fg-white p-2 d-none"></p>
 				</div>
 				<div class="d-flex justify-content-end w-90">
 					<a href="<?php echo set_url('forget_password'); ?>" class="btn btn-lightred p-1 fs-12">Forget Password</a>

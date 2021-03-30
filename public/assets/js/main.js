@@ -496,6 +496,55 @@ function validate_email(ele,min,max,required) {
 	validate_user_input(ele,min,max,required,errors);
 }
 
+function validate_password(ele){
+	var val = ele.value.trim();
+	var contain_upper = false;
+	var contain_lower = false;
+	var contain_number = false;
+	var number = /^[0-9]$/;
+	var lower = /^[a-z]$/;
+	var upper = /^[A-Z]$/;
+	var error = "";
+		console.log(val);
+	if(val.length < 8 ){
+		error = "Password length must greater than 8 Characters."; 
+	}else{
+		for(i in val){
+			if(parseInt(val[i])){
+				contain_number = true;
+			}else if(val[i].match(lower)){
+				contain_lower = true;
+			}else if(val[i].match(upper)){
+				contain_upper = true;
+			}
+		}
+	}
+	if(error.length == 0){
+		if(!contain_number){
+			error = "Password must contain number";
+		}else if(!contain_lower){
+			error = "Password must contain lowercase letter.";
+		}else if(!contain_upper){
+			error = "Password must contain uppercase letter.";
+		}
+	}
+	var p = ele.parentElement.nextElementSibling;
+	if(error.length != 0){
+		if(p.nodeName == "P"){
+			p.classList.remove("d-none");
+			p.classList.add("d-block");
+			p.innerHTML = error;
+		}
+	}else{
+		if(p.nodeName == "P"){
+			var p = ele.parentElement.nextElementSibling;
+			p.classList.remove("d-block");
+			p.classList.add("d-none");
+			p.innerHTML = "";
+		}
+	}
+}
+
 function update_student_selected_set(checkbox){
 	var selected_set = document.getElementById("selected-set");
 	var student_id = checkbox.value;
