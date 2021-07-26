@@ -317,6 +317,7 @@ function student_search(page=null,per_page=null){
 	xhr.onload = function(){
 		if(this.status == 200){
 			var response = this.responseText; 
+			console.log(response);
 			response = JSON.parse(response);
 			target_div.innerHTML = response['rows'];
 

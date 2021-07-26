@@ -1,4 +1,4 @@
-var base_url = "http://localhost/mymvc/";
+var base_url = "http://localhost/sms/";
 
 var toggle_buttons = document.getElementsByClassName("toggle-button");
 for(var i=0; i < toggle_buttons.length; i++){

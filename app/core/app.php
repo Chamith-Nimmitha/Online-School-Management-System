@@ -66,6 +66,7 @@
 
 		// run the controller which discovered by prepareURL method.
 		private function render(){
+			require_once(CONTROLLERS.$this->controller.'.php');
 			if(class_exists($this->controller)){
 				$controller = new $this->controller();
 				if(method_exists($controller, $this->method)){
@@ -75,7 +76,7 @@
 				}
 			}else{
 				echo $this->controller;
-				echo "This controller not exist.";
+				echo ". This controller not exist.";
 			}
 		}
 	}
