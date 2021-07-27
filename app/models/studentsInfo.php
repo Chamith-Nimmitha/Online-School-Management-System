@@ -22,7 +22,7 @@
 		}
 
 
-		public function get_student_list($start,$per_page,$student_id=NULL,$student_name=NULL,$grade=NULL,$class=NULL){
+		public function get_student_list($start=0,$per_page=50,$student_id=NULL,$student_name=NULL,$grade=NULL,$class=NULL){
 			$query = "SELECT SQL_CALC_FOUND_ROWS  `s`.`id` FROM `student` AS `s` ";
 			$flag = 0; // use for check wether query is already complete or not
 			$id_flag = 0; // use for check wether student id is set

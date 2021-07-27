@@ -8,14 +8,25 @@
 
 		// for test
 		public function test(){
-			$teacher_id = 1200001;
-			$this->load->model("teacher");
-			$this->load->teacher->set_by_id($teacher_id);
-			$timetable_data = $this->load->teacher->get_timetable();
-			
+			// $teacher_id = 1200001;
+			// $this->load->model("teacher");
+			// $this->load->teacher->set_by_id($teacher_id);
+			// $timetable_data = $this->load->teacher->get_timetable();
+			// echo "<pre>";
+			// print_r($timetable_data);
+			// echo "</pre>";
+
+			$this->load->model("student");
+			$this->load->student->set_by_id(1100024);
+			$cls = $this->load->student->get_classroom_object();
+
+			$data = $cls->get_students_data();
+
+
 			echo "<pre>";
-			print_r($timetable_data);
+			print_r($data);
 			echo "</pre>";
+
 		}
 
 		//homepage
