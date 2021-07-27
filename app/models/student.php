@@ -149,6 +149,7 @@
 			$data['grade'] = $this->grade;
 			$data['class'] = $this->class;
 			$data['gender'] = $this->gender;
+			$data['class'] = $this->class;
 			$data['dob'] = $this->dob;
 			$data['address'] = $this->address;
 			$data['contact_number'] = $this->contact_number;

@@ -200,11 +200,11 @@
 						<i class="fas fa-clock"></i>Help Center
 					</a>
 				</li>
-				<!-- <li class="nav-item aside-li">
+				<li class="nav-item aside-li">
 					<a href="<?php echo set_url('userrole/permission') ?>" class="nav-link">
 						<i class="fas fa-users-cog"></i>User Roles
 					</a>
-				</li> -->
+				</li>
 				<li id="settings-li" class="nav-item aside-li">
 					<a href="<?php echo set_url('settings/school') ?>" class="nav-link">
 						<i class="fas fa-sliders-h"></i>All Settings</a>
