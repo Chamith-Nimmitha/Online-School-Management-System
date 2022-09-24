@@ -4,7 +4,7 @@ Please do these steps after clone project:
   1) Change project name as you wish. Example: 'myProject'
   2) Please change /app/config/config.php file according to your project name.
   
-  	Change:
+  	From:
 		define('BASE_URL','http://localhost/sms/');
 		define('BASEPATH',$_SERVER["DOCUMENT_ROOT"].DS."sms/");
               
@@ -22,4 +22,4 @@ Please do these steps after clone project:
     
   5) Import downloaded sql file to created database.
 
- Congratulations!!! Now you can use full featured online school management system.
+ ## Congratulations!!! Now you can use full featured online school management system.
